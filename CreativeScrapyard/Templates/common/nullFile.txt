@@ -1,0 +1,399 @@
+/* #addcart i {
+    font-size: 34px;
+    vertical-align: middle;
+} FOR ICON
+#buyItem i {
+    font-size: 34px;
+    vertical-align: middle;
+}*/
+
+
+/*----------------------*/
+
+.single_product {
+    padding-top: 66px;
+    padding-bottom: 140px;
+    margin-top: 0px;
+    padding: 17px
+}
+
+.product_name {
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 0px
+}
+
+.product_price {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 9px;
+    clear: left
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000
+}
+
+div {
+    display: block;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+ul {
+    list-style: none;
+    margin-bottom: 0px
+}
+
+.image_selected {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% + 15px);
+    height: 525px;
+    -webkit-transform: translateX(-15px);
+    -moz-transform: translateX(-15px);
+    -ms-transform: translateX(-15px);
+    -o-transform: translateX(-15px);
+    transform: translateX(-15px);
+    border: solid 1px #e8e8e8;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 15px
+}
+
+.image_list li {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 165px;
+    border: solid 1px #e8e8e8;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    cursor: pointer;
+    padding: 15px;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+    overflow: hidden
+}
+
+.image_list li:last-child {
+    margin-bottom: 0
+}
+
+.image_list li:hover {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3)
+}
+
+.i   border-radius: 3px;
+}
+
+label.radio input:checked+span {
+    border-color: #ff3e6c;
+}
+
+.item-quantity {
+    width: 45px;
+    height: 25px;
+    border: solid 1px #e5e5e5;
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-left: 5px;
+}
+
+.item-color {
+    width: 120px;
+    height: 25px;
+    border: solid 1px #e5e5e5;
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-left: 5px;
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.btn-primary:hover {
+    background-color: #9e9a9c !important;
+}mage_list li img {
+    max-width: 100%
+}
+
+.image_selected {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% + 15px);
+    height: 525px;
+    -webkit-transform: translateX(-15px);
+    -moz-transform: translateX(-15px);
+    -ms-transform: translateX(-15px);
+    -o-transform: translateX(-15px);
+    transform: translateX(-15px);
+    border: solid 1px #e8e8e8;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 15px
+}
+
+.image_selected img {
+    max-width: 100%
+}
+
+.item-attrib {
+    margin-bottom: 20px;
+}
+
+label.radio {
+    cursor: pointer
+}
+
+.item-attrib input[type="radio"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+
+label.radio span {
+    padding: 2px 9px;
+    border: 2px solid #8d8d8d;
+    display: inline-block;
+    color: #8d8d8d;
+}
+
+
+
+
+------------------------------------------------
+
+
+    <div class="single_product">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 order-lg-1 order-2">
+                    <ul class="image_list">
+                        <li data-image="{% static 'img/products/1.jpg' %}"><img src="{% static 'img/products/1.jpg' %}" alt=""></li>
+                        <li data-image="{% static 'img/products/1.jpg' %}"><img src="{% static 'img/products/1.jpg' %}" alt=""></li>
+                        <li data-image="{% static 'img/products/1.jpg' %}"><img src="{% static 'img/products/1.jpg' %}" alt=""></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 order-lg-2 order-1">
+                    <div class="image_selected"><img src="{% static 'img/products/1.jpg' %}" alt=""></div>
+                </div>
+                <div class="col-lg-6 order-3">
+                    <div class="product_description">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Parent Category</a></li>
+                                <li class="breadcrumb-item"><a href="#">Sub Category</a></li>
+                                <li class="breadcrumb-item active">Creative Item</li>
+                            </ol>
+                        </nav>
+                        <div class="product_name">Creative Item Name</div>
+                        <div>
+                            <a href="#" style="text-decoration: none;"> <span style='color:gray; '>By Artist Name</span></a>
+                        </div>
+                        <div> <span class="product_price">Price</span> </div>
+						<hr>
+                        <div class="item-attrib ">
+                            <span>Size</span>
+							<div style="display: inline; margin-left: 10px ;">
+								<label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label>
+								<label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label>
+								<label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label>
+								<label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label>
+								<label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
+							</div>
+                        </div>
+
+                        <div class="item-attrib">
+                            <div>
+                                <span>Quantity</span>
+                                <select name="quantity" id="item-quantity"  class="item-quantity">
+											<option value="1">01</option>
+											<option value="2">02</option>
+											<option value="3">03</option>
+											<option value="4">04</option>
+											<option value="5">05</option>
+											<option value="6">06</option>
+											<option value="7">07</option>
+											<option value="8">08</option>
+											<option value="9">09</option>
+											<option value="10">10</option>
+								</select>
+                            </div>
+                        </div>
+
+
+                        <div class="item-attrib">
+                            <div>
+                                <span>Color</span>
+                                <select name="" id="item-color" name="item-color" class="item-color">
+											<option value="Red">Red</option>
+											<option value="Blue">Blue</option>
+											<option value="Green">Green</option>
+										</select>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-primary " style="background-color: #ffffff; border-color: #000; color:#000">Add to Cart</button>
+                            <button type=" button " class="btn btn-primary " style="background-color: #ff3e6c; border-color: #000; color:#fff" >Buy Now</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    ----------------------------
+
+
+                    <!-- <div class="row d-flex"> -->
+                <!-- <div class="col-md-6 col-12"> -->
+                <!-- <div class="prod-gal"> -->
+                <!-- <div id="sync1" class="owl-carousel owl-theme">
+                                <div class="item">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="{% static 'img/products/1.jpg' %}">
+                                            <img src="{% static 'img/products/1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="images/pink-frock-610x628.jpg">
+                                            <img src="{% static 'img/products/1.jpg' %}" alt=" ">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="images/black-frock-610x628.jpg">
+                                            <img src="{% static 'img/products/1.jpg' %}" alt=" ">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="images/navy-blue--frock-610x628.jpg">
+                                            <img src="{% static 'img/products/1.jpg' %}" alt="  ">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="images/pink-frock-610x628.jpg">
+                                            <img src="{% static 'img/products/1.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        <a href="images/black-frock-610x628.jpg">
+                                            <img src="{% static 'img/products/1.jpg' %}" alt=" ">
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div> -->
+
+
+                                            <!-- </div> -->
+
+                <!-- </div> -->
+------------------------------------------
+
+
+<div class="col-md-6 col-12">
+    <div class="prod-gal">
+        <div id="sync1" class="owl-carousel owl-theme">
+            <div class="item product-pic">
+                <div class="">
+                    <a href="{% static 'img/products/1.jpg' %}">
+                        <img class="zoom-img pic0" src="{% static 'img/products/1.jpg' %}" alt="white floral frock">
+                    </a>
+                </div>
+            </div>
+            <div class="item product-pic">
+                <div class="">
+                    <a href="{% static 'img/products/2.jpg' %}">
+                        <img class="zoom-img pic0" src="{% static 'img/products/2.jpg' %}" alt="pink frock">
+                    </a>
+                </div>
+            </div>
+            <div class="item product-pic">
+                <div class="">
+                    <a href="{% static 'img/products3.jpg' %}">
+                        <img class="zoom-img pic0" src="{% static 'img/products/3.jpg' %}" alt="black frock" data-zoom-image="{% static 'img/products/3.jpg' %}" width="411">
+                    </a>
+                </div>
+            </div>
+            <div class="item product-pic">
+                <div class="">
+                    <a href="{% static 'img/products/4.jpg' %}">
+                        <img class="zoom-img pic0" src="{% static 'img/products/4.jpg' %}" alt="navy blue frock">
+                    </a>
+                </div>
+            </div>
+            <div class="item product-pic">
+                <div class="">
+                    <a href="{% static 'img/products/5.jpg' %}">
+                        <img class="zoom-img pic0" src="{% static 'img/products/5.jpg' %}" alt="pink frock">
+                    </a>
+                </div>
+            </div>
+            <div class="item product-pic">
+                <div class="">
+                    <a href="{% static 'img/products/6.jpg' %}">
+                        <img class="zoom-img pic0" src="{% static 'img/products/6.jpg' %}" alt="black frock">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="sync2" class="owl-carousel owl-theme">
+            <div class="tb item"><img class="thumbnail-img fit-image" src="{% static 'img/products/1.jpg' %}" alt="white floral frock"></div>
+            <div class="tb item"><img class="thumbnail-img fit-image" src="{% static 'img/products/2.jpg' %}" alt="pink frock"></div>
+            <div class="tb item"><img class="thumbnail-img fit-image" src="{% static 'img/products/3.jpg' %}" alt="black frock"></div>
+            <div class="tb item"><img class="thumbnail-img fit-image" src="{% static 'img/products/4.jpg' %}" alt="navy blue frock"></div>
+            <div class="tb item"><img class="thumbnail-img fit-image" src="{% static 'img/products/5.jpg' %}" alt="pink frock"></div>
+            <div class="tb item"><img class="thumbnail-img fit-image" src="{% static 'img/products/6.jpg' %}" alt="black frock"></div>
+
+        </div>
+
+
+    </div>
+</div>
