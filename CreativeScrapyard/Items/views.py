@@ -3,5 +3,5 @@ from django.shortcuts import render,redirect
 # Create your views here.
 
 def singleItem(request):
-    template = 'common/single-item.html'
+    template = 'Shop/single-item.html'
     return render(request,template)

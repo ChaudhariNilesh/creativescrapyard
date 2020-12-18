@@ -1,10 +1,12 @@
-from django.urls import path
+
 from django.contrib import admin
 from django.urls import path,include
 from .views import *
 
-app_name = 'Items'
+app_name="Home"
 
 urlpatterns = [
-    path('single-item/',singleItem,name="Items"), 
+    path('',home,name="home"),
+    path('shop/',include('Items.urls')),
+
 ]

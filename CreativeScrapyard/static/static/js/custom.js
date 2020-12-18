@@ -124,10 +124,10 @@ $(function() {
     var changeProdHover = function() {
         $(".prod-thumb-img").on({
             mouseenter: function() {
-                $(this).attr("src", "static/img/products/2.jpg");
+                $(this).attr("src", "../../static/img/products/2.jpg");
             },
             mouseleave: function() {
-                $(this).attr("src", "static/img/products/1.jpg");
+                $(this).attr("src", "../../static/img/products/1.jpg");
             }
         });
 
