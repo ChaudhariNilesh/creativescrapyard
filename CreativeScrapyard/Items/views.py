@@ -5,3 +5,7 @@ from django.shortcuts import render,redirect
 def singleItem(request):
     template = 'Shop/single-item.html'
     return render(request,template)
+
+def viewCartItem(request):
+    template = 'Shop/cart.html'
+    return render(request,template)

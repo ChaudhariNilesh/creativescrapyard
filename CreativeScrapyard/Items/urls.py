@@ -7,4 +7,5 @@ app_name = 'Items'
 
 urlpatterns = [
     path('single-item/',singleItem,name="Items"), 
+    path('cart/',viewCartItem,name="cart"), 
 ]

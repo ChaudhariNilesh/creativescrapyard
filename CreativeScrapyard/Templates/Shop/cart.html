@@ -1,0 +1,194 @@
+{% extends 'common/common.html' %} {% load static %} {% block title %} Single Item {% endblock %} {% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {% block content %}
+
+
+
+<div class="main-content">
+
+    <section class="inner-content">
+        <div class="container">
+
+
+            <div class="cart-main">
+                <div class="row d-flex">
+                    <div class="col-md-8 col-12 border bg-light  my-3">
+
+                        <div class="row d-flex my-2 p-2 cart-item ">
+                            <div class="col-4 cart-image">
+                                <img class="img-fluid" src="{% static 'img/products/1.jpg' %}" alt="">
+                            </div>
+                            <div class="col-8 cart-detail">
+                                <div class="cart-name ">
+                                    <span class="h4">White Gray T shirt</span>
+                                    <div class="form-check" style="display: inline; float: right;">
+                                        <input type="checkbox" class="form-check-input" id="cart-item-chk">
+                                    </div>
+                                </div>
+
+                                <div class="cart-size my-3">
+                                    <span class="" style="color: #000; font-weight: 400;">Size:</span>
+                                    <span class="" style="color: rgb(141, 141, 141);">XL</span>
+                                </div>
+                                <div class="my-3">
+                                    <form id="cart_qty" method="post">
+
+                                        <div class="form-group">
+
+                                            <label for="input-cart-qty" style="color: #000; font-weight: 400;">Quantity : </label>
+                                            <select class="form-control" name="input-cart-qty " id="input-cart-qty">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div class="cart-price my-3">
+                                            <p class="" style="color: #000; font-weight: 500;">&#8377; 300</p>
+                                        </div>
+                                        <div class="form-group cart-btn">
+                                            <div class="brd my-3"></div>
+                                            <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row d-flex my-2 p-2 cart-item ">
+                            <div class="col-4 cart-image">
+                                <img class="img-fluid" src="{% static 'img/products/1.jpg' %}" alt="">
+                            </div>
+                            <div class="col-8 cart-detail">
+                                <div class="cart-name ">
+                                    <span class="h4">White Gray T shirt</span>
+                                    <div class="form-check" style="display: inline; float: right;">
+                                        <input type="checkbox" class="form-check-input" id="cart-item-chk">
+                                    </div>
+                                </div>
+
+                                <div class="cart-size my-3">
+                                    <span class="" style="color: #000; font-weight: 400;">Size:</span>
+                                    <span class="" style="color: rgb(141, 141, 141);">XL</span>
+                                </div>
+                                <div class="my-3">
+                                    <form id="cart_qty" method="post">
+
+                                        <div class="form-group">
+
+                                            <label for="input-cart-qty" style="color: #000; font-weight: 400;">Quantity : </label>
+                                            <select class="form-control" name="input-cart-qty " id="input-cart-qty">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div class="cart-price my-3">
+                                            <p class="" style="color: #000; font-weight: 500;">&#8377; 300</p>
+                                        </div>
+                                        <div class="form-group cart-btn">
+                                            <div class="brd my-3"></div>
+                                            <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row d-flex my-2 p-2 cart-item ">
+                            <div class="col-4 cart-image">
+                                <img class="img-fluid" src="{% static 'img/products/1.jpg' %}" alt="">
+                            </div>
+                            <div class="col-8 cart-detail">
+                                <div class="cart-name ">
+                                    <span class="h4">White Gray T shirt</span>
+                                    <div class="form-check" style="display: inline; float: right;">
+                                        <input type="checkbox" class="form-check-input" id="cart-item-chk">
+                                    </div>
+                                </div>
+
+                                <div class="cart-size my-3">
+                                    <span class="" style="color: #000; font-weight: 400;">Size:</span>
+                                    <span class="" style="color: rgb(141, 141, 141);">XL</span>
+                                </div>
+                                <div class="my-3">
+                                    <form id="cart_qty" method="post">
+
+                                        <div class="form-group">
+
+                                            <label for="input-cart-qty" style="color: #000; font-weight: 400;">Quantity : </label>
+                                            <select class="form-control" name="input-cart-qty " id="input-cart-qty">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div class="cart-price my-3">
+                                            <p class="" style="color: #000; font-weight: 500;">&#8377; 300</p>
+                                        </div>
+                                        <div class="form-group cart-btn">
+                                            <div class="brd my-3"></div>
+                                            <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+
+                    <div class="col-md-4 col-12 my-3">
+                        <div class="card p-2 order-summary">
+
+                            <div class="my-1">
+                                <span style="font-weight: bolder;">Order Summary</span>
+                            </div>
+
+                            <div class="my-1">
+                                <div style="float: left; font-size: 12px;"><span>Total MRP (Inclusive of all taxes)</div>
+                                <div style="float: right"><span>&#8377; 300</div>
+                            </div>
+
+                            <div class="my-1" >
+                                <div style="float: left; font-size: 12px;"> Shipping Charges</div>
+                                <div style="color: #ee3334;  font-size: 12px; font-weight: bold; float: right;">FREE</div>
+                            </div>
+                            <div class="my-1" style="border-top: 1px solid rgb(47, 59, 47)"></div>
+                            <div class="my-1" >
+                                <div style="float: left; font-size: 14px; font-weight: bold;">Total Payable</div>
+                                <div style="color:#ee3334; font-size: 14px; font-weight: bold; float: right;">&#8377;300</div>
+                            </div>
+
+                            <div>
+                                <form id="place_order" method="post">
+
+                                    <div class="form-group cart-btn my-3">
+
+                                        <button class="btn btn-block" id="place-ord-btn"> Place Order </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+</div>
+</section>
+</div>
+
+
+{% endblock %}
