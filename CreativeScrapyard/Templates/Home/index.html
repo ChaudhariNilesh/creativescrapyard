@@ -17,40 +17,38 @@
 
 <body>
   <!-- <body style="background-color: #b8d5cd;"> -->
-  <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 border-bottom shadow-sm">
-    <h4 class="my-0 mr-md-auto font-weight-bold"><a href="creativestore.html" class=" btn btn-outline-dark"
-        style="font-size: 18px;"></span><span style="color:#96ceb4"><b>C</b></span><span
-          style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
-          style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
-          style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span
-          style="color:#ff6f69"><b>E
-          </b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a
-        href="scrapyard.html" class="btn btn-outline-dark" style="font-size: 18px ;"><b>
-          SCRAPYARD</b></a></h5>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <!-- <a class="p-2 text-dark" href="#">Features</a>
-      <a class="p-2 text-dark" href="#">Enterprise</a>
-      <a class="p-2 text-dark" href="#">Support</a>
-      <a class="p-2 text-dark" href="#">Pricing</a> -->
-      </nav>
-      <span>
-        <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-          <button type="button" class="btn btn-dark">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z">
-              </path>
-              <path fill-rule="evenodd"
-                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"></path>
-            </svg>
-          </button>
-        </form>
-      </span>
-      <a class="btn btn-outline-dark ml-3" href="#">Sign up</a>
-  </div>
-<!-- 
+    <div class="shadow-sm  border-bottom py-3">
+        <div class="row mx-2">
+            <h4 class="my-0 mr-md-auto font-weight-bold"><a href="{% url 'Home:creativestore' %}" class=" btn btn-outline-dark"
+                    style="font-size: 18px;"></span><span style="color:#96ceb4"><b>C</b></span><span
+                        style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
+                        style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
+                        style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span
+                        style="color:#ff6f69"><b>E
+                        </b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                        checked></span><a href="scrapyard.html" class="btn btn-outline-dark"
+                    style="font-size: 18px ;"><b>
+                        SCRAPYARD</b></a></h4>
+
+            <div class="align-items-center  mr-sm-1">
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    <button type="button" class="btn btn-dark">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z">
+                            </path>
+                            <path fill-rule="evenodd"
+                                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z">
+                            </path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+            <a class="btn btn-outline-dark ml-3" href="#">Sign up</a>
+        </div>
+    </div><!-- 
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <ol class="carousel-indicators">
       <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></li>

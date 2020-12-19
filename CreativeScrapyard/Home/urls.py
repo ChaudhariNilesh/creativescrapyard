@@ -7,6 +7,7 @@ app_name="Home"
 
 urlpatterns = [
     path('',home,name="home"),
+    path('creativestore/',creativestore,name="creativestore"),
     path('login/',login,name="login"),
     path('signup/',signup,name="signup"),
     path('shop/',include('Items.urls')),
