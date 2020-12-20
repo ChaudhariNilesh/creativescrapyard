@@ -10,6 +10,10 @@ def creativestore(request):
     template="Home/creativestore.html"
     return render(request,template)    
 
+def scrapyard(request):
+    template="Home/scrapyard.html"
+    return render(request,template)    
+
 def login(request):
     template="Home/login.html"
     return render(request,template)
