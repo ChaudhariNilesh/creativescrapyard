@@ -32,26 +32,27 @@
 
             <div class="align-items-center  mr-sm-1">
                 <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                    <button type="button" class="btn btn-dark">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z">
-                            </path>
-                            <path fill-rule="evenodd"
-                                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z">
-                            </path>
-                        </svg>
+                    <input class="form-control border-dark" type="text" placeholder="Search" aria-label="Search">
+                    <button type="button" class="btn btn-outline-dark">
+                        <i class="fa fa-search"></i>
                     </button>
                 </form>
             </div>
             <a class="btn btn-outline-dark ml-3" href="#">Sign up</a>
         </div>
+        
+    <!-- Categories -->
         <div class="btn-group mt-3 mx-2 d-flex" role="group" aria-label="Basic outlined example">
             <button type="button" id="allcategory" class="btn font-weight-bold">All Categories</button>
             <button type="button" id="home-decor" class="btn font-weight-bold">Home Decor</button>
-            <button type="button" id="lifestyle" class="btn font-weight-bold">Lifestyle</button>
+            <div class="btn-group" role="group">
+                <button type="button" id="lifestyle" class="btn font-weight-bold dropdown-toggle"  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Lifestyle</button>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                  <a class="dropdown-item" href="#">Men's</a>
+                  <a class="dropdown-item" href="#">Women's</a>
+                </div>
+              </div>
             <button type="button" id="accessories" class="btn font-weight-bold">Accesories</button>
             <button type="button" id="jewellories" class="btn font-weight-bold">Jewellories</button>
             <button type="button" id="toys" class="btn font-weight-bold">Toys</button>
@@ -60,6 +61,30 @@
             <button type="button" id="others" class="btn font-weight-bold">Others</button>
           </div>
     </div>
+
+    
+    <!--Main page after nav -->
+    <div class="container-fluid text-center py-3">
+        <h2>All Categories</h2>
+    </div>
+<!-- 
+    <div class="panel panel-primary">
+        <div class="panel-heading">Panel Heading</div>
+        <div class="panel-body">Panel Content</div>
+      </div> -->
+
+    <!-- <div class="row w-100">
+        <div class="d-inline-flex card shadow-sm">
+            <h5 class="">Filters</h5>
+            <div>
+            <h6 class="">Price</h6>
+            </div>
+            </section>
+        </div>
+        <div class="card shadow-sm">  
+
+        </div>
+    </div> -->
 
 
     <!-- Optional JavaScript; choose one of the two! -->
