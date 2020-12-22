@@ -71,7 +71,6 @@ $(function() {
             if (current < start) {
                 sync2.data('owl.carousel').to(current - onscreen, 100, true);
             }
-            //prodLens();
 
         }
 
@@ -121,6 +120,7 @@ $(function() {
             owl.trigger('owl.prev');
         })
     };
+
     var changeProdHover = function() {
         $(".prod-thumb-img").on({
             mouseenter: function() {
@@ -155,8 +155,6 @@ $(function() {
         ArtistProductGal();
         changeProdHover();
         prodLens();
-
-
     });
 });
 

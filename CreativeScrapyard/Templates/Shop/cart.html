@@ -1,4 +1,4 @@
-{% extends 'common/common.html' %} {% load static %} {% block title %} Single Item {% endblock %} {% block link %}
+{% extends 'common/common.html' %} {% load static %} {% block title %} CS - My Cart {% endblock %} {% block link %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {% block content %}
 
 
@@ -46,6 +46,8 @@
                                         <div class="cart-price my-3">
                                             <p class="" style="color: #000; font-weight: 500;">&#8377; 300</p>
                                         </div>
+                                    </form>
+                                    <form>
                                         <div class="form-group cart-btn">
                                             <div class="brd my-3"></div>
                                             <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
@@ -151,16 +153,16 @@
                             </div>
 
                             <div class="my-1">
-                                <div style="float: left; font-size: 12px;"><span>Total MRP (Inclusive of all taxes)</div>
-                                <div style="float: right"><span>&#8377; 300</div>
+                                <div style="float: left; font-size: 12px;"><span>Total MRP (Inclusive of all taxes)</span></div>
+                                <div style="float: right"><span>&#8377; 300</span> </div>
                             </div>
 
-                            <div class="my-1" >
+                            <div class="my-1">
                                 <div style="float: left; font-size: 12px;"> Shipping Charges</div>
                                 <div style="color: #ee3334;  font-size: 12px; font-weight: bold; float: right;">FREE</div>
                             </div>
                             <div class="my-1" style="border-top: 1px solid rgb(47, 59, 47)"></div>
-                            <div class="my-1" >
+                            <div class="my-1">
                                 <div style="float: left; font-size: 14px; font-weight: bold;">Total Payable</div>
                                 <div style="color:#ee3334; font-size: 14px; font-weight: bold; float: right;">&#8377;300</div>
                             </div>
@@ -170,7 +172,7 @@
 
                                     <div class="form-group cart-btn my-3">
 
-                                        <button class="btn btn-block" id="place-ord-btn"> Place Order </button>
+                                        <button class="btn btn-block" id="place-ord-btn"> Checkout</button>
                                     </div>
                                 </form>
                             </div>

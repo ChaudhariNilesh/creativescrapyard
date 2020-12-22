@@ -1,0 +1,67 @@
+{%extends 'common/common.html'%} {% load static %} {% block title %} CS - Track Order {% endblock %} {% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {%block content%}
+
+<main>
+    <section class="">
+        <div class="container">
+            <div class="infomain">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">My Account</a></li>
+                    <li class="breadcrumb-item"><a href="#">My Orders</a></li>
+                    <li class="breadcrumb-item active">Track Order</li>
+                </ol>
+            </div>
+
+            <div class="my-4">
+                <h2>Track My Order</h2>
+            </div>
+
+            <div class="card bg-light rounded-0 mt-4">
+                <div class="mt-2 border-bottom p-3">
+                    <span>ORDER ID : </span><span style="color: rgb(141, 141, 141);">10001</span>
+                    <span style="float: right;" class="mr-2">EXPECTED DATE : <span style="color: rgb(141, 141, 141);">DEC 20, 2020</span></span>
+                </div>
+
+                <div class="my-3 mx-3">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Order Placed</div>
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Order dispatched</div>
+                        <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Out for delivery</div>
+                        <div class="progress-bar inactive progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Delivered</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card bg-light rounded-0 ">
+
+                <div>
+                    <div class="row d-flex  px-3 mt-3 mx-2 ">
+                        <div class="d-flex">
+                            <h6><span class="cxt-color font-weight-bold">2020-12-18 8.00 AM </span class="">Order Placed</h6>
+                        </div>
+                    </div>
+                    <div class="row d-flex px-3 mt-3 mx-2 ">
+                        <div class="d-flex">
+                            <h6><span class="cxt-color font-weight-bold">2020-22-19 9.00 AM </span>Order dispatched</h6>
+                        </div>
+                    </div>
+                    <div class="row d-flex px-3 mt-3 mx-2">
+                        <div class="d-flex">
+                            <h6><span class="cxt-color font-weight-bold">2020-23-20 10.00 AM </span>Out for delivery</h6>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex px-3 mt-3 mx-2">
+                        <div class="d-flex">
+                            <h6><span class="cxt-color font-weight-bold">2020-23-20 11.00 AM </span>Delivered</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{%endblock%}
