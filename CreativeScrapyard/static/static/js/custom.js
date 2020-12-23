@@ -145,6 +145,22 @@ $(function() {
 
     };
 
+    var priceSlider = function() {
+        let sym = "&#8377;"
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 1000,
+            values: [100, 5000],
+            slide: function(event, ui) {
+                $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
+                $("#amount1").val(ui.values[0]);
+                $("#amount2").val(ui.values[1]);
+            }
+        });
+        $("#amount").html(sym + $("#slider-range").slider("values", 0) +
+            " - " + sym + $("#slider-range").slider("values", 1));
+    };
 
     //   Dom Ready
     $(function() {
@@ -154,6 +170,7 @@ $(function() {
         //flatZoom();
         ArtistProductGal();
         changeProdHover();
+        priceSlider();
         prodLens();
     });
 });

@@ -1,0 +1,150 @@
+#allcategory {
+    background-color: #fff;
+    color: #94c5ae;
+}
+
+#allcategory:hover {
+    background-color: #94c5ae;
+    color: #fff;
+}
+
+#home-decor {
+    background-color: #fff;
+    color: #ffc425;
+}
+
+#home-decor:hover {
+    background-color: #ffc425;
+    color: #fff;
+}
+
+#lifestyle {
+    background-color: #fff;
+    color: #ff6f69;
+}
+
+#lifestyle:hover {
+    background-color: #ff6f69;
+    color: #fff;
+}
+
+#accessories {
+    background-color: #fff;
+    color: #ffcc5c;
+}
+
+#accessories:hover {
+    background-color: #ffcc5c;
+    color: #fff;
+}
+
+#jewellories {
+    background-color: #fff;
+    color: #88d8b0;
+}
+
+#jewellories:hover {
+    background-color: #88d8b0;
+    color: #fff;
+}
+
+#toys {
+    background-color: #fff;
+    color: #40b6be;
+}
+
+#toys:hover {
+    background-color: #40b6be;
+    color: #fff;
+}
+
+#electronics {
+    background-color: #fff;
+    color: #ffc425;
+}
+
+#electronics:hover {
+    background-color: #ffc425;
+    color: #fff;
+}
+
+#arts {
+    background-color: #fff;
+    color: #ff6f69;
+}
+
+#arts:hover {
+    background-color: #ff6f69;
+    color: #fff;
+}
+
+#others {
+    background-color: #fff;
+    color: #44423e;
+}
+
+#others:hover {
+    background-color: #44423e;
+    color: #fff;
+}
+
+#scrapyard-category {
+    background-color: #343a40;
+    color: #fff;
+}
+
+#scrapyard-category:hover {
+    background-color: #fff;
+    color: #343a40;
+}
+
+
+/* Price Slider */
+
+
+/* .inFilter {
+    float: left;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.priceFilter {
+    margin-top: 13px;
+} */
+
+#byprice .ui-slider .ui-slider-handle {
+    background: #292929;
+    border: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    top: -.4em;
+}
+
+#byprice .ui-widget-header {
+    background: #292929;
+}
+
+#byprice .ui-corner-all {
+    border-radius: 2px;
+    border: none;
+}
+
+#byprice .ui-widget-content {
+    background: #e1e1e1;
+}
+
+#byprice .ui-slider-horizontal {
+    height: 3px;
+}
+
+#byprice p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #525252;
+    font-weight: 500;
+}
+
+#byprice p span {
+    float: right;
+}

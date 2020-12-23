@@ -1,79 +1,275 @@
+{% extends 'common/common.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
+{%block title %}Creative Scrapyard{%endblock%}
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/yash/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% block content %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/yash/bootstrap.css' %}">
-      <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900' type='text/css'>
-    <title>Creative Store</title>
-</head>
+<div class="shadow-sm  border-bottom py-3">
+    <div class="row mx-2">
+        <h4 class="my-0 mr-md-auto font-weight-bold"><a href="{%url 'Home:creativestore'%}" class=" btn btn-dark"
+                style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span
+                    style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
+                    style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
+                    style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span
+                    style="color:#ff6f69"><b>E
+                    </b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                    checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark"
+                style="font-size: 18px ;"><b>
+                    SCRAPYARD</b></a></h4>
 
-<body>
-    <!-- <body style="background-color: #b8d5cd;"> -->
-    <div class="shadow-sm  border-bottom py-3">
-        <div class="row mx-2">
-            <h4 class="my-0 mr-md-auto font-weight-bold"><a href="{%url 'Home:creativestore'%}" class=" btn btn-dark"
-                    style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span
-                        style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
-                        style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
-                        style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span
-                        style="color:#ff6f69"><b>E
-                        </b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                        checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark"
-                    style="font-size: 18px ;"><b>
-                        SCRAPYARD</b></a></h4>
-
-            <div class="align-items-center  mr-sm-1">
-                <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control border-dark" type="text" placeholder="Search" aria-label="Search">
-                    <button type="button" class="btn btn-outline-dark">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
-            </div>
-            <a class="btn btn-outline-dark ml-3" href="#">Sign up</a>
-        </div>
-        
-    <!-- Categories -->
-        <div class="btn-group mt-3 mx-2 d-flex" role="group" aria-label="Basic outlined example">
-            <button type="button" id="allcategory" class="btn font-weight-bold">All Categories</button>
-            <button type="button" id="home-decor" class="btn font-weight-bold">Home Decor</button>
-            <div class="btn-group" role="group">
-                <button type="button" id="lifestyle" class="btn font-weight-bold dropdown-toggle"  data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Lifestyle</button>
+        <div class="align-items-center  mr-sm-1">
+            <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control border-dark" type="text" placeholder="Search" aria-label="Search">
+                <button type="button" class="btn btn-outline-dark">
+                    <i class="fa fa-search"></i>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                  <a class="dropdown-item" href="#">Men's</a>
-                  <a class="dropdown-item" href="#">Women's</a>
-                </div>
-              </div>
-            <button type="button" id="accessories" class="btn font-weight-bold">Accesories</button>
-            <button type="button" id="jewellories" class="btn font-weight-bold">Jewellories</button>
-            <button type="button" id="toys" class="btn font-weight-bold">Toys</button>
-            <button type="button" id="electronics" class="btn font-weight-bold">Electronics</button>
-            <button type="button" id="arts" class="btn font-weight-bold">Arts and Crafts</button>
-            <button type="button" id="others" class="btn font-weight-bold">Others</button>
-          </div>
+            </form>
+        </div>
+        <a class="btn btn-outline-dark ml-3" href="#">Sign up</a>
     </div>
 
-    
-    <!--Main page after nav -->
-    <div class="container-fluid text-center py-3">
-        <h2>All Categories</h2>
+    <!-- Categories -->
+    <div class="btn-group mt-3 mx-2 d-flex" role="group" aria-label="Basic outlined example">
+        <button type="button" id="allcategory" class="btn font-weight-bold">All Categories</button>
+        <button type="button" id="home-decor" class="btn font-weight-bold">Home Decor</button>
+        <div class="btn-group" role="group">
+            <button type="button" id="lifestyle" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Lifestyle</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Men's</a>
+                <a class="dropdown-item" href="#">Women's</a>
+            </div>
+        </div>
+        <button type="button" id="accessories" class="btn font-weight-bold">Accesories</button>
+        <button type="button" id="jewellories" class="btn font-weight-bold">Jewellories</button>
+        <button type="button" id="toys" class="btn font-weight-bold">Toys</button>
+        <button type="button" id="electronics" class="btn font-weight-bold">Electronics</button>
+        <button type="button" id="arts" class="btn font-weight-bold">Arts and Crafts</button>
+        <button type="button" id="others" class="btn font-weight-bold">Others</button>
     </div>
+</div>
+
+
+<!--Main page after nav -->
+<div class="infomain mx-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
+        <li class="breadcrumb-item"><a href="#">All Categories</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Categories</h2>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 card ">
+            <h4 class="text-center my-2">Filters</h4>
+
+            <div class="inFilter" id="byprice">
+                <div class="text-bold">By Price:</div>
+                <div class="priceFilter my-2">
+                    <div id="slider-range"></div>
+                    <form method="post" action="">
+                        <input type="hidden" id="amount1">
+                        <input type="hidden" id="amount2">
+                    </form>
+                    <p>
+                        Range: <span id="amount"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+
+
+
+            <div class="explore">
+                <div class="row d-flex">
+                    <div class="col-lg-3 col-sm-6 col-12 ">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <a href="#">
+                            <div class="product-thumb">
+                                <div class="image">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"
+                                        alt=" ">
+                                </div>
+
+                                <div class="caption ">
+                                    <h4 class="product-name ">
+                                        <span>Product Name</span>
+                                    </h4>
+                                    <p class="price ">
+                                        <span>&#8377; 300</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
 <!-- 
     <div class="panel panel-primary">
         <div class="panel-heading">Panel Heading</div>
         <div class="panel-body">Panel Content</div>
       </div> -->
 
-    <!-- <div class="row w-100">
+<!-- <div class="row w-100">
         <div class="d-inline-flex card shadow-sm">
             <h5 class="">Filters</h5>
             <div>
@@ -87,21 +283,5 @@
     </div> -->
 
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
-
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    -->
-</body>
-
-</html>
+<!-- Optional JavaScript; choose one of the two! -->
+{%endblock%}
