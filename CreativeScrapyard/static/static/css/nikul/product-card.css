@@ -1,0 +1,73 @@
+
+.product_card{
+	position: relative;
+	width: 280px;
+	height: 350px;
+	overflow: hidden;
+}
+
+img.org_img {
+	width: 280px;
+	height: 350px;
+}
+
+/*.imgbx::after {
+	content: 'NIKUL';
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	font-weight: 600;
+	font-size: 4em;
+	color: rgba(0,0,0,0.1);
+}*/
+
+.imgbx:hover::after {
+	content: '';
+}
+
+.contentbx {
+	width: 100%;
+	position: absolute;
+	bottom: -20%;
+	background-color: white;
+	opacity: .5;
+	transition: all 0.5s ease;
+}
+
+.product_card .imgbx:hover .contentbx {
+	width: 100%;
+	position: absolute;
+	bottom: 0%;
+	background-color: white;
+	opacity: .9;
+}
+
+.product_card .imgbox .contentbx .p {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+
+.m-0 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+p.product_title {
+	text-transform: uppercase;
+    font-size: 1em;
+    font-weight: 800;
+}
+
+p.product_price {
+	font-size: 1.5em;
+	font-weight: 800;
+}
+
+button.buy-btn {
+ 	text-transform: uppercase;
+    border: none;
+    background-color: #CDD8DC;
+    padding: 5px 15px;
+    /*border-radius: 30px;*/
+}

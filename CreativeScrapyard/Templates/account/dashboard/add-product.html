@@ -1,0 +1,121 @@
+{% extends 'account/dashboard.html' %}
+{% load static %}
+{% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}"/>
+{% endblock %}
+
+{% block base %}
+
+<div class="page-title">
+    Add Product
+</div>
+<hr/>
+<div class="main-page">
+    <form>
+        <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" class="form-control" id="productName" placeholder="Product Name">
+        </div>
+        <div class="form-group">
+            <label for="productDescription">Product Description</label>
+            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="subCategory">Sub-Category</label>
+                    <select id="subCategory" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="accordion" class="form-group">
+            <div class="card">
+                <div class="card-header">
+                    <a class="btn-link pri-color link-effect" data-toggle="collapse" href="#collapse1">
+                        Product 1
+                    </a>
+                </div>
+                <div id="collapse1" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="customFile1" class="col-sm-2 col-form-label">Product Image</label>
+                            <div class="col-sm-5">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile1">
+                                    <label class="custom-file-label" for="customFile1">product1.png</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputcolor1" class="col-sm-2 col-form-label">Product Color</label>
+                            <div class="col-sm-1">
+                                <input type="color" id="inputcolor1" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputsize1" class="col-sm-2 col-form-label">Size</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inputsize1" placeholder="In cm">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputquantity1" class="col-sm-2 col-form-label">Quantity</label>
+                            <div class="col-sm-2">
+                                <select id="inputquantity1" class="form-control">
+                                    <option selected>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputunitprice1" class="col-sm-2 col-form-label">Unit Price</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="inputunitprice1" placeholder="In rupees">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed btn-link pri-color link-effect" data-toggle="collapse" href="#collapse2">
+                        Product 2
+                    </a>
+                </div>
+                <div id="collapse2" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        Lorem ipsum..
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <a href="#" class="btn-link pri-color link-effect">+Add</a>
+        </div>
+        <button class="btn btn-block pri-bg-color px-4">Add Product</button>
+    </form>
+</div>
+
+{% endblock %}
