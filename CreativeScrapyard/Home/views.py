@@ -21,3 +21,7 @@ def login(request):
 def signup(request):
     template="Home/registration.html"
     return render(request,template)
+
+def contactus(request):
+    template="contact-us.html"
+    return render(request,template)
