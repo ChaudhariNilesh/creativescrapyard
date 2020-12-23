@@ -1,3 +1,13 @@
+:root {
+    --pri-color: #20c997;
+    --pri-color-light: #BDEFE0;
+    --pri-color-dark: #1BAA80;
+}
+
+.cxt-color {
+    color: var(--pri-color-dark);
+}
+
 a {
     background: transparent;
     color: #292929;
@@ -15,7 +25,7 @@ a {
 
 a:hover {
     text-decoration: none;
-    color: #ee3334;
+    color: var(--pri-color);
 }
 
 a:focus {
@@ -59,10 +69,11 @@ body {
 .breadcrumb-item {
     font-size: 11px;
     text-transform: uppercase;
+    font-size: 12px;
 }
 
 .breadcrumb-item a {
-    color: #ee3334;
+    color: var(--pri-color-dark);
 }
 
 .breadcrumb-item a:hover {
@@ -92,7 +103,7 @@ body {
 }
 
 .brand span a:hover {
-    color: #ee3334;
+    color: var(--pri-color);
 }
 
 .brand span.stock {
@@ -106,7 +117,7 @@ body {
     width: 100%;
     float: left;
     font-size: 24px;
-    color: #ee3334;
+    color: var(--pri-color);
 }
 
 .short-des {
@@ -184,7 +195,7 @@ select {
 }
 
 #addcart {
-    background: #ee3334;
+    background: var(--pri-color);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -199,11 +210,11 @@ select {
 }
 
 #addcart:hover {
-    background: #292929;
+    background: var(--pri-color-dark)
 }
 
 #buyItem {
-    background: #ee3334;
+    background: var(--pri-color);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -218,7 +229,7 @@ select {
 }
 
 #buyItem:hover {
-    background: #292929;
+    background: var(--pri-color-dark)
 }
 
 
@@ -236,12 +247,12 @@ select {
     font-size: 14px;
     font-weight: 300;
     border: 0px;
-    border-bottom: 1px solid #eb2424;
+    border-bottom: 1px solid var(--pri-color-dark);
     color: #000
 }
 
 #btn-chkPincode {
-    background: #ee3334;
+    background: var(--pri-color);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -254,7 +265,7 @@ select {
 
 #btn-chkPincode:hover {
     cursor: pointer;
-    background: #292929;
+    background: var(--pri-color-dark)
 }
 
 
@@ -474,7 +485,7 @@ select {
 
 .caption .price {
     font-size: medium;
-    color: #ee3334;
+    color: var(--pri-color);
     margin: 8px 0px 8px 0px;
 }
 
@@ -521,18 +532,18 @@ select {
 }
 
 .brd {
-    border-top: 1px solid #ee3334;
+    border-top: 1px solid var(--pri-color);
     /* margin-top: 10px;
     margin-bottom: 10px; */
 }
 
 #cart-ord-btn {
-    background-color: #ee3334;
+    background-color: var(--pri-color);
     color: white
 }
 
 #cart-ord-btn:hover {
-    background-color: #000;
+    background: var(--pri-color-dark)
 }
 
 .cartProductImg {}
@@ -543,12 +554,89 @@ select {
 }
 
 #place-ord-btn {
-    background-color: #ee3334;
+    background-color: var(--pri-color);
     color: white
 }
 
 #place-ord-btn:hover {
-    background-color: #000;
+    background: var(--pri-color-dark)
+}
+
+
+/*  Checkout */
+
+.your-order-table table th,
+.your-order-table table td {
+    border-bottom: 1px solid #dee2e6;
+    color: #6f7172;
+    font-size: 14px;
+    text-align: left;
+}
+
+.your-order-table table th {
+    border-top: medium none;
+    color: #6f7172;
+    font-weight: normal;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 250px;
+}
+
+.your-order-table table tr.order-total td span {
+    color: var(--pri-color);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#ord-track-btn {
+    background-color: var(--pri-color);
+    color: white;
+}
+
+#ord-track-btn:hover {
+    background: var(--pri-color-dark)
+}
+
+#ord-view-btn {
+    background-color: var(--pri-color);
+    color: white;
+}
+
+#ord-view-btn:hover {
+    background: var(--pri-color-dark)
+}
+
+.btn-cxt {
+    display: inline-block;
+    font-weight: 400;
+    background-color: var(--pri-color);
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-cxt:hover {
+    background: var(--pri-color-dark)
+}
+
+.progress-bar {
+    background-color: var(--pri-color-dark);
+}
+
+.progress-bar.inactive {
+    color: var(--pri-color-dark);
+    background-color: var(--pri-color-light);
 }
 
 
