@@ -112,6 +112,48 @@
     margin-top: 13px;
 } */
 
+.color-black{
+    background-color: #292929;
+    border-radius: 100%;
+    padding: 12px;
+    width: 5px;
+    height: 5px;
+    margin: 10px;
+}
+.color-red{
+    background-color: #db1212;
+    border-radius: 100%;
+    padding: 12px;
+    width: 5px;
+    height: 5px;
+    margin: 10px;
+}
+.color-green{
+    background-color: #09f764;
+    border-radius: 100%;
+    padding: 12px;
+    width: 5px;
+    height: 5px;
+    margin: 10px;
+}
+.color-blue{
+    background-color: #0f6fee;
+    border-radius: 100%;
+    padding: 12px;
+    width: 5px;
+    height: 5px;
+    margin: 10px;
+}
+.color-orange{
+    background-color: #f5750d;
+    border-radius: 100%;
+    padding: 12px;
+    width: 5px;
+    height: 5px;
+    margin: 10px;
+}
+
+
 #byprice .ui-slider .ui-slider-handle {
     background: #292929;
     border: none;

@@ -69,13 +69,45 @@
 
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-3 card ">
+    <div class="row p-3">
+        <div class="col-3 card shadow-sm">
             <h4 class="text-center my-2">Filters</h4>
 
+            <div>
+                <div class="text-bold border-bottom my-2 p-2">By Category:</div>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">Home Decor</a>
+                        </li>
+                        <li>
+                            <a href="#">Lifestyle</a>
+                        </li>
+                        <li>
+                            <a href="#">Accesories</a>
+                        </li>
+                        <li>
+                            <a href="#">Jewellories</a>
+                        </li>
+                        <li>
+                            <a href="#">Toys</a>
+                        </li>
+                        <li>
+                            <a href="#">Electronics</a>
+                        </li>
+                        <li>
+                            <a href="#">Arts and Crafts</a>
+                        </li>
+                        <li>
+                            <a href="#">Others</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="inFilter" id="byprice">
-                <div class="text-bold">By Price:</div>
-                <div class="priceFilter my-2">
+                <div class="text-bold border-bottom my-2 p-2">By Price:</div>
+                <div class="priceFilter py-2">
                     <div id="slider-range"></div>
                     <form method="post" action="">
                         <input type="hidden" id="amount1">
@@ -86,6 +118,35 @@
                     </p>
                 </div>
             </div>
+
+            <div>
+                <div class="text-bold border-bottom my-2 p-2">By Colors:</div>
+                <div class="form-check">
+                   
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <span class=" form-check-label form-inline color-black"> </span>
+                        <label class="form-check-label" for="defaultCheck1">
+                        </label>
+                </div>
+<!-- 
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        <span class=" form-check-label color-red"> </span>
+                        Red
+                    </label>
+                </div>
+                <div class="form-check">
+                   
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <span class=" form-check-label form-inline color-blue"> </span>
+                    <label class="form-check-label" for="defaultCheck1">
+                        Blue
+                    </label>
+                </div> -->
+            </div>
+
+
         </div>
         <div class="col-9">
 
