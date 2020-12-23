@@ -1,0 +1,48 @@
+{% extends 'common/common.html' %}
+{% load static %}
+{% block title %} CS - Profile {% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/nikul/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/nikul/dashboard.css' %}"/>
+{% block baselink %} {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+<div class="parent">
+    <div class="title p-2 p-sm-2 px-md-3 py-md-2 px-lg-4 px-xl-4 py-xl-4">
+        <span>Creative Scrapyard</span>
+    </div>
+    <header class="">
+        <div class="header-main">
+            <span class="float-right img-profile-title pl-3 pr-4">Nikul Prajapati</span>
+            <img src="{% static 'img/testimonial/1.png' %}" class="d-block float-right rounded-circle main-img"/>
+        </div>
+    </header>
+
+    <div class="left-panel">
+        <ul>
+            <li class="li-dashboard">
+                <span><a class="collapsed" data-toggle="collapse" href="#dashCollapse">Dashboard</a></span>
+                <ul id="dashCollapse" class="collapse show" data-parent="#accordion">
+                    <li>Child</li>
+                    <li>Child</li>
+                    <li>Child</li>
+                    <li>Child</li>
+                </ul>
+            </li>
+            <li>Dashboard</li>
+            <li>Dashboard</li>
+            <li>Dashboard</li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="main-container my-4 p-0">
+            {% block base %} {% endblock %}
+        </div>
+    </main>
+</div>
+
+{% endblock %}
