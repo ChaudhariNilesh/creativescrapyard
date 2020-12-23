@@ -11,5 +11,5 @@ urlpatterns = [
     path('login/',login,name="login"),
     path('signup/',signup,name="signup"),
     path('shop/',include('Items.urls')),
-
+    path('accounts', include('Authentication.urls')),
 ]
