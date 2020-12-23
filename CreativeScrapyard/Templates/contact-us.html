@@ -1,0 +1,68 @@
+{%extends 'common/common.html'%} {% load static %} {% block title %} CS - ContactUs {% endblock %} {% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {% block content %}
+<main>
+    <section class="">
+        <div class="container">
+            <div class="infomain">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Contact Us</li>
+                </ol>
+            </div>
+
+            <div class="">
+                <div class="mt-5 text-center">
+                    <h1>Contact Form</h1>
+                </div>
+
+                <div class="row ">
+                    <div class="col-lg-7 mx-auto">
+                        <div class="card mt-2 mx-auto p-4 bg-light">
+                            <div class="card-body bg-light">
+                                <div class="container">
+                                    <form id="contact-form" role="form">
+                                        <div class="controls">
+                                            <div class="">
+                                                <div class="form-group">
+                                                    <select id="form_qryCat" name="qry_cat" class="form-control" required="required" data-error="Please specify your query category.">
+                                                        <option value="" selected disabled>--Select Your Query Category--</option>
+                                                        <option>Contact</option>
+                                                        <option>Complaint</option>
+                                                        <option>Question</option>
+                                                        <option>Report Item</option>
+                                                        <option>Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <div class="form-group mt-3">
+                                                    <input id="form_sub" type="text" name="qry_sub" class="form-control" placeholder="Your Query Subject." required="required" data-error="Query Subject is required.">
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <div class="form-group mt-3">
+                                                    <input id="form_rptItm" type="text" name="qry_rptItem" class="form-control" placeholder="Item SKU for reporting.">
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <div class="form-group mt-3"> <textarea id="form_message" name="message" class="form-control" placeholder="Write your message here." rows="4" required="required" data-error="Please, leave us a message."></textarea> </div>
+                                            </div>
+
+                                            <div class="">
+                                                <input type="submit" class="btn-cxt pt-2 mt-3 btn-block" value="Send">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{%endblock%}
