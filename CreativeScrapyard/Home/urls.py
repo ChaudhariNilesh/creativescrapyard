@@ -12,4 +12,5 @@ urlpatterns = [
     path('signup/',signup,name="signup"),
     path('shop/',include('Items.urls')),
     path('contact-us/', contactus, name="contactus"),
+    path('accounts',include('Authentication.urls')),
 ]
