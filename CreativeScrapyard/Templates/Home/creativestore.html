@@ -1,25 +1,20 @@
-{% extends 'common/common.html' %}
-{% load static %}
-{%block title %}Creative Scrapyard{%endblock%}
-{% block link %}
+{% extends 'common/common.html' %} {% load static %} {%block title %}Creative Scrapyard{%endblock%} {% block link %}
 <link rel="stylesheet" href="{% static 'css/yash/style.css' %}">
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
-
-{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {% block content %}
 
 <div class="shadow-sm  border-bottom py-3">
     <div class="row mx-2">
-        <h4 class="my-0 mr-md-auto font-weight-bold"><a href="{%url 'Home:creativestore'%}" class=" btn btn-dark"
-                style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span
-                    style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
-                    style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
-                    style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span
-                    style="color:#ff6f69"><b>E
+        <h4 class="my-0 mr-md-auto font-weight-bold">
+            <a href="{%url 'Home:creativestore'%}" class=" btn btn-dark" style="font-size: 18px;"></span><span
+                    style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span
+                    style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span
+                    style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span><span 
+                    style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E
                     </b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1"
                     checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark"
                 style="font-size: 18px ;"><b>
-                    SCRAPYARD</b></a></h4>
+                    SCRAPYARD</b></a>
+        </h4>
 
         <div class="align-items-center  mr-sm-1">
             <form class="form-inline mt-2 mt-md-0">
@@ -35,8 +30,26 @@
     <!-- Categories -->
     <div class="btn-group mt-3 mx-2 d-flex" role="group" aria-label="Basic outlined example">
         <button type="button" id="allcategory" class="btn font-weight-bold">All Categories</button>
-        <button type="button" id="home-decor" class="btn font-weight-bold">Home Decor</button>
-        <div class="btn-group" role="group">
+
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="home-decor" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Home Decor</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Wall Decor</a>
+                <a class="dropdown-item" href="#">Decorative Cushions</a>
+                <a class="dropdown-item" href="#">Clocks</a>
+                <a class="dropdown-item" href="#">Bed Sheets</a>
+                <a class="dropdown-item" href="#">Curtains</a>
+                <a class="dropdown-item" href="#">Furniture</a>
+                <a class="dropdown-item" href="#">Home Lights</a>
+                <a class="dropdown-item" href="#">Rugs</a>
+                <a class="dropdown-item" href="#">Kitchen and Dining</a>
+                <a class="dropdown-item" href="#">Outdoor and Gardening</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
             <button type="button" id="lifestyle" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Lifestyle</button>
             </button>
@@ -45,11 +58,71 @@
                 <a class="dropdown-item" href="#">Women's</a>
             </div>
         </div>
-        <button type="button" id="accessories" class="btn font-weight-bold">Accesories</button>
-        <button type="button" id="jewellories" class="btn font-weight-bold">Jewellories</button>
-        <button type="button" id="toys" class="btn font-weight-bold">Toys</button>
-        <button type="button" id="electronics" class="btn font-weight-bold">Electronics</button>
-        <button type="button" id="arts" class="btn font-weight-bold">Arts and Crafts</button>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="accessories" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Accesories</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Bags and Purses</a>
+                <a class="dropdown-item" href="#">Headwear</a>
+                <a class="dropdown-item" href="#">Keychains</a>
+                <a class="dropdown-item" href="#">Belts</a>
+                <a class="dropdown-item" href="#">Sunglasses</a>
+                <a class="dropdown-item" href="#">Umbrella</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="jewellories" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Jewellories</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Rings</a>
+                <a class="dropdown-item" href="#">Necklace</a>
+                <a class="dropdown-item" href="#">Earrings</a>
+                <a class="dropdown-item" href="#">Bracelets</a>
+                <a class="dropdown-item" href="#">Other Imitation Jewellories</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="toys" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Toys</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Baby Toys</a>
+                <a class="dropdown-item" href="#">Dolls and Action Figures</a>
+                <a class="dropdown-item" href="#">Stuffed Toys</a>
+                <a class="dropdown-item" href="#">Games and Puzzles</a>
+                <a class="dropdown-item" href="#">Other</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="electronics" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Electronics</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Mobile Accesories</a>
+                <a class="dropdown-item" href="#">PC and Laptop Accesories</a>
+                <a class="dropdown-item" href="#">Laptop Skins(Decal) and Stickers</a>
+                <a class="dropdown-item" href="#">Other</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="arts" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Arts and Crafts</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Paper Crafts</a>
+                <a class="dropdown-item" href="#">Sketches & Painting</a>
+                <a class="dropdown-item" href="#">Sculpture</a>
+                <a class="dropdown-item" href="#">Glass Art</a>
+                <a class="dropdown-item" href="#">Photo Frame</a>
+                <a class="dropdown-item" href="#">Ceramin Arts</a>
+                <a class="dropdown-item" href="#">Clay Art</a>
+                <a class="dropdown-item" href="#">Wood Art</a>
+                <a class="dropdown-item" href="#">Other</a>
+            </div>
+        </div>
         <button type="button" id="others" class="btn font-weight-bold">Others</button>
     </div>
 </div>
@@ -120,30 +193,40 @@
             </div>
 
             <div>
-                <div class="text-bold border-bottom my-2 p-2">By Colors:</div>
-                <div class="form-check">
-                   
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <span class=" form-check-label form-inline color-black"> </span>
-                        <label class="form-check-label" for="defaultCheck1">
-                        </label>
+                <div class="text-bold border-bottom my-2 p-2">By Color:</div>
+                <div class="widget-info color-filter clearfix py-2">
+                    <ul>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                class="color color-3"></span>Red<span class="count">59</span>
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                class="color color-4"></span>Blue<span class="count">45</span>
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                class="color color-6"></span>Green<span class="count">10</span>
+                        </li>
+                    </ul>
                 </div>
-<!-- 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        <span class=" form-check-label color-red"> </span>
-                        Red
-                    </label>
+            </div>
+
+            <div>
+                <div class="text-bold border-bottom my-2 p-2">By Size:</div>
+                <div class="py-2">
+                    <ul>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XS
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">S
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">M
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">L
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XL
+                        </li>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XXL
+                        </li>
+                    </ul>
                 </div>
-                <div class="form-check">
-                   
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <span class=" form-check-label form-inline color-blue"> </span>
-                    <label class="form-check-label" for="defaultCheck1">
-                        Blue
-                    </label>
-                </div> -->
             </div>
 
 
