@@ -162,9 +162,10 @@ span.color.color-7 {
     background: #C38B4B;
 }
 
-.custom-dropdown:hover .dropdown-menu{
+.custom-dropdown:hover>.dropdown-menu{
     display: block;
 }
+
 
 
 
