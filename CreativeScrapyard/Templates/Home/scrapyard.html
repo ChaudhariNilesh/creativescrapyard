@@ -7,6 +7,51 @@
         background-color: #343a40;
         color: #fff;
     }
+    a{
+        color:#fff;
+    }
+    .color-filter ul li{
+        color:#fff;
+    }
+    #byprice p{
+        color:#fff;
+    }
+    #byprice .ui-widget-header{
+        background: #fff;
+    }
+
+    #byprice .ui-slider .ui-slider-handle{
+        background: #a8a8a8;
+    }
+
+    #byprice .ui-widget-content{
+        background: rgb(78, 78, 78);
+    }
+    .breadcrumb-item a{
+        color:#ffc107;
+    }
+    .breadcrumb-item a:hover{
+        color:#fff;
+    }
+    a{
+        color:#fff;
+       
+    a:hover{
+        color:#ffc107;
+    }
+       
+    }
+    .product-thumb{
+
+        background-color: #343a40;
+        box-shadow: 0 0 10px #2b2b2b;
+    }
+
+    .caption .price{
+        color:#ffc107;
+    }
+    
+
 </style> {% endblock %} {% block content %}
 <!-- <div class="bg-dark" style="width:100%;height:100%">  -->
 <div class="shadow-sm  border-bottom py-3">
@@ -30,11 +75,61 @@
     </div>
     <div class="btn-group mt-3 mx-2 d-flex" role="group" aria-label="Basic outlined example">
         <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
-        <button type="button" id="scrapyard-category" class="btn font-weight-bold">Glass & Ceramics</button>
-        <button type="button" id="scrapyard-category" class="btn font-weight-bold">Fabrics</button>
-        <button type="button" id="scrapyard-category" class="btn font-weight-bold">Metals</button>
-        <button type="button" id="scrapyard-category" class="btn font-weight-bold">Plastic</button>
-        <button type="button" id="scrapyard-category" class="btn font-weight-bold">Paper & Cardboard</button>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Crockery</a>
+                <a class="dropdown-item" href="#">Plain Glass</a>
+                <a class="dropdown-item" href="#">Glass Items</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Fabrics</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Footwear and Wearables</a>
+                <a class="dropdown-item" href="#">Home Fabrics</a>
+                <a class="dropdown-item" href="#">Jute Fabrics</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Metals</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Home Utensils</a>
+                <a class="dropdown-item" href="#">Tools and Metals piece</a>
+                <a class="dropdown-item" href="#">Vehicles Parts</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Plastic</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Utensils</a>
+                <a class="dropdown-item" href="#">Toys</a>
+                <a class="dropdown-item" href="#">Plastic items</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
+        <div class="btn-group custom-dropdown" role="group">
+            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="false" aria-expanded="false">Paper & Cardboard</button>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">Newspaper & Used Paper</a>
+                <a class="dropdown-item" href="#">Decorative & Crafts</a>
+                <a class="dropdown-item" href="#">Cardboard</a>
+                <a class="dropdown-item" href="#">Others</a>
+            </div>
+        </div>
         <button type="button" id="scrapyard-category" class="btn font-weight-bold">Rubber & Leather</button>
         <button type="button" id="scrapyard-category" class="btn font-weight-bold">Electronics</button>
         <button type="button" id="scrapyard-category" class="btn font-weight-bold">Woods & Furniture</button>
@@ -47,17 +142,17 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
-        <li class="breadcrumb-item"><a href="#">All Categories</a></li>
+        <li class="breadcrumb-item"><a href="#">All Materials</a></li>
     </ol>
 </div>
 <div class="container-fluid">
-    <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Categories</h2>
+    <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Materials</h2>
 </div>
 
 
 <div class="container-fluid">
     <div class="row p-3">
-        <div class="col-3 card shadow-sm">
+        <div class="col-3 card shadow-sm bg-dark border-secondary">
             <h4 class="text-center my-2">Filters</h4>
 
             <div>
@@ -65,7 +160,7 @@
                 <div>
                     <ul>
                         <li>
-                            <a href="#">Home Decor</a>
+                            <a class="scrapyard" href="#">Home Decor</a>
                         </li>
                         <li>
                             <a href="#">Lifestyle</a>

@@ -93,6 +93,10 @@
     color: #fff;
 }
 
+a .scrapyard{
+    color:#fff
+}
+
 #scrapyard-category:hover {
     background-color: #fff;
     color: #343a40;
