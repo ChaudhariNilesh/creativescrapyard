@@ -6,6 +6,7 @@
     body {
         background-color: #343a40;
         color: #fff;
+        overflow-y: auto;
     }
     a{
         color:#fff;
@@ -50,6 +51,9 @@
     .caption .price{
         color:#ffc107;
     }
+    .caption .product-name{
+        color:#fff;
+    }
     
 
 </style> {% endblock %} {% block content %}
@@ -73,10 +77,10 @@
         </div>
         <a class="btn btn-outline-light ml-3" href="#">Sign up</a>
     </div>
-    <div class="btn-group mt-3 mx-2 d-flex" role="group" aria-label="Basic outlined example">
+    <div class="btn-group mt-3 mx-2 d-flex w-100" role="group" aria-label="Basic outlined example">
         <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -87,7 +91,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Fabrics</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -98,7 +102,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Metals</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -109,7 +113,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Plastic</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -120,7 +124,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Paper</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -131,7 +135,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Rubber & Leather</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -141,7 +145,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold  dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Electronics</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -150,7 +154,7 @@
             </div>
         </div>
         <div class="btn-group custom-dropdown" role="group">
-            <button type="button" id="scrapyad-category" class="btn font-weight-bold text-white dropdown-toggle" data-toggle="dropdown"
+            <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="false" aria-expanded="false">Woods & Furniture</button>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
