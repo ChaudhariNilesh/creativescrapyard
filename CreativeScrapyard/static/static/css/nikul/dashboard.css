@@ -1,0 +1,74 @@
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    transition: 1s;
+}
+
+.bx-shd {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.short-card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #b3b3b3;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.card-value{
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.card-icon {
+    margin: 6px 0px;
+    padding: 2px 0px;
+    background-color: var(--pri-color-lighter)
+}
+
+th.tb-head {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #b3b3b3;
+    font-weight: 500;
+}
+
+.ord-status {
+    padding: 3px 20px;
+    border-radius: 16px;
+    font-size: .8rem;
+}
+
+.ord-status-pend {
+    color: #2d62b1;
+    background-color: #c0d0e8;
+}
+
+.ord-status-run {
+    color: #c46632;
+    background-color: #edd1c2;
+}
+
+.ord-status-com {
+    color: var(--pri-color-darker);
+    background-color: var(--pri-color-light);
+}
+
+.ord-status-hold {
+    color: #80899b;
+    background-color: #d9dce1;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .page-title {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}

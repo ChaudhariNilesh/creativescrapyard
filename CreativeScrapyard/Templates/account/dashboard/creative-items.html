@@ -1,0 +1,21 @@
+{% extends 'account/base-dashboard.html' %}
+{% load static %}
+{% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}"/>
+{% endblock %}
+
+{% block base %}
+
+<div class="page-title">
+    Creative Items
+    <a href="{% url 'Authentication:add_creative_product' %}" class="float-right link-effect">
+    <span class="ord-status ord-status-com align-middle my-2 pl-3">
+        <img src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a" width="20" height="20">
+        Add Item
+    </span>
+    </a>
+</div>
+<hr/>
+
+
+{% endblock %}
