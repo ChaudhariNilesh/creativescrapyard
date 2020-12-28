@@ -1,0 +1,129 @@
+{% extends 'common/common.html' %}
+{% load static %}
+{% block title %} CS - Profile {% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/nikul/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/nikul/base-dashboard.css' %}"/>
+{% block baselink %} {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+<div id="parent" class="parent">
+
+    <header class="">
+        <div class="header-main">
+            <span class="float-left border-2 rounded">
+                <img id="sideNavIcon" src="https://s.svgbox.net/hero-solid.svg?ic=menu-alt-2&fill=fff" width="32"
+                     height="32">
+            </span>
+            <span class="float-right">
+                <img src="{% static 'img/testimonial/4.jpg' %}" class="rounded-circle main-img"/>
+                <span class="img-profile-title pl-3 pr-4 align-top">Nikul Prajapati</span>
+            </span>
+        </div>
+    </header>
+
+    <div id="left-panel" class="left-panel">
+        <div id="dashTitle" class="title p-2 p-sm-2 px-md-3 py-md-2 px-lg-4 px-xl-4 py-xl-4">
+            <span id="dashTitleSpan">Creative Scrapyard</span>
+        </div>
+        <div id="sideNav">
+            <ul id="sideNavMenu">
+                <li>
+                    <a id="sideDashboard" data-toggle="collapse" href="#sideCollapse1" aria-expanded="false">
+                        <img src="https://s.svgbox.net/materialui.svg?ic=dashboard&fill=fff" width="28" height="28">
+                        <span class="px-2 align-middle"><a href="{% url 'Authentication:dashboard' %}">Dashboard</a></span>
+                    </a>
+<!--                    <div id="sideCollapse1" data-parent="#sideNavMenu" class="collapse"></div>-->
+                </li>
+
+                <li>
+                    <a id="sideAddProduct" data-toggle="collapse" href="#sideCollapse2" aria-expanded="false">
+                        <img src="https://s.svgbox.net/materialui.svg?ic=add_box&fill=fff" width="28" height="28">
+                        <span class="px-2 align-middle">Products</span>
+                        <span class="float-right pr-2">
+                            <img src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=fff" width="22"
+                                 height="22">
+                        </span>
+                    </a>
+                    <div id="sideCollapse2" data-parent="#sideNavMenu" class="collapse">
+                        <a href="{% url 'Authentication:creative_items' %}" class="sub-link"><span>Creative Items</span></a>
+                        <a href="#" class="sub-link"><span>Scrap Items</span></a>
+                    </div>
+                </li>
+
+<!--                <li>-->
+<!--                    <a id="sideAddDocument" data-toggle="collapse" href="#sideCollapse3" aria-expanded="false">-->
+<!--                        <img src="https://s.svgbox.net/materialui.svg?ic=note_add&fill=fff" width="28" height="28">-->
+<!--                        <span class="px-2 align-middle">Add Document</span>-->
+<!--                    </a>-->
+<!--                    <div id="sideCollapse3" data-parent="#sideNavMenu" class="collapse"></div>-->
+<!--                </li>-->
+
+                <li>
+                    <a id="sideProfile" data-toggle="collapse" href="#sideCollapse4" aria-expanded="false">
+                        <img src="https://s.svgbox.net/materialui.svg?ic=person&fill=fff" width="28" height="28">
+                        <span class="px-2 align-middle">Profile</span>
+                        <span class="float-right pr-2">
+                            <img src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=fff" width="22"
+                                 height="22">
+                        </span>
+                    </a>
+                    <div id="sideCollapse4" data-parent="#sideNavMenu" class="collapse">
+                        <a href="{% url 'Authentication:dashboard_profile' %}" class="sub-link"><span>Account</span></a>
+                        <a href="{% url 'Authentication:add_document' %}" class="sub-link"><span>Add Documents</span></a>
+                    </div>
+                </li>
+
+                <li>
+                    <a id="sideOrder" data-toggle="collapse" href="#sideCollapse5" aria-expanded="false">
+                        <img src="https://s.svgbox.net/hero-solid.svg?ic=shopping-cart&fill=fff" width="28" height="28">
+                        <span class="px-2 align-middle">Orders</span>
+                        <span class="float-right pr-2">
+                            <img src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=fff" width="22"
+                                 height="22">
+                        </span>
+                    </a>
+                    <div id="sideCollapse5" data-parent="#sideNavMenu" class="collapse">
+                        <a href="{% url 'Authentication:order_creative' %}" class="sub-link"><span>Creative orders</span></a>
+                        <a href="{% url 'Authentication:order_history' %}" class="sub-link"><span>Order history</span></a>
+                    </div>
+                </li>
+
+                <li>
+                    <a id="sideSettings" data-toggle="collapse" href="#sideCollapse6" aria-expanded="false">
+                        <img src="https://s.svgbox.net/materialui.svg?ic=settings&fill=fff" width="28" height="28">
+                        <a href="{% url 'Authentication:settings' %}"><span class="px-2 align-middle">Settings</span></a>
+                    </a>
+                    <div id="sideCollapse6" data-parent="#sideNavMenu" class="collapse"></div>
+                </li>
+
+<!--                <li>-->
+<!--                    <a id="sideAddProduc" data-toggle="collapse" href="#sideCollapse4" aria-expanded="false" class="collapsed">-->
+<!--                        <img src="https://s.svgbox.net/materialui.svg?ic=add_box&fill=fff" width="28" height="28">-->
+<!--                        <span class="px-2 align-middle">Add Product</span>-->
+<!--                        <span class="float-right pr-2">-->
+<!--                            <img src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=fff" width="22"-->
+<!--                                 height="22">-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <div id="sideCollapse4" data-parent="#sideNavMenu" class="collapse">-->
+<!--                        <a href="#" class="sub-link"><span>Creative product</span></a>-->
+<!--                        <a href="#" class="sub-link"><span>Scrap product</span></a>-->
+<!--                    </div>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        <div class="main-container my-4 p-0">
+            {% block base %} {% endblock %}
+        </div>
+    </main>
+</div>
+
+
+{% endblock %}

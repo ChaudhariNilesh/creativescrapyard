@@ -1,4 +1,4 @@
-{% extends 'account/dashboard.html' %}
+{% extends 'account/base-dashboard.html' %}
 {% load static %}
 {% block baselink %}
 <link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}"/>
@@ -41,6 +41,27 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="weight">Weight</label>
+                    <select id="weight" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="height">Height</label>
+                    <select id="height" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div id="accordion" class="form-group">
             <div class="card">
                 <div class="card-header">
@@ -51,11 +72,20 @@
                 <div id="collapse1" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="customFile1" class="col-sm-2 col-form-label">Product Image</label>
+                            <label for="primaryImage" class="col-sm-2 col-form-label">Primary Image</label>
                             <div class="col-sm-5">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile1">
-                                    <label class="custom-file-label" for="customFile1">product1.png</label>
+                                    <input type="file" class="custom-file-input" id="primaryImage">
+                                    <label class="custom-file-label" for="primaryImage">product1.png</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="otherImage" class="col-sm-2 col-form-label">Other Images</label>
+                            <div class="col-sm-5">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="otherImage" multiple>
+                                    <label class="custom-file-label" for="otherImage">product1.png</label>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +144,7 @@
         <div class="form-group">
             <a href="#" class="btn-link pri-color link-effect">+Add</a>
         </div>
-        <button class="btn btn-block pri-bg-color px-4">Add Product</button>
+        <button type="submit" class="btn btn-block pri-bg-color px-4">Add Product</button>
     </form>
 </div>
 

@@ -10,24 +10,25 @@
     height: 100vh;
 }
 
+
 .title {
-    grid-area: 1 / 1 / 1 / 1;
-    background-color: var(--pri-color);
+    background-color: var(--pri-color-darker);
     color:  white;
     font-size: 1.3em;
     font-weight: bold;
+    border-bottom: 1px solid white;
 }
 
 header {
     grid-area: 1 / 2 / 2 / 3;
-    background-color: var(--pri-color);
+    background-color: var(--pri-color-dark);
     overflow: hidden;
     vertical-align: middle;
 }
 
 .left-panel {
-    grid-area: 2 / 1 / 3 / 2;
-    background-color: var(--pri-color-dark);
+    grid-area: 1 / 1 / 3 / 2;
+    background-color: var(--pri-color-darker);
     overflow: hidden;
 }
 
@@ -73,16 +74,70 @@ main::-webkit-scrollbar {
 }
 
 /* Dashboard Left Panel Css */
-ul {
-    display: block;
-    list-style-type: none;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
+div#sideNav {
+    padding: 1em .5em;
 }
 
+div#sideNav ul {
+    padding: 0px;
+    margin: 0;
+    list-style: none;
+    text-align: left;
+    text-indent: 20px;
+}
+
+div#sideNav ul li {
+    padding: 5px 0px;
+    opacity: 0.5;
+}
+
+div#sideNav ul li:hover {
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+div#sideNav ul li a {
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+div#sideNav ul li:hover a {
+    color: white;
+}
+
+div#sideNav ul li:focus a {
+    color: white;
+}
+
+.sub-link {
+    position: relative;
+    left: 15%;
+    display: block;
+    padding: 5px 0px;
+    opacity: 0.5;
+}
+
+.sub-link:hover {
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.sub-link span {
+    font-size: 1rem;
+}
+
+.op-1 {
+    opacity: 1;
+}
+
+.border-2 {
+    border: 2px solid white;
+}
+
+.myClass {
+    grid-template-columns: 0% 100% !important;
+}
 
 /* Responsive Media Query */
 @media only screen and (max-width: 600px) {

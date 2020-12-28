@@ -1,7 +1,7 @@
-{% extends 'account/dashboard.html' %}
+{% extends 'account/base-dashboard.html' %}
 {% load static %}
 {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/add-product2.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/nikul/add-document.css' %}"/>
 {% endblock %}
 
 {% block base %}
@@ -10,7 +10,62 @@
     Become an Artist
 </div>
 <hr/>
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="accountNo">Account Number</label>
+            <input type="text" class="form-control" id="accountNo" placeholder="Account number">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="accountHolder">Account Holder</label>
+            <input type="text" class="form-control" id="accountHolder" placeholder="Account Holder">
+        </div>
+    </div>
 
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="bankName">Bank Name</label>
+            <select id="bankName" class="form-control">
+                <option selected>Select</option>
+                <option>State Bank of India</option>
+                <option>Bank of Baroda</option>
+                <option>ICICI Bank</option>
+                <option>HDFC Bank</option>
+                <option>Bank of India</option>
+                <option>Axis Bank</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="ifscCode">IFSC code</label>
+            <input type="text" class="form-control" id="ifscCode" placeholder="IFSC Code">
+        </div>
+    </div>
 
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="panNo">Pan Number</label>
+            <input type="text" class="form-control" id="panNo" placeholder="Pan Number">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="panName">Pan Name</label>
+            <input type="text" class="form-control" id="panName" placeholder="Pan name">
+            <small id="panNameHelp" class="form-text text-muted">
+                Enter name according to your pan card.
+            </small>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="customFile1">Pan Image</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile1">
+                <label class="custom-file-label" for="customFile1">pan_img.png</label>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-block pri-bg-color px-4">Submit</button>
+</form>
 
 {% endblock %}
