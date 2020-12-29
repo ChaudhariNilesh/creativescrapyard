@@ -96,12 +96,12 @@ $(function() {
 
     };
 
-    var flatZoom = function() {
-        var $easyzoom = $('.easyzoom').easyZoom();
-    };
+    // var flatZoom = function() {
+    //     var $easyzoom = $('.easyzoom').easyZoom();
+    // };
 
     var ArtistProductGal = function() {
-        var owl = $('#owl-artist-products');
+        var owl = $('#owl-artist-products.owl-prod');
         owl.owlCarousel({
             loop: false,
             autoplay: true,
@@ -145,21 +145,21 @@ $(function() {
 
     };
 
-//    var sideNav = function() {
-//        $("#sideNavIcon").click(function() {
-//            $("#parent").css("grid-template-columns", "0% 100%");
-//        });
-//    }
+    //    var sideNav = function() {
+    //        $("#sideNavIcon").click(function() {
+    //            $("#parent").css("grid-template-columns", "0% 100%");
+    //        });
+    //    }
 
-    var sideNav = function () {
+    var sideNav = function() {
         $("#sideNavIcon").click(function() {
-            if($("#parent").hasClass('myClass')) {
+            if ($("#parent").hasClass('myClass')) {
                 $("#parent").removeClass('myClass');
             } else {
                 $("#parent").addClass('myClass');
             }
-//            $("#parent").css("grid-template-columns", "0% 100%");
-        },);
+            //            $("#parent").css("grid-template-columns", "0% 100%");
+        }, );
     }
 
     var priceSlider = function() {
