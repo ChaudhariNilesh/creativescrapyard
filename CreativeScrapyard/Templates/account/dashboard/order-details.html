@@ -1,0 +1,101 @@
+{% extends 'account/base-dashboard.html' %}
+{% load static %}
+{% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}"/>
+{% endblock %}
+
+{% block base %}
+
+<div class="page-title">
+    Order Details
+</div>
+<hr/>
+
+<div class="bx-shd my-3 py-2 px-3">
+    <div class="row py-3">
+        <div class="col">
+            <p class="ord-details-id">Order Details: #2135</p>
+            <p class="ord-details-time">March 28, 2020, 12:43 PM</p>
+            <p class="ord-details-status mt-2">
+                <span>Status: </span>
+                <span class="ord-status ord-status-run ml-3">Running</span>
+            </p>
+        </div>
+        <div class="col">
+            <p class="ord-details-id">Payment Method</p>
+            <p class="mt-2"><span class="ord-status ord-status-com">Paytm Pay</span></p>
+            <p class="mt-2"><span class="ord-status ord-status-run">Cash On Delivery</span></p>
+        </div>
+    </div>
+</div>
+
+<div class="bx-shd my-3 py-2 px-3">
+    <div class="row py-2">
+        <div class="col">
+            <p class="card-title">Billing Address</p>
+            <p class="ord-owner border-top py-1">Nikul Prajapati</p>
+            <div class="bill-address">
+                <p>9, Shanti banglows,</p>
+                <p>TP-44, Chandkheda</p>
+                <p>Ahmedabad, Gujarat - 382424</p>
+            </div>
+        </div>
+        <div class="col">
+            <p class="card-title">Contact Details</p>
+            <div class="contact-details border-top py-2">
+                <p>Email: <a class="link-effect" href="mailto:example@example.com">example@example.com</a></p>
+                <p>Phone no.: <a class="link-effect" href="tel:9874563210">9874563210</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bx-shd my-3 py-2 px-3">
+    <div class="py-3 table-responsive">
+        <table class="table border-bottom">
+
+            <tr class="tb-header">
+                <th scope="col" class="tb-head text-left">Product ID</th>
+                <th scope="col" class="tb-head text-center">Product name</th>
+                <th scope="col" class="tb-head text-right">Quantity</th>
+                <th scope="col" class="tb-head text-right">Unit Price</th>
+                <th scope="col" class="tb-head text-right">Total</th>
+            </tr>
+
+            <tbody>
+            <tr>
+                <th scope="row" class="text-left">101</th>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-left">101</th>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-left">101</th>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+
+            <tr>
+                <th scope="row" class="text-left"></th>
+                <td class="text-center"></td>
+                <td class="text-right"></td>
+                <td class="text-right">Total</td>
+                <td class="text-right">750</td>
+            </tr>
+            </tbody>
+            <!--            maximum order should be 10.-->
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends 'account/base-dashboard.html' %}
+{% load static %}
+{% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/dashboard-profile.css' %}"/>
+{% endblock %}
+
+{% block base %}
+
+<div class="page-title">
+    User Profile
+</div>
+<hr/>
+
+<!--<div class="row mx-0">-->
+<!--    <div class="bx-shd py-2 px-3 border col-8 mr-2">-->
+<!--        <span class="card-title">Public info</span>-->
+<!--        <div class=" row py-3">-->
+<!--            <div class="col-7">-->
+
+<!--                <form>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="profileEmail">Email</label>-->
+<!--                        <input type="text" class="form-control form-control-sm" id="profileEmail"-->
+<!--                               value="example@example.com" readonly>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="profileBio">Bio</label>-->
+<!--                        <textarea class="form-control form-control-sm" id="profileBio" rows="3"></textarea>-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="btn btn-sm pri-bg-color">Save changes</button>-->
+<!--                </form>-->
+
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="profile-img-container">-->
+<!--                    <img src="{% static 'img/testimonial/4.jpg' %}"-->
+<!--                         class="img-profile rounded-circle card-profile-image shadow">-->
+<!--                    <div class="custom-file text-center py-4">-->
+<!--                        <input type="file" class="custom-file-input" id="customFile1" hidden>-->
+<!--                        <label class="btn btn-sm pri-bg-color">Upload profile</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="bx-shd py-2 px-3 border col ml-2">-->
+<!--        <p class="card-title">Tags</p>-->
+<!--        <span class="tages"></span>-->
+<!--        <span class="tages"></span>-->
+<!--        <span class="tages"></span>-->
+<!--        <span class="tages"></span>-->
+<!--        <span class="tages"></span>-->
+
+<!--    </div>-->
+
+<!--</div>-->
+
+
+<div class="bx-shd py-2 px-3 border">
+    <span class="card-title">Public info</span>
+    <div class=" row py-2">
+        <div class="col-7">
+            <div class="pb-2 row">
+                <div class="col-1">
+                    <span>Tags: </span>
+                </div>
+                <div class="col">
+                    <p class="pb-2">
+                        <span class="tags tags-common mx-1 my-2">Artist</span>
+                        <span class="tags tags-special mx-1">Seller of the month</span>
+                        <span class="tags tags-rare mx-1">Seller of the year</span>
+                    </p>
+                    <p>
+                        <span class="tags tags-event mx-1">Navratri 2020</span>
+                        <span class="tags tags-event mx-1">Navratri 2020</span>
+                        <span class="tags tags-event mx-1">Navratri 2020</span>
+                    </p>
+                </div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="profileEmail">Email</label>
+                    <input type="text" class="form-control form-control-sm" id="profileEmail"
+                           value="example@example.com" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="profileBio">Bio</label>
+                    <textarea class="form-control form-control-sm" id="profileBio" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-sm pri-bg-color">Save changes</button>
+            </form>
+
+        </div>
+        <div class="col">
+            <div class="profile-img-container">
+                <img src="{% static 'img/testimonial/4.jpg' %}"
+                     class="img-profile rounded-circle card-profile-image shadow">
+                <div class="custom-file text-center py-4">
+                    <input type="file" class="custom-file-input" id="customFile1" hidden>
+                    <label class="btn btn-sm pri-bg-color">Upload profile</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="bx-shd my-4 py-2 px-3 border">
+    <span class="card-title">Personal info</span>
+    <div class="py-3">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="profileFirstName">First name</label>
+                    <input type="text" class="form-control" id="profileFirstName" placeholder="First name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="profileLastName">Last name</label>
+                    <input type="text" class="form-control" id="profileLastName" placeholder="Last name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="profileAddress">Address</label>
+                <input type="text" class="form-control" id="profileAddress" placeholder="1234 Main St">
+            </div>
+            <div class="form-group">
+                <label for="profileAddress2">Address 2</label>
+                <input type="text" class="form-control" id="profileAddress2" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="profileCity">City</label>
+                    <input type="text" class="form-control" id="profileCity">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="profileState">State</label>
+                    <select id="profileState" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="profileZip">Zip</label>
+                    <input type="text" class="form-control" id="profileZip">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+
+<!--only visible to artist or one who add their bank details for become an artist-->
+<div class="bx-shd my-4 py-2 px-3 border">
+    <span class="card-title">Bank Details</span>
+    <div class="py-3">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="accountNo">Account Number</label>
+                    <input type="text" class="form-control" id="accountNo" value="9988-7766-5544-2310">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="accountHolder">Account Holder</label>
+                    <input type="text" class="form-control" id="accountHolder" value="Mr. John Doe">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="bankName">Bank Name</label>
+                    <select id="bankName" class="form-control">
+                        <option selected>State Bank of India</option>
+                        <option>Bank of Baroda</option>
+                        <option>ICICI Bank</option>
+                        <option>HDFC Bank</option>
+                        <option>Bank of India</option>
+                        <option>Axis Bank</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="ifscCode">IFSC code</label>
+                    <input type="text" class="form-control" id="ifscCode" value="SBI778899">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

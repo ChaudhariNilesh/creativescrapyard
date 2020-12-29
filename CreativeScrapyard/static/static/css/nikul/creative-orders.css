@@ -10,26 +10,9 @@
     border-radius: 4px;
 }
 
-.short-card-title {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #b3b3b3;
-}
-
 .card-title {
     font-size: 1.1rem;
     font-weight: 500;
-}
-
-.card-value{
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-
-.card-icon {
-    margin: 6px 0px;
-    padding: 2px 0px;
-    background-color: var(--pri-color-lighter)
 }
 
 th.tb-head {

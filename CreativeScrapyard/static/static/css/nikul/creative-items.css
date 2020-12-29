@@ -1,0 +1,29 @@
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    transition: 1s;
+}
+
+.bx-shd {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.ord-status {
+    padding: 3px 20px;
+    border-radius: 16px;
+    font-size: .8rem;
+}
+
+.ord-status-com {
+    color: var(--pri-color-darker);
+    background-color: var(--pri-color-light);
+}
+
+@media only screen and (max-width: 600px) {
+  .page-title {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
