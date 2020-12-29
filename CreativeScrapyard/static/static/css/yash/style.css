@@ -96,6 +96,23 @@
 a .scrapyard{
     color:#fff
 }
+.text-block {
+    position: relative;
+    top: -100px;
+    background-color: rgba(85, 78, 78, 0.514);
+    color: white;
+    text-align: center;
+  }
+
+.homecategory{
+    background-image: url('../../static/img/products/11.jpg');
+}
+
+.carouselimage{
+    width:100%;
+    height: 20px !important;
+}
+
 
 #scrapyard-category:hover {
     background-color: #fff;
