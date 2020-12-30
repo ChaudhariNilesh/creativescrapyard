@@ -23,13 +23,35 @@
     
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" /> -->
 
-
-
 </head>
 
-<body>
-    {% block content %} {% endblock %}
+<body >
 
+    <header>
+        <div>
+            {% if is_scrap %}
+                {% include 'common/scrap-header.html' %}
+            {% elif is_creative %}
+                {% include 'common/creative-header.html' %}
+            {% else %}
+
+            {% endif %}
+        </div>
+    </header>
+
+    {% block content %} {% endblock %}
+    
+    <footer>
+        <div>
+            {% if is_scrap %}
+                {% include 'common/scrap-footer.html' %}
+            {% elif is_creative %}
+                {% include 'common/creative-footer.html' %}
+            {% else %}
+
+            {% endif %}
+        </div>
+    </footer>
 
     <script src="{% static 'js/jquery.min.js' %} "></script>
     <script src="{% static 'js/popper.min.js' %} "></script>

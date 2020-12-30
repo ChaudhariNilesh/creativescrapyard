@@ -6,7 +6,8 @@ from .views import *
 app_name = 'Items'
 
 urlpatterns = [
-    path('single-item/',singleItem,name="Items"), 
+    path('creative-single-item/',creativeSingleItem,name="creativeSingleItem"), 
+    path('scrap-single-item/',scrapSingleItem,name="scrapSingleItem"), 
     path('cart/',viewCartItem,name="cart"), 
     path('order/',include('Order.urls'))
 ]

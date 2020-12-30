@@ -4,15 +4,15 @@ from django.shortcuts import render,redirect
 # Create your views here.
 def home(request):
     template="Home/index.html"
-    return render(request,template)
+    return render(request,template,{'is_home':True})
 
 def creativestore(request):
     template="Home/creativestore.html"
-    return render(request,template)    
+    return render(request,template,{'is_creative':True})    
 
 def scrapyard(request):
     template="Home/scrapyard.html"
-    return render(request,template)    
+    return render(request,template,{'is_scrap':True})    
 
 def login(request):
     template="Home/login.html"

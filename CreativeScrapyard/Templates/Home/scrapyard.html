@@ -1,7 +1,13 @@
-{% extends 'common/scrapcommon.html' %}
-{%block title %}Scrapyard{%endblock%}
-{%block link%}{%endblock%}
+{% extends 'common/common.html' %}
 {% load static %}
+{%block title %}Scrapyard{%endblock%}
+
+{%block link%}
+<link rel="stylesheet" href="{%  static 'css/style.css' %}">
+<link rel="stylesheet" href="{%  static 'css/yash/style.css' %}">
+<link rel="stylesheet" href="{%  static 'css/yash/scrapstyle.css' %}">
+{% endblock %}
+
 <!-- <div class="bg-dark" style="width:100%;height:100%">  -->
 {% block content %}
 
@@ -112,7 +118,7 @@
             <div class="explore">
                 <div class="row d-flex">
                     <div class="col-lg-3 col-sm-6 col-12 ">
-                        <a href="#">
+                        <a href="{% url 'Home:Items:scrapSingleItem' %}">
                             <div class="product-thumb">
                                 <div class="image">
                                     <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">

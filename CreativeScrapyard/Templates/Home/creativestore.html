@@ -1,6 +1,12 @@
-{% extends 'common/creativecommon.html' %} {% load static %} 
+{% extends 'common/common.html' %} {% load static %} 
 {%block title %}Creative Store{%endblock%} 
-{% block link %}{% endblock %} 
+
+{% block link %}
+<link rel="stylesheet" href="{%  static 'css/style.css' %}">
+<link rel="stylesheet" href="{%  static 'css/yash/style.css' %}">
+{% endblock %} 
+
+
 {% block content %}
 <div class="infomain mx-3">
     <ol class="breadcrumb">
@@ -106,12 +112,10 @@
         </div>
         <div class="col-9">
 
-
-
             <div class="explore">
                 <div class="row d-flex">
                     <div class="col-lg-3 col-sm-6 col-12 ">
-                        <a href="#">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}">
                             <div class="product-thumb">
                                 <div class="image">
                                     <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}"

@@ -1,9 +1,14 @@
 {% extends 'common/common.html' %}
 {% load static %}
 {% block title %}  Single Item {% endblock %}
-{% block link %} <link rel="stylesheet" href="{%  static 'css/style.css' %}"> {% endblock %}
+{% block link %} 
+<link rel="stylesheet" href="{%  static 'css/style.css' %}">
+<link rel="stylesheet" href="{%  static 'css/yash/style.css' %}">
+{% if is_scrap %} <link rel="stylesheet" href="{%  static 'css/yash/scrapstyle.css' %}"> {% endif %}
+{% endblock %}
 
 {% block content %}
+
 
     <div class="main-content">
 
@@ -129,6 +134,7 @@
                                             <option value="Orange">Orange</option>
                                         </select>
                                     </div>
+                                    <!-- if creative then below buttons-->
                                     <div class="form-group">
                                         <button class="btn" id="addcart"> Add to cart</button>
                                         <button class="btn" id="buyItem">Buy Now</span></button>
@@ -454,4 +460,6 @@
             </div>
         </section>
     </div>
+
+
 {% endblock %}
