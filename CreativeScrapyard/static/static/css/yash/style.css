@@ -91,40 +91,72 @@
 #scrapyard-category {
     background-color: #343a40;
     color: #fff;
+    border-radius: 4px;
 }
 
 a .scrapyard{
     color:#fff
+}
+.scrapyard-link:hover{
+    color:#d4a002
 }
 .footer-logo {
     margin-bottom: 20px;
 }
 .c-footer-top {
     background-color: #1BAA80;
-    padding: 75px 0;
+    padding: 25px 0;
 }
 .s-footer-top {
     background-color:#d4a002;
-    padding: 75px 0;
+    padding: 25px 0;
 }
-.footer-logo > a {
-    color: #343a40;
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-.footer-logo > a:hover {
+.c-footer-logo > a {
     color: #fff;
     font-size: 30px;
     font-weight: 700;
+    opacity: 0.75;
     letter-spacing: 1px;
 }
-.footer-links{
-    color:#343a40;
+.c-footer-logo > a:hover {
+    color: #fff;
+    opacity: 1;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
-.footer-links:hover{
+.c-footer-links{
     color:#fff;
+    opacity: 0.75;
 }
+.c-footer-links:hover{
+    color:#fff;
+    opacity: 1;
+}
+
+.s-footer-logo > a {
+    color: #343a40;
+    font-size: 30px;
+    font-weight: 700;
+    opacity: 0.75;
+    letter-spacing: 1px;
+}
+.s-footer-logo > a:hover {
+    color: #343a40;
+    opacity: 1;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.s-footer-links{
+    color:#343a40;
+    opacity: 0.75;
+}
+.s-footer-links:hover{
+    color:#343a40;
+    opacity: 1;
+}
+
 .block-title > a {
     color: #fff;
 }
