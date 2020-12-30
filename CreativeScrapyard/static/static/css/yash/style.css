@@ -96,6 +96,42 @@
 a .scrapyard{
     color:#fff
 }
+.footer-logo {
+    margin-bottom: 20px;
+}
+.c-footer-top {
+    background-color: #1BAA80;
+    padding: 75px 0;
+}
+.s-footer-top {
+    background-color:#d4a002;
+    padding: 75px 0;
+}
+.footer-logo > a {
+    color: #343a40;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.footer-logo > a:hover {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.footer-links{
+    color:#343a40;
+}
+.footer-links:hover{
+    color:#fff;
+}
+.block-title > a {
+    color: #fff;
+}
+
+.color-white{
+    color:#fff;
+}
 .text-block {
     position: relative;
     top: -100px;
