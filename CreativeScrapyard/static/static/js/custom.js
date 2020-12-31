@@ -179,6 +179,17 @@ $(function() {
             " - " + sym + $("#slider-range").slider("values", 1));
     };
 
+
+    var func_expand = function() {
+        let loc = window.location.pathname;
+        if (loc == "/accounts/dashboard/") {
+            $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
+        } else if ((loc == "/accounts/dashboard/product/creative/add") || (loc == "/accounts/dashboard/product/scrapyard/add")) {
+            $('a[href="' + "/accounts/dashboard/product/creative/" + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        } else {
+            $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        }
+    };
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -190,6 +201,8 @@ $(function() {
         priceSlider();
         prodLens();
         sideNav();
+        func_expand();
+        // expandDashboard();
     });
 });
 
