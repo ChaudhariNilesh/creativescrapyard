@@ -3,48 +3,55 @@ body {
     color: #fff;
     overflow-y: hidden;
 }
-a{
-    color:#fff;
+
+a {
+    color: #fff;
 }
 
-.color-filter ul li{
-    color:#fff;
+.color-filter ul li {
+    color: #fff;
 }
-#byprice p{
-    color:#fff;
+
+#byprice p {
+    color: #fff;
 }
-#byprice .ui-widget-header{
+
+#byprice .ui-widget-header {
     background: #fff;
 }
 
-#byprice .ui-slider .ui-slider-handle{
+#byprice .ui-slider .ui-slider-handle {
     background: #a8a8a8;
 }
 
-#byprice .ui-widget-content{
+#byprice .ui-widget-content {
     background: rgb(78, 78, 78);
 }
-.breadcrumb-item a{
-    color:#ffc107;
+
+.breadcrumb-item a {
+    color: #ffc107;
 }
-.breadcrumb-item a:hover{
-    color:#fff;
+
+.breadcrumb-item a:hover {
+    color: #fff;
 }
-a{
-    color:#fff;
+
+a {
+    color: #fff;
 }
-   
-a:hover{
-    color:#ffc107;
+
+a:hover {
+    color: #ffc107;
 }
-   
-span{
-    color:#ffc107;
+
+span {
+    color: #ffc107;
 }
 
 .brand span a {
     color: rgb(190, 190, 190);
 }
+
 .brand span a:hover {
     color: #ffc107;
 }
@@ -71,12 +78,13 @@ span{
     color: #ffffff;
     width: 90px;
 }
-.brand{
-    color:#fff;
+
+.brand {
+    color: #fff;
 }
 
 #buyItem {
-    background:  #ffc107;
+    background: #ffc107;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -91,7 +99,7 @@ span{
 }
 
 #btn-chkPincode {
-    background:#ffc107 ;
+    background: #ffc107;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -102,9 +110,12 @@ span{
     /* border: 1px solid #eb2424; */
 }
 
-#buyItem:hover,#addcart:hover,#btn-chkPincode:hover{
-    background:  #daa506;
+#buyItem:hover,
+#addcart:hover,
+#btn-chkPincode:hover {
+    background: #daa506;
 }
+
 #addcart {
     background: #ffc107;
     font-size: 16px;
@@ -127,29 +138,29 @@ span{
     color: rgb(255, 255, 255);
 }
 
-.addinfo.table td, .addinfo.table th {
-   color: #fff;
+.addinfo.table td,
+.addinfo.table th {
+    color: #fff;
 }
 
-.owl-carousel, .owl-carousel .owl-item {
+.owl-carousel,
+.owl-carousel .owl-item {
     background-color: #343a40;
 }
 
-.product-thumb{
-
+.product-thumb {
     background-color: #343a40;
     box-shadow: 0 0 10px #2b2b2b;
 }
 
-
-
-.explore{
+.explore {
     background: 343a40;
 }
-.caption .price{
-    color:#ffc107;
-}
-.caption .product-name{
-    color:#fff;
+
+.caption .price {
+    color: #ffc107;
 }
 
+.caption .product-name {
+    color: #fff;
+}
