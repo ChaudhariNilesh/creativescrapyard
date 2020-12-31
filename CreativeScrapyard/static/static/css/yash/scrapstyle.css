@@ -31,18 +31,122 @@ a{
 }
 a{
     color:#fff;
+}
    
 a:hover{
     color:#ffc107;
 }
    
+span{
+    color:#ffc107;
 }
+
+.brand span a {
+    color: rgb(190, 190, 190);
+}
+.brand span a:hover {
+    color: #ffc107;
+}
+
+.short-des p {
+    color: #f7f7f7;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 300;
+    padding: 12px 0px;
+}
+
+#form_buy select {
+    width: 196px;
+    background-color: #fff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* appearance: none; */
+}
+
+#form_buy label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    width: 90px;
+}
+.brand{
+    color:#fff;
+}
+
+#buyItem {
+    background:  #ffc107;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0px 10px 0px 10px;
+    border-radius: 0px;
+    line-height: 45px;
+    margin: 20px 0px;
+    width: 140px;
+    border-radius: 5px;
+}
+
+#btn-chkPincode {
+    background:#ffc107 ;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 20px;
+    border-radius: 5px;
+    /* border: 1px solid #eb2424; */
+}
+
+#buyItem:hover,#addcart:hover,#btn-chkPincode:hover{
+    background:  #daa506;
+}
+#addcart {
+    background: #ffc107;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0px 10px 0px 10px;
+    border-radius: 0px;
+    line-height: 45px;
+    margin: 20px 0px;
+    width: 140px;
+    border-radius: 5px;
+}
+
+.dis-tab .resp-tabs-list li {
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 16px;
+    padding: 12px 0px 18px;
+    color: rgb(255, 255, 255);
+}
+
+.addinfo.table td, .addinfo.table th {
+   color: #fff;
+}
+
+.owl-carousel, .owl-carousel .owl-item {
+    background-color: #343a40;
+}
+
 .product-thumb{
 
     background-color: #343a40;
     box-shadow: 0 0 10px #2b2b2b;
 }
 
+.fa{
+    color: #fff;
+}
+
+.explore{
+    background: 343a40;
+}
 .caption .price{
     color:#ffc107;
 }
