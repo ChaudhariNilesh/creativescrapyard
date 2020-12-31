@@ -6,6 +6,7 @@ body {
 a{
     color:#fff;
 }
+
 .color-filter ul li{
     color:#fff;
 }
@@ -140,9 +141,7 @@ span{
     box-shadow: 0 0 10px #2b2b2b;
 }
 
-.fa{
-    color: #fff;
-}
+
 
 .explore{
     background: 343a40;

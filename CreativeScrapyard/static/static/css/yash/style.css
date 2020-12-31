@@ -103,6 +103,12 @@ a .scrapyard{
 .footer-logo {
     margin-bottom: 20px;
 }
+
+.userdrop{
+    position: relative;
+    top: 40px;
+    left:-50px;
+}
 .c-footer-top {
     background-color: #1BAA80;
     padding: 25px 0;

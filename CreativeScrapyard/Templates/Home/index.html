@@ -134,14 +134,16 @@
 <div class="container card">
   <div class="row">
     <div class="col-3 p-3 pt-5">
-      <div class="text-center px-3">
-        <h4>
-          Creative Store
-        </h4>
-        <p>
-          Fresh Artist Creations and Customized Materials Available At Reasonable Prices.
-        </p>
-      </div>
+      <a href="{% url 'Home:creativestore'%}" style="color: #000;">
+        <div class="text-center px-3 py-5">
+          <h4>
+            Creative Store
+          </h4>
+          <p>
+            Fresh Artist Creations and Customized Materials Available At Reasonable Prices.
+          </p>
+        </div>
+      </a>
     </div>
     <div class="col-9 bg-light">
       <div id="owl-artist-products" class="owl-carousel owl-theme bg-light owl-prod">
@@ -219,7 +221,7 @@
   <div class="row">
     <div class="col-9 bg-dark">
       <div id="owl-artist-products" class="owl-carousel owl-theme bg-dark owl-prod">
-        <div class="product-thumb bg-dark"  style="box-shadow: 0 0 2px #ccc;">
+        <div class="product-thumb bg-dark" style="box-shadow: 0 0 2px #ccc;">
           <div class="item"><img class="prod-thumb-img" src="{% static 'img/products/3.jpg' %}" alt="Owl Image">
             <div class="caption ">
               <h4 class="product-name ">
@@ -232,7 +234,7 @@
           </div>
         </div>
 
-<div class="product-thumb bg-dark"  style="box-shadow: 0 0 2px #ccc;">
+        <div class="product-thumb bg-dark" style="box-shadow: 0 0 2px #ccc;">
           <div class="item"><img class="prod-thumb-img" src="{% static 'img/products/3.jpg' %}" alt="Owl Image">
             <div class="caption ">
               <h4 class="product-name ">
@@ -245,7 +247,7 @@
           </div>
         </div>
 
-<div class="product-thumb bg-dark"  style="box-shadow: 0 0 2px #ccc;">
+        <div class="product-thumb bg-dark" style="box-shadow: 0 0 2px #ccc;">
           <div class="item"><img class="prod-thumb-img" src="{% static 'img/products/3.jpg' %}" alt="Owl Image">
             <div class="caption ">
               <h4 class="product-name ">
@@ -258,7 +260,7 @@
           </div>
         </div>
 
-       <div class="product-thumb bg-dark"  style="box-shadow: 0 0 2px #ccc;">
+        <div class="product-thumb bg-dark" style="box-shadow: 0 0 2px #ccc;">
           <div class="item"><img class="prod-thumb-img" src="{% static 'img/products/3.jpg' %}" alt="Owl Image">
             <div class="caption ">
               <h4 class="product-name ">
@@ -271,7 +273,7 @@
           </div>
         </div>
 
-        <div class="product-thumb bg-dark"  style="box-shadow: 0 0 2px #ccc;">
+        <div class="product-thumb bg-dark" style="box-shadow: 0 0 2px #ccc;">
           <div class="item"><img class="prod-thumb-img" src="{% static 'img/products/3.jpg' %}" alt="Owl Image">
             <div class="caption ">
               <h4 class="product-name ">
@@ -286,48 +288,50 @@
       </div>
     </div>
     <div class="col-3 p-3 pt-5 bg-dark text-white">
-      <div class="text-center px-3">
-        <h4>
-          Scrapyard
-        </h4>
-        <p>
-          Find Your Diamond From The Mine Of Scrapyard!
-        </p>
-      </div>
+      <a href="{% url 'Home:scrapyard' %}" style="color: #fff;">
+        <div class="text-center px-3 py-5">
+          <h4>
+            Scrapyard
+          </h4>
+          <p>
+            Find Your Diamond From The Mine Of Scrapyard!
+          </p>
+        </div>
+      </a>
     </div>
   </div>
 </div>
 
 <div class="c-footer-top">
-	<div class="container">
-		<div class="row  text-center">
-			<div class="footer-logo col-xs-12">
-				<a href="#">Creative Scrapyard</a>
-			</div>
-		</div>
-        <div class="footer-box">
-<div class="row">
-<div class="col">
-<ul style="list-style-type:none;">
-<li><a class="footer-links" href="#">Creative Store</a></li>
-<li><a class="footer-links" href="#">Scrapyard</a></li>
-<li><a class="footer-links" href="#">Your Cart</a></li>
-<li><a class="footer-links" href="#">Your Orders</a></li>
-<li><a class="footer-links" href="#">Your Payments</a></li>
-</div>
-<div class="col">
-<ul style="list-style-type:none;">    
-<li><a class="footer-links" href="#">Artists Of The Month</a></li>
-<li><a class="footer-links" href="#">Offers</a></li>
-<li><a class="footer-links" href="#">About Us</a></li>
-<li><a class="footer-links" href="#">Queries And Complaints</a></li>
-<li><a class="footer-links" href="#">Home</a></li>
-</ul>
-</div>
+  <div class="container">
+    <div class="row  text-center">
+      <div class="footer-logo col-xs-12">
+        <a href="#">Creative Scrapyard</a>
+      </div>
+    </div>
+    <div class="footer-box">
+      <div class="row">
+        <div class="col">
+          <ul style="list-style-type:none;">
+            <li><a class="footer-links" href="#">Creative Store</a></li>
+            <li><a class="footer-links" href="#">Scrapyard</a></li>
+            <li><a class="footer-links" href="#">Your Cart</a></li>
+            <li><a class="footer-links" href="#">Your Orders</a></li>
+            <li><a class="footer-links" href="#">Your Payments</a></li>
+        </div>
+        <div class="col">
+          <ul style="list-style-type:none;">
+            <li><a class="footer-links" href="#">Artists Of The Month</a></li>
+            <li><a class="footer-links" href="#">Offers</a></li>
+            <li><a class="footer-links" href="#">About Us</a></li>
+            <li><a class="footer-links" href="#">Queries And Complaints</a></li>
+            <li><a class="footer-links" href="#">Home</a></li>
+          </ul>
+        </div>
 
 
 
-<!-- 
+        <!-- 
 TWO MAIN TABS
   <div class="w-100 my-2">
     <div class="row w-100 mx-0">
@@ -386,11 +390,11 @@ TWO MAIN TABS
 
 
 
-<!-- <div class="card m-5"> -->
-<!-- <div class="card-body">
+        <!-- <div class="card m-5"> -->
+        <!-- <div class="card-body">
       <h5 class="card-title">Creative Store</h5> -->
 
-<!-- <div class="container">
+        <!-- <div class="container">
     <div class="card-deck mb-3 text-left">
       <div class="card mb-4 shadow-sm border-danger">
         <div class="card-header bg-danger">
@@ -511,20 +515,22 @@ TWO MAIN TABS
       </div>
     </div>
   </div> -->
-<!-- <a href="#" class="btn btn-primary">Explore Creative Store</a> -->
-<!-- </div>
+        <!-- <a href="#" class="btn btn-primary">Explore Creative Store</a> -->
+        <!-- </div>
   </div> -->
-<!-- Optional JavaScript; choose one of the two! -->
+        <!-- Optional JavaScript; choose one of the two! -->
 
-<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+          crossorigin="anonymous"></script>
 
-<!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+        <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
-{% endblock %}
+        {% endblock %}

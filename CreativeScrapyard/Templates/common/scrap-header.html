@@ -5,15 +5,31 @@
             <span style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E</b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-light" style="font-size: 18px ;"><b>
                             SCRAPYARD</b></a></h4>
 
+        
         <div class="align-items-center  mr-sm-1">
             <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control border-dark" type="text" placeholder="Search" aria-label="Search">
-                <button type="button" class="btn btn-outline-light">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
                             <i class="fa fa-search"></i>
                         </button>
+                    </div>
+                </div>
             </form>
         </div>
-        <a class="btn btn-outline-light ml-3" href="#">Sign up</a>
+        <!-- If not logined in -->
+        <div>
+        <!-- <a class="btn btn-outline-dark" href="#">Log In</a> -->
+
+        <!-- If logged in-->
+        <a href="#">
+            <i class="fa fa-user fa-2x m-1"></i>
+        </a>
+        <a href="Home:Authentication:dashboard">
+            <i class="fa fa-shopping-cart fa-2x m-1"></i>
+        </a>
+        </div>
     </div>
 
     <center>
