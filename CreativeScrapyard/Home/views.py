@@ -14,6 +14,10 @@ def scrapyard(request):
     template="Home/scrapyard.html"
     return render(request,template,{'is_scrap':True})    
 
+def achievers(request):
+    template="achievers.html"
+    return render(request,template,{'is_creative':True})    
+
 def login(request):
     template="Home/login.html"
     return render(request,template)

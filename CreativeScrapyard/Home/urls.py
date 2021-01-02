@@ -8,6 +8,7 @@ urlpatterns = [
     path('',home,name="home"),
     path('creativestore/',creativestore,name="creativestore"),
     path('scrapyard/',scrapyard,name="scrapyard"),
+    path('achievers/',achievers,name="achievers"),
     path('login/',login,name="login"),
     path('signup/',signup,name="signup"),
     path('shop/',include('Items.urls')),

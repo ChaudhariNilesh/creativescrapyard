@@ -1,0 +1,54 @@
+{% extends 'common/common.html' %} {% load static %}
+{%block title %}Achievers{%endblock%}
+
+{% block link %}
+<link rel="stylesheet" href="{%  static 'css/style.css' %}">
+<link rel="stylesheet" href="{%  static 'css/yash/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="infomain mx-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Achievers</a></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">Achievers</h2>
+</div>
+
+<div class="container border">
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Artist Of The Month </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+                <div class="row">
+                    <img src="{% static 'img/testimonial/4.jpg' %}" height="100" width="100" class="rounded-circle mx-auto d-block" >
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">Yash Kukreja :p</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">For Selling 489+ Products Last Month</p>
+                </div>
+                <div class="row">
+                    <div class="btn btn-success mx-auto d-block mt-3" style="background-color:#1BAA80 ;">Visit Profile</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
