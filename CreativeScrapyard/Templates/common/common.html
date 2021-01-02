@@ -20,6 +20,9 @@
     
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900' type='text/css'>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+      <link rel="stylesheet" href="{% static 'css/bootstrap.offcanvas.min.css' %}" />
+
     
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" /> -->
 
@@ -41,7 +44,7 @@
 
     {% block content %} {% endblock %}
     
-    <footer>
+    <footer class="">
         <div>
             {% if is_scrap %}
                 {% include 'common/scrap-footer.html' %}
@@ -62,6 +65,9 @@
     <script src="{% static 'js/custom.js' %} "></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script> -->
+
+      <script src="{% static 'js/bootstrap.offcanvas.js' %}"></script>
+
 </body>
 
 </html>

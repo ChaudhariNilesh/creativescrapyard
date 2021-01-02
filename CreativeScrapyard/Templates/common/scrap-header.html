@@ -1,140 +1,173 @@
-<div class="shadow-sm  border-bottom py-3">
+<div class="shadow-sm  border-bottom py-3 ">
     <div class="row mx-2">
-        <h4 class="my-0 mr-md-auto font-weight-bold">
-            <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-light" style="font-size: 18px;"></span>
-            <span style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span><span style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E</b></span></a><span> <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-light" style="font-size: 18px ;"><b>
-                            SCRAPYARD</b></a></h4>
+        <div class="d-flex col-md-12 ">
 
-        
-        <div class="align-items-center  mr-sm-1">
-            <form class="form-inline mt-2 mt-md-0">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        
-        </div>
-        <!-- If not logined in -->
-        <div>
+            <div class="col-md-8">
+                <h4 class="my-0 mr-md-auto font-weight-bold">
+                    <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-light" style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span>
+                        <span style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E</b></span>
+                    </a>
+                    <span> <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span>
+                    <a href="{%url 'Home:scrapyard'%}" class="btn btn-light" style="font-size: 18px ;"><b> SCRAPYARD</b></a>
+                </h4>
+            </div>
+
+
+
+            <!-- If not logined in -->
             <!-- <a class="btn btn-outline-dark" href="#">Log In</a> -->
 
             <!-- If logged in-->
-            <a href="#">
-                <i class="fa fa-user fa-2x m-1"></i>
-            </a>
-            <a href="Home:Authentication:dashboard">
-                <i class="fa fa-shopping-cart fa-2x m-1"></i>
-            </a>
-        </div>
-    </div>
+            <!-- -->
+            <div class="col-md-4">
 
-    <center>
-        <div class="btn-group mt-3 " role="group" aria-label="Basic outlined example">
-            <div>
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Crockery</a>
-                    <a class="dropdown-item" href="#">Plain Glass</a>
-                    <a class="dropdown-item" href="#">Glass Items</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Fabrics</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Footwear and Wearables</a>
-                    <a class="dropdown-item" href="#">Home Fabrics</a>
-                    <a class="dropdown-item" href="#">Jute Fabrics</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Metals</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Home Utensils</a>
-                    <a class="dropdown-item" href="#">Tools and Metals piece</a>
-                    <a class="dropdown-item" href="#">Vehicles Parts</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Plastic</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Utensils</a>
-                    <a class="dropdown-item" href="#">Toys</a>
-                    <a class="dropdown-item" href="#">Plastic items</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Paper</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Newspaper & Used Paper</a>
-                    <a class="dropdown-item" href="#">Decorative & Crafts</a>
-                    <a class="dropdown-item" href="#">Cardboard</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Rubber & Leather</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Tires</a>
-                    <a class="dropdown-item" href="#">Lifestyle</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold  dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Electronics</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">E-Waste</a>
+                <div class="row">
+                    <div class="col-md-8 w-75">
+                        <form class="form-inline mt-2 mt-md-0">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <diV style="float: right;" class="d-flex">
+                            <!-- <span>
+                            <a class="btn btn-light" href="#">Log In</a>
+                        </span> -->
+                            <span class="dropdown custom-dropdown px-3">
+                            <a href="Home:Authentication:dashboard">
+                                <i class="fa fa-shopping-cart fa-2x m-1"></i>
+                            </a>
+                        </span>
+                            <span class="dropdown  custom-dropdown">
+                            <a href="" data-toggle="dropdown">
+                                <i class="fa fa-user fa-2x m-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">My Account</a>
+                                <a class="dropdown-item" href="#">My Order</a>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </span>
+                        </diV>
+                    </div>
 
                 </div>
-            </div>
-            </div>
-            <div>
-            <div class="btn-group custom-dropdown" role="group">
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Woods & Furniture</button>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="#">Furniture</a>
-                    <a class="dropdown-item" href="#">Wood Materials</a>
-                    <a class="dropdown-item" href="#">Others</a>
-                </div>
-            </div>
-            </div>
-            <div>
-                <button type="button" id="scrapyard-category" class="btn font-weight-bold">Others</button>
+
             </div>
         </div>
-    </center>
+
+
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+        <div class="container-fluid ">
+            <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example" style="">
+                <div>
+                    <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Crockery</a>
+                            <a class="dropdown-item" href="#">Plain Glass</a>
+                            <a class="dropdown-item" href="#">Glass Items</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Fabrics</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Footwear and Wearables</a>
+                            <a class="dropdown-item" href="#">Home Fabrics</a>
+                            <a class="dropdown-item" href="#">Jute Fabrics</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Metals</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Home Utensils</a>
+                            <a class="dropdown-item" href="#">Tools and Metals piece</a>
+                            <a class="dropdown-item" href="#">Vehicles Parts</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Plastic</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Utensils</a>
+                            <a class="dropdown-item" href="#">Toys</a>
+                            <a class="dropdown-item" href="#">Plastic items</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Paper</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Newspaper & Used Paper</a>
+                            <a class="dropdown-item" href="#">Decorative & Crafts</a>
+                            <a class="dropdown-item" href="#">Cardboard</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Rubber & Leather</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Tires</a>
+                            <a class="dropdown-item" href="#">Lifestyle</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold  dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Electronics</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">E-Waste</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group custom-dropdown" role="group">
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Woods & Furniture</button>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Furniture</a>
+                            <a class="dropdown-item" href="#">Wood Materials</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" id="scrapyard-category" class="btn font-weight-bold">Others</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-

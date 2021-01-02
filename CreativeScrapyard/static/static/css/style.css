@@ -444,12 +444,12 @@ select {
     font-size: 42px;
     padding: 0px;
     background: transparent;
-    color: #292929;
+    color: #383838;
 }
 
 #owl-artist-products.owl-theme .owl-nav [class*="owl-"]:hover {
     background: transparent;
-    color: #e28989;
+    color: rgb(0, 0, 0);
 }
 
 
