@@ -1,5 +1,7 @@
 {% extends 'common/common.html' %} {% load static %} {% block title %} CS - My Cart {% endblock %} {% block link %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/creativestyle.css' %}">
+ {% endblock %} {% block content %}
 
 
 
@@ -7,7 +9,14 @@
 
     <section class="inner-content">
         <div class="container">
-
+            <div class="infomain">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
+                    <li class="breadcrumb-item"><a href="#">My Account</a></li>
+                    <li class="breadcrumb-item active">My Cart</li>
+                </ol>
+            </div>
 
             <div class="cart-main">
                 <div class="row d-flex">
@@ -21,7 +30,7 @@
                                 <div class="cart-name ">
                                     <span class="h4">White Gray T shirt</span>
                                     <div class="form-check" style="display: inline; float: right;">
-                                        <input type="checkbox" class="form-check-input" id="cart-item-chk">
+                                        <input type="checkbox" class="form-check-input" id="cart-item-chk" checked >
                                     </div>
                                 </div>
 
@@ -50,7 +59,7 @@
                                     <form>
                                         <div class="form-group cart-btn">
                                             <div class="brd my-3"></div>
-                                            <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                            <button class="btn-cxt" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
                                         </div>
                                     </form>
                                 </div>
@@ -92,7 +101,7 @@
                                         </div>
                                         <div class="form-group cart-btn">
                                             <div class="brd my-3"></div>
-                                            <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                            <button class="btn-cxt" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
                                         </div>
                                     </form>
                                 </div>
@@ -135,7 +144,7 @@
                                         </div>
                                         <div class="form-group cart-btn">
                                             <div class="brd my-3"></div>
-                                            <button class="btn" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                                            <button class="btn-cxt" id="cart-ord-btn" style="float: right;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
                                         </div>
                                     </form>
                                 </div>
@@ -159,20 +168,20 @@
 
                             <div class="my-1">
                                 <div style="float: left; font-size: 12px;"> Shipping Charges</div>
-                                <div style="color: #ee3334;  font-size: 12px; font-weight: bold; float: right;">FREE</div>
+                                <div style="color: var(--pri-color);  font-size: 12px; font-weight: bold; float: right;">FREE</div>
                             </div>
                             <div class="my-1" style="border-top: 1px solid rgb(47, 59, 47)"></div>
                             <div class="my-1">
                                 <div style="float: left; font-size: 14px; font-weight: bold;">Total Payable</div>
-                                <div style="color:#ee3334; font-size: 14px; font-weight: bold; float: right;">&#8377;300</div>
+                                <div style="color: var(--pri-color); font-size: 14px; font-weight: bold; float: right;">&#8377;300</div>
                             </div>
 
                             <div>
-                                <form id="place_order" method="post">
+                                <form id="place_order" method="post" action="{% url 'Home:Items:Order:checkout' %}">{% csrf_token %}
 
                                     <div class="form-group cart-btn my-3">
 
-                                        <button class="btn btn-block" id="place-ord-btn"> Checkout</button>
+                                        <button class="btn-cxt btn-block" id="place-ord-btn"> Checkout</button>
                                     </div>
                                 </form>
                             </div>

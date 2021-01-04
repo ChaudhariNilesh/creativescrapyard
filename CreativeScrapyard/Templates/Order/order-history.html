@@ -1,11 +1,15 @@
 {%extends 'common/common.html'%} {% load static %} {% block title %} CS - My Orders {% endblock %} {% block link %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {%block content%}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/creativestyle.css' %}">
+{% endblock %} {%block content%}
 
 <main>
     <section class="">
         <div class="container">
             <div class="infomain">
                 <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
                     <li class="breadcrumb-item"><a href="#">My Account</a></li>
                     <li class="breadcrumb-item active">My Orders</li>
                 </ol>

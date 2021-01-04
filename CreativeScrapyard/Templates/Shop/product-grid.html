@@ -1,0 +1,273 @@
+{% load static %}
+
+
+
+<div class="product_card border-0 rounded px-0 mt-3">
+    <div class="imgbx py-0">
+        <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+            <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt="">
+            <div class="contentbx m-0 px-3 py-3">
+                <div class="caption">
+
+                    <p class="product-name pb-1">Product Name</p>
+                    <p class="price mb-2 ">&#8377; 300</p>
+
+                </div>
+                <a href="#">
+                    <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
+                </a>
+                {% if is_creative or tab == 'creative' %}
+                <a href="{% url 'Home:Items:Cart:addToCart' %}"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
+            </div>
+        </a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- <div class="row">
+
+    <div class="col-md-3">
+        <div class="product_card border rounded px-0 mt-3">
+            <div class="imgbx py-0">
+                <img src="{% static 'img/products/1.jpg' %}" class="img-fluid">
+
+                <div class="contentbx m-0 px-3 py-3">
+                    <p class="product_title m-0">Gray T-Shirt</p>
+                    <p class="product_price mb-2">&#8377; 20</p>
+                    <a href="#">
+                        <button class="btn shadow-none px-3 pri-bg-color">Buy Now</button>
+                    </a>
+                    <a href="#">
+                        <button class="btn shadow-none px-3  pri-bg-color mx-2">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="product_card border rounded px-0 mt-3">
+            <div class="imgbx py-0">
+                <img src="{% static 'img/products/1.jpg' %}" class="img-fluid">
+
+                <div class="contentbx m-0 px-3 py-3">
+                    <p class="product_title m-0">Timex</p>
+                    <p class="product_price mb-2">&#8377; 20</p>
+                    <a href="#">
+                        <button class="btn shadow-none  px-3 ">Buy Now</button>
+                    </a>
+                    <a href="#">
+                        <button class="btn shadow-none px-3  mx-2">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="product_card border rounded px-0 mt-3">
+            <div class="imgbx py-0">
+                <img src="{% static 'img/products/1.jpg' %}" class="img-fluid">
+
+                <div class="contentbx m-0 px-3 py-3">
+                    <p class="product_title m-0">Timex</p>
+                    <p class="product_price mb-2">&#8377; 20</p>
+                    <a href="#">
+                        <button class="btn shadow-none px-3 " id="#buyItem">{% if is_creative %}Buy Now{% else %}Contact {% endif %}</button>
+                    </a>
+                    <a href="#">
+                        <button class="btn shadow-none px-3  pri-bg-color mx-2">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="product_card border rounded px-0 mt-3">
+            <div class="imgbx py-0">
+                <img src="{% static 'img/products/1.jpg' %}" class="img-fluid">
+
+                <div class="contentbx m-0 px-3 py-3">
+                    <p class="product_title m-0">Timex</p>
+                    <p class="product_price mb-2">&#8377; 20</p>
+                    <a href="#">
+                        <button class="btn shadow-none  px-3 pri-bg-color" id="#buyItem">{% if is_scrap %}Contact{% else %} Buy Now {% endif %}</button>
+                    </a>
+                    {% if not is_scrap %}
+                    <a href="#"><button class="btn shadow-none px-3  pri-bg-color mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div> -->
+
+<!-- <div id="" class="row d-flex my-2">
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="product_card border rounded px-0">
+            <div class="imgbx py-0">
+                <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+                <div class="contentbx m-0 px-3 py-3">
+                    <p class="product_title m-0">Timex</p>
+                    <p class="product_price m-0">$20</p>
+                    <a href="#">
+                        <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                    </a>
+                    <a href="#">
+                        <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+
+<div class="row d-flex w-100 my-2 mx-0">
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row d-flex w-100 my-2 mx-0">
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="product_card border rounded col mx-2 px-0">
+        <div class="imgbx py-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="org_img">
+            <div class="contentbx m-0 px-3 py-3">
+                <p class="product_title m-0">Timex</p>
+                <p class="product_price m-0">$20</p>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color">Buy Now</button>
+                </a>
+                <a href="#">
+                    <button class="btn shadow-none my-2 px-3 py-2 pri-bg-color mx-2">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</div> -->

@@ -1,11 +1,15 @@
 {%extends 'common/common.html'%} {% load static %} {% block title %} CS - Track Order {% endblock %} {% block link %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock %} {%block content%}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/creativestyle.css' %}">
+ {% endblock %} {%block content%}
 
 <main>
     <section class="">
         <div class="container">
             <div class="infomain">
                 <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
                     <li class="breadcrumb-item"><a href="#">My Account</a></li>
                     <li class="breadcrumb-item"><a href="#">My Orders</a></li>
                     <li class="breadcrumb-item active">Track Order</li>
@@ -35,7 +39,7 @@
             </div>
 
 
-            <div class="card bg-light rounded-0 ">
+            <div class="card bg-light rounded-0 mb-5 ">
 
                 <div>
                     <div class="row d-flex  px-3 mt-3 mx-2 ">

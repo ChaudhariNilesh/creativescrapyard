@@ -1,2 +1,8 @@
 {
+    "terminal.integrated.automationShell.windows": "",
+    "terminal.integrated.cwd": "./CreativeScrapyard",
+    "terminal.integrated.shellArgs.windows": ["python"],
+    
+
 }
+

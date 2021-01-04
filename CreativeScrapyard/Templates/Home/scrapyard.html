@@ -1,13 +1,12 @@
 {% extends 'common/common.html' %} {% load static %} {%block title %}Scrapyard{%endblock%} {%block link%}
 <link rel="stylesheet" href="{%  static 'css/style.css' %}">
-<link rel="stylesheet" href="{%  static 'css/yash/style.css' %}">
-<link rel="stylesheet" href="{%  static 'css/yash/scrapstyle.css' %}"> {% endblock %}
+<link rel="stylesheet" href="{%  static 'css/scrapstyle.css' %}"> {% endblock %}
 
 <!-- <div class="bg-dark" style="width:100%;height:100%">  -->
 {% block content %}
 
 <!--Main page after nav -->
-<div class="infomain mx-3">
+<div class="infomain mx-5">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
@@ -21,7 +20,7 @@
 
 <div class="container-fluid">
     <div class="row p-3">
-        <div class="col-3 card shadow-sm bg-dark border-secondary">
+        <div class="col-3 mt-3 card shadow-sm bg-dark border-secondary" style="height: fit-content;">
             <h4 class="text-center my-2">Filters</h4>
 
             <div>
@@ -38,19 +37,19 @@
                             <a class="scrapyard-link" href="#">Accesories</a>
                         </li>
                         <li>
-                            <a href="scrapyard-link">Jewellories</a>
+                            <a class="scrapyard-link" href="#">Jewellories</a>
                         </li>
                         <li>
-                            <a href="scrapyard-link">Toys</a>
+                            <a class="scrapyard-link" href="#">Toys</a>
                         </li>
                         <li>
-                            <a href="scrapyard-link">Electronics</a>
+                            <a class="scrapyard-link" href="#">Electronics</a>
                         </li>
                         <li>
-                            <a href="scrapyard-link">Arts and Crafts</a>
+                            <a class="scrapyard-link" href="#">Arts and Crafts</a>
                         </li>
                         <li>
-                            <a href="scrapyard-link">Others</a>
+                            <a class="scrapyard-link" href="#">Others</a>
                         </li>
                     </ul>
                 </div>
@@ -107,168 +106,36 @@
 
         </div>
         <div class="col-9">
-
-
-
-            <div class="">
-                <div class="row d-flex">
-                    <div class="col-lg-3 col-sm-6 col-12 ">
-                        <a href="{% url 'Home:Items:scrapSingleItem' %}">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <a href="#">
-                            <div class="product-thumb">
-                                <div class="image">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt=" ">
-                                </div>
-
-                                <div class="caption ">
-                                    <h4 class="product-name ">
-                                        <span>Product Name</span>
-                                    </h4>
-                                    <p class="price ">
-                                        <span>&#8377; 300</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+            {% with n='[1,2,3,4,5]' %}
+            <div class="d-md-flex row ">
+                {% for i in n %}
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {% include 'shop/product-grid.html' %}
                 </div>
+                {%endfor%}
             </div>
-
-
-
+            {%endwith%}
+        </div>
+        <div class="row mx-auto mt-3">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span class="" aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>

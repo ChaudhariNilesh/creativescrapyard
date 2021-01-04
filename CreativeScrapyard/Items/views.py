@@ -10,7 +10,5 @@ def scrapSingleItem(request):
     template = 'Shop/single-item.html'
     return render(request,template,{'is_scrap':True})
 
-def viewCartItem(request):
-    template = 'Shop/cart.html'
-    return render(request,template)
+
 
