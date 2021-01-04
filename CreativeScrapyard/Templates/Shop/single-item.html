@@ -98,7 +98,7 @@
                                     Product Description</p>
                             </div>
                             <div class="availStock">Availability : <span class="stock">IN stock</span></div>
-                            <form id="form_buy" method="post" action="{% url 'Home:Items:Order:checkout' %}">{% csrf_token %}
+                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' %}{% else %} # {%endif%}">{% csrf_token %}
 
                                 <div class="form-group ">
                                     <label>Quantity : </label>

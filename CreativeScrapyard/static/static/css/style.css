@@ -38,6 +38,144 @@
     font-size: 14px;
 }
 
+#owl-artist-products.owl-theme.owl-crt .owl-nav [class*="owl-"] {
+    color: #383838;
+}
+
+#owl-artist-products.owl-theme.owl-crt .owl-nav [class*="owl-"]:hover {
+    color: var(--pri-color);
+}
+
+#owl-artist-products.owl-theme.owl-scp .owl-nav [class*="owl-"] {
+    color: #fff;
+}
+
+#owl-artist-products.owl-theme.owl-scp .owl-nav [class*="owl-"]:hover {
+    color: var(--pri-color-scp);
+}
+
+
+/* Login Page */
+
+.logo-sm {
+    width: 40vh;
+}
+
+.pri-color-light {
+    color: var(--pri-color-light);
+}
+
+.pri-color {
+    color: var(--pri-color);
+}
+
+.pri-color-dark {
+    color: var(--pri-color-dark);
+}
+
+.pri-bg-light-color {
+    background-color: var(--pri-color-light);
+}
+
+.pri-bg-color {
+    background-color: var(--pri-color);
+    color: white;
+}
+
+.pri-bg-color:hover {
+    background-color: var(--pri-color-dark);
+    color: white;
+}
+
+.pri-bg-dark-color {
+    background-color: var(--pri-color-dark);
+}
+
+.btn-google {
+    background-color: red;
+    color: white;
+}
+
+.btn-google:hover {
+    background-color: red;
+    color: white;
+}
+
+.social-icons {
+    list-style-type: none;
+}
+
+.btn-facebook {
+    background-color: #1874EB;
+    color: white;
+}
+
+.btn-facebook:hover {
+    background-color: #1874EB;
+    color: white;
+}
+
+.btn-twitter {
+    background-color: #00ACEE;
+    color: white;
+}
+
+.btn-twitter:hover {
+    background-color: #00ACEE;
+    color: white;
+}
+
+.link-effect {
+    color: var(--pri-color);
+}
+
+.link-effect:hover {
+    color: var(--pri-color-dark);
+}
+
+.form-control:focus {
+    border-color: var(--pri-color);
+    box-shadow: inset 0 1px 1px rgba(32, 201, 151, 0.075), 0 0 8px rgba(189, 239, 224, 0.6);
+    /*box-shadow: inset 0 1px 1px rgba(189, 239, 224, 0.075), 0 0 8px rgba(32, 201, 151, 0.6);*/
+}
+
+.custom-control-label:before {
+    background-color: white;
+    border-color: var(--pri-color-dark);
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: var(--pri-color-dark);
+    border-color: var(--pri-color-dark);
+}
+
+.custom-control-input:active~.custom-control-label::before {
+    border-color: var(--pri-color-dark);
+}
+
+.custom-checkbox .custom-control-input:focus~.custom-control-label::before {
+    box-shadow: 0 0 0 1px var(--pri-color-dark), 0 0 0 0.2rem var(--pri-color);
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+
+/* css for profile.html */
+
+.card-profile-image {
+    height: 10rem;
+    width: 10rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* Common Header */
 
