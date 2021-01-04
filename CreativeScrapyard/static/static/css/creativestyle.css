@@ -120,6 +120,47 @@
 }
 
 
+/* Product Grid */
+
+
+/* .product_card {
+    position: relative;
+    overflow: hidden;
+} */
+
+.contentbx {
+    width: 100%;
+    position: absolute;
+    bottom: -20%;
+    background-color: rgba(255, 255, 255, 0.90);
+    opacity: .5;
+    transition: all 0.5s ease;
+}
+
+.product_card .imgbx:hover .contentbx {
+    width: 100%;
+    position: absolute;
+    bottom: 0%;
+    background-color: #fff;
+    opacity: .9;
+}
+
+.caption .product-name {
+    border-bottom: 1px solid #dbdbdb;
+    position: relative;
+    text-decoration: none;
+    color: #000;
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.caption .price {
+    color: var(--pri-color);
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+
 /* Single Creative Item */
 
 .byartist span {

@@ -1,20 +1,21 @@
 {% load static %} {% with n='[1,2,3,4,5,6,7,8,9,10]' %} {% for i in n %}
-<div class="product_card border-0 rounded px-0 m-3">
-    <div class="imgbx py-0">
+{% comment %} {% if type == 'creative' %} {% block index_custom %}  <link rel="stylesheet" href="{% static 'css/creativestyle.css' %}"> {%endblock%}{%else%} {% block index_custom %} <link rel="stylesheet" href="{% static 'css/scrapstyle.css' %}"> {%endblock%}{%endif%}  {% endcomment %}
+<div class="product_card border-0 rounded px-0 m-3"  >
+    <div class="imgbx  py-0">
         <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
             <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt="">
-            <div class="contentbx m-0 px-3 py-3">
+            <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                 <div class="caption">
 
-                    <p class="product-name pb-1">Product Name</p>
-                    <p class="price mb-2 ">&#8377; 300</p>
+                    <p class="product-name  pb-1" style="{% if type == 'scrap' %} color: #fff; {% elif type == 'creative' %} #000 {% else %}   {% endif %}">Product Name</p>
+                    <p class="price mb-2 " style="{% if type == 'scrap' %} color: var(--pri-color-scp); {% elif type == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 300</p>
 
                 </div>
                 <a href="#">
                     <button class="{% if is_scrap or type == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or type == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                 </a>
-                <!-- {% if is_creative or type == 'creative' %}
-                <a href="#"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %} -->
+                {% if is_creative %}
+                <a href="#"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
             </div>
         </a>
 
