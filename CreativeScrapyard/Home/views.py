@@ -30,6 +30,11 @@ def contactus(request):
     template="contact-us.html"
     return render(request,template)
 
+
+def aboutus(request):
+    template="about-us.html"
+    return render(request,template,{'is_creative':True})
+
 def passwordReset(request):
     template="account/password_reset.html"
     return render(request,template)

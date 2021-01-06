@@ -1,0 +1,225 @@
+body {
+    background-color: var(--pri-color-scp-bg);
+    color: #fff;
+    overflow-y: hidden;
+}
+
+a {
+    color: #fff;
+}
+
+
+/* a .scrapyard {
+    color: #fff
+} */
+
+a:hover {
+    color: var(--pri-color-scp);
+}
+
+.scrapyard-link:hover {
+    color: var(--pri-color-scp-dark);
+}
+
+.breadcrumb-item a {
+    color: var(--pri-color-scp);
+}
+
+.breadcrumb-item a:hover {
+    color: #fff;
+}
+
+
+/* Header */
+
+#scrapyard-category {
+    background-color: var(--pri-color-scp-bg);
+    color: #fff;
+    border-radius: 4px;
+}
+
+#scrapyard-category:hover {
+    background-color: #fff;
+    color: var(--pri-color-scp-bg);
+}
+
+
+/* Footer */
+
+.s-footer-top {
+    background-color: var(--pri-color-scp-dark);
+    padding: 25px 0;
+}
+
+.s-footer-logo>a {
+    color: var(--pri-color-scp-bg);
+    font-size: 30px;
+    font-weight: 700;
+    opacity: 0.75;
+    letter-spacing: 1px;
+}
+
+.s-footer-logo>a:hover {
+    color: var(--pri-color-scp-bg);
+    opacity: 1;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.s-footer-links {
+    color: var(--pri-color-scp-bg);
+    opacity: 0.75;
+}
+
+.s-footer-links:hover {
+    color: var(--pri-color-scp-bg);
+    opacity: 1;
+}
+
+
+/* Product Grid */
+
+
+/* .product_card {
+    position: relative;
+    overflow: hidden;
+} */
+
+.contentbx {
+    width: 100%;
+    position: absolute;
+    bottom: -20%;
+    background-color: #5a65707a;
+    opacity: .5;
+    transition: all 0.5s ease;
+}
+
+.product_card .imgbx:hover .contentbx {
+    width: 100%;
+    position: absolute;
+    bottom: 0%;
+    background-color: #343a40c0;
+    opacity: .9;
+}
+
+.caption .product-name {
+    border-bottom: 1px solid #dbdbdb;
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.caption .price {
+    color: var(--pri-color-scp);
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.color-filter ul li {
+    color: #fff;
+}
+
+#byprice p {
+    color: #fff;
+}
+
+#byprice .ui-widget-header {
+    background: #fff;
+}
+
+#byprice .ui-slider .ui-slider-handle {
+    background: #a8a8a8;
+}
+
+#byprice .ui-widget-content {
+    background: rgb(78, 78, 78);
+}
+
+
+/* Scrap Single Item */
+
+span {
+    color: var(--pri-color-scp);
+}
+
+.byartist span a {
+    color: rgb(190, 190, 190);
+}
+
+.byartist span a:hover {
+    color: var(--pri-color-scp);
+}
+
+.availStock {
+    color: #fff;
+}
+
+#form_buy select {
+    background-color: #fff;
+}
+
+#form_buy label {
+    color: #ffffff;
+}
+
+.product-disarea .price {
+    padding: 18px 0px;
+    width: 100%;
+    float: left;
+    font-size: 24px;
+    color: var(--pri-color-scp);
+}
+
+.short-des {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    float: left;
+    width: 100%;
+    margin-bottom: 42px;
+}
+
+.short-des p {
+    color: #f7f7f7;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 300;
+    padding: 12px 0px;
+}
+
+.dis-tab .resp-tabs-list li {
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 16px;
+    padding: 12px 0px 18px;
+    color: rgb(255, 255, 255);
+}
+
+.addinfo.table td,
+.addinfo.table th {
+    color: #fff;
+}
+
+#owl-artist-products.owl-theme .owl-nav [class*="owl-"] {
+    color: #fff;
+}
+
+#owl-artist-products.owl-theme .owl-nav [class*="owl-"]:hover {
+    color: var(--pri-color-scp)
+}
+
+
+/* Pagination */
+
+.page-link {
+    color: var(--pri-color-scp) !important;
+    border: 1px solid var(--pri-color-scp-light)!important;
+    box-shadow: none !important;
+    background-color: #343a40 !important;
+}
+
+.page-link:hover {
+    color: var(--pri-color-scp-darker) !important;
+    box-shadow: none !important;
+}
