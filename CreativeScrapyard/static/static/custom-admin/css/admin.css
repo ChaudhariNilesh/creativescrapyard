@@ -550,3 +550,8 @@ th {
     border: 1px solid #ced4da;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+button.btn-sm.btn-danger.text-white.rounded.cus {
+    box-shadow: none!important;
+    border: none!important;
+}

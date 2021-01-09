@@ -193,12 +193,12 @@ $(function() {
 
     var productViewModel = function() {
         $('#editProductNext').click(function() {
-            $('#view-data').hide("slide", {direction: "left" }, 1000);
+            $('#view-data').hide("slide", { direction: "left" }, 1000);
             $('#edit-data-1').show("slide", { direction: "right" }, 1000);
         });
 
         $('#editProductNext1').click(function() {
-            $('#edit-data-1').hide("slide", {direction: "left" }, 1000);
+            $('#edit-data-1').hide("slide", { direction: "left" }, 1000);
             $('#edit-data-2').show("slide", { direction: "right" }, 1000);
         });
 
@@ -206,12 +206,12 @@ $(function() {
 
     var CustomFileUploader = function() {
         $('#productFileUploader').FancyFileUpload({
-            'params' : {
-                action : 'fileuploader'
+            'params': {
+                action: 'fileuploader'
             },
-            'maxfilesize' : 1000000,
-            'edit' : true,
-            'retries' : 3,
+            'maxfilesize': 1000000,
+            'edit': true,
+            'retries': 3,
         });
     }
 
