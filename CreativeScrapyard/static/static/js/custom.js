@@ -214,6 +214,38 @@ $(function() {
             'retries': 3,
         });
     }
+    var uploadImageName = function() {
+        $("#primaryImage").on("change", function() {
+            $(this).siblings(".custom-file-label").addClass("selected").html("Primary Image...");
+            let priDiv = document.getElementById("pri-img-div")
+            priDiv.removeAttribute("hidden");
+            $("#pri-prod-img-name").append("<p>" + document.getElementById("primaryImage").files[0].name + "</p>")
+            $('#pri-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[0]) + "'/>");
+
+
+        });
+
+        $("#otherImages").on("change", function() {
+            // console.log($(this).val());
+            // var fileName = $(this).val().split("\\").pop();
+            // var filesname = document.getElementById("otherImages").files[0].name;
+            // for (var i = 0; i < total_file; i++) 
+            //     console.log(filesname);
+            // $("#pri-prod-img-names").append("<p>" + document.getElementById("primaryImage").files[i].name + "</p>")
+
+            $(this).siblings(".custom-file-label").addClass("selected").html("Multiple Product Images...");
+
+            let total_file = document.getElementById("otherImages").files.length;
+            let secDiv = document.getElementById("sec-img-div");
+            secDiv.removeAttribute("hidden");
+
+            for (var i = 0; i < total_file; i++) {
+                $("#sec-prod-img-names").append("<p>" + document.getElementById("otherImages").files[i].name + "</p>")
+                $('#sec-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[i]) + "'/>");
+            }
+        });
+
+    }
 
     //   Dom Ready
     $(function() {
@@ -230,6 +262,7 @@ $(function() {
         productViewModel();
         CustomFileUploader();
         // expandDashboard();
+        uploadImageName();
     });
 });
 
