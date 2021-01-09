@@ -3,7 +3,9 @@
 :root {
     --pri-color: #20c997;
     --pri-color-light: #BDEFE0;
+    --pri-color-lighter: #d1eee6;
     --pri-color-dark: #1BAA80;
+    --pri-color-darker: #13775a;
 }
 
 body {
@@ -118,4 +120,15 @@ body {
 
 .fw-600 {
     font-weight: 600;
+}
+
+
+/* css for profile.html */
+
+.card-profile-image {
+    height: 10rem;
+    width: 10rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

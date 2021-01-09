@@ -71,7 +71,6 @@ $(function() {
             if (current < start) {
                 sync2.data('owl.carousel').to(current - onscreen, 100, true);
             }
-            //prodLens();
 
         }
 
@@ -97,12 +96,12 @@ $(function() {
 
     };
 
-    var flatZoom = function() {
-        var $easyzoom = $('.easyzoom').easyZoom();
-    };
+    // var flatZoom = function() {
+    //     var $easyzoom = $('.easyzoom').easyZoom();
+    // };
 
     var ArtistProductGal = function() {
-        var owl = $('#owl-artist-products');
+        var owl = $('#owl-artist-products.owl-prod');
         owl.owlCarousel({
             loop: false,
             autoplay: true,
@@ -121,13 +120,14 @@ $(function() {
             owl.trigger('owl.prev');
         })
     };
+
     var changeProdHover = function() {
         $(".prod-thumb-img").on({
             mouseenter: function() {
-                $(this).attr("src", "static/img/products/2.jpg");
+                $(this).attr("src", "../../static/img/products/2.jpg");
             },
             mouseleave: function() {
-                $(this).attr("src", "static/img/products/1.jpg");
+                $(this).attr("src", "../../static/img/products/1.jpg");
             }
         });
 
@@ -145,7 +145,51 @@ $(function() {
 
     };
 
+    //    var sideNav = function() {
+    //        $("#sideNavIcon").click(function() {
+    //            $("#parent").css("grid-template-columns", "0% 100%");
+    //        });
+    //    }
 
+    var sideNav = function() {
+        $("#sideNavIcon").click(function() {
+            if ($("#parent").hasClass('myClass')) {
+                $("#parent").removeClass('myClass');
+            } else {
+                $("#parent").addClass('myClass');
+            }
+            //            $("#parent").css("grid-template-columns", "0% 100%");
+        }, );
+    }
+
+    var priceSlider = function() {
+        let sym = "&#8377;"
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 1000,
+            values: [100, 5000],
+            slide: function(event, ui) {
+                $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
+                $("#amount1").val(ui.values[0]);
+                $("#amount2").val(ui.values[1]);
+            }
+        });
+        $("#amount").html(sym + $("#slider-range").slider("values", 0) +
+            " - " + sym + $("#slider-range").slider("values", 1));
+    };
+
+
+    var func_expand = function() {
+        let loc = window.location.pathname;
+        if (loc == "/accounts/dashboard/") {
+            $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
+        } else if ((loc == "/accounts/dashboard/product/creative/add") || (loc == "/accounts/dashboard/product/scrapyard/add")) {
+            $('a[href="' + "/accounts/dashboard/product/creative/" + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        } else {
+            $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        }
+    };
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -154,9 +198,11 @@ $(function() {
         //flatZoom();
         ArtistProductGal();
         changeProdHover();
+        priceSlider();
         prodLens();
-
-
+        sideNav();
+        func_expand();
+        // expandDashboard();
     });
 });
 

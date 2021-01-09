@@ -6,11 +6,11 @@
     <div class="imgbx py-0">
         <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
             <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt="">
-            <div class="contentbx m-0 px-3 py-3">
+            <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                 <div class="caption">
 
-                    <p class="product-name pb-1">Product Name</p>
-                    <p class="price mb-2 ">&#8377; 300</p>
+                    <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">Product Name</p>
+                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 300</p>
 
                 </div>
                 <a href="#">

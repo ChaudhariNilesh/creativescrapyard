@@ -1,0 +1,36 @@
+{% extends 'custom-admin/common.html' %} {% load static %} {%block main-content%} {%block content %}
+<div class="container-fluid login">
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <div class="p-5 bg-white rounded card shadow" style="margin-top: 130px;">
+                <div>
+                    <h1 class="text-center title m-4">Creative Scrapyard</h1>
+                </div>
+                <div class="container-fluid">
+                    <form id="" role="form">
+                        <div class="controls">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group"> <input id="username" type="text" name="username" class="form-control" placeholder="Enter your username." required="required" data-error="Username is required."> </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group"><input id="username" type="text" name="password" class="form-control outline-none" placeholder="Enter your password." required="required" data-error="Password is required."> </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-12"> <input type="submit" class="btn-cxt pt-2 btn-block " value="Login"> </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.8 -->
+        </div>
+        <!-- /.row-->
+    </div>
+</div>{% endblock %} {%endblock%}

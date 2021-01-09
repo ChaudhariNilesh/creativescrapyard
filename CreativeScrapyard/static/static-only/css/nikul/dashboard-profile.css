@@ -1,0 +1,69 @@
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    transition: 1s;
+}
+
+.bx-shd {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.img-profile {
+    height: 130px;
+    width: 130px;
+}
+
+.img-upload {
+    background-color: var(--pri-color);
+    color: white;
+    padding: .3rem .5rem;
+    border-radius: 4px;
+    transition: .5s;
+}
+
+.img-upload:hover {
+    color: white;
+    box-shadow: rgba(7, 170, 128, 0.2) 0px 20px 30px;
+    /*box-shadow: rgba(7, 170, 128, 0.15) 0px 48px 100px 0px;*/
+}
+
+.tags {
+    padding: 3px 20px;
+    border-radius: 16px;
+    font-size: .8rem;
+}
+
+.tags-common{
+    color: var(--pri-color-darker);
+    background-color: var(--pri-color-light);
+}
+
+.tags-special {
+    color: #2d62b1;
+    background-color: #c0d0e8;
+}
+
+.tags-rare {
+    color: #892cdc;
+    background-color: #dcc0f5;
+}
+
+.tags-event {
+    color: #ea2c62;
+    background-color: #f9c0d0;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .page-title {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}

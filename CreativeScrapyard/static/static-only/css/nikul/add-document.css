@@ -1,0 +1,23 @@
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    transition: 1s;
+}
+
+#panNameHelp {
+    text-indent: 5px;
+    font-style: italic;
+}
+
+.svg-box svg{
+    position: fixed;
+    top: 150px;
+    width: 600px;
+}
+
+@media only screen and (max-width: 600px) {
+  .page-title {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,28 @@
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    transition: 1s;
+}
+
+.main-page {
+
+}
+
+.bx-shd {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .page-title {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
