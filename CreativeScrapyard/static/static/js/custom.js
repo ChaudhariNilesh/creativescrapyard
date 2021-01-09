@@ -190,6 +190,31 @@ $(function() {
             $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         }
     };
+
+    var productViewModel = function() {
+        $('#editProductNext').click(function() {
+            $('#view-data').hide("slide", {direction: "left" }, 1000);
+            $('#edit-data-1').show("slide", { direction: "right" }, 1000);
+        });
+
+        $('#editProductNext1').click(function() {
+            $('#edit-data-1').hide("slide", {direction: "left" }, 1000);
+            $('#edit-data-2').show("slide", { direction: "right" }, 1000);
+        });
+
+    }
+
+    var CustomFileUploader = function() {
+        $('#productFileUploader').FancyFileUpload({
+            'params' : {
+                action : 'fileuploader'
+            },
+            'maxfilesize' : 1000000,
+            'edit' : true,
+            'retries' : 3,
+        });
+    }
+
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -202,6 +227,8 @@ $(function() {
         prodLens();
         sideNav();
         func_expand();
+        productViewModel();
+        CustomFileUploader();
         // expandDashboard();
     });
 });

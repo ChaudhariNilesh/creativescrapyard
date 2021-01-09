@@ -2,6 +2,7 @@
 {% load static %}
 {% block baselink %}
 <link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/fancy_fileupload.css' %}"/>
 {% endblock %}
 
 {% block base %}
@@ -17,5 +18,168 @@
 </div>
 <hr/>
 
+<!--Model popup-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal
+</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content product-view-modal">
+            <div id="view-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">SKU-125</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{% static 'img/products/1.jpg' %}" class="img-fluid" alt="Responsive image">
+                        </div>
+                        <div class="col">
+                            <h3 class="pri-color">Product name</h3>
+                            <p class="text-justify  fs-9">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            <div class="row mt-1 py-1 fs-9">
+                                <div class="col">
+                                    <p>
+                                        <span class="pri-color">Category: </span>
+                                        <span>Jewellery</span>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p>
+                                        <span class="pri-color">Sub-category: </span>
+                                        <span>others</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row py-1 fs-9">
+                                <div class="col">
+                                    <p>
+                                        <span class="pri-color">Color: </span>
+                                        <span></span>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p>
+                                        <span class="pri-color">Size: </span>
+                                        <span>XXL</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row py-1 fs-9">
+                                <div class="col">
+                                    <p>
+                                        <span class="pri-color">Quantity: </span>
+                                        <span>15</span>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p>
+                                        <span class="pri-color">Price: </span>
+                                        <span>&#8377; 225</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="editProductNext" type="button" class="btn btn-sm pri-bg-color">Edit</button>
+                </div>
+            </div>
+
+            <div id="edit-data-1">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle1">SKU-125</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="productFileUploader" class="ff_fileupload_wrap" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm pri-bg-color">Back</button>
+                    <button id="editProductNext1" type="button" class="btn btn-sm pri-bg-color">Next</button>
+                </div>
+            </div>
+
+            <div id="edit-data-2">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle2">SKU-125</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="productName">Product Name</label>
+                            <input type="text" class="form-control form-control-sm" id="productName"
+                                   value="My product name">
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Product Descritption</label>
+                            <textarea class="form-control form-control-sm" id="productDescription" rows="3">Loren Gypsum is simply dummied text of the printing and typesetting industry. Loren Gypsum has been the industry's standard dummy text ever since when an unknown printer took a galley of type and scrambled it to make a type specimen book.</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="productCategory">Category</label>
+                                    <select class="form-control form-control-sm" id="productCategory">
+                                        <option selected>Select</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="productSubCategory">Category</label>
+                                    <select class="form-control form-control-sm" id="productSubCategory">
+                                        <option selected>Select</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="productWeight">Weight</label>
+                                    <select class="form-control form-control-sm" id="productWeight">
+                                        <option selected>Select</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="productHeight">Height</label>
+                                    <select class="form-control form-control-sm" id="productHeight">
+                                        <option selected>Select</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm pri-bg-color">Back</button>
+                    <button id="saveProduct" type="button" class="btn btn-sm pri-bg-color">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -1,111 +1,126 @@
-{% extends 'common/common.html' %} 
-{% load static %} 
+{% extends 'common/common.html' %}
+{% load static %}
 {% block title %} SignUp {% endblock %}
-{% block link %} 
+{% block link %}
 <link rel="stylesheet" href="{%  static 'css/style.css' %}"> {% endblock %}
 
- {% block content %}
+{% block content %}
 
-      <div id="main-wrapper">
-        <div class="container-fluid px-0">
-          <div class="row no-gutters min-vh-100"> 
+<div id="main-wrapper">
+    <div class="container-fluid px-0">
+        <div class="row no-gutters min-vh-100">
             <!-- Left-block
             ========================= -->
             <div class="col-md-5 pri-bg-light-color">
-              <div class="hero-wrap d-flex align-items-center h-100">
-                <div class="hero-mask opacity-3 bg-primary"></div>
-                <div class="hero-content mx-auto w-100 h-100">
-                  <div class="container d-flex flex-column h-100">
-                    <div class="row no-gutters">
-                      <div class="col-11 col-lg-9 mx-auto">
-                        <div class="logo mt-5 mb-5 mb-md-0"> <a class="d-flex" href="#" title="LOGO"><img src="{% static 'img/logo/logo.png' %}" alt="LOGO" class="logo-sm"></a> </div>
-                      </div>
+                <div class="hero-wrap d-flex align-items-center h-100">
+                    <div class="hero-mask opacity-3 bg-primary"></div>
+                    <div class="hero-content mx-auto w-100 h-100">
+                        <div class="container d-flex flex-column h-100">
+                            <div class="row no-gutters">
+                                <div class="col-11 col-lg-9 mx-auto">
+                                    <div class="logo mt-5 mb-5 mb-md-0"><a class="d-flex" href="#" title="LOGO"><img
+                                            src="{% static 'img/logo/logo.png' %}" alt="LOGO" class="logo-sm"></a></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters my-auto">
+                                <div class="col-11 col-lg-9 mx-auto">
+                                    <p class="text-4 line-height-4">Looks like you're new here!</p>
+                                    <h1 class="text-9 font-weight-600 mb-5">Join the largest Artist community in the
+                                        world.</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row no-gutters my-auto">
-                      <div class="col-11 col-lg-9 mx-auto">
-                        <p class="text-4 line-height-4">Looks like you're new here!</p>
-                        <h1 class="text-9 font-weight-600 mb-5">Join the largest Artist community in the world.</h1>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
             </div>
-            <!-- Left-block --> 
-            
+            <!-- Left-block -->
+
             <!-- Right-block
             ========================= -->
             <div class="col-md-7 d-flex flex-column align-items-center">
-              <div class="container pt-5">
-                <div class="row">
-                  <div class="col-11 col-md-11 mx-auto">
-                    <p class="text-right text-2 mb-0">Already have an account? <a class="btn-link pri-color link-effect" href="login.html">Sign In</a></p>
-                  </div>
-                </div>
-              </div>
-              <div class="container my-auto py-5">
-                <div class="row">
-                  <div class="col-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
-                    <h3 class="font-weight-600 mb-4 pri-color">Sign up to Cretive ScrapYard</h3>
-                    <div class="form-row mb-3">
-                      <div class="col-4 col-sm-4 col-lg-6">
-                          <button type="button" class="btn btn-google btn-sm font-weight-400 shadow-none"><span class="mx-2"><i class="fab fa-google mx-1"></i>Sign in with Google</span></button>
-                          <button type="button" class="btn btn-facebook btn-sm font-weight-400 shadow-none"><span class="mx-1"><i class="fab fa-facebook-f"></i></button>
-                          <button type="button" class="btn btn-twitter btn-sm font-weight-400 shadow-none"><span class="mx-1"><i class="fab fa-twitter"></i></button>
-                      </div>
+                <div class="container pt-5">
+                    <div class="row">
+                        <div class="col-11 col-md-11 mx-auto">
+                            <p class="text-right text-2 mb-0">Already have an account? <a
+                                    class="btn-link pri-color link-effect" href="{% url 'Home:login' %}">Sign In</a></p>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center my-4">
-                      <hr class="flex-grow-1">
-                      <span class="mx-3 text-2 text-muted">Or with Email</span>
-                      <hr class="flex-grow-1">
-                    </div>
-
-
-                    <form id="loginForm" method="post">
-                      
-                      <div class="mx-0 px-0 row">
-                        <div class="form-group font-weight-500 col pl-0">
-                          <label for="firstName">First Name</label>
-                          <input type="text" class="form-control bg-light border-1" id="firstName" required placeholder="Enter First Name">
-                        </div>
-                        <div class="form-group font-weight-500 col pr-0">
-                          <label for="lastName">Last Name</label>
-                          <input type="text" class="form-control bg-light border-1" id="lastName" required placeholder="Enter Last Name">
-                        </div>
-                      </div>
-
-                      <div class="form-group font-weight-500">
-                        <label for="emailAddress">Email Address</label>
-                        <input type="email" class="form-control bg-light border-1" id="emailAddress" required placeholder="Enter Your Email">
-                      </div>
-                      
-                      <div class="form-group font-weight-500">
-                        <label for="password1">Password</label>
-                        <input type="password" class="form-control bg-light border-1" required placeholder="Enter Password">
-                      </div>
-                      
-                      <div class="form-group font-weight-500">
-                        <label for="password2">Confirm Password</label>
-                        <input type="password" class="form-control bg-light border-1" required placeholder="Re-Enter Password">
-                      </div>
-                      
-                      <div class="form-group mt-4">
-                        <div class="form-check text- custom-control custom-checkbox">
-                          <input id="agree" name="agree" class="custom-control-input" type="checkbox">
-                          <label class="custom-control-label" for="agree">I agree to the <a href="#" class="link-effect">Terms</a> and <a href="#" class="link-effect">Privacy Policy</a>.</label>
-                        </div>
-                      </div>
-
-                      <button class="btn shadow-none my-2 px-5 py-2 pri-bg-color" type="submit">Sign up</button>
-                    
-                    </form>
-                  </div>
                 </div>
-              </div>
+                <div class="container my-auto py-5">
+                    <div class="row">
+                        <div class="col-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
+                            <h3 class="font-weight-600 mb-4 pri-color">Sign up to Cretive ScrapYard</h3>
+<!--                            <div class="form-row mb-3">-->
+<!--                                <div class="col-4 col-sm-4 col-lg-6">-->
+<!--                                    <button type="button" class="btn btn-google btn-sm font-weight-400 shadow-none">-->
+<!--                                        <span class="mx-2"><i class="fab fa-google mx-1"></i>Sign in with Google</span>-->
+<!--                                    </button>-->
+<!--                                    <button type="button" class="btn btn-facebook btn-sm font-weight-400 shadow-none">-->
+<!--                                        <span class="mx-1"><i class="fab fa-facebook-f"></i></span></button>-->
+<!--                                    <button type="button" class="btn btn-twitter btn-sm font-weight-400 shadow-none">-->
+<!--                                      <span class="mx-1"><i class="fab fa-twitter"></i></span></button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="d-flex align-items-center my-4">-->
+<!--                                <hr class="flex-grow-1">-->
+<!--                                <span class="mx-3 text-2 text-muted">Or with Email</span>-->
+<!--                                <hr class="flex-grow-1">-->
+<!--                            </div>-->
+
+
+                            <form id="loginForm" method="post">
+
+                                <div class="mx-0 px-0 row">
+                                    <div class="form-group font-weight-500 col pl-0">
+                                        <label for="firstName">First Name</label>
+                                        <input type="text" class="form-control bg-light border-1" id="firstName"
+                                               required placeholder="Enter First Name">
+                                    </div>
+                                    <div class="form-group font-weight-500 col pr-0">
+                                        <label for="lastName">Last Name</label>
+                                        <input type="text" class="form-control bg-light border-1" id="lastName" required
+                                               placeholder="Enter Last Name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group font-weight-500">
+                                    <label for="emailAddress">Email Address</label>
+                                    <input type="email" class="form-control bg-light border-1" id="emailAddress"
+                                           required placeholder="Enter Your Email">
+                                </div>
+
+                                <div class="form-group font-weight-500">
+                                    <label for="password1">Password</label>
+                                    <input id="password1" type="password" class="form-control bg-light border-1" required
+                                           placeholder="Enter Password">
+                                </div>
+
+                                <div class="form-group font-weight-500">
+                                    <label for="password2">Confirm Password</label>
+                                    <input id="password2" type="password" class="form-control bg-light border-1" required
+                                           placeholder="Re-Enter Password">
+                                </div>
+
+                                <div class="form-group mt-4">
+                                    <div class="form-check text- custom-control custom-checkbox">
+                                        <input id="agree" name="agree" class="custom-control-input" type="checkbox">
+                                        <label class="custom-control-label" for="agree">I agree to the <a href="#"
+                                                                                                          class="link-effect">Terms</a>
+                                            and <a href="#" class="link-effect">Privacy Policy</a>.</label>
+                                    </div>
+                                </div>
+
+                                <button class="btn shadow-none my-2 px-5 py-2 pri-bg-color" type="submit">Sign up
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Right-block --> 
-          </div>
+            <!-- Right-block -->
         </div>
-      </div>
+    </div>
+</div>
 
 {% endblock %}

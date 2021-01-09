@@ -58,7 +58,7 @@ body {
     color: white;
 }
 
-.social-icons {
+/*.social-icons {
     list-style-type: none;
 }
 
@@ -80,7 +80,7 @@ body {
 .btn-twitter:hover {
     background-color: #00ACEE;
     color: white;
-}
+}*/
 
 .link-effect {
     color: var(--pri-color);
@@ -122,6 +122,9 @@ body {
     font-weight: 600;
 }
 
+.fs-9{
+    font-size: .9rem;
+}
 
 /* css for profile.html */
 
@@ -131,4 +134,17 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+
+/* Creative-items */
+
+.product-view-modal {
+    overflow-x: scroll;
+    display: grid;
+    grid-template-columns: repeat(4, 100%);
+}
+
+#edit-data-1, #edit-data-2 {
+    display: none;
 }
