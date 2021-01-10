@@ -171,6 +171,57 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="ProductColor">Color</label>
+                                    <input type="color" id="ProductColor" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="productSize">Size</label>
+                                    <select class="form-control form-control-sm" id="productSize">
+                                        <option selected>Select</option>
+                                        <option>XS</option>
+                                        <option>SM</option>
+                                        <option>M</option>
+                                        <option>XL</option>
+                                        <option>XXL</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="ProductQuantity">Color</label>
+                                    <select class="form-control form-control-sm" id="ProductQuantity">
+                                        <option selected>Select</option>
+                                        {% with n='[1,2,3,4,5,6,7,8,9,10]' %}
+                                        {% for i in n %}
+                                            <option>{{i}}</option>
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="productSize">Size</label>
+                                    <select class="form-control form-control-sm" id="productSize">
+                                        <option selected>Select</option>
+                                        <option>XS</option>
+                                        <option>SM</option>
+                                        <option>M</option>
+                                        <option>XL</option>
+                                        <option>XXL</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">

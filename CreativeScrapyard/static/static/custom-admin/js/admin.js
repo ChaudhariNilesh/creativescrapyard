@@ -73,11 +73,10 @@ $(function() {
 
             }
 
-
-
-
         });
     }
+
+
     $(function() {
         adminSideBar();
         logoutSwal();

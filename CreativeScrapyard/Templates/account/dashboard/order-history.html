@@ -15,8 +15,8 @@
 <div class="bx-shd my-3 py-2 px-3">
     <span class="card-title">My Orders</span>
     <div class="py-3">
-        <table class="table border-bottom">
-
+        <table class="table border-bottom tablemanager">
+            <thead>
             <tr class="">
                 <th scope="col" class="tb-head text-center">Order Id</th>
                 <th scope="col" class="tb-head text-center">Created On</th>
@@ -24,43 +24,18 @@
                 <th scope="col" class="tb-head text-center">Total</th>
                 <th scope="col" class="tb-head text-center">Status</th>
             </tr>
-
+            </thead>
             <tbody>
+            {% with n='[1,2,3,4,5,6]' %}
+            {% for i in n %}
             <tr>
                 <th scope="row" class="text-center">101</th>
                 <td class="text-center">27/12/20</td>
                 <td class="text-center">Creative Art</td>
                 <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-run">Running</span> </td>
+                <td class="text-center"> Runnni <span class="ord-status ord-status-run">Running</span> </td>
             </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-pend">Pending</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-com">Completed</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-hold">On Hold</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-run">Running</span> </td>
-            </tr>
+
             <tr>
                 <th scope="row" class="text-center">101</th>
                 <td class="text-center">27/12/20</td>
@@ -82,10 +57,12 @@
                 <td class="text-center">&#8377; 200</td>
                 <td class="text-center"> <span class="ord-status ord-status-hold">On Hold</span> </td>
             </tr>
+            {% endfor %}
+            {% endwith %}
             </tbody>
 <!--            maximum order should be 10.-->
         </table>
     </div>
-    <button class="btn btn-sm pri-bg-color">Load more</button>
+    <button id="loadmore-btn" class="btn btn-sm pri-bg-color btn-cxt">Load more</button>
 </div>
 {% endblock %}
