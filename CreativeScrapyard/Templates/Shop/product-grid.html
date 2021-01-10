@@ -4,7 +4,7 @@
 
 <div class="product_card border-0 rounded px-0 mt-3">
     <div class="imgbx py-0">
-        <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+        <a href="{% if is_creative and tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
             <img class="img-fluid prod-thumb-img" src="{% static 'img/products/1.jpg' %}" alt="">
             <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                 <div class="caption">

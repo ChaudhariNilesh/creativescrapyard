@@ -269,14 +269,14 @@ $(function() {
     var tableManager = function() {
         $('.tablemanager').tablemanager({
             firstSort: [
+                [1, 0],
                 [3, 0],
-                [2, 0],
-                [1, 'asc']
+                [4, 0],
+                [5, 1]
             ],
-            disable: ["last"],
             appendFilterby: true,
             dateFormat: [
-                [4, "mm-dd-yyyy"]
+                [2, "mm-dd-yyyy"]
             ],
             debug: false,
             vocabulary: {
@@ -286,7 +286,8 @@ $(function() {
             },
             pagination: false,
             showrows: [5, 10, 20, 50, 100],
-            disableFilterBy: [1]
+            disableFilterBy: []
+
         });
     }
     var loadMoreRows = function() {

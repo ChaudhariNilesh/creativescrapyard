@@ -48,6 +48,35 @@ th.tb-head {
     background-color: #d9dce1;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+td span img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+table,
+th,
+td {
+    border: 1px solid #bbb;
+    text-align: left;
+}
+
+th {
+    background-color: #ddd;
+}
+
 
 /*Initial style sort*/
 
@@ -135,13 +164,9 @@ th.tb-head {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-
-
-
-
 @media only screen and (max-width: 600px) {
-  .page-title {
-    font-size: 1rem;
-    font-weight: 500;
-  }
+    .page-title {
+        font-size: 1rem;
+        font-weight: 500;
+    }
 }
