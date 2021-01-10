@@ -14,7 +14,7 @@ urlpatterns = [
     path('shop/',include('Items.urls')),
     path('contact-us/', contactus, name="contactus"),
     path('about-us/', aboutus, name="aboutus"),    
-    path('accounts',include('Authentication.urls')),
+    # path('accounts',include('Authentication.urls')),
     path('password-reset-link/',passwordReset,name="passwordReset"),
     path('password-reset-done/',passwordResetLink,name="passwordResetLink"),
     path('new-password/',newPassword,name="newPassword"),

@@ -37,7 +37,7 @@
                                                     </td>
                                                     <td>
                                                         <a href="{% url 'Authentication:profile' %}" class="user-view p-2"><i class="fa fa-eye text-white p-2 rounded cus" aria-hidden="true"></i></a>
-                                                         <a href="#" class="user-disable"><button class="btn-sm btn-danger p-2 text-white rounded cus" aria-hidden="true">DISABLE</button></a>
+                                                         <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger p-2 text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
                                                     </td>
                                                     {% comment %} <td>
                                                         <a href="user-edit.html"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a>
@@ -48,6 +48,27 @@
                                                 </tr>
                                                 {% endfor %}
                                                 {% endwith %}
+                                                <tr>
+                                                    <td><span ><img class="rounded-circle" width="50px" height="50px" src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
+                                                    </td>
+                                                    <td><a href="#"><span class="list-enq-name">Nilesh</span></a>
+                                                    </td>
+                                                    <td>+91 9876543210</td>
+                                                    <td>nilesh@test.com</td>
+                                                    <td>
+                                                        <a href="#" class="listing"><span class="label label-primary text-white p-2 rounded listing">20</a></span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'Authentication:profile' %}" class="user-view p-2"><i class="fa fa-eye text-white p-2 rounded cus" aria-hidden="true"></i></a>
+                                                         <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger p-2 text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                                    </td>
+                                                    {% comment %} <td>
+                                                        <a href="user-edit.html"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a>
+                                                    </td> {% endcomment %}
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

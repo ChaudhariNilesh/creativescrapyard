@@ -246,8 +246,10 @@ $(function() {
         });
 
     }
+    var gridPagination = function() {
 
-    //   Dom Ready
+        }
+        //   Dom Ready
     $(function() {
         responsiveTab();
         prodGallery();
@@ -263,6 +265,7 @@ $(function() {
         CustomFileUploader();
         // expandDashboard();
         uploadImageName();
+        gridPagination();
     });
 });
 
