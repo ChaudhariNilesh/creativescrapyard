@@ -74,10 +74,37 @@
                                     <input type="file" class="custom-file-input" id="primaryImage" name="pri-product-image">
                                     <label class="custom-file-label" for="primaryImage">Upload Primary Image</label>
                                 </div>
+                                <!-- <progress class="w-100 mt-2" id="progressBar" value="0" max="100"></progress>
+                                <h3 id="status"></h3>
+                                <p id="loaded_n_total"></p> -->
                             </div>
 
                             <div class="col-sm-5">
-                                <div id="pri-image_preview"></div>
+                                <div>
+                                    <ul id="pri-image_preview" class="list-inline list-group list-group-horizontal">
+                                    </ul>
+                                    <div class="modal fade" id="pri-img-modal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <!-- <div class="modal-header">
+                                                    <div class="pull-left">Image Name</div>
+                                                    <button type="button" class="close" data-dismiss="modal" title="Close"> <span><i class="fa fa-close" aria-hidden="true"></i></span></button>
+                                                </div> -->
+                                                <div class="modal-body">
+                                                    <div id="pri-gallery" class="carousel slide carousel-fade" data-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="modal-footer">
+                                                    <div class="pull-left">
+                                                        <small>This is your primary image.</small>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -98,7 +125,40 @@
                             </div>
 
                             <div class="col-sm-5">
-                                <div id="sec-image_preview"></div>
+                                <div>
+                                    <ul id="sec-image_preview" class="list-inline list-group list-group-horizontal">
+                                    </ul>
+                                    <div class="modal fade" id="sec-img-modal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <!-- <div class="modal-header">
+                                                    <div class="pull-left">My Gallery Title</div>
+                                                    <button type="button" class="close" data-dismiss="modal" title="Close"> <span><i class="fa fa-close" aria-hidden="true"></i></span></button>
+                                                </div> -->
+                                                <div class="modal-body">
+                                                    <div id="sec-gallery" class="carousel slide carousel-fade" data-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                        </div>
+                                                        <a class="carousel-control-prev" href="#sec-gallery" role="button" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next" href="#sec-gallery" role="button" data-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="modal-footer">
+                                                    <div class="pull-left">
+                                                        <small>Photographs by <a href="https://placeimg.com" target="new">placeimg.com</a></small>
+                                                    </div>
+                                                    <button class="btn-sm close" type="button" data-dismiss="modal">Close</button>
+=                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

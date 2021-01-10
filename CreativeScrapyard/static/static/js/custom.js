@@ -216,13 +216,17 @@ $(function() {
     }
     var uploadImageName = function() {
         $("#primaryImage").on("change", function() {
-            $(this).siblings(".custom-file-label").addClass("selected").html("Primary Image...");
-            let priDiv = document.getElementById("pri-img-div")
+
+            $(this).siblings(".custom-file-label").addClass("selected").html("Added Product Image...");
+            let priDiv = document.getElementById("pri-img-div");
             priDiv.removeAttribute("hidden");
-            $("#pri-prod-img-name").append("<p>" + document.getElementById("primaryImage").files[0].name + "</p>")
-            $('#pri-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[0]) + "'/>");
 
+            $("#pri-prod-img-name").html("<p>" + document.getElementById("primaryImage").files[0].name + "</p>");
+            //$('#pri-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[0]) + "'/>");
+            $('#pri-image_preview').append("<li data-toggle='modal' data-target='#pri-img-modal' class='m-1'><a href='#pri-gallery' data-slide-to='0'><img class='img-thumbnail' width='80px' height='80px' src='" + URL.createObjectURL(event.target.files[0]) + "'></a></li>");
 
+            //alert(model_img);
+            $("#pri-gallery .carousel-inner").append("<div class='carousel-item active'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[0]) + "'></div>");
         });
 
         $("#otherImages").on("change", function() {
@@ -233,16 +237,30 @@ $(function() {
             //     console.log(filesname);
             // $("#pri-prod-img-names").append("<p>" + document.getElementById("primaryImage").files[i].name + "</p>")
 
-            $(this).siblings(".custom-file-label").addClass("selected").html("Multiple Product Images...");
 
             let total_file = document.getElementById("otherImages").files.length;
-            let secDiv = document.getElementById("sec-img-div");
-            secDiv.removeAttribute("hidden");
+            if (total_file != 7) {
+                swal("Oh no!", "Please add 7 images.", "error");
 
-            for (var i = 0; i < total_file; i++) {
-                $("#sec-prod-img-names").append("<p>" + document.getElementById("otherImages").files[i].name + "</p>")
-                $('#sec-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[i]) + "'/>");
+            } else {
+                let secDiv = document.getElementById("sec-img-div");
+                $(this).siblings(".custom-file-label").addClass("selected").html("Added Product Images...");
+
+                secDiv.removeAttribute("hidden");
+                for (var i = 0; i < total_file; i++) {
+                    $("#sec-prod-img-names").append("<p>" + document.getElementById("otherImages").files[i].name + "</p>")
+                        //$('#sec-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[i]) + "'/>");
+                    $('#sec-image_preview').append("<li data-toggle='modal' data-target='#sec-img-modal' class='m-1'><a href='#sec-gallery' data-slide-to='0'><img class='img-thumbnail' width='80px' height='80px' src='" + URL.createObjectURL(event.target.files[i]) + "'></a></li>");
+                    if (i == 0) {
+                        $("#sec-gallery .carousel-inner").append("<div class='carousel-item active'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[i]) + "'></div>");
+                    } else {
+                        $("#sec-gallery .carousel-inner").append("<div class='carousel-item'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[i]) + "'></div>");
+
+                    }
+
+                }
             }
+
         });
 
     }
@@ -262,12 +280,13 @@ $(function() {
         sideNav();
         func_expand();
         productViewModel();
-        CustomFileUploader();
+        // CustomFileUploader();
         // expandDashboard();
-        uploadImageName();
+        // uploadImageName();
         gridPagination();
     });
 });
+
 
 
 // $(document).ready(function() {
