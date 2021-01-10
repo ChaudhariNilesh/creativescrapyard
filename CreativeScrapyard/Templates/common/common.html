@@ -57,6 +57,7 @@
         {% endif %}
     </div>
 </footer>
+{%block customscript%} {% endblock%}
 <script src="{% static 'js/jquery.min.js' %} "></script>
 <script src="{% static 'js/popper.min.js' %} "></script>
 <script src="{% static 'js/bootstrap.min.js' %} "></script>
@@ -65,6 +66,8 @@
 <script src="{% static 'js/easy-responsive-tabs.js' %} "></script>
 <script src="{% static 'js/jquery-ui.js' %} "></script>
 <script src="{% static 'js/custom.js' %} "></script>
+<script src="{% static 'custom-admin/js/sweetalert.min.js' %}"></script>
+
 <script type="text/javascript"
         src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script> -->
@@ -76,6 +79,9 @@
 <script src="{% static 'js/jquery.fileupload.js' %}"></script>
 <script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
 <script src="{% static 'js/jquery.fancy-fileupload.js' %}"></script>
+
+<!-- Grid Pagination-->
+
 
 <!-- table manager -->
 <script src="{% static 'custom-admin/js/tableManager.js' %}"></script>

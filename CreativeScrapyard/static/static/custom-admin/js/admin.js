@@ -72,18 +72,58 @@ $(function() {
                 $rows.filter(':lt(' + (last + 10) + ')').addClass('active').css({ "display": "" });
 
             }
-
         });
     }
+    var disableBtn = function() {
+        $('.disable-btn').on("click", function() {
+            swal({
+                    text: 'Write reason for disable?',
+                    content: "input",
+                    dangerMode: true,
+                    button: {
+                        text: "Disable",
+                        closeModal: false,
 
+                    },
+                })
+                .then(name => {
+                    if (!name) throw null;
 
+                    //return fetch(`url`);
+                    return true;
+
+                })
+                .then(results => {
+                    if (results)
+                        swal("User disabled successfully.", {
+                            icon: "success",
+                        });
+                    else {
+
+                        swal("Oh no!", "The AJAX request failed!", "error");
+                        swal.stopLoading();
+                        swal.close();
+                    }
+
+                })
+                .catch(err => {
+                    if (err) {
+                        swal("Oh no!", "The AJAX request failed!", "error");
+                    } else {
+                        swal.stopLoading();
+                        swal.close();
+                    }
+                });
+        });
+
+    }
     $(function() {
         adminSideBar();
         logoutSwal();
         sidebarCollapse();
         tableManager();
         loadMoreRows();
-
+        disableBtn();
 
 
     });
