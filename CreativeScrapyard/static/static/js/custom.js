@@ -222,6 +222,41 @@ $(function() {
             'edit': true,
             'retries': 3,
         });
+
+        $("#otherImages").on("change", function() {
+            // console.log($(this).val());
+            // var fileName = $(this).val().split("\\").pop();
+            // var filesname = document.getElementById("otherImages").files[0].name;
+            // for (var i = 0; i < total_file; i++)
+            //     console.log(filesname);
+            // $("#pri-prod-img-names").append("<p>" + document.getElementById("primaryImage").files[i].name + "</p>")
+
+
+            let total_file = document.getElementById("otherImages").files.length;
+            if (total_file != 7) {
+                swal("Oh no!", "Please add 7 images.", "error");
+
+            } else {
+                let secDiv = document.getElementById("sec-img-div");
+                $(this).siblings(".custom-file-label").addClass("selected").html("Added Product Images...");
+
+                secDiv.removeAttribute("hidden");
+                for (var i = 0; i < total_file; i++) {
+                    $("#sec-prod-img-names").append("<p>" + document.getElementById("otherImages").files[i].name + "</p>")
+                        //$('#sec-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[i]) + "'/>");
+                    $('#sec-image_preview').append("<li data-toggle='modal' data-target='#sec-img-modal' class='m-1'><a href='#sec-gallery' data-slide-to='0'><img class='img-thumbnail' width='80px' height='80px' src='" + URL.createObjectURL(event.target.files[i]) + "'></a></li>");
+                    if (i == 0) {
+                        $("#sec-gallery .carousel-inner").append("<div class='carousel-item active'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[i]) + "'></div>");
+                    } else {
+                        $("#sec-gallery .carousel-inner").append("<div class='carousel-item'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[i]) + "'></div>");
+
+                    }
+
+                }
+            }
+
+        });
+
     }
     var uploadImageName = function() {
         $("#primaryImage").on("change", function() {
