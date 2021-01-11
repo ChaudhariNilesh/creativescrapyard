@@ -162,6 +162,15 @@ $(function() {
         }, );
     }
 
+
+    var contact = function() {
+        $("#contactBtn.btn-scp").click(function() {
+            swal("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
+                buttons: ["Nope", "Send"],
+              });
+        }, );
+    }
+
     var priceSlider = function() {
         let sym = "&#8377;"
         $("#slider-range").slider({
@@ -226,6 +235,7 @@ $(function() {
         priceSlider();
         prodLens();
         sideNav();
+        contact();
         func_expand();
         productViewModel();
         CustomFileUploader();
