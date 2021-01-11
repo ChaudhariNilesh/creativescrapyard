@@ -1,10 +1,5 @@
-{% extends 'account/base-dashboard.html' %}
-{% load static %}
-{% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}"/>
-{% endblock %}
-
-{% block base %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<!-- <link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Order Details
@@ -52,50 +47,53 @@
 
 <div class="bx-shd my-3 py-2 px-3">
     <div class="py-3 table-responsive">
-        <table class="table border-bottom">
+        <table class="table table-hover border-bottom tablemanager">
 
-            <tr class="tb-header">
-                <th scope="col" class="tb-head text-left">Product ID</th>
-                <th scope="col" class="tb-head text-center">Product name</th>
-                <th scope="col" class="tb-head text-right">Quantity</th>
-                <th scope="col" class="tb-head text-right">Unit Price</th>
-                <th scope="col" class="tb-head text-right">Total</th>
-            </tr>
+            <thead>
+                <tr class="">
+                    <th scope="col" class="text-left">Product ID</th>
+                    <th scope="col" class="text-center">Product name</th>
+                    <th scope="col" class="text-right">Quantity</th>
+                    <th scope="col" class="text-right">Unit Price</th>
+                    <th scope="col" class="text-right">Total</th>
+                </tr>
+            </thead>
+
 
             <tbody>
-            <tr>
-                <th scope="row" class="text-left">101</th>
-                <td class="text-center">Perfume</td>
-                <td class="text-right">5</td>
-                <td class="text-right">50</td>
-                <td class="text-right">250</td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-left">101</th>
-                <td class="text-center">Perfume</td>
-                <td class="text-right">5</td>
-                <td class="text-right">50</td>
-                <td class="text-right">250</td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-left">101</th>
-                <td class="text-center">Perfume</td>
-                <td class="text-right">5</td>
-                <td class="text-right">50</td>
-                <td class="text-right">250</td>
-            </tr>
+                <tr>
+                    <td scope="row" class="text-left">101</td>
+                    <td class="text-center">Perfume</td>
+                    <td class="text-right">5</td>
+                    <td class="text-right">50</td>
+                    <td class="text-right">250</td>
+                </tr>
+                <tr>
+                    <td scope="row" class="text-left">101</td>
+                    <td class="text-center">Perfume</td>
+                    <td class="text-right">5</td>
+                    <td class="text-right">50</td>
+                    <td class="text-right">250</td>
+                </tr>
+                <tr>
+                    <td scope="row" class="text-left">101</td>
+                    <td class="text-center">Perfume</td>
+                    <td class="text-right">5</td>
+                    <td class="text-right">50</td>
+                    <td class="text-right">250</td>
+                </tr>
 
-            <tr>
-                <th scope="row" class="text-left"></th>
-                <td class="text-center"></td>
-                <td class="text-right"></td>
-                <td class="text-right">Total</td>
-                <td class="text-right">750</td>
-            </tr>
+                <tr>
+                    <td scope="row" class="text-left"></td>
+                    <td class="text-center"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right">Total</td>
+                    <td class="text-right">750</td>
+                </tr>
             </tbody>
-            <!--            maximum order should be 10.-->
+                       maximum order should be 10.
         </table>
     </div>
-</div>
+</div> -->
 
 {% endblock %}

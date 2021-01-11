@@ -167,7 +167,7 @@ $(function() {
         $("#contactBtn.btn-scp").click(function() {
             swal("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
                 buttons: ["Nope", "Send"],
-              });
+            });
         }, );
     }
 
@@ -289,7 +289,7 @@ $(function() {
             ],
             debug: false,
             vocabulary: {
-                voc_filter_by: 'Filter By',
+                voc_filter_by: 'Search By',
                 voc_type_here_filter: 'Search...',
                 voc_show_rows: 'Rows Per Page'
             },
