@@ -1,20 +1,24 @@
 {% extends 'common/common.html' %} {% load static %} {%block title %}Profile{%endblock%} {% block link %}
 <link rel="stylesheet" href="{%  static 'css/style.css' %}">
 <link rel="stylesheet" href="{%  static 'css/creativestyle.css' %}"> {% endblock %} {% block content %}
-<div class="infomain mx-5">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">About-Us</a></li>
-    </ol>
-</div>
+
 <div class="main-wrapper bg-white px-5">
+
+    <div class="row" style="margin-left: 65px;">
+        <div class="infomain ">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Profile</a></li>
+            </ol>
+        </div>
+    </div>
     <div class="main-content  row m-0 px-5">
+
         <!-- Left container -->
-        <div class="col-md-4  px-3">
+        <div class="col-md-4  px-3 py-3">
             <div class="px-3 bg-white justify-content-center border py-3">
                 <div class="w-100 pt-5 pb-2">
-                    <img src="{% static 'img/testimonial/4.jpg' %}"
-                        class="img-thumbnail rounded-circle card-profile-image shadow">
+                    <img src="{% static 'img/testimonial/4.jpg' %}" class="img-thumbnail rounded-circle card-profile-image shadow">
                 </div>
                 <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">Sabrina Morningstar</p>
                 <div class="my-0 text-center">
@@ -66,12 +70,8 @@
             <div class="px-3 bg-white justify-content-center border mt-3 py-3">
                 <p class="text-4 line-height-4 text-left py-3 my-0 fw-600">Bio</p>
                 <p class="text-4 line-height-4 text-justify my-0 fw-300">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book. It has
-                    survived not only five centuries, but also the leap into electronic typesetting, remaining
-                    essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-                    containing Lorem Ipsum passages, and more recently
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+                    survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
                     with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
             </div>
@@ -79,19 +79,17 @@
 
 
         <!-- Right container -->
-        <div class="col-md-8 bg-white px-3 py-5">
+        <div class="col-md-8 bg-white px-3 py-3">
             <div class="px-3 bg-white pt-4 pb-3 border">
                 <!-- <span class="px-3 align-middle h5">Creative Items</span>
                 <span class="px-3 align-middle h5">Scrap Items</span> -->
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-cretive-tab" data-toggle="tab"
-                            href="#nav-creative">Creative
+                        <a class="nav-item nav-link active" id="nav-cretive-tab" data-toggle="tab" href="#nav-creative">Creative
                             Items</a>
                         <a class="nav-item nav-link" id="nav-scrap-tab" data-toggle="tab" href="#nav-scrap">Scrap
                             Items</a>
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"
-                            href="#nav-review">Reviews</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-review">Reviews</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tab Content">
@@ -101,13 +99,33 @@
                         {% with n='[1,2,3,4,5]' tab='creative'%}
                         <div class="d-md-flex row">
                             {% for i in n %}
-                            <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
                                 {% include 'shop/product-grid.html' %}
                             </div>
                             {%endfor%}
                         </div>
                         {%endwith%}
-
+                        <div class="row mx-auto mt-3">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span class="" aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Scrap items -->
@@ -121,11 +139,31 @@
                             {%endfor%}
                         </div>
                         {%endwith%}
+                        <div class="row mx-auto mt-3">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span class="" aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade mt-2" id="nav-review">
-                        {% with r="[0,1,2,3,4]"%}
-                        {% for i in r%}
-                        <div class="container py-3 px-4 d-block border shadow-sm">
+                        {% with r="[0,1,2,3,4]"%} {% for i in r%}
+                        <div class="container py-3 px-4 my-3 d-block border shadow-sm">
                             <div class="row">
                                 <div class="col">
                                     <div><b>Yash Kukreja</div>
@@ -140,13 +178,31 @@
                                 </div>
                             </div>
                             <div class="row mx-auto my-1 d-block">
-                                <p>"Lorem Ipsum is simply dummy text of the printing and typesetting industryLorem Ipsum
-                                    is simply dummy text of the printing and typesetting industryLorem Ipsum is simply
-                                    dummy text of the printing and typesetting industry"</p>
+                                <p>"Lorem Ipsum is simply dummy text of the printing and typesetting industryLorem Ipsum is simply dummy text of the printing and typesetting industryLorem Ipsum is simply dummy text of the printing and typesetting industry"</p>
                             </div>
                         </div>
-                        {% endfor %}
-                        {% endwith %}
+                        {% endfor %} {% endwith %}
+                        <div class="row mx-auto mt-3">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span class="" aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
