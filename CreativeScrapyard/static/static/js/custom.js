@@ -164,7 +164,8 @@ $(function() {
 
 
     var contact = function() {
-        $("#contactBtn.btn-scp").click(function() {
+        $("#contactBtn.btn-scp").click(function(e) {
+            e.preventDefault();
             swal("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
                 buttons: ["Nope", "Send"],
               });
