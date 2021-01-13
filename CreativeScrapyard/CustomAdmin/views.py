@@ -10,6 +10,10 @@ def users(request):
     template = 'custom-admin/users.html'
     return render(request,template)
 
+def badges(request):
+    template = 'custom-admin/manage-badges.html'
+    return render(request,template)
+
 def login(request):
     template = 'custom-admin/login.html'
     return render(request,template)
