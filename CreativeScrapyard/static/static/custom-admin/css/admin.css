@@ -542,6 +542,9 @@ table {
 .table th {
     padding: 15px;
 }
+.table td {
+    padding: 15px 0px;
+}
 
 .table th,
 .table td {
