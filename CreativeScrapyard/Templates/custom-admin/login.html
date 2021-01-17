@@ -7,7 +7,7 @@
                     <h1 class="text-center title m-4">Creative Scrapyard</h1>
                 </div>
                 <div class="container-fluid">
-                    <form id="" role="form">
+                    <form id="" role="form" method="POST" action="{% url 'CustomAdmin:login' %}"> {% csrf_token %}
                         <div class="controls">
                             <div class="row">
                                 <div class="col-md-12">

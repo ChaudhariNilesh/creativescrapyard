@@ -50,6 +50,10 @@ th.tb-head {
     background-color: #d9dce1;
 }
 
+table {
+    font-size: 15px;
+}
+
 
 /* table {
     width: 100%;

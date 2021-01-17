@@ -66,16 +66,15 @@
                     <span>Tags: </span>
                 </div>
                 <div class="col">
-                    <p class="pb-2">
-                        <span class="tags tags-common mx-1 my-2">Artist</span>
-                        <span class="tags tags-special mx-1">Seller of the month</span>
-                        <span class="tags tags-rare mx-1">Seller of the year</span>
-                    </p>
-                    <p>
-                        <span class="tags tags-event mx-1">Navratri 2020</span>
-                        <span class="tags tags-event mx-1">Navratri 2020</span>
-                        <span class="tags tags-event mx-1">Navratri 2020</span>
-                    </p>
+                    <ul class="pb-2 list-inline list-group list-group-horizontal nav d-flex justify-content-center">
+                        <li class="tags tags-common mx-1 my-1">Artist</li>
+                        <li class="tags tags-special mx-1 my-1">Seller of the month</li>
+                        <li class="tags tags-rare mx-1 my-1">Seller of the year</li>
+                    
+                        <li class="tags tags-event mx-1 my-1">Navratri 2020</li>
+                        <li class="tags tags-event mx-1 my-1">Navratri 2020</li>
+                        <li class="tags tags-event mx-1 my-1">Navratri 2020</li>
+                    </ul>
                 </div>
             </div>
             <form>
@@ -155,37 +154,49 @@
 <div class="bx-shd my-4 py-2 px-3 border">
     <span class="card-title">Bank Details</span>
     <div class="py-3">
-        <form>
+
+        <form method="" action="#">{% csrf_token %}
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="accountNo">Account Number</label>
-                    <input type="text" class="form-control" id="accountNo" value="9988-7766-5544-2310">
+                    <input type="text" class="form-control" name="accountNo" id="accountNo" value="9988-7766-5544-2310">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="accountHolder">Account Holder</label>
-                    <input type="text" class="form-control" id="accountHolder" value="Mr. John Doe">
+                    <input type="text" class="form-control" name="accountNo" id="accountHolder" value="Mr. John Doe">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="bankName">Bank Name</label>
-                    <select id="bankName" class="form-control">
+                    <select name="bankName" id="bankName" class="form-control">
                         <option selected>State Bank of India</option>
-                        <option>Bank of Baroda</option>
-                        <option>ICICI Bank</option>
-                        <option>HDFC Bank</option>
-                        <option>Bank of India</option>
-                        <option>Axis Bank</option>
+                        <option value="">Bank of Baroda</option>
+                        <option value="">ICICI Bank</option>
+                        <option value="">HDFC Bank</option>
+                        <option value="">Bank of India</option>
+                        <option value="">Axis Bank</option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="ifscCode">IFSC code</label>
-                    <input type="text" class="form-control" id="ifscCode" value="SBI778899">
+                    <input type="text" class="form-control" name="ifscCode" id="ifscCode" value="SBI778899">
+                </div>
+                
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="panNo">PAN Number</label>
+                    <input type="text" class="form-control" readonly id="panNo" value="ABCD123456" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="panName">PAN Name</label>
+                    <input type="text" class="form-control" readonly id="panName" value="Mr. John Doe" disabled>
                 </div>
             </div>
-
             <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
+            <button type="submit" class="btn btn-sm pri-bg-color">Reveal</button>
         </form>
     </div>
 </div>

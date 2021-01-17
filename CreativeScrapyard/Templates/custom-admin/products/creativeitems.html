@@ -1,22 +1,25 @@
-{% extends 'custom-admin/common.html' %} {% load static %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %} 
+{% comment %} {%block breadcumb %}{% block breadcrumb-link%}<li class="breadcrumb-item active">User</li> {%endblock%} 
+{%endblock%}  {% endcomment %}
+{%block content%}
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="col-md-12">
             <div class="box-inn-sp">
                 <div class="page-title">
-                    User Details
+                    Creative Items
                 </div>
                 <div class="tab-inn">
                     <div class="table-responsive table-user">
                         <table class="table table-hover tablemanager">
                             <thead>
                                 <tr>
-                                    <th class="disableSort">User</th>
-                                    <th>Name</th>
+                                    <th class="disableSort">Image</th>
+                                    <th class="">Product ID</th>
+                                    <th>Product Name</th>
                                     <th>Email</th>
-                                    <th>Creative Items</th>
-                                    <th>Scrap Items</th>
+                                    <th>Status</th>
+                                    <th>Created On</th>
                                     <th class="disableFilterBy">Artist</th>
                                     <th class="disableFilterBy">Action</th>
                                 </tr>
@@ -29,10 +32,10 @@
                                     </td>
                                     <td>nilesh@test.com</td>
                                     <td>
-                                        <span class="p-2 listing">0</span>
+                                        <span class="p-2 listing">Inactive</span>
                                     </td>
                                     <td>
-                                        <span class="p-2 listing">2,200</span>
+                                        <span class="p-2 listing">1/01/2021</span>
                                     </td>
                                     <td>
                                         <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
@@ -58,12 +61,19 @@
                                     </td>
                                     <td>dummy@dummy.com</td>
                                     <td>
+                                        <span class="p-2 listing">Active</span>
+
+                                    </td>
+                                    <td>
+                                        <span class="p-2 listing">15/02/2021</span>
+                                    </td>
+                                    {% comment %} <td>
                                         <span class="p-2 listing">20</span>
 
                                     </td>
                                     <td>
                                         <span class="p-2 listing">20</span>
-                                    </td>
+                                    </td> {% endcomment %}
                                     <td>
                                         <span class="listing"><i class="fa fa-check" aria-hidden="true"></i></span>
                                     </td>
