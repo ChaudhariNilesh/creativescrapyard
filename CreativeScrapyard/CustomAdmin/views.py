@@ -141,5 +141,9 @@ def scrapitems(request):
 
 ####### ORDERS RELATED #######
 
+####### BADGES RELATED #######
+def badges(request):
+    template = 'custom-admin/manage-badges.html'
+    return render(request,template)
 
 

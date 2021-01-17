@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="{% static 'css/sweetalert2.css' %}">
     
 
+ <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900'
+          type='text/css'>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
 </head>
 
 <body>
@@ -52,6 +56,9 @@
                                 </li>
                                 <li>
                                     <a href="{% url 'CustomAdmin:verifyusers' %}">Verify User</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'CustomAdmin:badges' %}">Manage Badges</a>
                                 </li>
                             </ul>
                         </li>

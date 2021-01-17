@@ -212,6 +212,43 @@ $(function() {
     }
 
 
+    var addBadgesInput = function() {
+        $('#addBadge').on("click", function() {
+            swal("Enter the badge name :", {
+                    content: "input",
+                })
+                .then((value) => {
+                    swal(`${value} Badge Added`);
+                });
+        });
+    }
+    var badgeDelete = function() {
+        $('#badge').on("click", function() {
+            swal({
+                title: "Are you sure you want to delete this badge?",
+                text: "You will not be able to see the badge entries of this anymore!",
+                icon: "warning",
+                buttons: [
+                    'No, cancel it!',
+                    'Yes, I am sure!'
+                ],
+                dangerMode: true,
+            }).then(function(isConfirm) {
+                if (isConfirm) {
+                    swal({
+                        title: 'Deleted',
+                        text: 'The Badge is deleted success fully',
+                        icon: 'success'
+                    }).then(function() {
+                        form.submit();
+                    });
+                } else {
+                    swal("Cancelled", "The Badge is safe :)", "error");
+                }
+            });
+        });
+    }
+
     $(function() {
         adminSideBar();
         logoutSwal();
@@ -225,6 +262,8 @@ $(function() {
         verifyChk();
 
 
+        addBadgesInput();
+        badgeDelete();
     });
 
 

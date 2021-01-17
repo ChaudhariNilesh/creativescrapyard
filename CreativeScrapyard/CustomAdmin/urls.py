@@ -30,4 +30,5 @@ urlpatterns = [
 
 
 
+    path('badges/',badges,name="badges"),
 ]

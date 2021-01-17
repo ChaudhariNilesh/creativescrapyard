@@ -300,6 +300,18 @@ $(function() {
 
         });
     }
+
+    var addBadgesInput = function(){
+        $('#addBadge').on("click", function() {
+        swal("Write something here:", {
+            content: "input",
+          })
+          .then((value) => {
+            swal(`You typed: ${value}`);
+          }); 
+        });
+    }
+
     var loadMoreRows = function() {
         let i;
         for (i = 0; i < 5; i++) { $('.tablemanager').find("tbody tr").eq(i).addClass('active'); }
@@ -332,6 +344,7 @@ $(function() {
         //flatZoom();
         ArtistProductGal();
         changeProdHover();
+        addBadgesInput();
         priceSlider();
         prodLens();
         sideNav();
@@ -347,6 +360,9 @@ $(function() {
         gridPagination();
     });
 });
+
+
+
 
 
 
