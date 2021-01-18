@@ -192,6 +192,7 @@ $(function() {
     };
 
     var productViewModel = function() {
+//        forward on model
         $('#editProductNext').click(function() {
             $('#view-data').hide("slide", { direction: "left" }, 1000);
             $('#edit-data-1').show("slide", { direction: "right" }, 1000);
@@ -202,8 +203,19 @@ $(function() {
             $('#edit-data-2').show("slide", { direction: "right" }, 1000);
         });
 
+//       backward on model
+        $("#editProductBack1").click(function() {
+            $('#edit-data-1').hide("slide", {direction: "right"}, 1000);
+            $('#view-data').show("slide", {direction: "left"}, 1000);
+        });
+
+        $("#editProductBack2").click(function() {
+            $('#edit-data-2').hide("slide", {direction: "right"}, 1000);
+            $('#view-data').show("slide", {direction: "left"}, 1000);
+        });
     }
 
+    /*
     var CustomFileUploader = function() {
         $('#productFileUploader').FancyFileUpload({
             'params': {
@@ -264,6 +276,7 @@ $(function() {
         });
 
     }
+    */
 
     //table filters
     var tableManager = function() {
@@ -312,7 +325,42 @@ $(function() {
 
     var gridPagination = function() {
 
-        }
+    }
+
+    // new file uploader js SIBTC
+    var newFileUploader = function() {
+
+        $(".js-upload-photos").click(function () {
+            $("#fileupload").click();
+        });
+
+        /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
+        $("#fileupload").fileupload({
+            dataType: 'json',
+            sequentialUploads: true,  /* 1. SEND THE FILES ONE BY ONE */
+            start: function (e) {  /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
+              $("#modal-progress").modal("show");
+            },
+            stop: function (e) {  /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
+              $("#modal-progress").modal("hide");
+              setTimeout(function(){$("#modal-progress").modal("hide")}, 1000);
+            },
+            progressall: function (e, data) {  /* 4. UPDATE THE PROGRESS BAR */
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                var strProgress = progress + "%";
+                $(".progress-bar").css({"width": strProgress});
+                $(".progress-bar").text(strProgress);
+            },
+            done: function (e, data) {
+                if (data.result.is_valid) {
+                    $("#gallery tbody").prepend(
+                        "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a></td><td><a href=" + 'http://127.0.0.1:8000/accounts/photo-delete/' + data.result.id + "><span class='remove-product-image p-1'><img src='https://s.svgbox.net/materialui.svg?ic=delete&fill=13775a' width='26' height='26'></span></a></td></tr>"
+                    );
+                }
+            }
+        });
+    }
+
         //   Dom Ready
     $(function() {
         responsiveTab();
@@ -327,12 +375,13 @@ $(function() {
         func_expand();
         productViewModel();
         // CustomFileUploader();
-        CustomFileUploader();
+        //CustomFileUploader();
         tableManager();
         loadMoreRows();
         // expandDashboard();
         // uploadImageName();
         gridPagination();
+        newFileUploader();
     });
 });
 
