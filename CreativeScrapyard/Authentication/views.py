@@ -6,7 +6,7 @@ from django.http import JsonResponse
 # Create your views here.
 def profile(request):
     template = "account/profile.html"
-    return render(request, template,{'is_creative':True})
+    return render(request, template)
 
 def creative_items(request):
     template = "account/dashboard/creative-items.html"

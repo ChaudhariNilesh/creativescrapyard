@@ -89,7 +89,7 @@
                     <div class="col-md-6 col-12 ">
                         <div class="product-disarea">
                             <h2 class="product-name">Item Name</h2>
-                            <div class="byartist"><span><a href="{% url 'Home:Authentication:profile' %}">By Artist Name</a></span></div>
+                            <div class="byartist"><span><a href="{% url 'Authentication:profile' %}">By Artist Name</a></span></div>
                             <p class="price">
                                 <span>&#8377; 300</span>
                             </p>
@@ -132,7 +132,7 @@
                                 <div class="form-group">
                                     {% if is_creative %}
                                     <button type="submit" class="btn-cxt btn-block mt-3" id="buyItem">Buy Now</span></button> {% else %}
-                                    <button class="btn-scp btn-block  mt-3" id="contactScpBtn">Contact</span></button> {% endif %}
+                                    <button id="contactBtn" class="btn-scp btn-block  mt-3">Contact</span></button> {% endif %}
                                 </div>
                             </form>
                             {% if is_creative %}

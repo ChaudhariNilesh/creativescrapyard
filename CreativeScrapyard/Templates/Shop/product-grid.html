@@ -14,9 +14,9 @@
 
                 </div>
                 <a href="#">
-                    <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
+                    <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                 </a>
-                {% if is_creative and  tab == 'creative' %}
+                {% if is_creative or  tab == 'creative' %}
                 <a href="{% url 'Home:Items:Cart:addToCart' %}"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
             </div>
         </a>

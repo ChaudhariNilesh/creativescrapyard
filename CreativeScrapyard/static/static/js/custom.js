@@ -162,6 +162,16 @@ $(function() {
         }, );
     }
 
+
+    var contact = function() {
+        $("#contactBtn.btn-scp").click(function(e) {
+            e.preventDefault();
+            swal("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
+                buttons: ["Nope", "Send"],
+            });
+        }, );
+    }
+
     var priceSlider = function() {
         let sym = "&#8377;"
         $("#slider-range").slider({
@@ -282,26 +292,39 @@ $(function() {
     var tableManager = function() {
         $('.tablemanager').tablemanager({
             firstSort: [
+                [1, 0],
                 [3, 0],
-                [2, 0],
-                [1, 'asc']
+                [4, 0],
+                [5, 1]
             ],
-            disable: ["last"],
             appendFilterby: true,
             dateFormat: [
-                [4, "mm-dd-yyyy"]
+                [2, "mm-dd-yyyy"]
             ],
             debug: false,
             vocabulary: {
-                voc_filter_by: 'Filter By',
+                voc_filter_by: 'Search By',
                 voc_type_here_filter: 'Search...',
                 voc_show_rows: 'Rows Per Page'
             },
             pagination: false,
             showrows: [5, 10, 20, 50, 100],
-            disableFilterBy: [1]
+            disableFilterBy: []
+
         });
     }
+
+    var addBadgesInput = function(){
+        $('#addBadge').on("click", function() {
+        swal("Write something here:", {
+            content: "input",
+          })
+          .then((value) => {
+            swal(`You typed: ${value}`);
+          }); 
+        });
+    }
+
     var loadMoreRows = function() {
         let i;
         for (i = 0; i < 5; i++) { $('.tablemanager').find("tbody tr").eq(i).addClass('active'); }
@@ -369,9 +392,11 @@ $(function() {
         //flatZoom();
         ArtistProductGal();
         changeProdHover();
+        addBadgesInput();
         priceSlider();
         prodLens();
         sideNav();
+        contact();
         func_expand();
         productViewModel();
         // CustomFileUploader();
@@ -384,6 +409,9 @@ $(function() {
         newFileUploader();
     });
 });
+
+
+
 
 
 
