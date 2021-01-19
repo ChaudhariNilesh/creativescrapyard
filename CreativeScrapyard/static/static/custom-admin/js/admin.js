@@ -128,6 +128,12 @@ $(function() {
           }); 
         });
     }
+
+    var assignBadgeInput = function(){
+        $('#assignBadge').on("click",function(){
+            
+        });
+    }
     var badgeDelete = function(){
         $('#badge').on("click", function(){
             swal({

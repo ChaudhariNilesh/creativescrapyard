@@ -29,14 +29,104 @@
                 <p class="card-value">57</p>
             </div>
             <div class="col shadow bg-white my-2 mx-3 py-2 text-center">
+                <img class="card-icon rounded" src="//s.svgbox.net/hero-outline.svg?ic=user-group&fill=13775a" width="40" height="40">
+                <p class="short-card-title">Total Sellers</p>
+                <p class="card-value">234</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col row ">
+            <div class="col shadow bg-white my-2 mx-3 py-2 text-center">
+                <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=users&fill=13775a" width="40" height="40">
+                <p class="short-card-title">Total Users</p>
+                <p class="card-value">57</p>
+            </div>
+        </div>
+
+        <div class="col row">
+            <div class="col shadow bg-white my-2 mx-3 py-2 text-center">
+                <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=trash&fill=13775a" width="40" height="40">
+                <p class="short-card-title">Total Scrap Products</p>
+                <p class="card-value">57</p>
+            </div>
+            <div class="col shadow bg-white my-2 mx-3 py-2 text-center">
                 <img class="card-icon rounded" src="https://s.svgbox.net/materialui.svg?ic=color_lens&fill=13775a" width="40" height="40">
                 <p class="short-card-title">Total Creative Products</p>
                 <p class="card-value">234</p>
             </div>
         </div>
     </div>
-
 </div>
 
+<hr/>
+<div class="row">
 
+    <div class="col shadow bg-white my-2 py-2 mr-3">
+        <div class="">
+            <h4 class="border-bottom">Top Creative Items</h4>
+        </div>
+        {% with n='[1]' %} {% for i in n %}
+        <div class="top-creativeitem my-2 border-bottom p-2">
+
+            <div class="row d-flex">
+                <div class="col-6">
+                    <img class="img-thumbnail" src="{% static 'img/products/creative/bottlebasket.jpg' %} " alt="product image ">
+                </div>
+                <div class="col-6 m-auto">
+                    <div class="row">
+                        <h5 class="mb-0 font-weight-bolder">Bottle Basket</h5>
+                    </div>
+                    <div class="row">
+                        <p class="mb-0" style="font-size:15px"><a href="{% url 'Authentication:profile' %}">By John Doe</a></p>
+                    </div>
+
+                    <div class="row">
+                        <p class="mb-0" style="font-size:15px"><span class="font-weight-bold">SKU:</span> ABC-ABC-ABC-ABC</p>
+                    </div>
+                    <div class="row">
+                        <p class="mb-0 font-weight-bolder">&#8377; 300</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%} {%endwith%}
+    </div>
+
+    <div class="col shadow bg-white my-2 py-2">
+        <div class="">
+            <h4 class="border-bottom">Top Sellers</h4>
+        </div>
+        {% with n='[1]' %} {% for i in n %}
+
+        <div class="top-creativeitem my-2 border-bottom p-2">
+            <div class="row d-flex">
+                <div class="col-3">
+                    <img class="rounded-circle m-auto" src=" {% static 'custom-admin/images/user/1.png' %} " alt=" ">
+                </div>
+                <div class="col-9 ">
+                    <div class="row ">
+                        <h5 class="mb-0 font-weight-bolder ">John Doe</h5>
+                    </div>
+                    <div class="row ">
+                        <p class="mb-0 " style="font-size:15px "><span class="font-weight-bold ">Revenue : </span>&#8377;10,000</p>
+                    </div>
+                    <div class="row ">
+                        <p class="mb-0 w-100 " style="font-size:15px "><span class="font-weight-bold ">Creative Items Listed : </span> 100 </p>
+                        <p class="mb-0 " style="font-size:15px "><span class="font-weight-bold ">Scrap Items Listed :</span> 50 </p>
+                    </div>
+                    <div class="row ">
+                        <p class="mb-0 " style="font-size:15px "><span class="font-weight-bold ">Total Order Completed :</span> 1000 </p>
+                    </div>
+                </div>
+                <!-- <div class="col-3 ">
+                    <p class="mb-0 font-weight-bolder ">&#8377; 300</p>
+                </div> -->
+            </div>
+        </div>
+        {%endfor%} {%endwith%}
+
+    </div>
+</div>
 {%endblock%}

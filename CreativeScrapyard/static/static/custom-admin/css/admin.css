@@ -166,8 +166,8 @@ a:focus {
 /* Admin Dashboard */
 
 .main-container {
-    margin-left: 3rem;
-    margin-right: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     transition: 1s ease;
 }
 
@@ -458,8 +458,19 @@ MEDIAQUERIES
 
 /* Users */
 
-.table-user i.cus {
-    background: var(--pri-color);
+.btn-sm,
+.btn-group-sm>.btn {
+    font-size: 0.875rem !important;
+}
+
+.pri-bg-color {
+    background-color: var(--pri-color);
+    color: white;
+}
+
+.pri-bg-color:hover {
+    background-color: var(--pri-color-dark);
+    color: white;
 }
 
 
@@ -494,10 +505,16 @@ td span.listing i {
     margin-right: auto;
 }
 
-.table-user i.cus:hover {
+
+/* .table-user i.cus {
+    background: var(--pri-color);
+} */
+
+
+/* .table-user i.cus:hover {
     background: var(--pri-color-dark);
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+} */
 
 .table-user i.fa-trash-o {
     background: red
@@ -510,15 +527,23 @@ td span.listing i {
 
 table {
     width: 100%;
-    border-collapse: collapse;
     margin-top: 20px;
     margin-bottom: 20px;
+    font-size: 15px;
 }
 
-td span img {
+
+/* td span img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+} */
+
+.table th {
+    padding: 15px;
+}
+.table td {
+    padding: 15px 0px;
 }
 
 .table th,
@@ -526,16 +551,18 @@ td span img {
     vertical-align: middle;
 }
 
-table,
+
+/* table,
 th,
 td {
     border: 1px solid #bbb;
     text-align: left;
-}
+} */
 
-th {
+
+/* th {
     background-color: #ddd;
-}
+} */
 
 
 /*Initial style sort*/
