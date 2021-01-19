@@ -17,7 +17,9 @@ urlpatterns = [
     path('verify-users/',verifyusers,name="verifyusers"),
     
     path('creative-categories/',creativeCat,name="creativeCat"),
+    path('creative-categories/<int:id>/',loadSubCrtCats,name="loadSubCrtCats"),
     path('creativeitems/',creativeitems,name="creativeitems"),
+    
     path('scrap-categories/',scrapCat,name="scrapCat"),
     path('scrapitems/',scrapitems,name="scrapitems"),
     
@@ -25,6 +27,8 @@ urlpatterns = [
     path('ajax/view-details/',viewDets,name="viewDets"),
     path('ajax/documents/',docuDownload,name="docuDownload"),
     path('ajax/verify/',verifyChk,name="verifyChk"),
+    path('ajax/creative-categories/',loadSubCrtCats,name="loadSubCrtCats"),
+
 
 
 

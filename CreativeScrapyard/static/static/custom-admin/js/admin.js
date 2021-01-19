@@ -10,19 +10,33 @@ $(function() {
 
     var logoutSwal = function() {
         $('.logout').on('click', function() {
-            swal({
-                title: "Are you sure?",
-                icon: "warning",
-                buttons: ["No", "Yes"],
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete) {
+            // swal({
+            //     title: "Are you sure?",
+            //     icon: "warning",
+            //     buttons: ["No", "Yes"],
+            //     dangerMode: true,
+            // }).then((willDelete) => {
+            //     if (willDelete) {
+            //         $.ajax({
+            //             url: "/admin/logout/",
+            //             success: function(result) { location.reload(); }
+            //         });
+            //     } else {}
+            // });
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
                     $.ajax({
                         url: "/admin/logout/",
                         success: function(result) { location.reload(); }
                     });
-                } else {}
-            });
+                }
+            })
         });
     };
 
@@ -53,7 +67,7 @@ $(function() {
             },
             pagination: false,
             showrows: [5, 10, 20, 50, 100],
-            disableFilterBy: [1]
+            // disableFilterBy: [1]
         });
     }
     var loadMoreRows = function() {
@@ -68,7 +82,7 @@ $(function() {
             var last = $rows.filter('.active:last').index();
 
             if ((last + 1) == rlen) {
-                swal("All Records loaded");
+                Swal.fire("All Records loaded");
             } else {
                 $rows.filter(':lt(' + (last + 10) + ')').addClass('active').css({ "display": "" });
 
@@ -77,44 +91,53 @@ $(function() {
     }
     var disableBtn = function() {
         $('.disable-btn').on("click", function() {
-            swal({
-                    text: 'Write reason for disable?',
-                    content: "input",
-                    dangerMode: true,
-                    button: {
-                        text: "Disable",
-                        closeModal: false,
 
-                    },
-                })
-                .then(name => {
-                    if (!name) throw null;
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "",
+                        success: function(data) {
+                            if (true) {
+                                Swal.fire("User disabled successfully.", "", "success");
+                            }
+                        }
+                    });
+                }
+            })
 
-                    //return fetch(`url`);
-                    return true;
+            // .then(name => {
+            //     if (!name) throw null;
 
-                })
-                .then(results => {
-                    if (results)
-                        swal("User disabled successfully.", {
-                            icon: "success",
-                        });
-                    else {
+            //     //return fetch(`url`);
+            //     return true;
 
-                        swal("Oh no!", "The AJAX request failed!", "error");
-                        swal.stopLoading();
-                        swal.close();
-                    }
+            // })
+            // .then(results => {
+            //     if (results)
+            //         Swal.fire("User disabled successfully.", {
+            //             icon: "success",
+            //         });
+            //     else {
 
-                })
-                .catch(err => {
-                    if (err) {
-                        swal("Oh no!", "The AJAX request failed!", "error");
-                    } else {
-                        swal.stopLoading();
-                        swal.close();
-                    }
-                });
+            //         Swal.fire("Oh no!", "The AJAX request failed!", "error");
+            //         Swal.close();
+            //     }
+
+            // })
+            // .catch(err => {
+            //     if (err) {
+            //         swal("Oh no!", "The AJAX request failed!", "error");
+            //     } else {
+            //         swal.stopLoading();
+            //         swal.close();
+            //     }
+            // });
         });
 
     }
@@ -144,7 +167,7 @@ $(function() {
 
 
     var userViewDets = function() {
-        $("#userViewDets").on("click", function() {
+        $(".userViewDets").on("click", function() {
             $.ajax({
                 url: $(this).attr("data-view-url"),
                 datatype: JSON,
@@ -155,56 +178,57 @@ $(function() {
                         "Account Holder Name : " + data.accName + "\n" +
                         "Pan No : " + data.panNo + "\n" +
                         "Pan Name : " + data.panName;
+
                     Swal.fire(
-                            'User Verification Details',
-                            '<div class="p-4"> </div>',
-                        )
-                        //                     <div class="swal">
-                        //     <div class="row">
-                        //         <span class="col"></span>
-                        //         <span class="col"></span>
-                        //     </div>
-                        //     <div class="row">
-                        //         <span class="col"></span>
-                        //         <span class="col"></span>
-                        //     </div>
-                        // </div>
+                        'User Verification Details',
+                        loopValues(data),
+                        // "<div class=''><div class='row'><span class='col'></span><span class='col'></span></div></div>",
+                    )
+
 
                 }
             });
         });
+
+        function loopValues(data) {
+            var userDetails = "";
+            var label = ['Bank Name : ', 'Bank IFSC CODE : ', 'Account Number : ', 'Account Holder : ', 'Pan No : ', 'Pan Name : '];
+            let i = 0;
+            for (var val in data) {
+                userDetails += "<div class='row'><span class='col text-right'>" + label[i++] + "</span><span class='col text-left'>" + data[val] + "</span></div>"
+            }
+            return userDetails;
+        }
     }
 
-    var userDocuDownload = function() {
-        $("#userDocuDownload").on("click", function() {
-            $.ajax({
-                url: $(this).attr("data-url"),
-                datatype: JSON,
-                success: function(data) {}
-            });
-        });
-    }
+    // var userDocuDownload = function() {
+    //     $("#userDocuDownload").on("click", function() {
+    //         $.ajax({
+    //             url: $(this).attr("data-url"),
+    //             datatype: JSON,
+    //             success: function(data) {}
+    //         });
+    //     });
+    // }
 
     var verifyChk = function() {
-        $("#verifyChk").on("click", function() {
+        $(".verifyChk").on("click", function() {
             $.ajax({
                 url: $(this).attr("data-verify-url"),
                 datatype: JSON,
                 success: function(data) {
                     if (data.is_verified) {
-                        swal({
-                                title: "Are you sure?",
-                                icon: "warning",
-                                buttons: true,
-                                dangerMode: true,
-                            })
-                            .then((willDelete) => {
-                                if (willDelete) {
-                                    swal("Verified", {
-                                        icon: "success",
-                                    });
-                                }
-                            });
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire("User Verified", "", "success");
+                            }
+                        })
                     }
                 }
             });
@@ -214,41 +238,154 @@ $(function() {
 
     var addBadgesInput = function() {
         $('#addBadge').on("click", function() {
-            swal("Enter the badge name :", {
-                    content: "input",
-                })
-                .then((value) => {
-                    swal(`${value} Badge Added`);
-                });
+            const { value: badge } = Swal.fire({
+                title: 'Add Badge',
+                input: 'text',
+                inputLabel: 'Enter new badge name :',
+                inputPlaceholder: 'Enter badge name',
+                inputValidator: (value) => {
+                    if (!value) {
+                      return 'You need to write something!'
+                    }
+                    else{
+                        Swal.fire(`${value} Badge Added`)
+                    }
+                }
+              })
         });
     }
     var badgeDelete = function() {
         $('#badge').on("click", function() {
-            swal({
-                title: "Are you sure you want to delete this badge?",
-                text: "You will not be able to see the badge entries of this anymore!",
-                icon: "warning",
-                buttons: [
-                    'No, cancel it!',
-                    'Yes, I am sure!'
-                ],
-                dangerMode: true,
-            }).then(function(isConfirm) {
-                if (isConfirm) {
-                    swal({
-                        title: 'Deleted',
-                        text: 'The Badge is deleted success fully',
-                        icon: 'success'
-                    }).then(function() {
-                        form.submit();
-                    });
-                } else {
-                    swal("Cancelled", "The Badge is safe :)", "error");
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              })
+              
+              swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your badge has been deleted.',
+                    'success'
+                  )
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                  swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your badge is safe :)',
+                    'error'
+                  )
                 }
-            });
+              })
+            // swal({
+            //     title: "Are you sure you want to delete this badge?",
+            //     text: "You will not be able to see the badge entries of this anymore!",
+            //     icon: "warning",
+            //     buttons: [
+            //         'No, cancel it!',
+            //         'Yes, I am sure!'
+            //     ],
+            //     dangerMode: true,
+            // }).then(function(isConfirm) {
+            //     if (isConfirm) {
+            //         swal({
+            //             title: 'Deleted',
+            //             text: 'The Badge is deleted success fully',
+            //             icon: 'success'
+            //         }).then(function() {
+            //             form.submit();
+            //         });
+            //     } else {
+            //         swal("Cancelled", "The Badge is safe :)", "error");
+            //     }
+            // });
         });
     }
+    var addMainCrtCat = function() {
+        $("#add-main-cat").on("click", function() {
+            $("#addMainCatModal").modal("show");
+            $.ajax({
+                url: $(this).attr("data-url-cat"),
+                datatype: "json",
+                success: function(data) {}
+            })
+        });
+    };
 
+    var loadCats = function() {
+        $.ajax({
+            url: $(this).attr("data-url-cat"),
+            datatype: "json",
+            success: function(data) {
+                //    alert(data.mainCatName[0]["Home Decor"]);
+                var i = 0
+                $.each(data.mainCatName, function(key) {
+                    $.each(data.mainCatName[key], function(k, v) {
+                        console.log(k);
+                        console.log(v);
+                    });
+
+                });
+
+            }
+        })
+    }
+    var addSubCrtCat = function() {
+        $("#add-sub-crt-cat").on("click", function() {
+            $("#addSubCatModal").modal("show");
+            $.ajax({
+                url: $(this).attr("data-url-cat"),
+                datatype: "json",
+                success: function(data) {
+                    //    alert(data.mainCatName[0]["Home Decor"]);
+                    // var i = 0
+                    // $.each(data.mainCatName, function(key) {
+                    //     $.each(data.mainCatName[key], function(k, v) {
+                    //         console.log(k);
+                    //         console.log(v);
+                    //     });
+
+                    // });
+
+                }
+            })
+        });
+    };
+
+    var editMainCrtCat = function() {
+        $("#edit-mainCrtCat").on("click", function() {
+            $("#addSubCatModal").modal("show");
+            $.ajax({
+                url: $(this).attr("data-url-cat"),
+                datatype: "json",
+                success: function(data) {
+                    //    alert(data.mainCatName[0]["Home Decor"]);
+                    // var i = 0
+                    // $.each(data.mainCatName, function(key) {
+                    //     $.each(data.mainCatName[key], function(k, v) {
+                    //         console.log(k);
+                    //         console.log(v);
+                    //     });
+
+                    // });
+
+                }
+            })
+        });
+    };
     $(function() {
         adminSideBar();
         logoutSwal();
@@ -260,10 +397,12 @@ $(function() {
         userViewDets();
         // userDocuDownload();
         verifyChk();
-
-
         addBadgesInput();
         badgeDelete();
+
+        addMainCrtCat();
+        addSubCrtCat();
+        editMainCrtCat();
     });
 
 

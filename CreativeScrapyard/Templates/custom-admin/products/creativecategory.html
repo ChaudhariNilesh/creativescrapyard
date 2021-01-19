@@ -1,86 +1,204 @@
-{% extends 'custom-admin/common.html' %} {% load static %} 
-{% comment %} {%block breadcumb %}{% block breadcrumb-link%}<li class="breadcrumb-item active">User</li> {%endblock%} 
-{%endblock%}  {% endcomment %}
-{%block content%}
-<div class="shadow p-3 mb-5 bg-white rounded">
-    <div class="row">
-        <div class="col-md-12">
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+<div class="pl-3 page-title ">
+    Creative Items Categories
+    <hr/>
+</div>
+<div class="row">
+    <div class="{%if not dispSubCat %}col-md-12{% else %}col-md-6{% endif %}">
+        <div class="shadow p-3 mb-5 bg-white rounded">
             <div class="box-inn-sp">
-                <div class="page-title">
-                    Creative Categories
+                <div class="page-title ">
+                    <h4 class="my-auto py-2" style="float: left;">Main Categories</h4>
+
+                    <a id="add-main-cat" data-url-cat="{% url 'CustomAdmin:loadSubCrtCats' %}" class="link-effect" style="float:right; cursor: pointer;">
+                        <span class="cat align-middle my-2 pl-3 ">
+                            <img class="" src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a" width="20" height="20">
+                            Add
+                        </span>
+                    </a>
+
                 </div>
+
                 <div class="tab-inn">
                     <div class="table-responsive table-user">
-                        <table class="table table-hover border-bottom tablemanager">
+                        <table class="table table-hover border-bottom">
                             <thead>
                                 <tr>
-                                    <th class="text-center">User ID</th>
-                                    <th scope="col" class="text-center">Name</th>
-                                    <th scope="col" class="text-center">Email</th>
-                                    <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Creative Items</th>
-                                    <th scope="col" class="text-center">Scrap Items</th>
-                                    <th scope="col" class="text-center">Active From</th>
-                                    <th class="disableFilterBy text-center">Artist</th>
+                                    <th scope="col" class="text-center">Category </th>
+                                    <th scope="col" class="text-center">Total Products</th>
                                     <th class="disableFilterBy text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-center">10002
-                                    </td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">aNilesh</span></a>
-                                    </td>
-                                    <td class="text-center">nilesh@test.com</td>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:loadSubCrtCats' 1%}"><span class="listing">Home Decor</span></a></td>
+
+                                    <td class="text-center"><a href="#"><span class="">20</span></a></td>
+
                                     <td class="text-center">
-                                        <span class="listing text-danger">Inactive</span>
-                                    </td>
-                                    <td><span class="listing text-center">200</span></td>
-                                    <td><span class="listing text-center">10</span></td>
-                                    <td class="text-center">
-                                        <span class="listing">1/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
-                                        </span>
-                                    </td>
-                                    <td  class="text-center">
-                                        <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                        <a href="#" class=""><button id="edit-mainCrtCat" data-url-editmaincrtcat="{% url 'CustomAdmin:loadSubCrtCats' 1%}" class="btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff" width="20" height="20"></button></a>
                                     </td>
                                 </tr>
-                                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+
                                 <tr>
-                                    <td class="text-center">10001</td>
-                                    <td class="text-center" ><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
-                                    <td class="text-center">dummy@dummy.com</td>
-                                    <td class="text-center"><span class="listing">Active</span></td>
-                                    <td><span class="listing text-center">20</span></td>
-                                    <td><span class="listing text-center">20</span></td>
-                                    <td class="text-center"><span class="listing">15/02/2021</span></td>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:loadSubCrtCats' 2%}"><span class="listing">Lifestyle-Men</span></a></td>
 
-                                    <td class="text-center"><span class="listing"><i class="fa fa-check" aria-hidden="true"></i></span></td>
+                                    <td class="text-center"><a href="#"><span class="">20</span></a></td>
+
                                     <td class="text-center">
-                                        <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff" width="20" height="20"></button></a>
                                     </td>
-                                    {% comment %}
-                                    <td><a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a></td>
-                                    <td><a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a></td> {% endcomment %}
                                 </tr>
-                                {% endfor %} {% endwith %}
+                                <tr>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:loadSubCrtCats' 3%}"><span class="listing">Lifestyle-Women</span></a></td>
 
+                                    <td class="text-center"><a href="#"><span class="">20</span></a></td>
+
+                                    <td class="text-center">
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff" width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <button id="loadmore-btn" class="btn-cxt">Load more</button>
+                    <!-- <button id="loadmore-btn" class="btn-cxt">Load more</button> -->
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- SUB CATEGORY -->
+    {% if dispSubCat %}
+    <div class="col-md-6">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <div class="page-title">
+                <h4 class="my-auto py-2" style="float: left;">Sub Categories</h4>
+
+                <a id="add-sub-crt-cat" data-url-cat="{% url 'CustomAdmin:loadSubCrtCats' %}" class="link-effect " style="float:right; ">
+                    <span class="cat align-middle my-2 pl-3 ">
+                            <img class=" " src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a " width="20 " height="20 "/>
+                            Add
+                        </span>
+                </a>
+            </div>
+            {% if subCrtCats %}
+            <div class="tab-inn ">
+                <div class="table-responsive table-user ">
+                    <h6 class="border-top pt-3 ">Sub Categories of <b>'{{ mainCat.mainCatName }}'</b></h6>
+                    <table class="table table-hover border-bottom ">
+                        <thead>
+
+                            <tr>
+                                <th scope="col " class="text-center ">Sub Category </th>
+                                <th scope="col " class="text-center ">Total Products</th>
+                                <th class="disableFilterBy text-center ">Action</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            {% for subs,value in subCrtCats.items %}
+                            <tr>
+                                <td class="text-center "><span class="listing ">{{ value.name }}</span></td>
+
+                                <td class="text-center "><a href="# "><span class=" ">{{ value.products }}</span></a></td>
+
+                                <td class="text-center ">
+                                    <a href="# " class="user "><button class="btn btn-sm pri-bg-color " ><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff " width="20 " height="20 "></button></a>
+                                    <a href="# " class="user "><button class="btn btn-sm pri-bg-color " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {% else %}
+            <div class=" " style="display:inline-block; ">
+                <p class="p-5 text-muted ">No Subcategory found for '{{mainCat.mainCatName}}'</p>
+            </div>
+            {%endif%}
+        </div>
+    </div>
 </div>
 
+<!-- #################################################### -->
+<!-- MODEL FORM OF MAIN CATEGORY -->
+<div class="modal" id="addMainCatModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="mainCrtCat" class="form-label">Main Creative Categories</label>
+                    <input class="form-control" list="mainCrtCatList" name="mainCrtCat" id="mainCrtCat">
 
-{% endblock %}
+                    <!-- <datalist id="mainCrtCatList">
+
+                        </datalist> -->
+                </div>
+                <!-- <div>
+                        <label for="mainSubCrtCat" class="form-label">Sub Creative Categories</label>
+                        <input class="form-control" list="mainSubCrtCatList" name="mainSubCrtCat" id="mainSubCrtCat">
+
+                        <datalist id="mainSubCrtCatList">
+                        </datalist>
+                    </div> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cxt">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODEL FORM OF MAIN CATEGORY -->
+
+<!-- MODEL FORM OF SUB CATEGORY -->
+<div class="modal " id="addSubCatModal" tabindex="-1 " role="dialog ">
+    <div class="modal-dialog " role="document ">
+        <div class="modal-content ">
+            <div class="modal-header ">
+                <h5 class="modal-title ">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true ">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body ">
+
+                <div>
+                    <label for="mainSubCrtCat " class="form-label ">Sub Creative Categories</label>
+                    <input class="form-control " list="mainSubCrtCatList " name="mainSubCrtCat " id="mainSubCrtCat ">
+
+                    <!-- <datalist id="mainSubCrtCatList ">
+                        </datalist> -->
+                </div>
+                <!-- 
+                <div>
+                    <label for="mainCrtCat " class="form-label ">Main Creative Categories</label>
+                    <input class="form-control " list="mainCrtCatList " name="mainCrtCat " id="mainCrtCat ">
+
+                    <datalist id="mainCrtCatList ">
+
+                    </datalist>
+                </div> -->
+            </div>
+            <div class="modal-footer ">
+                <button type="button " class="btn-cxt ">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODEL FORM OF SUB CATEGORY -->
+{% endif %} {% endblock %}

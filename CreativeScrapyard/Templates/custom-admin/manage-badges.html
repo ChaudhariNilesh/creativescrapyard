@@ -1,14 +1,50 @@
 {% extends 'custom-admin/common.html' %} {% load static %} {%block breadcumb %}{% block breadcrumb-link%}
 <li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {%block content%}
+<!-- Modal -->
+<div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Assign Badge</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-auto d-block">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">User Email:</label>
+                            <input type="text" class="form-control" id="exampleFormControlFile1">
+                            <label for="exampleFormControlFile1">Badge Name:</label>
+                            <select class="custom-select">
+                                <option selected>Choose a Badge</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn-cxt">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="col-md-12">
             <div class="box-inn-sp">
                 <div class="page-title">
-                  Manage Badges
+                    Manage Badges
+
                 </div>
-                <h4>
+                <h4 class="mx-auto d-block">
+                    <hr>
                     All Badges
+                    <hr>
                 </h4>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
                     <li id="badge" class="btn tags tags-common mx-1 my-1">Artist</li>
@@ -16,12 +52,19 @@
                     <li class="btn tags tags-rare mx-1 my-1">Seller of the year</li>
                     <li class="btn tags tags-common mx-1 my-1">Artist</li>
                     <li class="btn tags tags-special mx-1 my-1">Seller of the month</li>
-                    <li  class="btn tags tags-event mx-1 my-1">Seller of</li>
+                    <li class="btn tags tags-event mx-1 my-1">Seller of</li>
                     <li id="addBadge" class="btn tags tags-add mx-1 my-1">+Add Badge</li>
                 </ul>
-                
+
                 <h4>
-                    Badges Achievers
+                    <hr>
+                    <div>
+                        <span class="">Badges Achievers</span>
+                        <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal"
+                            data-target="#assignBadgeModal">Assign Badge</span>
+                    </div>
+
+                    <hr>
                 </h4>
 
                 <div class="tab-inn">
@@ -32,68 +75,72 @@
                                     <th class="disableSort">User</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Creative Items</th>
-                                    <th>Scrap Items</th>
+                                    <th>Badge Name</th>
                                     <th class="disableFilterBy">Artist</th>
                                     <th class="disableFilterBy">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span><img class="rounded-circle" width="50px" height="50px" src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
+                                    <td><span><img class="rounded-circle" width="50px" height="50px"
+                                                src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
                                     </td>
                                     <td><a href="#"><span class="list-enq-name">aNilesh</span></a>
                                     </td>
                                     <td>nilesh@test.com</td>
                                     <td>
-                                        <span class="p-2 listing">0</span>
-                                    </td>
-                                    <td>
-                                        <span class="p-2 listing">2,200</span>
+                                        <span class="p-2 listing">Recycler Of the Month</span>
                                     </td>
                                     <td>
                                         <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><i class="fa fa-eye text-white p-1 rounded cus" aria-hidden="true"></i></a>
-                                        <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger p-1 text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                        <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
                                     </td>
                                     {% comment %}
                                     <td>
-                                        <a href="user-edit.html"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a>
+                                        <a href="user-edit.html"><i
+                                                class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                                                aria-hidden="true"></i></a>
                                     </td>
                                     <td>
-                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
+                                                aria-hidden="true"></i></a>
                                     </td> {% endcomment %}
                                 </tr>
                                 {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                                 <tr>
-                                    <td><span><img class="rounded-circle" width="50px" height="50px" src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
+                                    <td><span><img class="rounded-circle" width="50px" height="50px"
+                                                src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
                                     </td>
                                     <td><a href="#"><span class="list-enq-name">Marsha Hogan</span></a>
                                     </td>
                                     <td>dummy@dummy.com</td>
                                     <td>
-                                        <span class="p-2 listing">20</span>
+                                        <span class="p-2 listing">Artist</span>
 
-                                    </td>
-                                    <td>
-                                        <span class="p-2 listing">20</span>
                                     </td>
                                     <td>
                                         <span class="listing"><i class="fa fa-check" aria-hidden="true"></i></span>
                                     </td>
                                     <td>
-                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><i class="fa fa-eye text-white p-1 rounded cus" aria-hidden="true"></i></a>
-                                        <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger p-1 text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                        <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
                                     </td>
                                     {% comment %}
                                     <td>
-                                        <a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                                                aria-hidden="true"></i></a>
                                     </td>
                                     <td>
-                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
+                                                aria-hidden="true"></i></a>
                                     </td> {% endcomment %}
                                 </tr>
                                 {% endfor %} {% endwith %}
