@@ -24,11 +24,12 @@
     font-size: 1rem;
 }
 
-.tags-common{
+.tags-common {
     color: var(--pri-color-darker);
     background-color: var(--pri-color-light);
 }
-.tags-common:hover{
+
+.tags-common:hover {
     color: var(--pri-color-darker);
     background-color: var(--pri-color-light);
 }
@@ -43,7 +44,6 @@
     background-color: #c0d0e8;
 }
 
-
 .tags-rare {
     color: #892cdc;
     background-color: #dcc0f5;
@@ -55,18 +55,14 @@
 }
 
 .tags-add {
-    color:#000;
+    color: #000;
     background-color: #e4e4e4;
 }
-
 
 .tags-add:hover {
-    color:#000;
+    color: #000;
     background-color: #e4e4e4;
 }
-
-
-
 
 .tags-event {
     color: #ea2c62;
@@ -542,6 +538,7 @@ table {
 .table th {
     padding: 15px;
 }
+
 .table td {
     padding: 15px 0px;
 }
@@ -668,4 +665,22 @@ td {
 button.btn-sm.btn-danger.text-white.rounded.cus {
     box-shadow: none!important;
     border: none!important;
+}
+
+
+/* SWAL BUTTON */
+
+.swal2-styled.swal2-confirm {
+    background-color: var(--pri-color) !important;
+}
+
+
+/* Add Category */
+
+.cat {
+    padding: 3px 20px;
+    border-radius: 16px;
+    font-size: .8rem;
+    color: var(--pri-color-darker);
+    background-color: var(--pri-color-light);
 }
