@@ -148,3 +148,30 @@ body {
 #edit-data-1, #edit-data-2 {
     display: none;
 }
+
+
+/* Add-product */
+
+.remove-product-image {
+    border-radius: 2px;
+    background-color: var(--pri-color-light);
+}
+
+#dragDropProductImage {
+    border: 2px var(--pri-color) dashed;
+}
+
+/* dashboard-profile */
+
+.addFirstAddress {
+
+}
+
+.addFirstAddress     {
+    text-align: center;
+}
+
+.btn-addAddress:hover {
+    box-shadow: var(--pri-color) 0px 2px 8px 0px;
+}
+box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

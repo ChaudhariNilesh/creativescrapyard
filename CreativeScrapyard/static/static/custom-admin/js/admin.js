@@ -238,38 +238,80 @@ $(function() {
 
     var addBadgesInput = function() {
         $('#addBadge').on("click", function() {
-            swal("Enter the badge name :", {
-                    content: "input",
-                })
-                .then((value) => {
-                    swal(`${value} Badge Added`);
-                });
+            const { value: badge } = Swal.fire({
+                title: 'Add Badge',
+                input: 'text',
+                inputLabel: 'Enter new badge name :',
+                inputPlaceholder: 'Enter badge name',
+                inputValidator: (value) => {
+                    if (!value) {
+                      return 'You need to write something!'
+                    }
+                    else{
+                        Swal.fire(`${value} Badge Added`)
+                    }
+                }
+              })
         });
     }
     var badgeDelete = function() {
         $('#badge').on("click", function() {
-            swal({
-                title: "Are you sure you want to delete this badge?",
-                text: "You will not be able to see the badge entries of this anymore!",
-                icon: "warning",
-                buttons: [
-                    'No, cancel it!',
-                    'Yes, I am sure!'
-                ],
-                dangerMode: true,
-            }).then(function(isConfirm) {
-                if (isConfirm) {
-                    swal({
-                        title: 'Deleted',
-                        text: 'The Badge is deleted success fully',
-                        icon: 'success'
-                    }).then(function() {
-                        form.submit();
-                    });
-                } else {
-                    swal("Cancelled", "The Badge is safe :)", "error");
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              })
+              
+              swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your badge has been deleted.',
+                    'success'
+                  )
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                  swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your badge is safe :)',
+                    'error'
+                  )
                 }
-            });
+              })
+            // swal({
+            //     title: "Are you sure you want to delete this badge?",
+            //     text: "You will not be able to see the badge entries of this anymore!",
+            //     icon: "warning",
+            //     buttons: [
+            //         'No, cancel it!',
+            //         'Yes, I am sure!'
+            //     ],
+            //     dangerMode: true,
+            // }).then(function(isConfirm) {
+            //     if (isConfirm) {
+            //         swal({
+            //             title: 'Deleted',
+            //             text: 'The Badge is deleted success fully',
+            //             icon: 'success'
+            //         }).then(function() {
+            //             form.submit();
+            //         });
+            //     } else {
+            //         swal("Cancelled", "The Badge is safe :)", "error");
+            //     }
+            // });
         });
     }
     var addMainCrtCat = function() {

@@ -1,5 +1,7 @@
 from django.urls import path, include
 from .views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = "Authentication"
 
@@ -13,5 +15,10 @@ urlpatterns = [
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/details/', order_details, name="order_details"),
-    path('dashboard/settings/', settings, name="settings"),
+    path('dashboard/settings/', dashboard_settings, name="settings"),
+    path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
+    # path('photo-upload/', BasicUploadView, name='basic_upload'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
