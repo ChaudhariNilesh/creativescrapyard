@@ -1,3 +1,5 @@
+from CreativeScrapyard import settings
+
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
@@ -6,6 +8,8 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
+from .models import *
+from .forms import MainCreativeCategoryForm, SubCreativeCategoryForm
 
 ####### AUTH RELATED #######
 def login(request):
@@ -112,13 +116,64 @@ def verifyChk(request):
 
 ####### PRODUCTS RELATED #######
 ### CREATIVE ###
-def creativeCat(request):
-    if request.session.get('admin'):    
-        template = 'custom-admin/products/creativecategory.html'
-        subCrtCats={}
-        return render(request,template,{"subCrtCats":subCrtCats})
+def creativeCat(request,id=None,action=None):
+    if request.session.get('admin'):
+        crtMainCats=MainCreativeCategory.objects.all()
+        template = 'custom-admin/products/creativecategory.html' 
+        
+        if id != None:
+            print("dd")
+            if (id==1):
+                main={"mainCatName":"Home Decor"}
+                subCrtCats={0: {"name" : "1sub dummy1","products":"10" }, 1:{"name" : "1sub dummy2","products":"20" },3:{"name" : "1sub dummy3","products":"0" } }
+            elif (id==2):
+                main={"mainCatName":"LifeStyle-Men"}
+                subCrtCats={0:{"name" : "2sub dummy1","products":"10" }, 1:{"name" : "2sub dummy1","products":"30" } }
+            else:
+                main={"mainCatName":"LifeStyle-Women"}
+                subCrtCats={}
+            return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "dispSubCat":True })
+        
+        if action=="add":
+            if request.method=="POST" and request.is_ajax():
+                mainCrtCat=MainCreativeCategoryForm(request.POST or None)
+                if mainCrtCat.is_valid():
+                    main_crt_Cat = mainCrtCat.cleaned_data['crt_category_name']
+                    if mainCrtCat.save():
+                        
+                        return JsonResponse({"saved":True})
+                    else:
+                        return JsonResponse({"saved":False})
+                return JsonResponse({"saved":False})
+            else:
+                return JsonResponse({"saved":False})
+            
+        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats})
     else:
         return redirect('CustomAdmin:login')
+
+
+
+# def loadSubCrtCats(request,id=None):
+#     if request.session.get('admin'):
+#         if request.is_ajax() :
+#             main={"mainCatName":[{"Home Decor":["a","b","c"]},{"LifeStyle-Men":["d","e","f","g"]}]}
+#             return JsonResponse(main)
+#         template = 'custom-admin/products/creativecategory.html' 
+#         if (id==1):
+#             main={"mainCatName":"Home Decor"}
+#             subCrtCats={0: {"name" : "1sub dummy1","products":"10" }, 1:{"name" : "1sub dummy2","products":"20" },3:{"name" : "1sub dummy3","products":"0" } }
+#         elif (id==2):
+#             main={"mainCatName":"LifeStyle-Men"}
+#             subCrtCats={0:{"name" : "2sub dummy1","products":"10" }, 1:{"name" : "2sub dummy1","products":"30" } }
+#         else:
+#             main={"mainCatName":"LifeStyle-Women"}
+#             subCrtCats={}
+#             return render(request,template,{"subCrtCats":subCrtCats,"mainCat":main, "dispSubCat":True })
+
+#         return render(request,template,{"subCrtCats":subCrtCats,"mainCat":main,"dispSubCat":True})
+#     else:
+#         return redirect('CustomAdmin:login')
 
 def creativeitems(request):
     if request.session.get('admin'):    
@@ -126,28 +181,6 @@ def creativeitems(request):
         return render(request,template,{"dispSubCat":False})
     else:
         return redirect('CustomAdmin:login')
-
-def loadSubCrtCats(request,id=None):
-    if request.session.get('admin'):
-        if request.is_ajax() :
-            main={"mainCatName":[{"Home Decor":["a","b","c"]},{"LifeStyle-Men":["d","e","f","g"]}]}
-            return JsonResponse(main)
-        template = 'custom-admin/products/creativecategory.html' 
-        if (id==1):
-            main={"mainCatName":"Home Decor"}
-            subCrtCats={0: {"name" : "1sub dummy1","products":"10" }, 1:{"name" : "1sub dummy2","products":"20" },3:{"name" : "1sub dummy3","products":"0" } }
-        elif (id==2):
-            main={"mainCatName":"LifeStyle-Men"}
-            subCrtCats={0:{"name" : "2sub dummy1","products":"10" }, 1:{"name" : "2sub dummy1","products":"30" } }
-        else:
-            main={"mainCatName":"LifeStyle-Women"}
-            subCrtCats={}
-            return render(request,template,{"subCrtCats":subCrtCats,"mainCat":main, "dispSubCat":True })
-
-        return render(request,template,{"subCrtCats":subCrtCats,"mainCat":main,"dispSubCat":True})
-    else:
-        return redirect('CustomAdmin:login')
-
 ### SCRAP ###
 def scrapCat(request):
     if request.session.get('admin'):    

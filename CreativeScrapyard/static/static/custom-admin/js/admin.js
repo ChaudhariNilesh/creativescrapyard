@@ -274,12 +274,61 @@ $(function() {
     }
     var addMainCrtCat = function() {
         $("#add-main-cat").on("click", function() {
-            $("#addMainCatModal").modal("show");
-            $.ajax({
-                url: $(this).attr("data-url-cat"),
-                datatype: "json",
-                success: function(data) {}
-            })
+            // $("#addMainCatModal").modal("show");
+            (async() => {
+                const { value: mainCrtCat } = await Swal.fire({
+                    title: 'Add Category',
+                    input: 'text',
+                    inputLabel: 'Main Creative Item Category',
+                    inputPlaceholder: 'Enter category'
+                })
+
+                if (mainCrtCat) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            console.log(`${mainCrtCat}`);
+                            $.ajax({
+                                type: "POST",
+                                url: $(this).attr("data-add-mainCrtCat"),
+                                dataType: 'json',
+                                data: {
+                                    crt_category_name: `${mainCrtCat}`,
+                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                                    action: 'post'
+                                },
+                                success: function(response) {
+                                    if (response.saved) {
+                                        Swal.fire(`${mainCrtCat} added`, "", "success");
+                                        location.reload();
+
+                                    } else {
+                                        Swal.fire(
+                                            'Error',
+                                            `${mainCrtCat} not added. \n Some error occured, Try Again..`,
+                                            'error'
+                                        )
+                                    }
+                                }
+
+                            })
+
+
+                        }
+                    })
+                }
+            })()
+
+            // $.ajax({
+            //     url: $(this).attr("data-url-cat"),
+            //     datatype: "json",
+            //     success: function(data) {}
+            // })
         });
     };
 
@@ -304,25 +353,28 @@ $(function() {
     var addSubCrtCat = function() {
         $("#add-sub-crt-cat").on("click", function() {
             $("#addSubCatModal").modal("show");
-            $.ajax({
-                url: $(this).attr("data-url-cat"),
-                datatype: "json",
-                success: function(data) {
-                    //    alert(data.mainCatName[0]["Home Decor"]);
-                    // var i = 0
-                    // $.each(data.mainCatName, function(key) {
-                    //     $.each(data.mainCatName[key], function(k, v) {
-                    //         console.log(k);
-                    //         console.log(v);
-                    //     });
 
-                    // });
-
-                }
-            })
         });
     };
 
+    //****************** */
+    // AJAX FOR FETCH CATEG. DATA
+    // $.ajax({
+    //     url: $(this).attr("data-url-cat"),
+    //     datatype: "json",
+    //     success: function(data) {
+    //         //    alert(data.mainCatName[0]["Home Decor"]);
+    //         $.each(data.mainCatName, function(key) {
+    //             $.each(data.mainCatName[key], function(k, v) {
+    //                 console.log(k);
+    //                 console.log(v);
+    //             });
+
+    //         });
+
+    //     }
+    // })
+    //****************** */
     var editMainCrtCat = function() {
         $("#edit-mainCrtCat").on("click", function() {
             $("#addSubCatModal").modal("show");

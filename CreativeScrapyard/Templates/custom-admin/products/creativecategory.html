@@ -11,7 +11,7 @@
                 <div class="page-title ">
                     <h4 class="my-auto py-2" style="float: left;">Main Categories</h4>
 
-                    <a id="add-main-cat" data-url-cat="{% url 'CustomAdmin:loadSubCrtCats' %}" class="link-effect" style="float:right; cursor: pointer;">
+                    <a id="add-main-cat" data-add-mainCrtCat="{% url 'CustomAdmin:creativeCat' 'add' %}" class="link-effect" style="float:right; cursor: pointer;">{% csrf_token %}
                         <span class="cat align-middle my-2 pl-3 ">
                             <img class="" src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a" width="20" height="20">
                             Add
@@ -22,7 +22,7 @@
 
                 <div class="tab-inn">
                     <div class="table-responsive table-user">
-                        <table class="table table-hover border-bottom">
+                        <table id="crtMainCatTable" class="table table-hover border-bottom">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">Category </th>
@@ -32,18 +32,18 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-center"><a href="{% url 'CustomAdmin:loadSubCrtCats' 1%}"><span class="listing">Home Decor</span></a></td>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:creativeCat' 1 %}"><span class="listing">Home Decor</span></a></td>
 
                                     <td class="text-center"><a href="#"><span class="">20</span></a></td>
 
                                     <td class="text-center">
-                                        <a href="#" class=""><button id="edit-mainCrtCat" data-url-editmaincrtcat="{% url 'CustomAdmin:loadSubCrtCats' 1%}" class="btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
+                                        <a href="#" class=""><button id="edit-mainCrtCat" data-url-editmaincrtcat="{% url 'CustomAdmin:creativeCat' 1%}" class="btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
                                         <a href="#" class=""><button class="btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff" width="20" height="20"></button></a>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="text-center"><a href="{% url 'CustomAdmin:loadSubCrtCats' 2%}"><span class="listing">Lifestyle-Men</span></a></td>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:creativeCat' 2%}"><span class="listing">Lifestyle-Men</span></a></td>
 
                                     <td class="text-center"><a href="#"><span class="">20</span></a></td>
 
@@ -53,7 +53,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center"><a href="{% url 'CustomAdmin:loadSubCrtCats' 3%}"><span class="listing">Lifestyle-Women</span></a></td>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:creativeCat' 3%}"><span class="listing">Lifestyle-Women</span></a></td>
 
                                     <td class="text-center"><a href="#"><span class="">20</span></a></td>
 
@@ -62,6 +62,18 @@
                                         <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff" width="20" height="20"></button></a>
                                     </td>
                                 </tr>
+                                {% for crtCat in mainCat %}
+                                <tr>
+                                    <td class="text-center"><a href="{% url 'CustomAdmin:creativeCat' crtCat.crt_category_id %}"><span class="listing">{{crtCat.crt_category_name}}</span></a></td>
+
+                                    <td class="text-center"><a href="#"><span class="">20</span></a></td>
+
+                                    <td class="text-center">
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
+                                        <a href="#" class=""><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff" width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +91,7 @@
             <div class="page-title">
                 <h4 class="my-auto py-2" style="float: left;">Sub Categories</h4>
 
-                <a id="add-sub-crt-cat" data-url-cat="{% url 'CustomAdmin:loadSubCrtCats' %}" class="link-effect " style="float:right; ">
+                <a id="add-sub-crt-cat" data-url-cat="{% url 'CustomAdmin:creativeCat' %}" class="link-effect " style="float:right; ">
                     <span class="cat align-middle my-2 pl-3 ">
                             <img class=" " src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a " width="20 " height="20 "/>
                             Add
