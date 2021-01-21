@@ -1,5 +1,7 @@
-{% extends 'custom-admin/common.html' %} {% load static %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %}  
+{% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {% endcomment %}
+{%block content%}
 <!-- Modal -->
 <div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">

@@ -16,23 +16,27 @@ urlpatterns = [
     path('sellers/',sellers,name="sellers"),
     path('verify-users/',verifyusers,name="verifyusers"),
     
-    path('creative-categories/',creativeCat,name="creativeCat"),
-    path('creative-categories/<int:id>/',creativeCat,name="creativeCat"),
-    path('creative-categories/<str:action>/',creativeCat,name="creativeCat"),
+    ######CREATIVE CATEGORIES######
+    path('creative-categories/',creativeCat,name="creativeCat"),   
+    path('creative-categories/<int:id>/',creativeCat,name="loadSubCrtCat"),
+    path('creative-categories/<str:action>/',creativeCat,name="addMainCrtCat"),
+    path('creative-categories/<int:id>/<str:action>/',creativeCat,name="CrtCatAction"),
 
-
-
-    # path('creative-categories/<int:id>/',loadSubCrtCats,name="loadSubCrtCats"),
-    path('creativeitems/',creativeitems,name="creativeitems"),
-    
+    ######SCRAP CATEGORIES######
     path('scrap-categories/',scrapCat,name="scrapCat"),
+    path('scrap-categories/<int:id>/',scrapCat,name="loadSubScpCat"),
+    path('scrap-categories/<str:action>/',scrapCat,name="addMainScpCat"),
+    path('scrap-categories/<int:id>/<str:action>/',scrapCat,name="ScpCatAction"),
+
+
+    path('creativeitems/',creativeitems,name="creativeitems"),    
     path('scrapitems/',scrapitems,name="scrapitems"),
     
-    #AJAX
+
+    ######AJAX######
     path('ajax/view-details/',viewDets,name="viewDets"),
     path('ajax/documents/',docuDownload,name="docuDownload"),
     path('ajax/verify/',verifyChk,name="verifyChk"),
-    # path('ajax/creative-categories/',loadSubCrtCats,name="loadSubCrtCats"),
 
 
 
