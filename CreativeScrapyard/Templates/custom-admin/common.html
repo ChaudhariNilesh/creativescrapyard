@@ -61,14 +61,20 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
-                            <ul class="collapse list-unstyled" id="productSubmenu">
+                            <a href="#productCatSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Categories</a>
+                            <ul class="collapse list-unstyled" id="productCatSubmenu">
                                 <li>
                                     <a href="{% url 'CustomAdmin:creativeCat' %}">Creative Categories</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'CustomAdmin:scrapCat' %}">Scrap Categories</a>
                                 </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
+                            <ul class="collapse list-unstyled" id="productSubmenu">
                                 <li>
                                     <a href="{% url 'CustomAdmin:creativeitems' %}">Creative Items</a>
                                 </li>
@@ -160,8 +166,10 @@
                 <!-- {%block breadcrumb %} -->
                 <div class="infomain">
                     <ol class="breadcrumb rounded-0">
+                        
                         <!-- <li class="breadcrumb-item"><a href="{% url 'CustomAdmin:adminindex' %}">Home</a></li> -->
-                        <!-- {% block breadcrumb-link%} {%endblock%} -->
+                        <!-- -->
+                        {% block breadcrumb-link  %}{% endblock %}
                     </ol>
                 </div>
                 <!-- {% endblock %} -->

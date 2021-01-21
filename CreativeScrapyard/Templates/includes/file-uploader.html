@@ -1,0 +1,52 @@
+<div id="dragDropProductImage" class="well text-muted text-center" style="padding-top: 3rem; padding-bottom: 3rem;">
+    <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
+    <h3 class="pri-color">Drop Photos Here to Upload</h3>
+    <button type="button" class="btn pri-bg-color js-upload-photos">
+        <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+    </button>
+</div>
+
+
+<input id="fileupload" type="file" name="file" multiple
+       accept=".jpg, .jpeg, .png"
+       style="display: none;"
+       data-url="{% url 'Authentication:add_creative_product' %}"
+       data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+
+<table id="gallery" class="table table-bordered">
+    <thead>
+    <tr>
+        <th colspan="2">Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for photo in photos %}
+    <tr id="photo-list-{{ photo.id }}">
+        <td><a href="{{ photo.file.url }}">{{ photo.file.name }}</a></td>
+        <td>
+            <!--                <button id="delete_now-{{ photo.id }}" onclick="deletePhoto(event, {{ photo.id }})">Remove</button>-->
+            <a href="javascript:void(0)" id="delete_now-{{ photo.id }}" onclick="deletePhoto(event, {{ photo.id }})">
+                    <span class="remove-product-image p-1">
+                        <img src="https://s.svgbox.net/materialui.svg?ic=delete&fill=13775a" width="20" height="20">
+                    </span>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="modal fade" id="modal-progress">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Uploading...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

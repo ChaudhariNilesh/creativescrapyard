@@ -794,6 +794,14 @@ select {
 }
 
 
+/*.address-view-model {
+    overflow-x: scroll;
+    display: grid;
+    grid-template-columns: repeat(2, 100%);
+}
+
+#addDisplay2{ display: none; }*/
+
 /* Track Order */
 
 .progress-bar {

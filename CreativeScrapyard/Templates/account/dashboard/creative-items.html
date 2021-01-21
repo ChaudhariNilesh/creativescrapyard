@@ -1,6 +1,6 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}" />
-<link rel="stylesheet" href="{% static 'css/fancy_fileupload.css' %}" /> {% endblock %} {% block base %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/fancy_fileupload.css' %}"/> {% endblock %} {% block base %}
 
 <div class="page-title">
     Creative Items
@@ -13,13 +13,15 @@
 </div>
 
 <hr/>
-<input id="productFileUploader" class="ff_fileupload_wrap" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple>
+<!--<input id="productFileUploader" class="ff_fileupload_wrap" type="file" name="files"-->
+<!--       accept=".jpg, .png, image/jpeg, image/png" multiple>-->
 
-<ul class="list-inline list-group list-group-horizontal">
-    <li data-toggle="modal" data-target="#myModal" class="m-1">
-        <a href="#myGallery" data-slide-to="0"><img class="img-thumbnail" width="80px" height="80px" src="https://placeimg.com/200/133/nature/1">
-        </a>
-    </li>
+<!--<ul class="list-inline list-group list-group-horizontal">-->
+<!--    <li data-toggle="modal" data-target="#myModal" class="m-1">-->
+<!--        <a href="#myGallery" data-slide-to="0"><img class="img-thumbnail" width="80px" height="80px"-->
+<!--                                                    src="https://placeimg.com/200/133/nature/1">-->
+<!--        </a>-->
+<!--    </li>-->
     <!-- <li data-toggle="modal" data-target="#myModal" class="m-1">
         <a href="#myGallery" data-slide-to="1"><img class="img-thumbnail" width="80px" height="80px" src="https://placeimg.com/200/133/nature/2"><br>
         </a>
@@ -40,8 +42,7 @@
         <a href="#myGallery" data-slide-to="5"><img class="img-thumbnail" width="80px" height="80px" src="https://placeimg.com/200/133/nature/6"><br>
         </a>
     </li> -->
-</ul>
-
+<!--</ul>-->
 
 
 <!--begin modal window-->
@@ -50,7 +51,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="pull-left">My Gallery Title</div>
-                <button type="button" class="close" data-dismiss="modal" title="Close"> <span><i class="fa fa-close" aria-hidden="true"></i></span></button>
+                <button type="button" class="close" data-dismiss="modal" title="Close"><span><i class="fa fa-close"
+                                                                                                aria-hidden="true"></i></span>
+                </button>
             </div>
             <div class="modal-body">
 
@@ -58,7 +61,8 @@
                 <!--begin carousel-->
                 <div id="myGallery" class="carousel slide carousel-fade" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active"> <img src="https://placeimg.com/600/400/nature/1" alt="item0" class="d-block w-100">
+                        <div class="carousel-item active"><img src="https://placeimg.com/600/400/nature/1" alt="item0"
+                                                               class="d-block w-100">
                             <div class="carousel-caption">
                                 <h3>Heading 3</h3>
                                 <p>Slide 0 description.</p>
@@ -116,22 +120,18 @@
             </div>
             <!--end modal-content-->
         </div>
-        <!--end modal-dialoge-->
+        <!--end modal-dialog-->
     </div>
     <!--end myModal-->
 </div>
-
-
-
-
-
 
 
 <!--Model popup-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal
 </button>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content product-view-modal">
             <div id="view-data">
@@ -149,7 +149,9 @@
                         <div class="col">
                             <h3 class="pri-color">Product name</h3>
                             <p class="text-justify  fs-9">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book.
                             </p>
                             <div class="row mt-1 py-1 fs-9">
                                 <div class="col">
@@ -210,10 +212,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input id="productFileUploader" class="ff_fileupload_wrap" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple>
+                    {% include 'includes/file-uploader.html' %}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm pri-bg-color">Back</button>
+                    <button id="editProductBack1" type="button" class="btn btn-sm pri-bg-color">Back</button>
                     <button id="editProductNext1" type="button" class="btn btn-sm pri-bg-color">Next</button>
                 </div>
             </div>
@@ -229,7 +231,8 @@
                     <form>
                         <div class="form-group">
                             <label for="productName">Product Name</label>
-                            <input type="text" class="form-control form-control-sm" id="productName" value="My product name">
+                            <input type="text" class="form-control form-control-sm" id="productName"
+                                   value="My product name">
                         </div>
                         <div class="form-group">
                             <label for="productDescription">Product Descritption</label>
@@ -301,12 +304,12 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="ProductQuantity">Color</label>
+                                    <label for="ProductQuantity">Quantity</label>
                                     <select class="form-control form-control-sm" id="ProductQuantity">
                                         <option selected>Select</option>
                                         {% with n='[1,2,3,4,5,6,7,8,9,10]' %}
-                                        {% for i in n %}
-                                            <option>{{i}}</option>
+                                        {% for i in 'n' %}
+                                        <option>{{i}}</option>
                                         {% endfor %}
                                         {% endwith %}
                                     </select>
@@ -314,15 +317,14 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="productSize">Size</label>
-                                    <select class="form-control form-control-sm" id="productSize">
-                                        <option selected>Select</option>
-                                        <option>XS</option>
-                                        <option>SM</option>
-                                        <option>M</option>
-                                        <option>XL</option>
-                                        <option>XXL</option>
-                                    </select>
+                                    <label for="productUnitPrice">Unit price</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text" style="height:31px;">&#8377;</div>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" id="productUnitPrice"
+                                               placeholder="price">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -330,7 +332,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm pri-bg-color">Back</button>
+                    <button id="editProductBack2" type="button" class="btn btn-sm pri-bg-color">Back</button>
                     <button id="saveProduct" type="button" class="btn btn-sm pri-bg-color">Done</button>
                 </div>
             </div>
@@ -338,4 +340,28 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block baseScript %}
+<script>
+        var deletePhoto = function(event, id) {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/accounts/photo-delete/' + id,
+                success: function() {
+                    is_done(true);
+                }
+            });
+
+            function is_done(ans) {
+                if(ans) {
+                    var trID = '#photo-list-' + id;
+                    $(trID).remove();
+                }else{
+                    alert("Technical issue.");
+                }
+            }
+            event.preventDefault();
+        }
+
+</script>
 {% endblock %}

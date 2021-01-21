@@ -161,7 +161,7 @@ $(function() {
 
             $('.breadcrumb').prepend('<li class="breadcrumb-item"><a href="/admin/">Dashboard</a></li>');
         } else {
-            $('.breadcrumb').html('<a href="/admin/">DASHBOARD /</a>');
+            //$('.breadcrumb').html('<a href="/admin/">DASHBOARD /</a>');
         }
     }
 
@@ -238,193 +238,262 @@ $(function() {
 
     var addBadgesInput = function() {
         $('#addBadge').on("click", function() {
-            const { value: badge } = Swal.fire({
-                title: 'Add Badge',
-                input: 'text',
-                inputLabel: 'Enter new badge name :',
-                inputPlaceholder: 'Enter badge name',
-                inputValidator: (value) => {
-                    if (!value) {
-                      return 'You need to write something!'
-                    }
-                    else{
-                        Swal.fire(`${value} Badge Added`)
-                    }
-                }
-              })
+            swal("Enter the badge name :", {
+                    content: "input",
+                })
+                .then((value) => {
+                    swal(`${value} Badge Added`);
+                });
         });
     }
     var badgeDelete = function() {
         $('#badge').on("click", function() {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn-cxt mx-1',
-                  cancelButton: 'btn btn-danger mx-1'
-                },
-                buttonsStyling: false
-              })
-              
-              swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  swalWithBootstrapButtons.fire(
-                    'Deleted!',
-                    'Your badge has been deleted.',
-                    'success'
-                  )
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your badge is safe :)',
-                    'error'
-                  )
+            swal({
+                title: "Are you sure you want to delete this badge?",
+                text: "You will not be able to see the badge entries of this anymore!",
+                icon: "warning",
+                buttons: [
+                    'No, cancel it!',
+                    'Yes, I am sure!'
+                ],
+                dangerMode: true,
+            }).then(function(isConfirm) {
+                if (isConfirm) {
+                    swal({
+                        title: 'Deleted',
+                        text: 'The Badge is deleted success fully',
+                        icon: 'success'
+                    }).then(function() {
+                        form.submit();
+                    });
+                } else {
+                    swal("Cancelled", "The Badge is safe :)", "error");
                 }
-              })
-            // swal({
-            //     title: "Are you sure you want to delete this badge?",
-            //     text: "You will not be able to see the badge entries of this anymore!",
-            //     icon: "warning",
-            //     buttons: [
-            //         'No, cancel it!',
-            //         'Yes, I am sure!'
-            //     ],
-            //     dangerMode: true,
-            // }).then(function(isConfirm) {
-            //     if (isConfirm) {
-            //         swal({
-            //             title: 'Deleted',
-            //             text: 'The Badge is deleted success fully',
-            //             icon: 'success'
-            //         }).then(function() {
-            //             form.submit();
-            //         });
-            //     } else {
-            //         swal("Cancelled", "The Badge is safe :)", "error");
-            //     }
-            // });
+            });
         });
     }
 
-    var deleteAssignedBadge = function(){
-        $("#deleteAssignedBadge").on("click",function(){
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn-cxt mx-1',
-                  cancelButton: 'btn btn-danger mx-1'
-                },
-                buttonsStyling: false
-              })
-              
-              swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  swalWithBootstrapButtons.fire(
-                    'Unassigned!',
-                    'You unassigned the badge.',
-                    'success'
-                  )
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your badge is still assigned :)',
-                    'error'
-                  )
-                }
-              })
-        })
-    }
+    /////////////// CREATIVE CATEGORIES ///////////////
     var addMainCrtCat = function() {
-        $("#add-main-cat").on("click", function() {
-            $("#addMainCatModal").modal("show");
-            $.ajax({
-                url: $(this).attr("data-url-cat"),
-                datatype: "json",
-                success: function(data) {}
-            })
+        $("#add-main-crt-cat").on("click", function() {
+            CatOps("Add Category", "Main Creative Item Category", "Enter category", $(this).attr("data-add-mainCrtCat"), "crt_category_name");
+
         });
     };
 
-    var loadCats = function() {
-        $.ajax({
-            url: $(this).attr("data-url-cat"),
-            datatype: "json",
-            success: function(data) {
-                //    alert(data.mainCatName[0]["Home Decor"]);
-                var i = 0
-                $.each(data.mainCatName, function(key) {
-                    $.each(data.mainCatName[key], function(k, v) {
-                        console.log(k);
-                        console.log(v);
-                    });
 
-                });
-
-            }
-        })
-    }
     var addSubCrtCat = function() {
         $("#add-sub-crt-cat").on("click", function() {
-            $("#addSubCatModal").modal("show");
-            $.ajax({
-                url: $(this).attr("data-url-cat"),
-                datatype: "json",
-                success: function(data) {
-                    //    alert(data.mainCatName[0]["Home Decor"]);
-                    // var i = 0
-                    // $.each(data.mainCatName, function(key) {
-                    //     $.each(data.mainCatName[key], function(k, v) {
-                    //         console.log(k);
-                    //         console.log(v);
-                    //     });
-
-                    // });
-
-                }
-            })
+            CatOps("Add Sub Category", "Sub Creative Item Category", "Enter category", $(this).attr("data-add-subCrtCat"), "crt_sub_category_name");
         });
     };
 
     var editMainCrtCat = function() {
-        $("#edit-mainCrtCat").on("click", function() {
-            $("#addSubCatModal").modal("show");
+            $(".edit-main-crt-cat").on("click", function() {
+
+                const url = $(this).attr("data-edit-mainCrtCat");
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    datatype: 'json',
+                    success: function(response) {
+                        if (response != null) {
+                            CatOps("Edit Category", "Main Creative Item Category", "Edit category", url, "crt_category_name", response.crt_category_name);
+                        } else {
+                            Swal.fire(
+                                'Error',
+                                `Some error occured, Try Again..`,
+                                'error'
+                            )
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            jqXHR.status + "",
+                            textStatus + " : " + errorThrown,
+                            'error'
+                        )
+                    }
+
+                });
+
+            });
+        }
+        // 
+    var editSubCrtCat = function() {
+        $(".edit-sub-crt-cat").on("click", function() {
+            const url = $(this).attr("data-edit-subCrtCat");
             $.ajax({
-                url: $(this).attr("data-url-cat"),
-                datatype: "json",
-                success: function(data) {
-                    //    alert(data.mainCatName[0]["Home Decor"]);
-                    // var i = 0
-                    // $.each(data.mainCatName, function(key) {
-                    //     $.each(data.mainCatName[key], function(k, v) {
-                    //         console.log(k);
-                    //         console.log(v);
-                    //     });
+                type: "GET",
+                url: url,
+                datatype: 'json',
+                success: function(response) {
+                    if (response != null) {
+                        CatOps("Edit Category", "Sub Creative Item Category", "Edit Sub category", url, "crt_sub_category_name", response.crt_sub_category_name);
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            `Some error occured, Try Again..`,
+                            'error'
+                        )
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire(
+                        jqXHR.status + "",
+                        textStatus + " : " + errorThrown,
+                        'error'
+                    )
+                }
 
-                    // });
+            });
 
+
+        });
+    }
+    var delCrtCat = function() {
+        $(".del-each-crt-cat").on("click", function() {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Once done action cannot be revert!!",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    delCat($(this).attr("data-del"));
+                }
+            })
+
+
+        });
+    };
+    /////////////// SCRAP CATEGORIES ///////////////
+
+
+    var addMainScpCat = function() {
+        $("#add-main-scp-cat").on("click", function() {
+            CatOps("Add Category", "Main Scrap Item Category", "Enter category", $(this).attr("data-add-mainScpCat"), "scp_category_name");
+
+        });
+    };
+
+
+    var addSubScpCat = function() {
+        $("#add-sub-scp-cat").on("click", function() {
+            CatOps("Add Sub Category", "Sub Scrap Item Category", "Enter category", $(this).attr("data-add-subScpCat"), "scp_sub_category_name");
+        });
+    };
+
+    var editMainScpCat = function() {
+            $(".edit-main-scp-cat").on("click", function() {
+
+                const url = $(this).attr("data-edit-mainScpCat");
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    datatype: 'json',
+                    success: function(response) {
+                        if (response != null) {
+                            CatOps("Edit Category", "Main Scrap Item Category", "Edit category", url, "scp_category_name", response.scp_category_name);
+                        } else {
+                            Swal.fire(
+                                'Error',
+                                `Category name not found, Try Again..`,
+                                'error'
+                            )
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            jqXHR.status + "",
+                            textStatus + " : " + errorThrown,
+                            'error'
+                        )
+                    }
+
+                });
+
+            });
+        }
+        // 
+    var editSubScpCat = function() {
+        $(".edit-sub-scp-cat").on("click", function() {
+            const url = $(this).attr("data-edit-subScpCat");
+            $.ajax({
+                type: "GET",
+                url: url,
+                datatype: 'json',
+                success: function(response) {
+                    if (response != null) {
+                        CatOps("Edit Category", "Sub Scrap Item Category", "Edit Sub category", url, "scp_sub_category_name", response.scp_sub_category_name);
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            `Category name not found, Try Again..`,
+                            'error'
+                        )
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire(
+                        jqXHR.status + "",
+                        textStatus + " : " + errorThrown,
+                        'error'
+                    )
+                }
+
+            });
+
+
+        });
+    }
+    var delScpCat = function() {
+        $(".del-each-scp-cat").on("click", function() {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Once done action cannot be revert!!",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    delCat($(this).attr("data-del"));
+                }
+            })
+
+
+        });
+    };
+    var disableProdBtn = function() {
+        $('.prod-disable').on("click", function() {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "",
+                        success: function(data) {
+                            if (true) {
+                                Swal.fire("Product disabled successfully.", "", "success");
+                            }
+                        }
+                    });
                 }
             })
         });
-    };
+    }
+
+
     $(function() {
         adminSideBar();
         logoutSwal();
@@ -442,7 +511,145 @@ $(function() {
         addMainCrtCat();
         addSubCrtCat();
         editMainCrtCat();
+        editSubCrtCat();
+        delCrtCat();
+
+        addMainScpCat();
+        addSubScpCat();
+        editMainScpCat();
+        editSubScpCat();
+        delScpCat();
+
+        disableProdBtn();
+
+
+
     });
 
+    /////////////// CREATIVE CATEGORIES ///////////////
+    function delCat(url) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: 'json',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function(response) {
+                if (response.saved) {
+                    Swal.fire(response.itemName + ' deleted', "", "success");
+                    setTimeout(function() { location.reload() }, 2000);
+
+                } else {
+                    Swal.fire(
+                        'Error',
+                        response.itemName + 'not deleted. \n' + response.message + ', Try Again..',
+                        'error'
+                    )
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+
+        })
+
+    };
+
+    function CatOps(titl, inLbl, inPlace, url, field, inVal) {
+        (async() => {
+            const { value: crtCat } = await Swal.fire({
+                title: titl,
+                input: "text",
+                inputLabel: inLbl,
+                inputPlaceholder: inPlace,
+                inputValue: inVal || "",
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You need to write something!'
+                    }
+                }
+            })
+            if (crtCat) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes',
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let postDataObj = {
+                            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                            action: 'post',
+                        };
+                        postDataObj[field] = `${crtCat}`;
+
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            dataType: 'json',
+                            data: postDataObj,
+                            success: function(response) {
+                                if (response.saved) {
+                                    Swal.fire(`${crtCat} added`, "", "success");
+                                    setTimeout(function() { location.reload() }, 1000);
+
+
+                                } else if (response.updated) {
+
+                                    Swal.fire(inVal + ` updated to '${crtCat}' `, "", "success");
+                                    setTimeout(function() { location.reload() }, 2000);
+
+                                } else {
+                                    Swal.fire(
+                                        'Error',
+                                        `${crtCat} not added. \n` + response.message + `Try Again..\n`,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+
+                                Swal.fire(
+                                    jqXHR.status + "",
+                                    textStatus + " : " + errorThrown,
+                                    'error'
+                                )
+                            }
+
+                        })
+                    }
+                })
+            }
+        })()
+    };
+
+    /////////////// SCRAP CATEGORIES ///////////////
 
 });
+
+
+//*******************************************/
+// AJAX FOR FETCH CATEG. DATA
+// $.ajax({
+//     url: $(this).attr("data-url-cat"),
+//     datatype: "json",
+//     success: function(data) {
+//         //    alert(data.mainCatName[0]["Home Decor"]);
+//         $.each(data.mainCatName, function(key) {
+//             $.each(data.mainCatName[key], function(k, v) {
+//                 console.log(k);
+//                 console.log(v);
+//             });
+
+//         });
+
+//     }
+// })
