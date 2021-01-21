@@ -258,8 +258,8 @@ $(function() {
         $('#badge').on("click", function() {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
+                  confirmButton: 'btn-cxt mx-1',
+                  cancelButton: 'btn btn-danger mx-1'
                 },
                 buttonsStyling: false
               })
@@ -269,8 +269,8 @@ $(function() {
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
                 reverseButtons: true
               }).then((result) => {
                 if (result.isConfirmed) {
@@ -313,6 +313,45 @@ $(function() {
             //     }
             // });
         });
+    }
+
+    var deleteAssignedBadge = function(){
+        $("#deleteAssignedBadge").on("click",function(){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn-cxt mx-1',
+                  cancelButton: 'btn btn-danger mx-1'
+                },
+                buttonsStyling: false
+              })
+              
+              swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  swalWithBootstrapButtons.fire(
+                    'Unassigned!',
+                    'You unassigned the badge.',
+                    'success'
+                  )
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                  swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your badge is still assigned :)',
+                    'error'
+                  )
+                }
+              })
+        })
     }
     var addMainCrtCat = function() {
         $("#add-main-cat").on("click", function() {
@@ -399,7 +438,7 @@ $(function() {
         verifyChk();
         addBadgesInput();
         badgeDelete();
-
+        deleteAssignedBadge();
         addMainCrtCat();
         addSubCrtCat();
         editMainCrtCat();

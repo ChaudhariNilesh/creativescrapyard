@@ -22,6 +22,9 @@ urlpatterns = [
     
     path('scrap-categories/',scrapCat,name="scrapCat"),
     path('scrapitems/',scrapitems,name="scrapitems"),
+
+    path('allorders',allorders,name='allorders'),
+    path('orderdetails/<int:id>',orderdetails,name='orderdetails'),
     
     #AJAX
     path('ajax/view-details/',viewDets,name="viewDets"),

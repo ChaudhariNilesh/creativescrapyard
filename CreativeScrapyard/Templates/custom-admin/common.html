@@ -79,7 +79,21 @@
                         </li>
 
                         <li>
-                            <a href="#">Orders</a>
+                            <a href="#orderSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Orders</a>
+                            <ul class="collapse list-unstyled" id="orderSubmenu">
+                                <li>
+                                    <a href="{% url 'CustomAdmin:allorders' %}">All Orders</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'CustomAdmin:scrapCat' %}">Scrap Categories</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'CustomAdmin:creativeitems' %}">Creative Items</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'CustomAdmin:scrapitems' %}">Scrap Items</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#">Payments</a>

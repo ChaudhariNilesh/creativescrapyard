@@ -163,6 +163,19 @@ def scrapitems(request):
         return redirect('CustomAdmin:login')
 
 ####### ORDERS RELATED #######
+def allorders(request):
+    if request.session.get('admin'):    
+        template = 'custom-admin/allorders.html'
+        return render(request,template)
+    else:
+        return redirect('CustomAdmin:login')
+
+def orderdetails(request,id):
+    if request.session.get('admin'):    
+        template = 'custom-admin/orderdetails.html'
+        return render(request,template)
+    else:
+        return redirect('CustomAdmin:login')
 
 ####### BADGES RELATED #######
 def badges(request):
