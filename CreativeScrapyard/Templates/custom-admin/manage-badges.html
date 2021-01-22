@@ -1,5 +1,7 @@
-{% extends 'custom-admin/common.html' %} {% load static %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %}  
+{% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {% endcomment %}
+{%block content%}
 <!-- Modal -->
 <div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -72,19 +74,15 @@
                         <table class="table table-hover tablemanager">
                             <thead>
                                 <tr>
-                                    <th class="disableSort">User</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Badge Name</th>
                                     <th class="disableFilterBy">Artist</th>
-                                    <th class="disableFilterBy">Action</th>
+                                    <th class="disableFilterBy disableSort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span><img class="rounded-circle" width="50px" height="50px"
-                                                src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
-                                    </td>
                                     <td><a href="#"><span class="list-enq-name">aNilesh</span></a>
                                     </td>
                                     <td>nilesh@test.com</td>
@@ -100,6 +98,7 @@
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
+                                                    <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
                                     </td>
                                     {% comment %}
                                     <td>
@@ -114,9 +113,6 @@
                                 </tr>
                                 {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                                 <tr>
-                                    <td><span><img class="rounded-circle" width="50px" height="50px"
-                                                src="{% static 'custom-admin/images/user/1.png' %}" alt=""></span>
-                                    </td>
                                     <td><a href="#"><span class="list-enq-name">Marsha Hogan</span></a>
                                     </td>
                                     <td>dummy@dummy.com</td>
@@ -132,6 +128,7 @@
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
+                                                    <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
                                     </td>
                                     {% comment %}
                                     <td>

@@ -1,0 +1,175 @@
+{% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
+<div class="page-title">
+    Order No. 001425
+    <hr>
+</div>
+<div class="container">
+    <div class="row my-1">
+        <div class="col">
+            <b><span class="mx-auto">Buyer User ID : </span></b>
+            <span> 0104158</span>
+        </div>
+        <div class="col">
+            <b><span class="">Buyer Full Name : </span></b>
+            <span> Yash Kukreja</span>
+        </div>
+    </div>
+    <div class="row my-1">
+        <div class="col">
+            <b><span class="mx-auto">Order Date : </span></b>
+            <span> 02/01/2021</span>
+        </div>
+        <div class="col">
+            <b><span class="">No Of Items : </span></b>
+            <span> 4</span>
+        </div>
+    </div>
+    <div class="row my-1">
+        <div class="col">
+            <b><span class="mx-auto">Deliver To : </span></b>
+            <span> Nikul Prajapati</span>
+        </div>
+        <div class="col">
+            <b><span class="">Contact No : </span></b>
+            <span> 9988776655</span>
+        </div>
+    </div>
+    <div class="row my-1">
+        <div class="col">
+            <b><span class="mx-auto">Delivery Address : </span></b>
+            <span> Chandkheda, Ahmedabad </span>
+        </div>
+    </div>
+    <div class="row my-1">
+        <div class="col">
+            <div class="table-responsive table-user">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Detail ID</th>
+                            <th class="text-center">Product ID</th>
+                            <th class="text-center">Product Name</th>
+                            <th class="text-center">Seller Name</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center"><span class="list-enq-name">000001</span>
+                            </td>
+                            <td class="text-center"><a href=""><span class="list-enq-name">101010</span></a>
+                            </td>
+                            <td class="text-center"><a href=""><span class="list-enq-name">German Lantern</span></a>
+                            </td>
+                            <td class="text-center"><a href=""><span class="list-enq-name">Raghav</span></a>
+                            </td>
+                            <td class="text-center">
+                                <select class="p-1 ord-status">
+                                    <option value="Processing" selected>Processing</option>
+                                    <option value="Shipping">Shipping</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                    <option value="Returned">Returned</option>
+                                </select>
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">2</span>
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">400.0</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="list-enq-name">800.0</span>
+                            </td>
+                            {% comment %}
+                            <td>
+                                <a href="user-edit.html"><i class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                                        aria-hidden="true"></i></a>
+                            </td>
+                            <td>
+                                <a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a>
+                            </td> {% endcomment %}
+                        </tr>
+                        {% for i in '012'|make_list %}
+                        <tr>
+                            <td class="text-center"><span class="list-enq-name">000001</span>
+                            </td>
+                            <td class="text-center"><a href=""><span class="list-enq-name">101010</span></a>
+                            </td>
+                            <td class="text-center"><a href=""><span class="list-enq-name">German Lantern</span></a>
+                            </td>
+                            <td class="text-center"><a href=""><span class="list-enq-name">Nilesh Chaudary</span></a>
+                            </td>
+                            <td class="text-center">
+                                <select class="p-1 ord-status">
+                                    <option value="Processing" selected>Processing</option>
+                                    <option value="Shipping">Shipping</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                    <option value="Returned">Returned</option>
+                                </select>
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">1</span>
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">250.0</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="list-enq-name">500.0</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row my-1">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <b>Payment Method</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Cash On Delivery
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <b>Total
+                        <hr>
+                    </b>
+                    <div class="row">
+                        <div class="col">
+                            Cost Price :
+                        </div>
+                        <div class="col">1840.0</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            Comission :
+                        </div>
+                        <div class="col">460.0</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            Total :
+                        </div>
+                        <div class="col">2300.0</div>
+                    </div>
+                    <hr>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
