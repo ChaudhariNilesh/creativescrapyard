@@ -2,17 +2,23 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 
 # Create your models here.
-class MainCreativeCategory(models.Model):
+class tbl_crt_categories(models.Model):
     crt_category_id =  models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
     crt_category_name = models.CharField(max_length=40)
+
+    class Meta:
+        db_table = 'tbl_crt_categories'
 
     def __str__(self):
         return self.crt_category_name
 
-class SubCreativeCategory(models.Model):
+class tbl_crt_subcategories(models.Model):
     crt_sub_category_id =  models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
     crt_sub_category_name = models.CharField(max_length=40)
-    crt_category = models.ForeignKey(MainCreativeCategory, on_delete=models.CASCADE)
+    crt_category = models.ForeignKey(tbl_crt_categories, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "tbl_crt_subcategories"
 
     def __str__(self):
         return self.crt_sub_category_name

@@ -122,12 +122,15 @@ $(function() {
     };
 
     var changeProdHover = function() {
+        const firstSrc = $(".prod-thumb-img").attr("src");
         $(".prod-thumb-img").on({
             mouseenter: function() {
-                $(this).attr("src", "../../static/img/products/2.jpg");
+                const secondSrc = $(this).attr("change-src");
+                $(this).attr("src", secondSrc);
             },
             mouseleave: function() {
-                $(this).attr("src", "../../static/img/products/1.jpg");
+
+                $(this).attr("src", firstSrc);
             }
         });
 
@@ -386,6 +389,29 @@ $(function() {
     }
 
     //   Dom Ready
+    var orderItemCancel = () => {
+        $('.btn-item-cancel').on('click', function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#20C993',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Cancelled!',
+                        'order item is cancelled.',
+                        'success'
+                    );
+                }
+            });
+        });
+    }
+
+    //   Dom Ready
     $(function() {
         responsiveTab();
         prodGallery();
@@ -408,6 +434,7 @@ $(function() {
         // uploadImageName();
         gridPagination();
         newFileUploader();
+        orderItemCancel();
     });
 });
 

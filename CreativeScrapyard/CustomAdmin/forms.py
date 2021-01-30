@@ -1,9 +1,9 @@
-from .models import MainCreativeCategory,SubCreativeCategory,MainScrapCategory,SubScrapCategory
+from .models import tbl_crt_categories,tbl_crt_subcategories,MainScrapCategory,SubScrapCategory
 from django import forms
 
 class MainCreativeCategoryForm(forms.ModelForm):
     class Meta:
-        model = MainCreativeCategory
+        model = tbl_crt_categories
         fields = ('crt_category_name',)
 
     def clean(self):
@@ -19,7 +19,7 @@ class MainCreativeCategoryForm(forms.ModelForm):
 
 class SubCreativeCategoryForm(forms.ModelForm):
     class Meta:
-        model = SubCreativeCategory
+        model = tbl_crt_subcategories
         fields = ('crt_sub_category_name',)
 
 class MainScrapCategoryForm(forms.ModelForm):
