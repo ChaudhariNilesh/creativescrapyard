@@ -4,9 +4,9 @@ from .views import *
 app_name="CustomAdmin"
 
 urlpatterns = [
+
     path('',adminindex,name="adminindex"),
     path('login/',login,name="login"),
-    # path('logout/',logout,name="logout"),
     path('users/',users,name="users"),
     path('change-password/',changePassword,name="changePassword"),
     path('admin-account/',adminAccount,name="adminAccount"),
@@ -15,6 +15,7 @@ urlpatterns = [
     path('buyers/',buyers,name="buyers"),
     path('sellers/',sellers,name="sellers"),
     path('verify-users/',verifyusers,name="verifyusers"),
+
     
     ######CREATIVE CATEGORIES######
     path('creative-categories/',creativeCat,name="creativeCat"),   
@@ -42,9 +43,13 @@ urlpatterns = [
     path('ajax/verify/',verifyChk,name="verifyChk"),
 
 
-
-
-
-
+    ######BADGES######
     path('badges/',badges,name="badges"),
+
+    ######QUERIES######
+    path('query/',queries,name="query"),
+
+    ######MAIL######
+    path('send-mail/',sendmail,name="sendmail"),
+
 ]

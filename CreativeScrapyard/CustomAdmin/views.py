@@ -124,7 +124,7 @@ def creativeCat(request,id=None,action=None):
     if request.session.get('admin'):
         crtMainCats=tbl_crt_categories.objects.all()
         template = 'custom-admin/products/creativecategory.html' 
-        
+        mainCrtCat=MainCreativeCategoryForm()
         if id != None and action==None :
             #print("DD1")
             subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id)
@@ -139,16 +139,23 @@ def creativeCat(request,id=None,action=None):
            # print("DD2")
             if request.method=="POST" and request.is_ajax():
                 mainCrtCat=MainCreativeCategoryForm(request.POST or None)
+
                 if mainCrtCat.is_valid():
                     #main_crt_Cat = mainCrtCat.cleaned_data['crt_category_name']
                     try:
                         mainCrtCat.save()
                     except:
+                        # print(e)
                         return JsonResponse({"saved":False,"message":"Database Error!!"})
                     
                     return JsonResponse({"saved":True,"message":""})
                 else:
-                    return JsonResponse({"saved":False,"message":"Invalid Data!!"})
+                    # print(mainCrtCat.errors.get_json_data(escape_html=True))
+                    err=mainCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    # print(err)
+                    
+                    return JsonResponse({"saved":False,"message":err})
             else:
                 raise PermissionDenied
             
@@ -240,7 +247,9 @@ def creativeCat(request,id=None,action=None):
    
             else:
                 raise PermissionDenied
-        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats})
+                            
+        #print(mainCrtCat)
+        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
     else:
         return redirect('CustomAdmin:login')
 
@@ -409,6 +418,22 @@ def orderdetails(request,id):
 def badges(request):
     template = 'custom-admin/manage-badges.html'
     return render(request,template)
+
+####### QUERIES RELATED #######
+def queries(request):
+    template = 'custom-admin/queries/queries.html'
+    return render(request,template)
+
+####### SEND EMAIL RELATED #######
+def sendmail(request):
+    template = 'custom-admin/sendmail/sendmail.html'
+    if request.method == "POST":
+        email = request.POST.get('email', '')
+        subject = request.POST.get('subject', '')
+        message = request.POST.get('message', '')
+        print(email.split(","),subject,message)
+    return render(request,template)
+
 
 
 
