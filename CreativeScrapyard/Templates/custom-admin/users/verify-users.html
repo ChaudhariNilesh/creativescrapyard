@@ -1,48 +1,112 @@
-{% extends 'custom-admin/common.html' %} {% load static %} 
-{% comment %} {%block breadcumb %}{% block breadcrumb-link%}<li class="breadcrumb-item active">User</li> {%endblock%} 
-{%endblock%}  {% endcomment %}
-{%block content%}
-<div class="shadow p-3 mb-5 bg-white rounded">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box-inn-sp">
-                <div class="page-title">
-                    Verify User Document
-                </div>
-                <div class="tab-inn">
-                    <div class="table-responsive table-user">
-                        <table class="table table-hover border-bottom tablemanager">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">User ID</th>
-                                    <th scope="col" class="text-center">Name</th>
-                                    <th scope="col" class="text-center">Email</th>
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+<div class="">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-fill" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#pending">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#verified">Verified</a>
+        </li>
+    </ul>
 
-                                    <th class="disableFilterBy disableSort text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
-                                <tr>
-                                    <td class="text-center">10001</td>
-                                    <td class="text-center" ><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
-                                    <td class="text-center">dummy@dummy.com</td>
-                                    <td class="text-center">
-                                    
-                                        <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                        <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
-                                    </td>
-                                    {% comment %}
-                                    <td><a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a></td>
-                                    <td><a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a></td> {% endcomment %}
-                                </tr>
-                                {% endfor %} {% endwith %}
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="pending" class="tab-pane active"><br>
+            <div class="shadow p-3 mb-5 bg-white rounded">
 
-                            </tbody>
-                        </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-inn-sp">
+                            <div class="page-title">
+                                Verify User Document
+                            </div>
+                            <div class="tab-inn">
+                                <div class="table-responsive table-user">
+                                    <table class="table table-hover border-bottom tablemanager">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">User ID</th>
+                                                <th scope="col" class="text-center">Name</th>
+                                                <th scope="col" class="text-center">Email</th>
+
+                                                <th class="disableFilterBy disableSort text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                                            <tr>
+                                                <td class="text-center">10001</td>
+                                                <td class="text-center"><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
+                                                <td class="text-center">dummy@dummy.com</td>
+                                                <td class="text-center">
+
+                                                    <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
+                                                    <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
+                                                    <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
+                                                    <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>
+                                                </td>
+                                                {% comment %}
+                                                <td><a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a></td>
+                                                <td><a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a></td> {% endcomment %}
+                                            </tr>
+                                            {% endfor %} {% endwith %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="loadmore-btn" class="btn-cxt">Load more</button>
+                            </div>
+                        </div>
                     </div>
-                    <button id="loadmore-btn" class="btn-cxt">Load more</button>
+                </div>
+            </div>
+        </div>
+        <div id="verified" class="tab-pane fade"><br>
+            <div class="shadow p-3 mb-5 bg-white rounded">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-inn-sp">
+                            <div class="page-title">
+                                Verified Users
+                            </div>
+                            <div class="tab-inn">
+                                <div class="table-responsive table-user">
+                                    <table class="table table-hover border-bottom ">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">User ID</th>
+                                                <th scope="col" class="text-center">Name</th>
+                                                <th scope="col" class="text-center">Email</th>
+                                                <th class="disableFilterBy disableSort text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                                            <tr>
+                                                <td class="text-center">10001</td>
+                                                <td class="text-center"><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
+                                                <td class="text-center">dummy@dummy.com</td>
+                                                <td class="text-center">
+
+                                                    <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
+                                                    <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
+
+                                                </td>
+                                                {% comment %}
+                                                <td><a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a></td>
+                                                <td><a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a></td> {% endcomment %}
+                                            </tr>
+                                            {% endfor %} {% endwith %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,5 +115,5 @@
 
 
 
-{% endblock %}
 
+{% endblock %}

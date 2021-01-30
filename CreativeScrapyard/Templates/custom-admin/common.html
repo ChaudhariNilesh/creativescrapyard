@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-     <link rel="shortcut icon" href="{% static 'custom-admin/images/favicon.ico' %}"> 
+    <link rel="shortcut icon" href="{% static 'custom-admin/images/favicon.ico' %}">
 
     <title>{% block title %}CS - Admin {% endblock %}</title>
 
@@ -18,9 +18,9 @@
     <!-- <link rel="stylesheet" href="{% static 'custom-admin/css/materialize.css' %}" /> -->
     <link rel="stylesheet" href="{% static 'custom-admin/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/sweetalert2.css' %}">
-    
 
- <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900' type='text/css'>
+
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900' type='text/css'>
 
 </head>
 
@@ -105,7 +105,10 @@
                             <a href="#">Payments</a>
                         </li>
                         <li>
-                            <a href="#">Queries</a>
+                            <a href="{% url 'CustomAdmin:sendmail' %}">Send E-mail</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'CustomAdmin:query' %}">Queries</a>
                         </li>
                         <li>
                             <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account Settings</a>
@@ -166,10 +169,10 @@
                 <!-- {%block breadcrumb %} -->
                 <div class="infomain">
                     <ol class="breadcrumb rounded-0">
-                        
+
                         <!-- <li class="breadcrumb-item"><a href="{% url 'CustomAdmin:adminindex' %}">Home</a></li> -->
                         <!-- -->
-                        {% block breadcrumb-link  %}{% endblock %}
+                        {% block breadcrumb-link %}{% endblock %}
                     </ol>
                 </div>
                 <!-- {% endblock %} -->
@@ -185,21 +188,18 @@
         </div>
 
 
-        {% endblock %}
-
-         {% block footer %} 
-        {%block custom-script %} 
-        
-        {% endblock%}
+        {% endblock %} {% block footer %} {%block custom-script %} {% endblock%}
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
 
-        {% comment %} <script src="{% static 'custom-admin/js/sweetalert.min.js' %}"></script> {% endcomment %}
+        {% comment %}
+        <script src="{% static 'custom-admin/js/sweetalert.min.js' %}"></script> {% endcomment %}
         <script src="{% static 'custom-admin/js/tableManager.js' %}"></script>
         <script src="{% static 'custom-admin/js/admin.js' %}"></script>
         <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+
 
         {% endblock %}
 

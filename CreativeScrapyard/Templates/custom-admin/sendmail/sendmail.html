@@ -1,0 +1,121 @@
+{% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="page-title">
+        Send E-mails
+        <a href="#addEmailModal" data-toggle="modal" data-target="" class="link-effect" style="float:right; cursor: pointer;">
+            <span class="cat align-middle my-2 pl-3 ">
+            <img class="" src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a" width="20" height="20">
+            Add Email(s)
+        </span>
+        </a>
+        <hr>
+
+    </div>
+
+    <div class="m-2">
+        <div class="row ">
+            <label for="recipientEmail" class="col-md-2 col-form-label">Recipient(s)</label>
+            <div class="col-md-10">
+                <div class="email-input">
+                    <div class="emails emails-input">
+                        <span class="email-chip"><span class="content">example@example.com</span><a class="email-remove">×</a></span>
+
+                        <span class="inputTag">
+                            <input id="user-email" type="email" placeholder="Add email.....">
+        
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <form method="POST" action="{% url 'CustomAdmin:sendmail' %}"> {% csrf_token %}
+            <div class="form-group row ">
+                <input id="user-email-list" type="text" name="email" class="form-control">
+            </div>
+
+            <div class="form-group row ">
+                <div class="col-md-12 ">
+                    <input type="text" name="subject" class="form-control" placeholder="Subject">
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <div class="col-md-12  ">
+                    <textarea class="form-control" name="message" placeholder="Message"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn-cxt">Send</button>
+
+        </form>
+
+    </div>
+</div>
+
+<!-- SELECT USER Modal -->
+<div class="modal fade" id="addEmailModal" tabindex="-1" role="dialog" aria-labelledby="addEmailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmailLabel">Select User(s)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-inn">
+                    <div class="table-responsive">
+                        <table class="table table-hover border-bottom tablemanager select-email">
+                            <thead>
+                                <tr>
+                                    <th scope="col " class="text-center disableSort disableFilterBy"><input type="checkbox" id="selectAll" /></th>
+                                    <th scope="col " class="text-center ">Name</th>
+                                    <th scope="col " class="text-center ">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center " id=""><input type="checkbox" /> </td>
+                                    <td class="text-center ">dummy dummy1 </td>
+                                    <td class="text-center pl-2 ">dummy1@dummy.com</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center " id=" "><input type="checkbox" /> </td>
+                                    <td class="text-center ">dummy dummy2 </td>
+                                    <td class="text-center pl-2 ">dummy2@dummy.com</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center " id=" "><input type="checkbox" /> </td>
+                                    <td class="text-center ">dummy dummy3 </td>
+                                    <td class="text-center pl-2 ">dummy3@dummy.com</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center " id=" "><input type="checkbox" /> </td>
+                                    <td class="text-center ">dummy dummy4 </td>
+                                    <td class="text-center pl-2 ">dummy4@dummy.com</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center " id=" "><input type="checkbox" /> </td>
+                                    <td class="text-center ">dummy dummy5 </td>
+                                    <td class="text-center pl-2 ">dummy5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="addEmails" type="button " class="btn-cxt ">Add Email(s)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

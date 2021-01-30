@@ -45,3 +45,5 @@ class tbl_orders_details(models.Model):
 
     def __str__(self):
         return self.order_details_id
+    
+    
