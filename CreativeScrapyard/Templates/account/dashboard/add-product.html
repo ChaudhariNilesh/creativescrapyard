@@ -18,17 +18,22 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="category">Category</label>
-                    <select id="category" class="form-control">
+                    <label for="itemCategory">Category</label>
+                    <select id="itemCategory" class="form-control">
                         <option selected>Choose...</option>
-                        <option>...</option>
+                        {% for cat in crtCategory %}
+                        <option id="{{ cat.crt_category_id }}"
+                                data-get-sub-crt="{% url 'Authentication:get_crt_sub_cat' cat.crt_category_id %}">
+                            {{cat.crt_category_name}}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="subCategory">Sub-Category</label>
-                    <select id="subCategory" class="form-control">
+                    <label for="itemSubCategory">Sub-Category</label>
+                    <select id="itemSubCategory" class="form-control">
                         <option selected>Choose...</option>
                         <option>...</option>
                     </select>
@@ -153,6 +158,8 @@
             }
             event.preventDefault();
         }
+
+
 
 </script>
 {% endblock %}
