@@ -21,190 +21,190 @@
 
 
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/3.22.1/tagify.css">
 
-</head>
+    <body>
 
-<body>
+        <div>
 
-    <div>
+            {%block header %} {% endblock %} {% block main-content %}
+            <div class="wrapper">
 
-        {%block header %} {% endblock %} {% block main-content %}
-        <div class="wrapper">
+                <nav id="sidebar">
+                    <div class="sidebar-header">
+                        <span>Creative Scrapyard</span>
+                    </div>
+                    <div class="sidebar-items">
+                        <ul class="list-unstyled components">
+                            <li>
+                                <a href="{% url 'CustomAdmin:adminindex' %}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
+                                <ul class="collapse list-unstyled" id="userSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:users' %}">All users</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:buyers' %}">Buyers</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:sellers' %}">Sellers</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:verifyusers' %}">Verify User</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:badges' %}">Manage Badges</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#productCatSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Categories</a>
+                                <ul class="collapse list-unstyled" id="productCatSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:creativeCat' %}">Creative Categories</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:scrapCat' %}">Scrap Categories</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <span>Creative Scrapyard</span>
-                </div>
-                <div class="sidebar-items">
-                    <ul class="list-unstyled components">
-                        <li>
-                            <a href="{% url 'CustomAdmin:adminindex' %}">Dashboard</a>
-                        </li>
-                        <li class="active">
-                            <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-                            <ul class="collapse list-unstyled" id="userSubmenu">
-                                <li>
-                                    <a href="{% url 'CustomAdmin:users' %}">All users</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:buyers' %}">Buyers</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:sellers' %}">Sellers</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:verifyusers' %}">Verify User</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:badges' %}">Manage Badges</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#productCatSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Categories</a>
-                            <ul class="collapse list-unstyled" id="productCatSubmenu">
-                                <li>
-                                    <a href="{% url 'CustomAdmin:creativeCat' %}">Creative Categories</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:scrapCat' %}">Scrap Categories</a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li>
+                                <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
+                                <ul class="collapse list-unstyled" id="productSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:creativeitems' %}">Creative Items</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:scrapitems' %}">Scrap Items</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <li>
-                            <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
-                            <ul class="collapse list-unstyled" id="productSubmenu">
-                                <li>
-                                    <a href="{% url 'CustomAdmin:creativeitems' %}">Creative Items</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:scrapitems' %}">Scrap Items</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="#orderSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Orders</a>
-                            <ul class="collapse list-unstyled" id="orderSubmenu">
-                                <li>
-                                    <a href="{% url 'CustomAdmin:allorders' %}">All Orders</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:scrapCat' %}">Scrap Categories</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:creativeitems' %}">Creative Items</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:scrapitems' %}">Scrap Items</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Payments</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'CustomAdmin:sendmail' %}">Send E-mail</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'CustomAdmin:query' %}">Queries</a>
-                        </li>
-                        <li>
-                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account Settings</a>
-                            <ul class="collapse list-unstyled" id="pageSubmenu">
-                                <li>
-                                    <a href="{% url 'CustomAdmin:adminAccount' %}">My Account</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'CustomAdmin:changePassword' %}">Change Password</a>
-                                </li>
-                                <li>
-                                    <a id="btn-logout" class="logout">Logout</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                            <li>
+                                <a href="#orderSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Orders</a>
+                                <ul class="collapse list-unstyled" id="orderSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:allorders' %}">All Orders</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:scrapCat' %}">Scrap Categories</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:creativeitems' %}">Creative Items</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:scrapitems' %}">Scrap Items</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Payments</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'CustomAdmin:sendmail' %}">Send E-mail</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'CustomAdmin:query' %}">Queries</a>
+                            </li>
+                            <li>
+                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Account Settings</a>
+                                <ul class="collapse list-unstyled" id="pageSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:adminAccount' %}">My Account</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:changePassword' %}">Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a id="btn-logout" class="logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
 
 
-            </nav>
+                </nav>
 
-            <!-- Page Content Holder -->
-            <div id="content">
+                <!-- Page Content Holder -->
+                <div id="content">
 
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
 
-                        <button type="button" id="sidebarCollapse" class="navbar-btn rounded">
+                            <button type="button" id="sidebarCollapse" class="navbar-btn rounded">
 								<span></span>
 								<span></span>
 								<span></span>
 							</button>
-                        <button class="btn btn-cxt d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="btn btn-cxt d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<i class="fa fa-align-justify"></i>
 							</button>
 
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/">View Site</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'CustomAdmin:adminAccount' %}">My Account</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'CustomAdmin:changePassword' %}">Change Password</a>
-                                </li>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="nav navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/">View Site</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'CustomAdmin:adminAccount' %}">My Account</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'CustomAdmin:changePassword' %}">Change Password</a>
+                                    </li>
 
 
-                                <li class="nav-item">
-                                    <!-- {% url 'CustomAdmin:logout' %} -->
-                                    <a class="nav-link"><button id="btn-logout" class="btn-scp rounded logout" style="position: relative; left: -5px; top: -10px;  cursor: pointer;">Log out</button></a>
-                                </li>
-                            </ul>
+                                    <li class="nav-item">
+                                        <!-- {% url 'CustomAdmin:logout' %} -->
+                                        <a class="nav-link"><button id="btn-logout" class="btn-scp rounded logout" style="position: relative; left: -5px; top: -10px;  cursor: pointer;">Log out</button></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </nav>
-                <!-- {%block breadcrumb %} -->
-                <div class="infomain">
-                    <ol class="breadcrumb rounded-0">
+                    </nav>
+                    <!-- {%block breadcrumb %} -->
+                    <div class="infomain">
+                        <ol class="breadcrumb rounded-0">
 
-                        <!-- <li class="breadcrumb-item"><a href="{% url 'CustomAdmin:adminindex' %}">Home</a></li> -->
-                        <!-- -->
-                        {% block breadcrumb-link %}{% endblock %}
-                    </ol>
+                            <!-- <li class="breadcrumb-item"><a href="{% url 'CustomAdmin:adminindex' %}">Home</a></li> -->
+                            <!-- -->
+                            {% block breadcrumb-link %}{% endblock %}
+                        </ol>
+                    </div>
+                    <!-- {% endblock %} -->
+                    <main class="">
+                        <div class="main-container ">
+                            {% block content %} {% endblock %}
+
+                        </div>
+                    </main>
+
                 </div>
-                <!-- {% endblock %} -->
-                <main class="">
-                    <div class="main-container ">
-                        {% block content %} {% endblock %}
-
-                    </div>
-                </main>
 
             </div>
 
+
+            {% endblock %} {% block footer %} {%block custom-script %} {% endblock%}
+            <script src="{% static 'js/jquery.min.js' %}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+            <script src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+
+            {% comment %}
+            <script src="{% static 'custom-admin/js/sweetalert.min.js' %}"></script> {% endcomment %}
+            <script src="{% static 'custom-admin/js/tableManager.js' %}"></script>
+            <script src="{% static 'custom-admin/js/admin.js' %}"></script>
+            <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/3.22.1/tagify.min.js"></script>
+
+
+            {% endblock %}
+
         </div>
 
-
-        {% endblock %} {% block footer %} {%block custom-script %} {% endblock%}
-        <script src="{% static 'js/jquery.min.js' %}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-        <script src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-
-        {% comment %}
-        <script src="{% static 'custom-admin/js/sweetalert.min.js' %}"></script> {% endcomment %}
-        <script src="{% static 'custom-admin/js/tableManager.js' %}"></script>
-        <script src="{% static 'custom-admin/js/admin.js' %}"></script>
-        <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
-
-
-        {% endblock %}
-
-    </div>
-
-</body>
+    </body>
 
 </html>

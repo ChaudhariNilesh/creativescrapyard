@@ -34,6 +34,7 @@
         <form method="POST" action="{% url 'CustomAdmin:sendmail' %}"> {% csrf_token %}
             <div class="form-group row ">
                 <input id="user-email-list" type="text" name="email" class="form-control">
+                <input name='tags' value='jquery, bootstrap' autofocus>
             </div>
 
             <div class="form-group row ">
