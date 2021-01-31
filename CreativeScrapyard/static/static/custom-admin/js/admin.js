@@ -61,7 +61,7 @@ $(function() {
             ],
             debug: false,
             vocabulary: {
-                voc_filter_by: 'Filter By',
+                voc_filter_by: 'Search By',
                 voc_type_here_filter: 'Search...',
                 voc_show_rows: 'Rows Per Page'
             },
@@ -493,6 +493,132 @@ $(function() {
         });
     }
 
+    /* SEND EMAILS */
+    var selectUserEmail = function() {
+
+        let values = [];
+        let $inputTag = $("#user-email");
+        //let email = [];
+        let i = 0
+
+        $(".tablemanager.select-email").tablemanager({
+            disable: ['first'],
+        })
+
+        $('#selectAll').click(function(e) {
+            $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+        });
+
+        $("#addEmails").click(function(e) {
+            //   let dbEmail = [];
+            $.each($("td input:checked").closest("tr").find("td:last-child"),
+                function() {
+                    const email = $(this).text();
+                    if (validateEmail(email)) {
+                        values.push(email);
+                    } else {
+                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + email + '</span><a class="email-remove">×</a></span>');
+                    }
+
+                });
+
+
+            $('input:checked').prop('checked', false);
+            $('#addEmailModal').modal("hide");
+
+            addEmails(values);
+            //alert("val---" + values.join(", "));
+
+        });
+
+
+        $inputTag.keydown(function(e) {
+            $inputTag.css('border', '')
+            if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
+                let getEmail = $inputTag.val();
+                e.preventDefault();
+                if (validateEmail(getEmail)) {
+                    if (!values.includes(getEmail)) {
+                        $('.inputTag').before('<span class="email-chip"><span class="content">' + getEmail + '</span><a class="email-remove">×</a></span>');
+                        $inputTag.val('');
+
+                        //email[i++] = getEmail
+                        values.push(getEmail);
+                        // console.log(email);
+                        $("#user-email-list").val(values)
+                    } else {
+                        Swal.fire("Email already exists in the list");
+                    }
+                } else {
+                    $inputTag.css('border', '1px solid red')
+                }
+
+            }
+
+        });
+
+        function addEmails(data) {
+            if (data) {
+                var newEmail = [];
+                // $.each(values, (k, v) => {
+                //     newEmail.push(v);
+                // });
+                $("#user-email-list").val('');
+                $(".inputTag").siblings().remove('.email-chip');
+                $.each(data, function(key, val) {
+                    if (validateEmail(val)) {
+                        $('.inputTag').before('<span class="email-chip"><span class="content">' + val + '</span><a class="email-remove">×</a></span>');
+                        $inputTag.val('');
+
+                        newEmail.push(val);
+                        $("#user-email-list").val(newEmail)
+                    } else {
+                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + val + '</span><a class="email-remove">×</a></span>');
+                        $(".invalid-email").css('border', '1px solid red')
+                    }
+                })
+
+            }
+
+        }
+
+        function updateInputEmails(data) {
+            if (data) {
+                var updatedEmails = [];
+                // console.log(data)
+                $("#user-email-list").val('');
+                $.each(data, function(key, val) {
+                    if (validateEmail(val)) {
+                        updatedEmails.push(val)
+                        $("#user-email-list").val(updatedEmails)
+                    }
+                })
+
+            }
+        }
+
+        function validateEmail(val) {
+            return /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(val);
+        }
+
+
+
+
+        $(document).on("click", '.email-remove', function(e) {
+            var rmEmail = $(this).siblings().text();
+            if ($(this).parent().hasClass("email-chip")) {
+                values.splice(values.indexOf(rmEmail), 1);
+            }
+            $(this).parent().slice(values.indexOf(rmEmail)).remove();
+            // console.log(values);
+            updateInputEmails(values);
+
+        });
+
+
+
+    }
+
 
     $(function() {
         adminSideBar();
@@ -507,7 +633,7 @@ $(function() {
         verifyChk();
         addBadgesInput();
         badgeDelete();
-        deleteAssignedBadge();
+        // deleteAssignedBadge();
         addMainCrtCat();
         addSubCrtCat();
         editMainCrtCat();
@@ -521,6 +647,8 @@ $(function() {
         delScpCat();
 
         disableProdBtn();
+
+        selectUserEmail();
 
 
 
@@ -608,11 +736,11 @@ $(function() {
                                     setTimeout(function() { location.reload() }, 2000);
 
                                 } else {
-                                    Swal.fire(
-                                        'Error',
-                                        `${crtCat} not added. \n` + response.message + `Try Again..\n`,
-                                        'error'
-                                    )
+                                    Swal.fire({
+                                        title: 'Error',
+                                        html: `${crtCat} not added.` + "<br/>" + response.message + `<br/> Try Again..`,
+                                        icon: 'error'
+                                    })
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
@@ -631,7 +759,7 @@ $(function() {
         })()
     };
 
-    /////////////// SCRAP CATEGORIES ///////////////
+
 
 });
 

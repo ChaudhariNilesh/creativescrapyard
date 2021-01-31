@@ -2,6 +2,7 @@
 
 import django.core.validators
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -9,10 +10,15 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+<<<<<<< HEAD
+=======
+        ('Items', '0007_auto_20210124_1741'),
+>>>>>>> 10290f52f0d94b94aeb49c9b4464759fee617f5c
     ]
 
     operations = [
         migrations.CreateModel(
+<<<<<<< HEAD
             name='tbl_orders_details',
             fields=[
                 ('order_details_id', models.PositiveIntegerField(primary_key=True, serialize=False, validators=[django.core.validators.MaxValueValidator(9999999999)])),
@@ -23,6 +29,8 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+=======
+>>>>>>> 10290f52f0d94b94aeb49c9b4464759fee617f5c
             name='tbl_orders_mst',
             fields=[
                 ('order_id', models.PositiveIntegerField(primary_key=True, serialize=False, validators=[django.core.validators.MaxValueValidator(9999999999)])),
@@ -35,4 +43,19 @@ class Migration(migrations.Migration):
                 ('delivery_date', models.DateTimeField(auto_now_add=True)),
             ],
         ),
+<<<<<<< HEAD
+=======
+        migrations.CreateModel(
+            name='tbl_orders_details',
+            fields=[
+                ('order_details_id', models.PositiveIntegerField(primary_key=True, serialize=False, validators=[django.core.validators.MaxValueValidator(9999999999)])),
+                ('crt_item_qty', models.PositiveIntegerField(default=1, validators=[django.core.validators.MaxValueValidator(999)])),
+                ('unit_price', models.DecimalField(decimal_places=2, max_digits=15, validators=[django.core.validators.MinValueValidator(0)])),
+                ('pickup_address', models.CharField(max_length=350)),
+                ('item_status', models.CharField(choices=[('PLACED', 'Placed'), ('COMPLETED', 'Completed'), ('CANCELLED', 'Cancelled'), ('FAILED', 'Failed'), ('RETURNED', 'Returned')], max_length=15)),
+                ('crt_item_details', models.ForeignKey(null=True, on_delete=django.db.models.deletion.RESTRICT, to='Items.tbl_creativeitems_details')),
+                ('order', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='Order.tbl_orders_mst')),
+            ],
+        ),
+>>>>>>> 10290f52f0d94b94aeb49c9b4464759fee617f5c
     ]

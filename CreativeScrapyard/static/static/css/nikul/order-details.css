@@ -73,99 +73,12 @@ th.tb-head {
     background-color: #d9dce1;
 }
 
-
-/* @media only screen and (max-width: 600px) {
-  .page-title {
-    font-size: 1rem;
-    font-weight: 500;
-  }
-} */
-
-
-/*Initial style sort*/
-
-.tablemanager th.sorterHeader {
-    cursor: pointer;
+.fw-500 {
+    font-weight: 700;
 }
 
-.tablemanager th.sorterHeader:after {
-    content: " \f0dc";
-    font-family: "FontAwesome";
-}
-
-
-/*Style sort desc*/
-
-.tablemanager th.sortingDesc:after {
-    content: " \f0dd";
-    font-family: "FontAwesome";
-}
-
-
-/*Style sort asc*/
-
-.tablemanager th.sortingAsc:after {
-    content: " \f0de";
-    font-family: "FontAwesome";
-}
-
-
-/*Style disabled*/
-
-.tablemanager th.disableSort {}
-
-#for_numrows {
-    padding: 10px;
-    float: left;
-}
-
-#numrows {
-    padding: 8px 8px;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-#for_numrows label {
-    color: var(--pri-color-dark);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-#for_filter_by {
-    padding: 10px;
-    float: right;
-}
-
-#for_filter_by label {
-    color: var(--pri-color-dark);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-#filter_by {
-    padding: 8px 8px;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-#filter_input {
-    padding: 5px 5px;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+.bx-img {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 @media only screen and (max-width: 600px) {

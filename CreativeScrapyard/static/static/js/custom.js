@@ -122,12 +122,15 @@ $(function() {
     };
 
     var changeProdHover = function() {
+        const firstSrc = $(".prod-thumb-img").attr("src");
         $(".prod-thumb-img").on({
             mouseenter: function() {
-                $(this).attr("src", "../../static/img/products/2.jpg");
+                const secondSrc = $(this).attr("change-src");
+                $(this).attr("src", secondSrc);
             },
             mouseleave: function() {
-                $(this).attr("src", "../../static/img/products/1.jpg");
+
+                $(this).attr("src", firstSrc);
             }
         });
 
@@ -202,7 +205,7 @@ $(function() {
     };
 
     var productViewModel = function() {
-//        forward on model
+        //        forward on model
         $('#editProductNext').click(function() {
             $('#view-data').hide("slide", { direction: "left" }, 1000);
             $('#edit-data-1').show("slide", { direction: "right" }, 1000);
@@ -213,15 +216,15 @@ $(function() {
             $('#edit-data-2').show("slide", { direction: "right" }, 1000);
         });
 
-//       backward on model
+        //       backward on model
         $("#editProductBack1").click(function() {
-            $('#edit-data-1').hide("slide", {direction: "right"}, 1000);
-            $('#view-data').show("slide", {direction: "left"}, 1000);
+            $('#edit-data-1').hide("slide", { direction: "right" }, 1000);
+            $('#view-data').show("slide", { direction: "left" }, 1000);
         });
 
         $("#editProductBack2").click(function() {
-            $('#edit-data-2').hide("slide", {direction: "right"}, 1000);
-            $('#view-data').show("slide", {direction: "left"}, 1000);
+            $('#edit-data-2').hide("slide", { direction: "right" }, 1000);
+            $('#view-data').show("slide", { direction: "left" }, 1000);
         });
     }
 
@@ -314,14 +317,14 @@ $(function() {
         });
     }
 
-    var addBadgesInput = function(){
+    var addBadgesInput = function() {
         $('#addBadge').on("click", function() {
-        swal("Write something here:", {
-            content: "input",
-          })
-          .then((value) => {
-            swal(`You typed: ${value}`);
-          }); 
+            swal("Write something here:", {
+                    content: "input",
+                })
+                .then((value) => {
+                    swal(`You typed: ${value}`);
+                });
         });
     }
 
@@ -353,28 +356,29 @@ $(function() {
     // new file uploader js SIBTC
     var newFileUploader = function() {
 
-        $(".js-upload-photos").click(function () {
+        $(".js-upload-photos").click(function() {
             $("#fileupload").click();
         });
 
         /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
         $("#fileupload").fileupload({
             dataType: 'json',
-            sequentialUploads: true,  /* 1. SEND THE FILES ONE BY ONE */
-            start: function (e) {  /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
-              $("#modal-progress").modal("show");
+            sequentialUploads: true,
+            /* 1. SEND THE FILES ONE BY ONE */
+            start: function(e) { /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
+                $("#modal-progress").modal("show");
             },
-            stop: function (e) {  /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
-              $("#modal-progress").modal("hide");
-              setTimeout(function(){$("#modal-progress").modal("hide")}, 1000);
+            stop: function(e) { /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
+                $("#modal-progress").modal("hide");
+                setTimeout(function() { $("#modal-progress").modal("hide") }, 1000);
             },
-            progressall: function (e, data) {  /* 4. UPDATE THE PROGRESS BAR */
+            progressall: function(e, data) { /* 4. UPDATE THE PROGRESS BAR */
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 var strProgress = progress + "%";
-                $(".progress-bar").css({"width": strProgress});
+                $(".progress-bar").css({ "width": strProgress });
                 $(".progress-bar").text(strProgress);
             },
-            done: function (e, data) {
+            done: function(e, data) {
                 if (data.result.is_valid) {
                     $("#gallery tbody").prepend(
                         "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a></td><td><a href=" + 'http://127.0.0.1:8000/accounts/photo-delete/' + data.result.id + "><span class='remove-product-image p-1'><img src='https://s.svgbox.net/materialui.svg?ic=delete&fill=13775a' width='26' height='26'></span></a></td></tr>"
@@ -384,7 +388,30 @@ $(function() {
         });
     }
 
-        //   Dom Ready
+    //   Dom Ready
+    var orderItemCancel = () => {
+        $('.btn-item-cancel').on('click', function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#20C993',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Cancelled!',
+                        'order item is cancelled.',
+                        'success'
+                    );
+                }
+            });
+        });
+    }
+
+    //   Dom Ready
     $(function() {
         responsiveTab();
         prodGallery();
@@ -407,6 +434,7 @@ $(function() {
         // uploadImageName();
         gridPagination();
         newFileUploader();
+        orderItemCancel();
     });
 });
 

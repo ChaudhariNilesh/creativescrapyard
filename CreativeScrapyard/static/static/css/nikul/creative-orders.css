@@ -50,121 +50,19 @@ th.tb-head {
     background-color: #d9dce1;
 }
 
-table {
-    font-size: 15px;
+.fs-9 {
+    font-size: .8rem;
 }
 
-
-/* table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    margin-bottom: 20px;
+/*.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: var(--pri-color) !important;
 }
 
-
-.table th,
-.table td {
-    vertical-align: middle;
-}
-
-table,
-th,
-td {
-    border: 1px solid #bbb;
-    text-align: left;
-}
-
-th {
-    background-color: #ddd;
-} */
-
-
-/*Initial style sort*/
-
-.tablemanager th.sorterHeader {
-    cursor: pointer;
-}
-
-.tablemanager th.sorterHeader:after {
-    content: " \f0dc";
-    font-family: "FontAwesome";
-}
-
-
-/*Style sort desc*/
-
-.tablemanager th.sortingDesc:after {
-    content: " \f0dd";
-    font-family: "FontAwesome";
-}
-
-
-/*Style sort asc*/
-
-.tablemanager th.sortingAsc:after {
-    content: " \f0de";
-    font-family: "FontAwesome";
-}
-
-
-/*Style disabled*/
-
-.tablemanager th.disableSort {}
-
-#for_numrows {
-    padding: 10px;
-    float: left;
-}
-
-#numrows {
-    padding: 8px 8px;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-#for_numrows label {
-    color: var(--pri-color-dark);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-#for_filter_by {
-    padding: 10px;
-    float: right;
-}
-
-#for_filter_by label {
-    color: var(--pri-color-dark);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-#filter_by {
-    padding: 8px 8px;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-#filter_input {
-    padding: 5px 5px;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+.nav-pills .nav-link, .nav-pills .show>.nav-link {
+    color: var(--pri-color);
+    background-color: #fff !important;
+}*/
 
 @media only screen and (max-width: 600px) {
     .page-title {

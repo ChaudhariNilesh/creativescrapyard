@@ -122,13 +122,13 @@ def verifyChk(request):
 
 def creativeCat(request,id=None,action=None):
     if request.session.get('admin'):
-        crtMainCats=MainCreativeCategory.objects.all()
+        crtMainCats=tbl_crt_categories.objects.all()
         template = 'custom-admin/products/creativecategory.html' 
-        
+        mainCrtCat=MainCreativeCategoryForm()
         if id != None and action==None :
             #print("DD1")
-            subCrtCats=SubCreativeCategory.objects.filter(crt_category_id=id)
-            parentCat=get_object_or_404(MainCreativeCategory,pk=id)
+            subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id)
+            parentCat=get_object_or_404(tbl_crt_categories,pk=id)
                 
             if subCrtCats!= None:
                 return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True })
@@ -139,16 +139,23 @@ def creativeCat(request,id=None,action=None):
            # print("DD2")
             if request.method=="POST" and request.is_ajax():
                 mainCrtCat=MainCreativeCategoryForm(request.POST or None)
+
                 if mainCrtCat.is_valid():
                     #main_crt_Cat = mainCrtCat.cleaned_data['crt_category_name']
                     try:
                         mainCrtCat.save()
                     except:
+                        # print(e)
                         return JsonResponse({"saved":False,"message":"Database Error!!"})
                     
                     return JsonResponse({"saved":True,"message":""})
                 else:
-                    return JsonResponse({"saved":False,"message":"Invalid Data!!"})
+                    # print(mainCrtCat.errors.get_json_data(escape_html=True))
+                    err=mainCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    # print(err)
+                    
+                    return JsonResponse({"saved":False,"message":err})
             else:
                 raise PermissionDenied
             
@@ -160,7 +167,7 @@ def creativeCat(request,id=None,action=None):
                 if newSubCrtCat.is_valid():
                     #sub_crt_Cat = newSubCrtCat.cleaned_data['crt_sub_category_name']
                     newSubCrtCat = newSubCrtCat.save(commit=False)
-                    newSubCrtCat.crt_category = get_object_or_404(MainCreativeCategory,pk=id)
+                    newSubCrtCat.crt_category = get_object_or_404(tbl_crt_categories, pk=id)
                     try:
                         newSubCrtCat.save()
                     except:
@@ -176,7 +183,7 @@ def creativeCat(request,id=None,action=None):
 
             if request.method=="POST" and request.is_ajax():
                # print("editmain")
-                editMainCrtCat = get_object_or_404(MainCreativeCategory,pk=id)
+                editMainCrtCat = get_object_or_404(tbl_crt_categories, pk=id)
                 editMainCrtCat = MainCreativeCategoryForm(request.POST or None,instance=editMainCrtCat)
                 if editMainCrtCat.is_valid():
                     try:
@@ -188,7 +195,7 @@ def creativeCat(request,id=None,action=None):
                     return JsonResponse({"updated":False,"message":"Invalid Data!!"})
             elif request.method=="GET" and request.is_ajax():
                 print("ajax")
-                mainCrtCat = get_object_or_404(MainCreativeCategory,pk=id)
+                mainCrtCat = get_object_or_404(tbl_crt_categories, pk=id)
                 return JsonResponse({"crt_category_name":mainCrtCat.crt_category_name})
             else:
                 raise PermissionDenied
@@ -196,7 +203,7 @@ def creativeCat(request,id=None,action=None):
         elif action=="editSubs" and id!=None:
             #print("EditSubs")
             if request.method=="POST" and request.is_ajax():
-                editSubCrtCat = get_object_or_404(SubCreativeCategory,pk=id)
+                editSubCrtCat = get_object_or_404(tbl_crt_subcategories, pk=id)
                 editSubCrtCat = SubCreativeCategoryForm(request.POST or None,instance=editSubCrtCat)
                 if editSubCrtCat.is_valid():
                     try:
@@ -208,7 +215,7 @@ def creativeCat(request,id=None,action=None):
                     return JsonResponse({"updated":False,"message":"Invalid Data!!"})
             elif request.method=="GET" and request.is_ajax():
                 #print("ajax")
-                subCrtCat = get_object_or_404(SubCreativeCategory,pk=id)
+                subCrtCat = get_object_or_404(tbl_crt_subcategories, pk=id)
                 return JsonResponse({"crt_sub_category_name":subCrtCat.crt_sub_category_name})
 
             else:
@@ -217,7 +224,7 @@ def creativeCat(request,id=None,action=None):
         elif action=="delMain" and id!=None:
             #print("DelMain")
             if request.method=="POST" and request.is_ajax():
-                delMainCrtCat = get_object_or_404(MainCreativeCategory,pk=id)
+                delMainCrtCat = get_object_or_404(tbl_crt_categories, pk=id)
                 try:
                     itemName=delMainCrtCat.crt_category_name
                     delMainCrtCat.delete()
@@ -230,7 +237,7 @@ def creativeCat(request,id=None,action=None):
         elif action=="delSubs" and id!=None:
             #print("DelMain")
             if request.method=="POST" and request.is_ajax():
-                delSubCrtCat = get_object_or_404(SubCreativeCategory,pk=id)
+                delSubCrtCat = get_object_or_404(tbl_crt_subcategories, pk=id)
                 try:
                     itemName=delSubCrtCat.crt_sub_category_name
                     delSubCrtCat.delete()
@@ -240,7 +247,9 @@ def creativeCat(request,id=None,action=None):
    
             else:
                 raise PermissionDenied
-        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats})
+                            
+        #print(mainCrtCat)
+        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
     else:
         return redirect('CustomAdmin:login')
 
@@ -427,6 +436,22 @@ def allorderdetails(request,action='delivered'):
 def badges(request):
     template = 'custom-admin/manage-badges.html'
     return render(request,template)
+
+####### QUERIES RELATED #######
+def queries(request):
+    template = 'custom-admin/queries/queries.html'
+    return render(request,template)
+
+####### SEND EMAIL RELATED #######
+def sendmail(request):
+    template = 'custom-admin/sendmail/sendmail.html'
+    if request.method == "POST":
+        email = request.POST.get('email', '')
+        subject = request.POST.get('subject', '')
+        message = request.POST.get('message', '')
+        print(email.split(","),subject,message)
+    return render(request,template)
+
 
 
 
