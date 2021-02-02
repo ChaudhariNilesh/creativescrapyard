@@ -411,6 +411,12 @@ $(function() {
         });
     }
 
+    var btnLoading = () => {
+        $('.btn-load').click(function() {
+          $('.btn-load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
+        });
+    }
+
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -435,6 +441,7 @@ $(function() {
         gridPagination();
         newFileUploader();
         orderItemCancel();
+        btnLoading();
     });
 });
 

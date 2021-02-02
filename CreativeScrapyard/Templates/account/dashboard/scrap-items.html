@@ -58,7 +58,7 @@
             </tbody>
         </table>
     </div>
-    <button id="loadmore-btn" class="btn btn-sm pri-bg-color btn-cxt btn-load">Load more</button>
+    <button id="loadmore-btn" class="btn btn-sm pri-bg-color btn-cxt">Load more</button>
 </div>
 
 <!--Model popup-->
@@ -274,28 +274,4 @@
     </div>
 </div>
 
-{% endblock %}
-
-{% block baseScript %}
-<script>
-        var deletePhoto = function(event, id) {
-            $.ajax({
-                url: 'http://127.0.0.1:8000/accounts/photo-delete/' + id,
-                success: function() {
-                    is_done(true);
-                }
-            });
-
-            function is_done(ans) {
-                if(ans) {
-                    var trID = '#photo-list-' + id;
-                    $(trID).remove();
-                }else{
-                    alert("Technical issue.");
-                }
-            }
-            event.preventDefault();
-        }
-
-</script>
 {% endblock %}

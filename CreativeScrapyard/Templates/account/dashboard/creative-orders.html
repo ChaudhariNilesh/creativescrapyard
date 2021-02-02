@@ -42,65 +42,15 @@
                 <td class="text-center">&#8377; 50</td>
                 <td class="text-center">&#8377; 450</td>
                 <td class="text-center">
-                    <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg">
-                        <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
-                    </a>
+                    <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a>
                 </td>
             </tr>
             {% endfor %}
             {% endwith %}
             </tbody>
-            <!--            maximum order should be 10.-->
         </table>
     </div>
-    <button class="btn btn-sm pri-bg-color">Load more</button>
+    <button class="btn btn-sm pri-bg-color btn-load">Load more</button>
 
-    <!-- model form -->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="order-id">Order Id: #5047</h5>
-                </div>
-                <div class="modal-body p-0 pt-2">
-                    <table class="table table-hover border-bottom">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="text-center">Item Name</th>
-                            <th scope="col" class="text-center">Quantity</th>
-                            <th scope="col" class="text-center">Unit Price</th>
-                            <th scope="col" class="text-center">Total price</th>
-                            <th scope="col" class="text-center">Item Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% with n='[1,2,3,4,5,6]' %}
-                        {% for i in n %}
-                        <tr>
-                            <td class="text-center">
-                                <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Designer Cup</a>
-                            </td>
-                            <td scope="row" class="text-center">10</td>
-                            <td class="text-center">50</td>
-                            <td class="text-center">&#8377; 500</td>
-                            <td class="text-center"><span class="ord-status ord-status-run">Pending</span></td>
-                        </tr>
-                        {% endfor %}
-                        {% endwith %}
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-center">Total</td>
-                            <td class="text-center">&#8377; 10500</td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
