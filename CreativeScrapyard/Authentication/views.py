@@ -15,6 +15,10 @@ def creative_items(request):
     template = "account/dashboard/creative-items.html"
     return render(request, template)
 
+def scrap_items(request):
+    template = "account/dashboard/scrap-items.html"
+    return render(request, template)
+
 
 def add_creative_product(request, id=None):
     if request.is_ajax() and id != None:
@@ -78,6 +82,10 @@ def order_history(request,action='current'):
 
 def order_details(request):
     template = "account/dashboard/order-details.html"
+    return render(request, template)
+
+def dashboard_payments(request):
+    template = "account/dashboard/payments.html"
     return render(request, template)
 
 

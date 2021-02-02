@@ -12,19 +12,19 @@
 <hr/>
 
 <div>
-    <div class="order-nav">
-        <ul class="nav nav-tabs nav-pills nav-justified nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item nav-tab">
-                <a class="nav-link" id="current-order-tab" href="{% url 'Authentication:order_tab_history' 'current' %}">Current Orders</a>
+    <div class="order-nav bx-shd">
+        <ul class="d-flex order-tab-list" id="myTab" role="tablist">
+            <li class="flex-fill text-center">
+                <a class="nav-link {% if title == 'Current Orders' %} tab-active {% endif %}" id="current-order-tab" href="{% url 'Authentication:order_tab_history' 'current' %}">Current Orders</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="closed-order-tab" href="{% url 'Authentication:order_tab_history' 'complete' %}">Completed Orders</a>
+            <li class="flex-fill  text-center">
+                <a class="nav-link {% if title == 'Completed Orders' %} tab-active {% endif %}" id="closed-order-tab" href="{% url 'Authentication:order_tab_history' 'complete' %}">Completed Orders</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="cancelled-order-tab" href="{% url 'Authentication:order_tab_history' 'cancel' %}">Cancelled Orders</a>
+            <li class="flex-fill  text-center">
+                <a class="nav-link {% if title == 'Cancelled Orders' %} tab-active {% endif %}" id="cancelled-order-tab" href="{% url 'Authentication:order_tab_history' 'cancel' %}">Cancelled Orders</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="return-order-tab" href="{% url 'Authentication:order_tab_history' 'return' %}">Return Orders</a>
+            <li class="flex-fill  text-center">
+                <a class="nav-link {% if title == 'Returned Orders' %} tab-active {% endif %}" id="return-order-tab" href="{% url 'Authentication:order_tab_history' 'return' %}">Return Orders</a>
             </li>
         </ul>
     </div>

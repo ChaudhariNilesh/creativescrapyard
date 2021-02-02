@@ -7,7 +7,7 @@ class tbl_crt_categories(models.Model):
     crt_category_name = models.CharField(max_length=40)
 
     class Meta:
-        db_table = 'tbl_crt_categories'
+        db_table = 'tbl_crt_categories' 
 
     def __str__(self):
         return self.crt_category_name

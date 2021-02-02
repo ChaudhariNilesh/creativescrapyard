@@ -64,6 +64,26 @@ th.tb-head {
     background-color: #fff !important;
 }*/
 
+.order-tab-list {
+    list-style: none;
+    background: white;
+    padding-left: 0px !important;
+}
+
+.order-tab-list li a {
+    color: var(--pri-color);
+}
+
+.order-tab-list li a:hover {
+    color: white;
+    background: var(--pri-color);
+}
+
+.tab-active {
+    color: white !important;
+    background: var(--pri-color);
+}
+
 @media only screen and (max-width: 600px) {
     .page-title {
         font-size: 1rem;

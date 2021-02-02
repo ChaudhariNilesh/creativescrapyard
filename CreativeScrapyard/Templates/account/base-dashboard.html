@@ -17,29 +17,49 @@
                 <img id="sideNavIcon" src="https://s.svgbox.net/hero-solid.svg?ic=menu-alt-2&fill=fff" width="32"
                      height="32">
             </span>
+            <div class="store-btn-container float-left mx-3 mt-1">
+                <a href="{%url 'Home:creativestore'%}" class="btn btn-sm btn-dark btn-cre shadow-none">
+                    <span style="color:#94c5ae">C</span>
+                    <span style="color:#ffc425">R</span>
+                    <span style="color:#ff6f69">E</span>
+                    <span style="color:#ffcc5c">A</span>
+                    <span style="color:#88d8b0">T</span>
+                    <span style="color:#96ceb4">I</span>
+                    <span style="color:#ffc425">V</span>
+                    <span style="color:#ff6f69">E</span>
+                </a>
+                <a href="{%url 'Home:scrapyard'%}" class="btn btn-sm btn-scr shadow-none">SCRAPYARD</a>
+            </div>
             <span class="float-right">
                 <img src="{% static 'img/testimonial/4.jpg' %}" class="rounded-circle main-img"/>
-                <span class="img-profile-title pl-3 pr-4 align-top">Nikul Prajapati</span>
+                <a href="{% url 'Authentication:dashboard_profile' %}" class="btn btn-sm shadow-none" style="font-weight: 700;color:white;">Nikul Prajapati</a>
+                <a href="" class="btn btn-sm shadow-none" style="font-weight: 700;color:white;">
+                    <img src="https://s2.svgbox.net/materialui.svg?ic=logout&color=fff" class="mr-2" width="20" height="20">Logout
+                </a>
             </span>
         </div>
     </header>
 
     <div id="left-panel" class="left-panel">
         <div id="dashTitle" class="title p-2 p-sm-2 px-md-3 py-md-2 px-lg-4 px-xl-4 py-xl-4">
-            <span id="dashTitleSpan">Creative Scrapyard</span>
+            <span id="dashTitleSpan">
+                <a href="{% url 'Home:home' %}" class="title-link">Creative Scrapyard</a>
+            </span>
         </div>
         <div id="sideNav">
             <ul id="sideNavMenu">
                 <li>
                     <a id="sideDashboard" data-toggle="collapse" href="#sideCollapse1" aria-expanded="false">
                         <img src="https://s.svgbox.net/materialui.svg?ic=dashboard&fill=fff" width="28" height="28">
-                        <span class="px-2 align-middle"><a href="{% url 'Authentication:dashboard' %}">Dashboard</a></span>
+                        <span class="px-2 align-middle"><a
+                                href="{% url 'Authentication:dashboard' %}">Dashboard</a></span>
                     </a>
-<!--                    <div id="sideCollapse1" data-parent="#sideNavMenu" class="collapse"></div>-->
+                    <!--                    <div id="sideCollapse1" data-parent="#sideNavMenu" class="collapse"></div>-->
                 </li>
 
                 <li>
-                    <a id="sideAddProduct" data-toggle="collapse" href="#sideCollapse2" aria-expanded="false" class="expand">
+                    <a id="sideAddProduct" data-toggle="collapse" href="#sideCollapse2" aria-expanded="false"
+                       class="expand">
                         <img src="https://s.svgbox.net/materialui.svg?ic=add_box&fill=fff" width="28" height="28">
                         <span class="px-2 align-middle">Products</span>
                         <span class="float-right pr-2">
@@ -49,20 +69,13 @@
                     </a>
                     <div id="sideCollapse2" data-parent="#sideNavMenu" class="collapse exd">
                         <a href="{% url 'Authentication:creative_items' %}" class="sub-link"><span>Creative Items</span></a>
-                        <a href="#" class="sub-link"><span>Scrap Items</span></a>
+                        <a href="{% url 'Authentication:scrap_items' %}" class="sub-link"><span>Scrap Items</span></a>
                     </div>
                 </li>
 
-<!--                <li>-->
-<!--                    <a id="sideAddDocument" data-toggle="collapse" href="#sideCollapse3" aria-expanded="false">-->
-<!--                        <img src="https://s.svgbox.net/materialui.svg?ic=note_add&fill=fff" width="28" height="28">-->
-<!--                        <span class="px-2 align-middle">Add Document</span>-->
-<!--                    </a>-->
-<!--                    <div id="sideCollapse3" data-parent="#sideNavMenu" class="collapse"></div>-->
-<!--                </li>-->
-
                 <li>
-                    <a id="sideProfile" data-toggle="collapse" href="#sideCollapse4" aria-expanded="false" class="expand" >
+                    <a id="sideProfile" data-toggle="collapse" href="#sideCollapse4" aria-expanded="false"
+                       class="expand">
                         <img src="https://s.svgbox.net/materialui.svg?ic=person&fill=fff" width="28" height="28">
                         <span class="px-2 align-middle">Profile</span>
                         <span class="float-right pr-2">
@@ -72,7 +85,8 @@
                     </a>
                     <div id="sideCollapse4" data-parent="#sideNavMenu" class="collapse">
                         <a href="{% url 'Authentication:dashboard_profile' %}" class="sub-link"><span>Account</span></a>
-                        <a href="{% url 'Authentication:add_document' %}" class="sub-link"><span>Add Documents</span></a>
+                        <a href="{% url 'Authentication:add_document' %}"
+                           class="sub-link"><span>Add Documents</span></a>
                     </div>
                 </li>
 
@@ -86,17 +100,28 @@
                         </span>
                     </a>
                     <div id="sideCollapse5" data-parent="#sideNavMenu" class="collapse">
-                        <a href="{% url 'Authentication:order_creative' %}" class="sub-link"><span>Creative orders</span></a>
+                        <a href="{% url 'Authentication:order_creative' %}"
+                           class="sub-link"><span>Creative orders</span></a>
                         <a href="{% url 'Authentication:order_history' %}" class="sub-link"><span>My Orders</span></a>
                     </div>
                 </li>
 
                 <li>
-                    <a id="sideSettings" data-toggle="collapse" href="#sideCollapse6" aria-expanded="false">
-                        <img src="https://s.svgbox.net/materialui.svg?ic=settings&fill=fff" width="28" height="28">
-                        <a href="{% url 'Authentication:settings' %}"><span class="px-2 align-middle">Settings</span></a>
+                    <a id="sidePayments" data-toggle="collapse" href="#sideCollapse6" aria-expanded="false">
+                        <img src="https://s2.svgbox.net/materialui.svg?ic=payment&color=fff" width="28" height="28">
+                        <a href="{% url 'Authentication:payments' %}"><span
+                                class="px-2 align-middle">Payments</span></a>
                     </a>
                     <div id="sideCollapse6" data-parent="#sideNavMenu" class="collapse"></div>
+                </li>
+
+                <li>
+                    <a id="sideSettings" data-toggle="collapse" href="#sideCollapse7" aria-expanded="false">
+                        <img src="https://s.svgbox.net/materialui.svg?ic=settings&fill=fff" width="28" height="28">
+                        <a href="{% url 'Authentication:settings' %}"><span
+                                class="px-2 align-middle">Settings</span></a>
+                    </a>
+                    <div id="sideCollapse7" data-parent="#sideNavMenu" class="collapse"></div>
                 </li>
             </ul>
         </div>
@@ -112,10 +137,15 @@
 
 {% block customscript%} {% block baseScript %} {% endblock %} {% endblock %}
 
-{% comment %} <script>
+{% comment %}
+<script>
     
     function func_expand() {
         $(this).find("a").css({'color': 'red'});
     }
+
+
+
+
 </script> {% endcomment %}
 {% endblock %}
