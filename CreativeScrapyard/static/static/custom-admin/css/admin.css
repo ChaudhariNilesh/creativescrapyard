@@ -712,6 +712,14 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
     background-color: #d9dce1;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: var(--pri-color);
+}
+
+.nav-pills .nav-link, .nav-pills .show > .nav-link {
+    color: var(--pri-color) ;
+    
 
 /* EMAIL INPUT */
 

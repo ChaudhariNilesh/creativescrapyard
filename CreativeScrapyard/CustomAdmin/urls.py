@@ -34,9 +34,10 @@ urlpatterns = [
     path('scrapitems/',scrapitems,name="scrapitems"),
 
     path('allorders',allorders,name='allorders'),
-    path('orderdetails/<int:id>',orderdetails,name='orderdetails'),
-    
+    path('orderdetails/<int:id>',orderdetails,name='orderdetails'), # 
 
+    path('allorderdetails/',allorderdetails,name='allorderdetails'),
+    path('allorderdetails/tab/<str:action>/',allorderdetails,name='allorderdetailsTab'),#Order Detail tab
     ######AJAX######
     path('ajax/view-details/',viewDets,name="viewDets"),
     path('ajax/documents/',docuDownload,name="docuDownload"),

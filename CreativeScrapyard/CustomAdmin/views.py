@@ -407,6 +407,7 @@ def allorders(request):
     else:
         return redirect('CustomAdmin:login')
 
+
 def orderdetails(request,id):
     if request.session.get('admin'):    
         template = 'custom-admin/orderdetails.html'
@@ -414,6 +415,23 @@ def orderdetails(request,id):
     else:
         return redirect('CustomAdmin:login')
 
+def allorderdetails(request,action='delivered'):
+    
+    if request.session.get('admin'):  
+        #print(action)
+        if action == 'delivered':
+            title = "Delivered Orders"
+        elif action == 'returned':
+            title = "Returned Orders"
+        elif action == 'processing':
+            title = "Processing Orders"
+        elif action == 'canceled':
+            title = "Cancelled Orders"
+        
+        template = 'custom-admin/allorderdetails.html'
+        return render(request,template,{"title":title})
+    else:
+        return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
 def badges(request):
     template = 'custom-admin/manage-badges.html'

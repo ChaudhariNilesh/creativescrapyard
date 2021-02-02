@@ -56,7 +56,7 @@ class tbl_creativeitems_details(models.Model):
     crt_item = models.ForeignKey(tbl_creativeitems_mst, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id
+        return self.crt_item_details_id
 
 
 class tbl_crtimages(models.Model):

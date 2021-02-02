@@ -1,0 +1,144 @@
+{% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
+<div class="page-title">
+    Order Details
+    <hr>
+</div>
+
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+<div>
+
+<ul class="nav nav-tabs nav-pills nav-justified" id="orderDetailsTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="delivered-tab" href="{% url 'CustomAdmin:allorderdetailsTab' 'delivered' %}" role="tab"  aria-selected="true">Delivered</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="return-tab" href="{% url 'CustomAdmin:allorderdetailsTab' 'returned' %}" role="tab" aria-selected="false">Returned</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="processing-tab" href="{% url 'CustomAdmin:allorderdetailsTab' 'processing' %}" role="tab" aria-selected="false">Processing</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="cancelled-tab" href="{% url 'CustomAdmin:allorderdetailsTab' 'canceled' %}" role="tab" aria-selected="false">Cancelled</a>
+  </li>
+</ul>
+</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    {{title}}
+                </div>
+                <div class="tab-inn">
+                    <div class="table-responsive table-user">
+                        <table class="table table-hover tablemanager">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Order ID</th>
+                                    <th class="text-center">Detail ID</th>
+                                    <th class="text-center">Product ID</th>
+                                    <th class="text-center">Seller Name</th>
+                                    <th class="text-center">Buyer Name</th>
+                                    <!-- <th class="text-center">Status</th> -->
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">0010001</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">000001</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101010</span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Raghav</span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nikul</span></a>
+                                    </td>
+                                    <!-- <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Processing</option>
+                            <option value="Shipping">Shipping</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Returned">Returned</option>
+                        </select>
+                    </td> -->
+                                    <td class="text-center"><span class="list-enq-name">2</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;400.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;800.0</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a>
+                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                        <!-- <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a> -->
+                                    </td>
+                                </tr>
+                                {% for i in '012'|make_list %}
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">10111101</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">000001</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101010</span></a>
+                                    </td>
+
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nilesh
+                                                Chaudary</span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Yash</span></a>
+                                    </td>
+                                    <!-- <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Processing</option>
+                            <option value="Shipping">Shipping</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Returned">Returned</option>
+                        </select>
+                    </td> -->
+                                    <td class="text-center"><span class="list-enq-name">1</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;250.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;500.0</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a>
+                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                        <!-- <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a> -->
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="loadmore-btn" class="btn-cxt mb-3">Load more</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% comment %} {% include 'custom-admin/orderdetailstable.html' %} {% endcomment %}
+
+{% endblock %}
