@@ -442,6 +442,9 @@ def queries(request):
     template = 'custom-admin/queries/queries.html'
     return render(request,template)
 
+def reportedItemUsr(request):
+    template = 'custom-admin/queries/reports.html'
+    return render(request,template)
 ####### SEND EMAIL RELATED #######
 def sendmail(request):
     template = 'custom-admin/sendmail/sendmail.html'

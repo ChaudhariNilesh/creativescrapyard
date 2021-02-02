@@ -49,6 +49,7 @@ urlpatterns = [
 
     ######QUERIES######
     path('query/',queries,name="query"),
+    path('report/',reportedItemUsr,name="inappropriate-report"),
 
     ######MAIL######
     path('send-mail/',sendmail,name="sendmail"),

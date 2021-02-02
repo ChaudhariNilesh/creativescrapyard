@@ -97,19 +97,25 @@
                                 <p>
                                     Product Description</p>
                             </div>
-                            <div class="availStock">Availability : <span class="stock">IN stock</span></div>
-                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' %}{% else %} # {%endif%}">{% csrf_token %}
 
+                            {% if is_creative %}
+                            <div class="availStock">Availability : <span class="stock">IN stock</span></div>
+                            {% endif %}
+
+                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' %}{% else %} # {%endif%}">{% csrf_token %} {% if is_creative %}
                                 <div class="form-group ">
                                     <label>Quantity : </label>
-                                    <select class="form-control selectpicker " name="input-qty " id="input-qty ">
+                                    <input class="form-control-inline" type="number" value="1" min="1" max="10">
+                                    <!-- <select class="form-control selectpicker " name="input-qty " id="input-qty ">
                                         <option value="1 ">1</option>
                                         <option value="2 ">2</option>
                                         <option value="3 ">3</option>
                                         <option value="4 ">4</option>
                                         <option value="5 ">5</option>
-                                         </select>
+                                         </select> -->
                                 </div>
+
+                                {% endif %}
                                 <div class="form-group">
                                     <label>Size : </label>
                                     <select class="form-control  selectpicker" name="input-size" id="input-size">

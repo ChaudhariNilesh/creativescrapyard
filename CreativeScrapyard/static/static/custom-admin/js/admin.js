@@ -50,9 +50,7 @@ $(function() {
         $('.tablemanager').tablemanager({
             firstSort: [
                 [1, 0],
-                [2, 0],
-                [3, 0],
-                [4, 0],
+
             ],
             // disable: ["last"],
             appendFilterby: true,
@@ -69,6 +67,8 @@ $(function() {
             showrows: [5, 10, 20, 50, 100],
             // disableFilterBy: [1]
         });
+
+
     }
     var loadMoreRows = function() {
         let i;
@@ -515,9 +515,9 @@ $(function() {
                 function() {
                     const email = $(this).text();
                     if (validateEmail(email)) {
-                        values.push(email);
-                    } else {
-                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + email + '</span><a class="email-remove">×</a></span>');
+                        if (!values.includes(email)) {
+                            values.push(email);
+                        }
                     }
 
                 });
@@ -539,7 +539,7 @@ $(function() {
                 e.preventDefault();
                 if (validateEmail(getEmail)) {
                     if (!values.includes(getEmail)) {
-                        $('.inputTag').before('<span class="email-chip"><span class="content">' + getEmail + '</span><a class="email-remove">×</a></span>');
+                        $('.inputTag').before('<span class="email-chip"><span class="content">' + getEmail + '</span><a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a></span>');
                         $inputTag.val('');
 
                         //email[i++] = getEmail
@@ -566,14 +566,15 @@ $(function() {
                 $("#user-email-list").val('');
                 $(".inputTag").siblings().remove('.email-chip');
                 $.each(data, function(key, val) {
+
                     if (validateEmail(val)) {
-                        $('.inputTag').before('<span class="email-chip"><span class="content">' + val + '</span><a class="email-remove">×</a></span>');
+                        $('.inputTag').before('<span class="email-chip"><span class="content">' + val + '</span><a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a></span>');
                         $inputTag.val('');
 
                         newEmail.push(val);
                         $("#user-email-list").val(newEmail)
                     } else {
-                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + val + '</span><a class="email-remove">×</a></span>');
+                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + val + '</span><a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a></span>');
                         $(".invalid-email").css('border', '1px solid red')
                     }
                 })
@@ -616,9 +617,11 @@ $(function() {
         });
 
 
-
     }
 
+    var reportTableManager = function() {
+
+    };
 
     $(function() {
         adminSideBar();
@@ -650,6 +653,7 @@ $(function() {
 
         selectUserEmail();
 
+        //  reportTableManager();
 
 
     });
