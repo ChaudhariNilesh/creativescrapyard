@@ -1,0 +1,56 @@
+{% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
+<div class="page-title">
+    Payments
+    <hr>
+</div>
+<div class="tab-inn">
+    <div class="table-responsive table-user">
+        <table class="table table-hover tablemanager">
+            <thead>
+                <tr>
+                    <th class="text-center">Transaction ID</th>
+                    <th class="text-center">Order ID</th>
+                    <th class="text-center">Mode</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center disableSort disableFilterBy">Remark</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center"><span class="list-enq-name">00004</span>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' 20 %}">001101</span></a>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">Debit Card</span>
+                    </td>
+                    <td class="text-center">&#8377;400.0</td>
+                    <td class="text-center"> Successful
+                    </td>
+                    <td class="text-center">Bought Item
+                    </td>
+                </tr>
+                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                 <tr>
+                    <td class="text-center"><span class="list-enq-name">00011   </span>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' 20 %}">001101</span></a>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">Debit Card</span>
+                    </td>
+                    <td class="text-center">&#8377;400.0</td>
+                    <td class="text-center"> Successful
+                    </td>
+                    <td class="text-center">Sold Item
+                    </td>
+                </tr>
+                {% endfor %} {% endwith %}
+
+            </tbody>
+        </table>
+    </div>
+    <button id="loadmore-btn" class="btn-cxt mb-3">Load more</button>
+</div>
+
+{%endblock%}
