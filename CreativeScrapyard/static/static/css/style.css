@@ -723,6 +723,10 @@ select {
     background: transparent;
 }
 
+.dropdown-menu {
+    top: 40px !important;
+}
+
 
 /* Single Item Common OTHER PROD */
 
