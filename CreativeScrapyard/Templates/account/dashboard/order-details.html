@@ -1,10 +1,11 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}"/> {% endblock %} {% block base %}
+<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}" />
+ {% endblock %} {% block base %}
 
 <div class="page-title">
     Order details
 </div>
-<hr/>
+<hr />
 
 <div class="bx-shd my-3 py-2 px-3">
     <div class="row py-3">
@@ -12,8 +13,9 @@
             <p class="ord-details-id">Order id: #2135</p>
             <p class="ord-details-time my-2">
                 <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25"
-                     height="25">
-                <span class="ml-2 mt-2 mb-2"> March 28, 2020 At 12:43 PM</span></p>
+                    height="25">
+                <span class="ml-2 mt-2 mb-2"> March 28, 2020 At 12:43 PM</span>
+            </p>
             <p class="ord-details-status">
                 <span>Status: </span>
                 <span class="ord-status ord-status-run">Running</span>
@@ -81,6 +83,7 @@
 
 <div class="bx-shd my-3 pt-2 px-3">
     <h4 class="my-2 pb-2">Order Items</h4>
+
     {% with n='123' %}
     {% for i in n %}
     <div class="border-bottom py-3">
@@ -167,6 +170,11 @@
                         </a>
                     </div>
                     <div class="px-1">
+                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
+                            Give Rating & Review
+                          </button>
+                    </div>
+                    <div class="px-1">
                         <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel=""
                                 style="font-size: small;"> Return Item
                         </button>
@@ -178,80 +186,34 @@
     </div>
     {% endfor %}
     {% endwith %}
+
 </div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Rating & Review : </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form action="" method="GET">
+            <h6>Rate:</h6>
+            <div id="review"></div>
+            <h6>Review(Option):</h6>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn pri-bg-color">Send Review</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
-
-<div class="py-3 table-responsive">
-    <table class="table table-hover border-bottom tablemanager">
-
-        <thead>
-        <tr class="">
-            <th scope="col" class="text-left">Product ID</th>
-            <th scope="col" class="text-center">Product name</th>
-            <th scope="col" class="text-right">Quantity</th>
-            <th scope="col" class="text-right">Unit Price</th>
-            <th scope="col" class="text-right">Total</th>
-        </tr>
-        </thead>
-
-
-        <tbody>
-        <tr>
-            <td scope="row" class="text-left">101</td>
-            <td class="text-center">Perfume</td>
-            <td class="text-right">5</td>
-            <td class="text-right">50</td>
-            <td class="text-right">250</td>
-        </tr>
-        <tr>
-            <td scope="row" class="text-left">101</td>
-            <td class="text-center">Perfume</td>
-            <td class="text-right">5</td>
-            <td class="text-right">50</td>
-            <td class="text-right">250</td>
-        </tr>
-        <tr>
-            <td scope="row" class="text-left">101</td>
-            <td class="text-center">Perfume</td>
-            <td class="text-right">5</td>
-            <td class="text-right">50</td>
-            <td class="text-right">250</td>
-        </tr>
-
-        <tr>
-            <td scope="row" class="text-left"></td>
-            <td class="text-center"></td>
-            <td class="text-right"></td>
-            <td class="text-right">Total</td>
-            <td class="text-right">750</td>
-        </tr>
-        </tbody>
-        maximum order should be 10.
-    </table>
-</div>
-
-
-<div class="item-card">
-    <h4 class="my-2 pb-2">Order Items</h4>
-    <div class="item-card-main row px-3">
-        <div class="col-12 col-sm-3 col-md-2 px-0">
-            <img src="{% static 'img/products/1.jpg' %}" class="img-fluid" height="250" width="150"
-                 alt="Responsive image">
-        </div>
-        <div class="col px-0 py-2 px-sm-0 py-sm-0">
-            <div class="row">
-                <p class="col-3 text-left fw-500">Product name sahbjs dbjsba asdbjhbd asjdb</p>
-                <p class="col-3 text-right fw-500">&#8377; 50.00</p>
-                <p class="col-3 text-right fw-500">2</p>
-                <p class="col-3 text-right fw-500">&#8377; 100.00</p>
-            </div>
-            <div class="mt-3">
-                <p class="fz-small">SKU: <span class="pl-3">SHA-DJNS-SDK-561</span></p>
-                <p class="fz-small">Color: <span><img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=000"
-                                                      width="20" height="20"></span></p>
-                <p class="fz-small">Size: <span class="pl-3">XXL</span></p>
-            </div>
-        </div>
-    </div>
-</div>
