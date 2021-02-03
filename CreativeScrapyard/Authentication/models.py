@@ -1,5 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
+gender_type = (
+    ('F', 'Female'),
+    ('M', 'Male'),
+)
+
+# class CustomUser(AbstractUser):
+#     user_id =
 
 
 # Create your models here.
