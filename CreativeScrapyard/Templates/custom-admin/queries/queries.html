@@ -18,7 +18,6 @@
                                         <tr>
                                             <th class="text-center">Name</th>
                                             <th class="text-center">Email Id</th>
-                                            <th class="text-center">Query Type</th>
                                             <th class="text-center">Subject</th>
                                             <th class="text-center">Submitted On</th>
                                             <th class="disableFilterBy text-center">Status</th>
@@ -35,23 +34,22 @@
                                             <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
 
                                             </td>
-                                            <td class="text-center"><span class="list-enq-name">Complaint</span>
-                                                <td class="text-center"><span class="list-enq-name">Order not delivered</span>
-                                                </td>
-                                                <td class="text-center">28/12/2020</td>
-                                                <td class="text-center">
-                                                    <select class="p-1 ord-status">
-                            <option value="Pending" selected>Resolved</option>
-                            <option value="Completed">Pending</option>
-                            <option value="Cancelled">Rejected</option>
-                        </select>
-                                                </td>
+                                            <td class="text-center"><span class="list-enq-name">Complaint</span></td>
+                                            </td>
+                                            <td class="text-center">28/12/2020</td>
+                                            <td class="text-center">
+                                                <select class="p-1 ord-status">
+                                                    <option value="Pending" selected>Resolved</option>
+                                                    <option value="Completed">Pending</option>
+                                                    <option value="Cancelled">Rejected</option>
+                                                </select>
+                                            </td>
 
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                                    <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal">View</button>
+                                                <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
 
-                                                </td>
+                                            </td>
                                         </tr>
                                         {% endfor %} {% endwith %}
 
@@ -129,5 +127,13 @@
         </div>
     </div>
 
-    {% endblock %}
 </div>
+{% endblock %} {% block custom-script %}
+<script>
+    function readMsg(data) {
+        $(".read-msg").on("click", function() {
+            Swal.fire(data);
+        });
+    }
+</script>
+{%endblock%}

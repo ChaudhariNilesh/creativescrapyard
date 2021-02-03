@@ -42,8 +42,17 @@ $(function() {
 
     var sidebarCollapse = function() {
         let loc = window.location.pathname;
+        //console.log(loc);
+        //  $('a[href^="' + loc + '"]').css("background-color", "yellow");
+        // var a = loc.split("/");
+        let sideBarLoc = loc.match(/(?:.*?\/){3}/)[0];
+        if (loc != sideBarLoc) {
+            $('a[href^="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().parent().addClass("show").prev().css({ "opacity": "1" });
+        } else {
+            $('a[href^="' + loc + '"]').css({ "opacity": "1" }).parent().parent().addClass("show").prev().css({ "opacity": "1" });
 
-        $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().parent().addClass("show").prev().css({ "opacity": "1" });
+        }
+
     };
 
     var tableManager = function() {
@@ -144,6 +153,12 @@ $(function() {
 
     var dyanmicBreads = function() {
         let loc = window.location.pathname;
+        let sideBarLoc = loc.match(/(?:.*?\/){3}/)[0];
+        console.log(loc);
+        if (loc != sideBarLoc) {
+            loc = sideBarLoc
+        }
+
         var $this = $("#sidebar").find('a[href="' + loc + '"]');
         if (loc != "/admin/") {
             $this.parents('li').each(function(n, li) {
@@ -619,10 +634,11 @@ $(function() {
 
     }
 
-    var reportTableManager = function() {
-
+    var readMsg = function() {
+        $(".read-msg").on("click", function() {
+            Swal.fire("Hello.....");
+        });
     };
-
     $(function() {
         adminSideBar();
         logoutSwal();
@@ -653,9 +669,8 @@ $(function() {
 
         selectUserEmail();
 
+        // readMsg();
         //  reportTableManager();
-
-
     });
 
     /////////////// CREATIVE CATEGORIES ///////////////

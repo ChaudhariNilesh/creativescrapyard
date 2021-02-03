@@ -30,17 +30,45 @@ add report flag item link
 
 
 
-qty field chnage to numeric updown
-
-query and report tab
-disable pe dropdown
-disable user/product send mail reason
-single scrap item qty and instock remove
+--qty field chnage to numeric updown
+--query and report tab
+--single scrap item qty and instock remove
 
 
 -----------------------
 Shopping Cart no item
+disable user/product send mail reason/disable pe dropdown
 change images
-breadcrumbs and sidebar open in nested page
-admin order tab bgcolor  chg
+
+breadcrumbs and 
+--sidebar open in nested page
+
 ------------------------
+
+
+
+
+
+
+
+---------------------------------
+contact and issue discuss
+
+compt->reported items/users(ISSUES) TABLE								queries->contactus
+
+id, SKU, issuetype,rptUsrID, date, Senduser_id, ordet_id							id, name, email, sub, msg, date
+------------------------------------------------------------------------------------------------------------------------
+1001 SKU1 inappt   --        d1    200           ---
+1001 --   inappt   2001      d1    200	         ---
+1001 --   inappt   ---       d1    200	         333
+
+
+1-crt
+2- scp
+3- ord
+4- user
+
+
+issue_id, iss_type, issue_sub, message ref_id, 	date, 	sendUId
+101	  1	inappt      --       1001        d1      2001
+102       2     inappt       abc     1001	 d2	 3001

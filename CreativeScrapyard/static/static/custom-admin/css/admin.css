@@ -818,3 +818,26 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
     box-shadow: none!important;
     border: none!important;
 }
+
+
+/* REPORTED ITEM USER TABS */
+
+.tab-list {
+    list-style: none;
+    background: white;
+    padding-left: 0px !important;
+}
+
+.tab-list li a {
+    color: var(--pri-color);
+}
+
+.tab-list li a:hover {
+    color: white;
+    background: var(--pri-color);
+}
+
+.tab-active {
+    color: white !important;
+    background: var(--pri-color);
+}

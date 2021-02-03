@@ -1,5 +1,5 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}"/> {% endblock %} {% block base %}
+<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Order details
@@ -11,8 +11,7 @@
         <div class="col">
             <p class="ord-details-id">Order id: #2135</p>
             <p class="ord-details-time my-2">
-                <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25"
-                     height="25">
+                <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25" height="25">
                 <span class="ml-2 mt-2 mb-2"> March 28, 2020 At 12:43 PM</span></p>
             <p class="ord-details-status">
                 <span>Status: </span>
@@ -54,35 +53,34 @@
     </div>
 </div>
 
-<div    >
-<div class="bx-shd my-3 pt-2 px-3">
-    <h1 class="card-title py-3">Payment Summery</h1>
-    <div class="pr-3">
-        <p class="py-2 row">
-            <span class="col-6 col-sm-9 text-left">Subtotal</span>
-            <span class="col fw-500 text-right">&#8377;500.00</span>
-        </p>
-        <p class="py-2 row">
-            <span class="col-6 col-sm-9 text-left">Delivery Charges</span>
-            <span class="col fw-500 text-right">&#8377;50.00</span>
-        </p>
-        <p class="py-2 row">
-            <span class="col-6 col-sm-9 text-left">Tax</span>
-            <span class="col fw-500 text-right">&#8377;00.00</span>
-        </p>
-        <p class="bg-light py-3 pl-3 row">
-            <span class="col-6 col-sm-9 fw-500 text-left">Total paid by customer</span>
-            <span class="col fw-500 text-right">&#8377;550.00</span>
-        </p>
-    </div>
+<div>
+    <div class="bx-shd my-3 pt-2 px-3">
+        <h1 class="card-title py-3">Payment Summery</h1>
+        <div class="pr-3">
+            <p class="py-2 row">
+                <span class="col-6 col-sm-9 text-left">Subtotal</span>
+                <span class="col fw-500 text-right">&#8377;500.00</span>
+            </p>
+            <p class="py-2 row">
+                <span class="col-6 col-sm-9 text-left">Delivery Charges</span>
+                <span class="col fw-500 text-right">&#8377;50.00</span>
+            </p>
+            <p class="py-2 row">
+                <span class="col-6 col-sm-9 text-left">Tax</span>
+                <span class="col fw-500 text-right">&#8377;00.00</span>
+            </p>
+            <p class="bg-light py-3 pl-3 row">
+                <span class="col-6 col-sm-9 fw-500 text-left">Total paid by customer</span>
+                <span class="col fw-500 text-right">&#8377;550.00</span>
+            </p>
+        </div>
 
-</div>
+    </div>
 </div>
 
 <div class="bx-shd my-3 pt-2 px-3">
     <h4 class="my-2 pb-2">Order Items</h4>
-    {% with n='123' %}
-    {% for i in n %}
+    {% with n='123' %} {% for i in n %}
     <div class="border-bottom py-3">
         <div class="row d-flex">
             <div class="col-2 pr-0">
@@ -105,7 +103,7 @@
 
                 <div class="d-flex flex-row-reverse mt-4">
                     <div class="px-1">
-                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;" > Cancel Order</button>
+                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Order</button>
                     </div>
                     <div class="px-1">
                         <a href="{% url 'Home:Items:Order:orderTrack' %}">
@@ -114,23 +112,22 @@
                     </div>
                 </div>
 
-<!--                <div class="mr-2">-->
-<!--                        <button class="btn btn-sm btn-danger  mb-2 btn-item-cancel" data-item-cancel="" style="font-size: small;" > Cancel Order</button>-->
-<!--                </div>-->
-<!--                <div class="form-group ml-2" style="float: right;">-->
-<!--                    <div class="form-group" style="float: right;">-->
-<!--                        <a href="{% url 'Home:Items:Order:orderTrack' %}">-->
-<!--                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;"> Track-->
-<!--                            </button>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="mr-2">-->
+                <!--                        <button class="btn btn-sm btn-danger  mb-2 btn-item-cancel" data-item-cancel="" style="font-size: small;" > Cancel Order</button>-->
+                <!--                </div>-->
+                <!--                <div class="form-group ml-2" style="float: right;">-->
+                <!--                    <div class="form-group" style="float: right;">-->
+                <!--                        <a href="{% url 'Home:Items:Order:orderTrack' %}">-->
+                <!--                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;"> Track-->
+                <!--                            </button>-->
+                <!--                        </a>-->
+                <!--                    </div>-->
+                <!--                </div>-->
 
             </div>
         </div>
     </div>
-    {% endfor %}
-    {% endwith %}
+    {% endfor %} {% endwith %}
 </div>
 
 {% endblock %}
@@ -139,46 +136,46 @@
     <table class="table table-hover border-bottom tablemanager">
 
         <thead>
-        <tr class="">
-            <th scope="col" class="text-left">Product ID</th>
-            <th scope="col" class="text-center">Product name</th>
-            <th scope="col" class="text-right">Quantity</th>
-            <th scope="col" class="text-right">Unit Price</th>
-            <th scope="col" class="text-right">Total</th>
-        </tr>
+            <tr class="">
+                <th scope="col" class="text-left">Product ID</th>
+                <th scope="col" class="text-center">Product name</th>
+                <th scope="col" class="text-right">Quantity</th>
+                <th scope="col" class="text-right">Unit Price</th>
+                <th scope="col" class="text-right">Total</th>
+            </tr>
         </thead>
 
 
         <tbody>
-        <tr>
-            <td scope="row" class="text-left">101</td>
-            <td class="text-center">Perfume</td>
-            <td class="text-right">5</td>
-            <td class="text-right">50</td>
-            <td class="text-right">250</td>
-        </tr>
-        <tr>
-            <td scope="row" class="text-left">101</td>
-            <td class="text-center">Perfume</td>
-            <td class="text-right">5</td>
-            <td class="text-right">50</td>
-            <td class="text-right">250</td>
-        </tr>
-        <tr>
-            <td scope="row" class="text-left">101</td>
-            <td class="text-center">Perfume</td>
-            <td class="text-right">5</td>
-            <td class="text-right">50</td>
-            <td class="text-right">250</td>
-        </tr>
+            <tr>
+                <td scope="row" class="text-left">101</td>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+            <tr>
+                <td scope="row" class="text-left">101</td>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+            <tr>
+                <td scope="row" class="text-left">101</td>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
 
-        <tr>
-            <td scope="row" class="text-left"></td>
-            <td class="text-center"></td>
-            <td class="text-right"></td>
-            <td class="text-right">Total</td>
-            <td class="text-right">750</td>
-        </tr>
+            <tr>
+                <td scope="row" class="text-left"></td>
+                <td class="text-center"></td>
+                <td class="text-right"></td>
+                <td class="text-right">Total</td>
+                <td class="text-right">750</td>
+            </tr>
         </tbody>
         maximum order should be 10.
     </table>
@@ -189,8 +186,7 @@
     <h4 class="my-2 pb-2">Order Items</h4>
     <div class="item-card-main row px-3">
         <div class="col-12 col-sm-3 col-md-2 px-0">
-            <img src="{% static 'img/products/1.jpg' %}" class="img-fluid" height="250" width="150"
-                 alt="Responsive image">
+            <img src="{% static 'img/products/1.jpg' %}" class="img-fluid" height="250" width="150" alt="Responsive image">
         </div>
         <div class="col px-0 py-2 px-sm-0 py-sm-0">
             <div class="row">

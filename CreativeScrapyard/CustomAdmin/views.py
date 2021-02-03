@@ -79,10 +79,19 @@ def sellers(request):
     else:
         return redirect('CustomAdmin:login')
 
-def verifyusers(request):
+def verifyusers(request,tab="pending"):
     if request.session.get('admin'): 
         template = 'custom-admin/users/verify-users.html'
-        return render(request,template)
+        
+        if tab=='pending':
+            is_verified=False
+        elif tab == 'verified':
+            is_verified=True
+
+        context={
+            "is_verified":is_verified
+        }
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
@@ -432,28 +441,73 @@ def allorderdetails(request,action='delivered'):
         return render(request,template,{"title":title})
     else:
         return redirect('CustomAdmin:login')
+
+
 ####### BADGES RELATED #######
 def badges(request):
-    template = 'custom-admin/manage-badges.html'
-    return render(request,template)
+    if request.session.get('admin'):    
+        template = 'custom-admin/manage-badges.html'
+        return render(request,template)
+
+    else:
+        return redirect('CustomAdmin:login')
 
 ####### QUERIES RELATED #######
 def queries(request):
-    template = 'custom-admin/queries/queries.html'
-    return render(request,template)
+    if request.session.get('admin'):    
+        template = 'custom-admin/queries/queries.html'
+        return render(request,template)
 
-def reportedItemUsr(request):
-    template = 'custom-admin/queries/reports.html'
-    return render(request,template)
+    else:
+        return redirect('CustomAdmin:login')    
+
+def issues(request,opts="reportedCrtItem"):
+    if request.session.get('admin'):    
+        template = 'custom-admin/queries/issues.html'
+        title = "Reported Creative Items"
+        issueType=1
+        columnName="Item SKU"
+        if request.method=="POST":
+            issueType=request.POST.get("issueType")
+
+            if issueType == '1':
+                title = "Reported Creative Items"
+                issueType=1
+                columnName="Item SKU"
+            elif issueType == '2' :
+                title= "Reported Scrap Items"
+                issueType=2
+                columnName="Item SKU"
+            elif issueType == '3' :
+                title =  "Reported Users Items"
+                issueType=3
+                columnName="Username"
+            elif issueType == '4':
+                title = "Order Issues" 
+                issueType=4    
+                columnName="Oreder Detail ID"      
+        context = {
+            "title":title,
+            "issueType":issueType,
+            "columnName":columnName,
+        }
+        return render(request,template,context)
+
+    else:
+        return redirect('CustomAdmin:login')
 ####### SEND EMAIL RELATED #######
 def sendmail(request):
-    template = 'custom-admin/sendmail/sendmail.html'
-    if request.method == "POST":
-        email = request.POST.get('email', '')
-        subject = request.POST.get('subject', '')
-        message = request.POST.get('message', '')
-        print(email.split(","),subject,message)
-    return render(request,template)
+    if request.session.get('admin'):    
+        template = 'custom-admin/sendmail/sendmail.html'
+        if request.method == "POST":
+            email = request.POST.get('email', '')
+            subject = request.POST.get('subject', '')
+            message = request.POST.get('message', '')
+            print(email.split(","),subject,message)
+        return render(request,template)
+
+    else:
+        return redirect('CustomAdmin:login')    
 
 
 

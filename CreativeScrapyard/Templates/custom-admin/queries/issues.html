@@ -1,0 +1,98 @@
+{% extends 'custom-admin/common.html' %} {% load static %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">{{title}}</li>
+{%endblock%} {%block content%}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="page-title">
+        {{title}}
+        <div class="" style="float:right; cursor: pointer; ">
+            <form method="POST" action="{% url 'CustomAdmin:issues' %}"> {% csrf_token %}
+                <select name="issueType" class="p-1 form-control" onchange="this.form.submit();">
+                        <option {%if issueType == 1 %}selected{%endif%} value="1">Reported Creative Items</option>
+                        <option {%if issueType == 2 %}selected{%endif%} value="2">Reported Scrap Items</option>
+                        <option {%if issueType == 3 %}selected{%endif%} value="3">Reported Users Items</option>
+                        <option {%if issueType == 4 %}selected{%endif%} value="4">Order Issues</option>
+                    </select>
+
+            </form>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+
+            <div class="table-responsive table-user">
+                <table class="table table-hover tablemanager">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Email Id</th>
+                            <th class="text-center">{{columnName}}</th>
+                            <th class="text-center">Reason</th>
+                            <th class="text-center">Message</th>
+                            <th class="text-center">Submitted On</th>
+                            <th class="text-center">Status</th>
+
+                            <th class="disableFilterBy disableSort text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                        <tr>
+                            <td class="text-center"><span class="list-enq-name">dummy</span>
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
+
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">ABC-DEF-GHI-JKL</span>
+
+                            </td>
+                            <td class="text-center"><span class="list-enq-name">...</span></td>
+                            <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('hello');">Read</a></span></td>
+
+                            <td class="text-center">28/12/2020</td>
+                            <td class="text-center">
+                                <select class="p-1 ord-status">
+                                                        <option value="Pending" selected>Resolved</option>
+                                                        <option value="Completed">Pending</option>
+                                                        <option value="Cancelled">Rejected</option>
+                                                    </select>
+                            </td>
+
+                            <td class="text-center">
+                                {% if issueType == 1 %}
+                                <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <a href="#" class="disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                <!--  -->
+                                {% elif issueType == 2 %}
+                                <a href="{% url 'Home:Items:scrapSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                <!--  -->
+                                {%elif issueType == 3 %}
+                                <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <a href="#" class="disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+
+                                <!--  -->
+                                {% elif issueType == 4 %}
+                                <a href="{% url 'CustomAdmin:orderdetails' 20%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %} {% endwith %}
+
+                    </tbody>
+                </table>
+            </div>
+            <button id="loadmore-btn" class="btn-cxt">Load more</button>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %} {% block custom-script %}
+<script>
+    function readMsg(data) {
+        $(".read-msg").on("click", function() {
+            Swal.fire(data);
+        });
+    }
+</script>
+{%endblock%}

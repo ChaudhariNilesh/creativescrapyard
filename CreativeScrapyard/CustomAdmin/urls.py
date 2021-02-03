@@ -15,6 +15,8 @@ urlpatterns = [
     path('buyers/',buyers,name="buyers"),
     path('sellers/',sellers,name="sellers"),
     path('verify-users/',verifyusers,name="verifyusers"),
+    path('verify-users/<str:tab>',verifyusers,name="verifyusers"),
+
 
     
     ######CREATIVE CATEGORIES######
@@ -33,11 +35,11 @@ urlpatterns = [
     path('creativeitems/',creativeitems,name="creativeitems"),    
     path('scrapitems/',scrapitems,name="scrapitems"),
 
-    path('allorders',allorders,name='allorders'),
+    path('allorders/',allorders,name='allorders'),
     path('orderdetails/<int:id>',orderdetails,name='orderdetails'), # 
 
     path('allorderdetails/',allorderdetails,name='allorderdetails'),
-    path('allorderdetails/tab/<str:action>/',allorderdetails,name='allorderdetailsTab'),#Order Detail tab
+    path('allorderdetails/<str:action>/',allorderdetails,name='allorderdetailsTab'),#Order Detail tab
     ######AJAX######
     path('ajax/view-details/',viewDets,name="viewDets"),
     path('ajax/documents/',docuDownload,name="docuDownload"),
@@ -49,7 +51,7 @@ urlpatterns = [
 
     ######QUERIES######
     path('query/',queries,name="query"),
-    path('report/',reportedItemUsr,name="inappropriate-report"),
+    path('issues/',issues,name="issues"),
 
     ######MAIL######
     path('send-mail/',sendmail,name="sendmail"),
