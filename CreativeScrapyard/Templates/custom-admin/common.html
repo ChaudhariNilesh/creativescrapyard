@@ -96,7 +96,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#">Payments</a>
+                            <a href="{%url 'CustomAdmin:payment'%}">Payments</a>
                         </li>
                         <li>
                             <a href="{% url 'CustomAdmin:sendmail' %}">Send E-mail</a>
@@ -193,6 +193,7 @@
         <script src="{% static 'custom-admin/js/tableManager.js' %}"></script>
         <script src="{% static 'custom-admin/js/admin.js' %}"></script>
         <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+
 
 
         {% endblock %}

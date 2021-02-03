@@ -417,6 +417,17 @@ $(function() {
         });
     }
 
+    var rating = function(){
+          $("#review").rating({
+              "click":function (e) {
+                console.log(e);// {stars: 3, event: E.Event}
+                alert(e.stars);
+                 
+              },
+              'half':true,
+            });
+        };
+        
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -442,6 +453,7 @@ $(function() {
         newFileUploader();
         orderItemCancel();
         btnLoading();
+        rating();
     });
 });
 
