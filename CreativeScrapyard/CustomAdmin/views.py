@@ -145,8 +145,9 @@ def creativeCat(request,id=None,action=None):
                 return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True })
 
         elif action=="addMain":
-           # print("DD2")
             if request.method=="POST" and request.is_ajax():
+            #if request.method=="POST":
+        
                 mainCrtCat=MainCreativeCategoryForm(request.POST or None)
 
                 if mainCrtCat.is_valid():
@@ -162,9 +163,14 @@ def creativeCat(request,id=None,action=None):
                     # print(mainCrtCat.errors.get_json_data(escape_html=True))
                     err=mainCrtCat.errors.get_json_data(escape_html=True)
                     err=err['__all__'][0]['message']
-                    # print(err)
+                    #print(err)
+                    #print(mainCrtCat.errors)
                     
+                    #print("DD2")
                     return JsonResponse({"saved":False,"message":err})
+                    
+                    #return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
+
             else:
                 raise PermissionDenied
             
@@ -257,7 +263,7 @@ def creativeCat(request,id=None,action=None):
             else:
                 raise PermissionDenied
                             
-        #print(mainCrtCat)
+        
         return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
     else:
         return redirect('CustomAdmin:login')
@@ -486,10 +492,12 @@ def issues(request,opts="reportedCrtItem"):
                 title = "Order Issues" 
                 issueType=4    
                 columnName="Oreder Detail ID"      
+        
         context = {
             "title":title,
             "issueType":issueType,
             "columnName":columnName,
+            
         }
         return render(request,template,context)
 

@@ -841,3 +841,7 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
     color: white !important;
     background: var(--pri-color);
 }
+
+.errorlist {
+    color: red;
+}

@@ -40,14 +40,35 @@ Shopping Cart no item
 disable user/product send mail reason/disable pe dropdown
 change images
 
-breadcrumbs and 
+*see later*breadcrumbs and 
 --sidebar open in nested page
 
+***lost your pass link in admin
 ------------------------
 
 
+****************************************
 
+login=>admin-user,forget password, reset password, email verify input.
+singup
+edit profile(User,admin)
+add/edit document 
+add new address 
+add product
+edit product
+contact us
+reported modal
+send mail=> queries,
+categories
+disable reason input 
+assign/add badges input validate
 
+verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
+deactivate account validate
+
+>>shop cart javascript validate<< POST WORK
+
+****************************************
 
 
 
@@ -72,3 +93,4 @@ id, SKU, issuetype,rptUsrID, date, Senduser_id, ordet_id							id, name, email, 
 issue_id, iss_type, issue_sub, message ref_id, 	date, 	sendUId
 101	  1	inappt      --       1001        d1      2001
 102       2     inappt       abc     1001	 d2	 3001
+

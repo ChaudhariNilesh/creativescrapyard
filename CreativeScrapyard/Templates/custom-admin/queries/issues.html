@@ -1,6 +1,6 @@
-{% extends 'custom-admin/common.html' %} {% load static %}{% block breadcrumb-link%}
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {% block breadcrumb-link%}
 <li class="breadcrumb-item active">{{title}}</li>
-{%endblock%} {%block content%}
+{%endblock%} {% endcomment %} {%block content%}
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="page-title">
         {{title}}
