@@ -133,7 +133,7 @@ def creativeCat(request,id=None,action=None):
     if request.session.get('admin'):
         crtMainCats=tbl_crt_categories.objects.all()
         template = 'custom-admin/products/creativecategory.html' 
-        mainCrtCat=MainCreativeCategoryForm()
+        mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
         if id != None and action==None :
             #print("DD1")
             subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id)

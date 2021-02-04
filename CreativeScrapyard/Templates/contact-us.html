@@ -21,7 +21,7 @@
                         <div class="card mt-2 bg-light">
                             <div class="card-body bg-light">
                                 <div class="container">
-                                    <form id="contact-form" role="form">
+                                    <form id="contact-form" role="form" action="{% url 'Home:contactus' %}" data-validation="{% url 'Home:Validations:validateContactForm' %}">
                                         <div class="form-row py-2">
                                             <div class="col">
                                                 <input type="text" class="form-control rounded" name="contactFirstName" placeholder="First name" aria-label="First name">
@@ -37,7 +37,7 @@
                                             <input type="email" class="form-control rounded" name="contactEmail" placeholder="name@email.com">
                                         </div>
                                         <div class="form-row px-1 py-2">
-                                            <textarea class="form-control" rows="4" name="contactAddress" placeholder="Enter you message here..."></textarea>
+                                            <textarea class="form-control" rows="4" name="contactMsg" placeholder="Enter you message here..."></textarea>
                                         </div>
                                         <div class="form-row px-1 py-2">
                                             <input type="submit" class="form-control pri-bg-color my-0 mx-auto" />
