@@ -34,7 +34,7 @@
                         <li class="tags tags-common mx-1 my-1">Artist</li>
                         <li class="tags tags-special mx-1 my-1">Seller of the month</li>
                         <li class="tags tags-rare mx-1 my-1">Seller of the year</li>
-                    
+
                         <li class="tags tags-event mx-1 my-1">Navratri 2020</li>
                         <li class="tags tags-event mx-1 my-1">Navratri 2020</li>
                         <li class="tags tags-event mx-1 my-1">Navratri 2020</li>
@@ -85,6 +85,7 @@
             <table class="table table-sm my-2" style="font-size: 15px;">
                 <thead>
                 <tr class="thead-light">
+                    <th scope="col" class="text-center">Primary</th>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
                     <th scope="col">Address</th>
@@ -95,6 +96,7 @@
                 {% with n='[1]' %}
                 {% for i in n %}
                 <tr>
+                    <td class="text-center"><input type="radio" name="primaryAddressGroup" id="#"/></td>
                     <td>Nikul Prajapati</td>
                     <td>Office</td>
                     <td>6/F, Shanti society, Nigam Nagar, Chandkheda,
@@ -108,7 +110,7 @@
             </table>
         </div>
         <div class="addFirstAddress mt-3">
-            <button type="button" class="btn btn-sm pri-bg-color btn-addAddress" data-toggle="modal"
+            <button type="button" class="btn btn-sm pri-bg-color btn-addAddress shadow-none" data-toggle="modal"
                     data-target=".bd-example-modal-lg">Add address
             </button>
             <br/>
@@ -183,11 +185,11 @@
                                         <select id="addState" class="form-control form-control-sm">
                                             <option value="" selected disabled>--Select Your State--</option>
                                             <option>Gujarat</option>
-                                            <option>Rajastan</option>
+                                            <option>Rajasthan</option>
                                             <option>Madhya Pradesh</option>
                                             <option>Maharashtra</option>
                                             <option>Gujarat</option>
-                                            <option>Rajastan</option>
+                                            <option>Rajasthan</option>
                                             <option>Madhya Pradesh</option>
                                             <option>Maharashtra</option>
                                         </select>
@@ -208,48 +210,6 @@
             </div>
         </div>
     </div>
-
-
-    <!--    <div class="py-3">-->
-    <!--        <form>-->
-    <!--            <div class="form-row">-->
-    <!--                <div class="form-group col-md-6">-->
-    <!--                    <label for="profileFirstName">First name</label>-->
-    <!--                    <input type="text" class="form-control" id="profileFirstName" placeholder="First name">-->
-    <!--                </div>-->
-    <!--                <div class="form-group col-md-6">-->
-    <!--                    <label for="profileLastName">Last name</label>-->
-    <!--                    <input type="text" class="form-control" id="profileLastName" placeholder="Last name">-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            <div class="form-group">-->
-    <!--                <label for="profileAddress">Address</label>-->
-    <!--                <input type="text" class="form-control" id="profileAddress" placeholder="1234 Main St">-->
-    <!--            </div>-->
-    <!--            <div class="form-group">-->
-    <!--                <label for="profileAddress2">Address 2</label>-->
-    <!--                <input type="text" class="form-control" id="profileAddress2" placeholder="Apartment, studio, or floor">-->
-    <!--            </div>-->
-    <!--            <div class="form-row">-->
-    <!--                <div class="form-group col-md-6">-->
-    <!--                    <label for="profileCity">City</label>-->
-    <!--                    <input type="text" class="form-control" id="profileCity">-->
-    <!--                </div>-->
-    <!--                <div class="form-group col-md-4">-->
-    <!--                    <label for="profileState">State</label>-->
-    <!--                    <select id="profileState" class="form-control">-->
-    <!--                        <option selected>Choose...</option>-->
-    <!--                        <option>...</option>-->
-    <!--                    </select>-->
-    <!--                </div>-->
-    <!--                <div class="form-group col-md-2">-->
-    <!--                    <label for="profilePincode">Pincode</label>-->
-    <!--                    <input type="text" class="form-control" id="profilePincode">-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>-->
-    <!--        </form>-->
-    <!--    </div>-->
 </div>
 
 
@@ -286,7 +246,7 @@
                     <label for="ifscCode">IFSC code</label>
                     <input type="text" class="form-control" name="ifscCode" id="ifscCode" value="SBI778899">
                 </div>
-                
+
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">

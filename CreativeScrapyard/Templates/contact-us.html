@@ -21,10 +21,13 @@
                         <div class="card mt-2 bg-light">
                             <div class="card-body bg-light">
                                 <div class="container">
-                                    <form id="contact-form" role="form" action="{% url 'Home:contactus' %}" data-validation="{% url 'Home:Validations:validateContactForm' %}">
+                                    <form id="contact-form" action="{% url 'Home:contactus' %}" method="post">{% csrf_token %}
                                         <div class="form-row py-2">
                                             <div class="col">
-                                                <input type="text" class="form-control rounded" name="contactFirstName" placeholder="First name" aria-label="First name">
+                                                <input type="text" class="form-control rounded {% if name.valid %}is-valid{% elif not name.valid %}is-invalid{% endif %}" name="contactFirstName" placeholder="First name" aria-describedby="inputGroupPrepend3 validateName" required>
+                                                <div id="validateName" class="invalid-feedback">
+                                                    {{ name.msg }}
+                                                </div>
                                             </div>
                                             <div class="col">
                                                 <input type="text" class="form-control rounded" name="contactLastName" placeholder="Last name" aria-label="Last name">
@@ -34,7 +37,11 @@
                                             <input type="text" class="form-control rounded" name="contactSubject" placeholder="Subject">
                                         </div>
                                         <div class="form-row px-1 py-2">
-                                            <input type="email" class="form-control rounded" name="contactEmail" placeholder="name@email.com">
+                                            <input type="email" nnormal="{{ email.valid }}" class="form-control rounded {% if email.valid %}is-valid{% elif not email.valid  %}is-invalid{% endif %}" name="contactEmail" placeholder="name@email.com" aria-describedby="inputGroupPrepend3 validateEmail"
+                                                required>
+                                            <div id="validateEmail" class="invalid-feedback">
+                                                {{ email.msg }}
+                                            </div>
                                         </div>
                                         <div class="form-row px-1 py-2">
                                             <textarea class="form-control" rows="4" name="contactMsg" placeholder="Enter you message here..."></textarea>

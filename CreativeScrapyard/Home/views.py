@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect
+from .forms import QueryForm
+from Home.validate import *
 
 # Create your views here.
 def home(request):
@@ -28,7 +30,23 @@ def signup(request):
 
 def contactus(request):
     template="contact-us.html"
-    
+    formData = QueryForm()
+    if request.method == 'POST':
+        formData = QueryForm(request.POST or None)
+        mail = request.POST['contactEmail']
+        # name = request.POST['contactName']
+        name = "Nikul"
+        context = validate(email=mail, name=name)
+        print(context)
+        context['is_creative'] = True
+        #
+        # is_valid = checkEmail(mail)
+        # nameValid = checkName(name)
+        # context = {
+        #     'emailValid': is_valid
+        # }
+        return render(request, template, context)
+
     return render(request,template,{'is_creative':True})
 
 
