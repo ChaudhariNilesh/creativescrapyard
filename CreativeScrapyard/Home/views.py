@@ -28,7 +28,7 @@ def signup(request):
 
 def contactus(request):
     template="contact-us.html"
-    return render(request,template)
+    return render(request,template,{'is_creative':True})
 
 
 def aboutus(request):

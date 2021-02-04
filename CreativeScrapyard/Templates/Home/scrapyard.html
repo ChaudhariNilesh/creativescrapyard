@@ -13,12 +13,29 @@
         <li class="breadcrumb-item"><a href="#">All Materials</a></li>
     </ol>
 </div>
-<div class="container-fluid">
-    <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Materials</h2>
-</div>
-
 
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-10">
+            <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Materials</h2>
+        </div>
+        <div class="col-2">
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Sort By : Relevence</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Revelence</a>
+                    <a class="dropdown-item" href="#">Low to High Price</a>
+                    <a class="dropdown-item" href="#">High to Low Price</a>
+                    <a class="dropdown-item" href="#">Most Recent</a>
+                    <a class="dropdown-item" href="#">Top Review Artists</a>
+                    <a class="dropdown-item" href="#">Alphabetic</a>
+    
+                </div>
+            </div>
+    
+        </div>
+    </div>
     <div class="row p-3">
         <div class="col-3 mt-3 card shadow-sm bg-dark border-secondary" style="height: fit-content;">
             <h4 class="text-center my-2">Filters</h4>
@@ -73,11 +90,14 @@
                 <div class="text-bold border-bottom my-2 p-2">By Color:</div>
                 <div class="widget-info color-filter clearfix py-2">
                     <ul>
-                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span class="color color-3"></span>Red<span class="count">59</span>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                class="color color-3"></span>Red<span class="count">59</span>
                         </li>
-                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span class="color color-4"></span>Blue<span class="count">45</span>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                class="color color-4"></span>Blue<span class="count">45</span>
                         </li>
-                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span class="color color-6"></span>Green<span class="count">10</span>
+                        <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                class="color color-6"></span>Green<span class="count">10</span>
                         </li>
                     </ul>
                 </div>

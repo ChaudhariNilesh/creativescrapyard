@@ -40,6 +40,10 @@ urlpatterns = [
 
     path('allorderdetails/',allorderdetails,name='allorderdetails'),
     path('allorderdetails/<str:action>/',allorderdetails,name='allorderdetailsTab'),#Order Detail tab
+    
+    ######PAYMENT#####
+    path('payment/',payment,name='payment'),
+
     ######AJAX######
     path('ajax/view-details/',viewDets,name="viewDets"),
     path('ajax/documents/',docuDownload,name="docuDownload"),

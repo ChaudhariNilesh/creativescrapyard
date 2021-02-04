@@ -448,7 +448,14 @@ def allorderdetails(request,action='delivered'):
     else:
         return redirect('CustomAdmin:login')
 
+#######    PAYMENT     #######
 
+def payment(request):
+    if request.session.get('admin'):    
+        template = 'custom-admin/payment.html'
+        return render(request,template)
+    else:
+        return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
 def badges(request):
     if request.session.get('admin'):    

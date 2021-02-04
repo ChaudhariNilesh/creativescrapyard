@@ -204,6 +204,22 @@
     margin-right: auto;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff !important;
+    background-color: var(--pri-color) !important;
+}
+
+.nav-pills-options .nav-link {
+    color: var(--pri-color)!important;
+    margin: 0px 5px;
+}
+
+.nav-pills-options .nav-link:hover {
+    color: white !important;
+    background-color: var(--pri-color) !important;
+}
+
+
 
 /* Common Header */
 
@@ -706,6 +722,10 @@ select {
 
 #owl-artist-products.owl-theme .owl-nav [class*="owl-"]:hover {
     background: transparent;
+}
+
+.dropdown-menu {
+    top: 40px !important;
 }
 
 
