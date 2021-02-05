@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect
 from .forms import QueryForm
+from .models import *
 from Home.validate import *
+from django.contrib import messages
+
 
 # Create your views here.
 def home(request):
@@ -31,23 +34,50 @@ def signup(request):
 def contactus(request):
     template="contact-us.html"
     formData = QueryForm()
+    errorData={}
     if request.method == 'POST':
+        
         formData = QueryForm(request.POST or None)
-        mail = request.POST['contactEmail']
-        # name = request.POST['contactName']
-        name = "Nikul"
-        context = validate(email=mail, name=name)
-        print(context)
-        context['is_creative'] = True
-        #
-        # is_valid = checkEmail(mail)
-        # nameValid = checkName(name)
-        # context = {
-        #     'emailValid': is_valid
-        # }
-        return render(request, template, context)
+      
+        email = request.POST.get('email','')
+        first_name = request.POST.get('first_name','')
+        last_name = request.POST.get('last_name','')
+        query_subject = request.POST.get('query_subject','')
+        query_message = request.POST.get('query_subject','')
 
-    return render(request,template,{'is_creative':True})
+
+        errorData = validate(email=email,fname=first_name,lname=last_name,sub=query_subject)
+        print(errorData)
+       
+        if not errorData['errors']:
+            QryModel=Query(first_name=first_name,last_name=last_name,email=email,query_subject=query_subject,\
+                query_message=query_message)
+            try:
+                QryModel.save()
+                messages.success(request, 'Your Query is submitted sucessfully!')  
+                formData=QueryForm()
+                errorData.clear()
+                return redirect("Home:contactus")
+            except:
+                messages.error(request, 'Some error occured try after sometime.')
+        else:
+            messages.warning(request, errorData)
+            #'Please correct the error below.')
+            # context['form']=formData
+        # else:
+            # return redirect("Home:contactus")
+
+  #  elif request.method=='GET':
+    
+    context={
+        "is_creative":True,
+        "form":formData,
+        "errorData":errorData,
+    }
+
+    print(context)
+
+    return render(request,template,context)
 
 
 def aboutus(request):

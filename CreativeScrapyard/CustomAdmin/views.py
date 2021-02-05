@@ -147,7 +147,7 @@ def creativeCat(request,id=None,action=None):
         elif action=="addMain":
             if request.method=="POST" and request.is_ajax():
             #if request.method=="POST":
-        
+                
                 mainCrtCat=MainCreativeCategoryForm(request.POST or None)
 
                 if mainCrtCat.is_valid():

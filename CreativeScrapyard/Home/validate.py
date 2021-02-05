@@ -1,4 +1,5 @@
-# def checkEmail(mail):
+
+#  def checkEmail(mail):
 #     if len(mail) > 20:
 #         is_valid = True
 #     is_valid=True
@@ -9,49 +10,121 @@
 #         is_valid = True
 #     is_valid=False
 #     return is_valid
-data={}
 def validate(**kwargs):
-    if kwargs['email']!=None or kwargs['email']!="":
+    data={}
+    data['errors']=False
+   
+   #####################       EMAIL     #####################
+    if kwargs['email']:
         mail = kwargs['email']
         if not mail.endswith("gmail.com"):
             email = {
-                'valid':False,
+                'is_valid':False,
                 'msg':"Email is invalid."
             }
+            data["errors"]=True
         else:
             email = {
-                'valid':True,
+                'is_valid':True,
                 'msg':""
             }
+        
         data["email"] = email
+   
     else:
         email = {
-            'valid': False,
+            'is_valid': False,
             'msg': "Blank field is not allowed."
         }
         data["email"] = email
 
-
-    if kwargs['name']!=None or kwargs['name']!="":
-        name = kwargs['name']
-        if name.isdigit():
-            print(name.isdigit())
-            name = {
-                'valid': False,
-                'msg': "Numbers are not allowed."
+   #####################       FIRSTNAME     #####################
+    if kwargs['fname']:
+        fname = kwargs['fname']
+        if not fname.isalpha():
+            first_name = {
+                'is_valid': False,
+                'msg': "Invalid First Name."
             }
+            data["errors"]=True
         else:
-            name = {
-                'valid': True,
-                'msg': "VALID"
+            first_name = {
+                'is_valid': True,
+                'msg': ""
             }
-        data["name"] = name
+        data["first_name"] = first_name
     else:
-        name = {
-            'valid': False,
+        first_name = {
+            'is_valid': False,
             'msg': "Blank field is not allowed."
         }
-        data["name"] = name
+        data["errors"]=True
+        data["first_name"] = first_name
 
+   #####################       LASTNAME     #####################
+    if kwargs['lname']:
+        lname = kwargs['lname']
+        
+        if not lname.isalpha():
+            last_name = {
+                'is_valid': False,
+                'msg': "Invalid Last Name."
+            }
+            data["errors"]=True
+        else:
+            last_name = {
+                'is_valid': True,
+                'msg': ""
+            }
+        data["last_name"] = last_name
+    else:
+        last_name = {
+            'is_valid': False,
+            'msg': "Blank field is not allowed."
+        }
+        data["errors"]=True
+        data["last_name"] = last_name
 
+    #####################       SUBJECT     #####################
+    if kwargs['sub']:
+        inp_sub = kwargs['sub']
+        
+        if not inp_sub.isalpha():
+            sub = {
+                'is_valid': False,
+                'msg': "Invalid Subject Name."
+            }
+            data["errors"]=True
+        else:
+            sub = {
+                'is_valid': True,
+                'msg': ""
+            }
+        data["sub"] = sub
+    else:
+        sub = {
+            'is_valid': False,
+            'msg': "Blank field is not allowed."
+        }
+        data["errors"]=True
+        data["sub"] = sub
+
+   #####################       MESSSAGE     #####################
+    # if not kwargs['message']:
+    #     inp_msg = kwargs['message']
+    #     print(inp_msg)
+    #     message = {
+    #         'is_valid': True,
+    #         'msg': ""
+    #     }
+    #     data["message"] = message
+    # else:
+    #     message = {
+    #         'is_valid': False,
+    #         'msg': "Blank field is not allowed."
+    #     }
+    #     data["message"] = message
+    # #print(data)
+    
     return data
+

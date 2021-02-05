@@ -12,6 +12,7 @@
             </div>
 
             <div class="">
+                {% include 'includes/messages.html' %}
                 <div class="mt-5 text-center">
                     <h1>Contact us</h1>
                 </div>
@@ -21,33 +22,56 @@
                         <div class="card mt-2 bg-light">
                             <div class="card-body bg-light">
                                 <div class="container">
+
                                     <form id="contact-form" action="{% url 'Home:contactus' %}" method="post">{% csrf_token %}
                                         <div class="form-row py-2">
                                             <div class="col">
-                                                <input type="text" class="form-control rounded {% if name.valid %}is-valid{% elif not name.valid %}is-invalid{% endif %}" name="contactFirstName" placeholder="First name" aria-describedby="inputGroupPrepend3 validateName" required>
-                                                <div id="validateName" class="invalid-feedback">
-                                                    {{ name.msg }}
+                                                <!-- <input type="text" class="form-control rounded {% if form.errors.first_name == None %}is-valid{% elif form.errors.first_name != None  %}is-invalid{% endif %}" name="first_name" placeholder="First name" aria-describedby="inputGroupPrepend3 validateName"
+                                                    value="{{ form.first_name.value|default:'' }}" required> -->
+                                                <input type="text" class="form-control rounded {% if errorData.first_name.is_valid != None and errorData.first_name.is_valid %}is-valid{% elif errorData.first_name.is_valid != None and not errorData.first_name.is_valid %}is-invalid{% endif %}" name="first_name"
+                                                    placeholder="First name" aria-describedby="inputGroupPrepend3 validateFirstName" value="{{ form.first_name.value|default:'' }}">
+                                                <div id="validateFirstName" class="invalid-feedback">
+                                                    <!-- {{ fname.msg }} -->
+                                                    {{ errorData.first_name.msg }}
+
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <input type="text" class="form-control rounded" name="contactLastName" placeholder="Last name" aria-label="Last name">
+                                                <input type="text" class="form-control rounded {% if errorData.last_name.is_valid != None and errorData.last_name.is_valid %}is-valid{% elif errorData.last_name.is_valid != None and not errorData.last_name.is_valid %}is-invalid{% endif %}" name="last_name"
+                                                    value="{{ form.last_name.value|default:'' }}" placeholder="Last name" aria-describedby="inputGroupPrepend3 validateLastName" aria-label="Last name" required>
+                                                <div id="validateLastName" class="invalid-feedback">
+                                                    {{ errorData.last_name.msg }}
+
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-row px-1 py-2">
-                                            <input type="text" class="form-control rounded" name="contactSubject" placeholder="Subject">
+                                            <input type="text" class="form-control rounded {% if errorData.sub.is_valid != None and errorData.sub.is_valid %}is-valid{% elif errorData.sub.is_valid != None and not errorData.sub.is_valid %}is-invalid{% endif %}" name="query_subject" value="{{ form.query_subject.value|default:'' }}"
+                                                placeholder="Subject" aria-describedby="inputGroupPrepend3 validateSubject" required>
+                                            <div id="validateSubject" class="invalid-feedback">
+                                                {{ errorData.sub.msg }}
+
+                                            </div>
                                         </div>
                                         <div class="form-row px-1 py-2">
-                                            <input type="email" nnormal="{{ email.valid }}" class="form-control rounded {% if email.valid %}is-valid{% elif not email.valid  %}is-invalid{% endif %}" name="contactEmail" placeholder="name@email.com" aria-describedby="inputGroupPrepend3 validateEmail"
-                                                required>
+                                            <input type="email" class="form-control rounded {% if errorData.email.is_valid != None and errorData.email.is_valid %}is-valid{% elif errorData.email.is_valid != None and not errorData.email.is_valid  %}is-invalid{% endif %}" name="email" placeholder="name@email.com"
+                                                aria-describedby="inputGroupPrepend3 validateEmail" aria-describedby="inputGroupPrepend3 validateEmail" value="{{ form.email.value|default:'' }}" required>
+
                                             <div id="validateEmail" class="invalid-feedback">
-                                                {{ email.msg }}
+                                                {{ errorData.email.msg }}
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row px-1 py-2">
+                                            <textarea class="form-control {% if errorData.message.is_valid != None and errorData.message.is_valid %}is-valid{% elif errorData.message.is_valid != None and not errorData.message.is_valid %}is-invalid{% endif %}" rows="4" name="query_message" placeholder="Enter you message here..."
+                                                aria-describedby="inputGroupPrepend3 validateMsg" value="{{ form.query_message.value|default:'' }}"></textarea>
+                                            <div id="validateMsg" class="invalid-feedback">
+                                                {{ errorData.message.msg }}
+
                                             </div>
                                         </div>
                                         <div class="form-row px-1 py-2">
-                                            <textarea class="form-control" rows="4" name="contactMsg" placeholder="Enter you message here..."></textarea>
-                                        </div>
-                                        <div class="form-row px-1 py-2">
-                                            <input type="submit" class="form-control pri-bg-color my-0 mx-auto" />
+                                            <input type="submit" class="form-control pri-bg-color my-0 mx-auto " />
                                         </div>
                                     </form>
                                 </div>
