@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
 from .models import *
-from .forms import MainCreativeCategoryForm, SubCreativeCategoryForm, MainScrapCategoryForm, SubScrapCategoryForm
+from .forms import *
 from django.http import HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
@@ -20,9 +20,11 @@ def login(request):
     if request.method == 'POST':
         user = request.POST['username']
         pwd = request.POST['password']
+                    
         if user=='admin' and pwd=='admin':
             request.session['admin'] = user
             return redirect('CustomAdmin:adminindex')
+
     return render(request,template)
 
 def adminindex(request):
@@ -79,10 +81,19 @@ def sellers(request):
     else:
         return redirect('CustomAdmin:login')
 
-def verifyusers(request):
+def verifyusers(request,tab="pending"):
     if request.session.get('admin'): 
         template = 'custom-admin/users/verify-users.html'
-        return render(request,template)
+        
+        if tab=='pending':
+            is_verified=False
+        elif tab == 'verified':
+            is_verified=True
+
+        context={
+            "is_verified":is_verified
+        }
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
@@ -124,7 +135,7 @@ def creativeCat(request,id=None,action=None):
     if request.session.get('admin'):
         crtMainCats=tbl_crt_categories.objects.all()
         template = 'custom-admin/products/creativecategory.html' 
-        mainCrtCat=MainCreativeCategoryForm()
+        mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
         if id != None and action==None :
             #print("DD1")
             subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id)
@@ -136,8 +147,9 @@ def creativeCat(request,id=None,action=None):
                 return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True })
 
         elif action=="addMain":
-           # print("DD2")
             if request.method=="POST" and request.is_ajax():
+            #if request.method=="POST":
+                
                 mainCrtCat=MainCreativeCategoryForm(request.POST or None)
 
                 if mainCrtCat.is_valid():
@@ -153,9 +165,14 @@ def creativeCat(request,id=None,action=None):
                     # print(mainCrtCat.errors.get_json_data(escape_html=True))
                     err=mainCrtCat.errors.get_json_data(escape_html=True)
                     err=err['__all__'][0]['message']
-                    # print(err)
+                    #print(err)
+                    #print(mainCrtCat.errors)
                     
+                    #print("DD2")
                     return JsonResponse({"saved":False,"message":err})
+                    
+                    #return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
+
             else:
                 raise PermissionDenied
             
@@ -248,7 +265,7 @@ def creativeCat(request,id=None,action=None):
             else:
                 raise PermissionDenied
                             
-        #print(mainCrtCat)
+        
         return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
     else:
         return redirect('CustomAdmin:login')
@@ -443,23 +460,71 @@ def payment(request):
         return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
 def badges(request):
-    template = 'custom-admin/manage-badges.html'
-    return render(request,template)
+    if request.session.get('admin'):    
+        template = 'custom-admin/manage-badges.html'
+        return render(request,template)
+
+    else:
+        return redirect('CustomAdmin:login')
 
 ####### QUERIES RELATED #######
 def queries(request):
-    template = 'custom-admin/queries/queries.html'
-    return render(request,template)
+    if request.session.get('admin'):    
+        template = 'custom-admin/queries/queries.html'
+        return render(request,template)
 
+    else:
+        return redirect('CustomAdmin:login')    
+
+def issues(request,opts="reportedCrtItem"):
+    if request.session.get('admin'):    
+        template = 'custom-admin/queries/issues.html'
+        title = "Reported Creative Items"
+        issueType=1
+        columnName="Item SKU"
+        if request.method=="POST":
+            issueType=request.POST.get("issueType")
+
+            if issueType == '1':
+                title = "Reported Creative Items"
+                issueType=1
+                columnName="Item SKU"
+            elif issueType == '2' :
+                title= "Reported Scrap Items"
+                issueType=2
+                columnName="Item SKU"
+            elif issueType == '3' :
+                title =  "Reported Users Items"
+                issueType=3
+                columnName="Username"
+            elif issueType == '4':
+                title = "Order Issues" 
+                issueType=4    
+                columnName="Oreder Detail ID"      
+        
+        context = {
+            "title":title,
+            "issueType":issueType,
+            "columnName":columnName,
+            
+        }
+        return render(request,template,context)
+
+    else:
+        return redirect('CustomAdmin:login')
 ####### SEND EMAIL RELATED #######
 def sendmail(request):
-    template = 'custom-admin/sendmail/sendmail.html'
-    if request.method == "POST":
-        email = request.POST.get('email', '')
-        subject = request.POST.get('subject', '')
-        message = request.POST.get('message', '')
-        print(email.split(","),subject,message)
-    return render(request,template)
+    if request.session.get('admin'):    
+        template = 'custom-admin/sendmail/sendmail.html'
+        if request.method == "POST":
+            email = request.POST.get('email', '')
+            subject = request.POST.get('subject', '')
+            message = request.POST.get('message', '')
+            print(email.split(","),subject,message)
+        return render(request,template)
+
+    else:
+        return redirect('CustomAdmin:login')    
 
 
 

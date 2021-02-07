@@ -195,13 +195,19 @@ $(function() {
 
     var func_expand = function() {
         let loc = window.location.pathname;
+        let sideBarLoc = loc.match(/(?:.*?\/){4,5}/); //[0]
+
         if (loc == "/accounts/dashboard/") {
             $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
-        } else if ((loc == "/accounts/dashboard/product/creative/add") || (loc == "/accounts/dashboard/product/scrapyard/add")) {
-            $('a[href="' + "/accounts/dashboard/product/creative/" + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        } else if (sideBarLoc != loc) {
+            $('a[href="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         } else {
             $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         }
+
+        // else if ((loc == "/accounts/dashboard/product/creative/add") || (loc == "/accounts/dashboard/product/scrapyard/add")) {
+        //     $('a[href="' + "/accounts/dashboard/product/creative/" + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        // }
     };
 
     var productViewModel = function() {
@@ -402,14 +408,14 @@ $(function() {
 
     var btnLoading = () => {
         $('.btn-load').click(function() {
-          $('.btn-load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
+            $('.btn-load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
         });
     }
 
-    var rating = function(){
-          $("#review").rating({
-              "click":function (e) {
-                console.log(e);// {stars: 3, event: E.Event}
+    var rating = function() {
+        $("#review").rating({
+            "click": function(e) {
+                console.log(e); // {stars: 3, event: E.Event}
                 alert(e.stars);
               },
               'half':true,

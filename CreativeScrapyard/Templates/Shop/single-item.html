@@ -88,8 +88,51 @@
 
                     <div class="col-md-6 col-12 ">
                         <div class="product-disarea">
-                            <h2 class="product-name">Item Name</h2>
-                            <div class="byartist"><span><a href="{% url 'Authentication:profile' %}">By Artist Name</a></span></div>
+                            <div class="d-flex justify-content-between">
+                                <span class="product-name" style="font-weight:600;font-size:2.2rem;">ITEM NAME</span>
+                                <span class="d-inline-block" data-toggle="tooltip" title="Report">
+                                    <a href="#" data-toggle="modal" data-target=".report_model_sm">
+                                        <i class="fas fa-flag"></i>
+                                    </a>
+                                </span>
+                                <!-- Report model code    -->
+
+                                <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="model-header p-2 border-2 border-bottom">
+                                                <span class="text-dark">Report Item</span>
+                                            </div>
+                                            <div class="model-body p-2">
+                                                <form action="" method="post">
+                                                    <div class="form-group">
+                                                        <label class="text-dark" for="reportMsg">Please tell us about the issue</label>
+                                                        <select class="form-control form-control-sm rounded">
+                                                            <option selected>What's the issue?</option>
+                                                            <option>Doesn't match product</option>
+                                                            <option>Offensive or adult content</option>
+                                                            <option>Is not clear</option>
+                                                            <option>Other</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="text-dark" for="reportMsg">Comments (optional)</label>
+                                                        <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="d-flex flex-row-reverse">
+                                                        <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
+                                                        <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Report model code end here    -->
+                            </div>
+                            <div class="byartist"><span><a href="{% url 'Authentication:profile' %}">By Artist Name</a></span>
+                            </div>
                             <p class="price">
                                 <span>&#8377; 300</span>
                             </p>
@@ -97,54 +140,63 @@
                                 <p>
                                     Product Description</p>
                             </div>
-                            <div class="availStock">Availability : <span class="stock">IN stock</span></div>
-                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' %}{% else %} # {%endif%}">{% csrf_token %}
 
+                            {% if is_creative %}
+                            <div class="availStock">Availability : <span class="stock">IN stock</span></div>
+                            {% endif %}
+
+                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' %}{% else %} # {%endif%}">{% csrf_token %} {% if is_creative %}
                                 <div class="form-group ">
                                     <label>Quantity : </label>
-                                    <select class="form-control selectpicker " name="input-qty " id="input-qty ">
+                                    <input class="form-control-inline" type="number" value="1" min="1" max="10">
+                                    <!-- <select class="form-control selectpicker " name="input-qty " id="input-qty ">
                                         <option value="1 ">1</option>
                                         <option value="2 ">2</option>
                                         <option value="3 ">3</option>
                                         <option value="4 ">4</option>
                                         <option value="5 ">5</option>
-                                         </select>
+                                         </select> -->
                                 </div>
+
+                                {% endif %}
                                 <div class="form-group">
                                     <label>Size : </label>
                                     <select class="form-control  selectpicker" name="input-size" id="input-size">
-                                            <option value="s">S</option>
-                                            <option value="m">M</option>
-                                            <option value="l">L</option>
-                                            <option value="xl">XL</option>
-                                        </select>
+                                        <option value="s">S</option>
+                                        <option value="m">M</option>
+                                        <option value="l">L</option>
+                                        <option value="xl">XL</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Color : </label>
                                     <select class="form-control selectpicker" name="input-color" id="input-color">
-                                            <option value="White">White</option>
-                                            <option value="Red">Red</option>
-                                            <option value="Yellow">Yellow</option>
-                                            <option value="Orange">Orange</option>
-                                        </select>
+                                        <option value="White">White</option>
+                                        <option value="Red">Red</option>
+                                        <option value="Yellow">Yellow</option>
+                                        <option value="Orange">Orange</option>
+                                    </select>
                                 </div>
                                 <!-- if creative then below buttons-->
                                 <div class="form-group">
                                     {% if is_creative %}
-                                    <button type="submit" class="btn-cxt btn-block mt-3" id="buyItem">Buy Now</span></button> {% else %}
+                                    <button type="submit" class="btn-cxt btn-block mt-3" id="buyItem">Buy
+                                        Now</span></button> {% else %}
                                     <button id="contactBtn" class="btn-scp btn-block  mt-3">Contact</span></button> {% endif %}
                                 </div>
                             </form>
                             {% if is_creative %}
                             <form action="{% url 'Home:Items:Cart:addToCart' %}" method="post"> {% csrf_token %}
                                 <div class="form-group">
-                                    <button type="submit" class="btn-cxt btn-block" id="addcart"> Add to cart</button></a>
+                                    <button type="submit" class="btn-cxt btn-block" id="addcart"> Add to cart</button>
+                                    </a>
                                 </div>
                             </form>
                             <form>
                                 <div class="form-group chkPincode mt-3">{% csrf_token %}
                                     <input class="form-control" type="text" name="input-pincode" id="input-pincode" placeholder="Enter Pincode" style="width:142px;">
-                                    <button class="{% if is_creative %} btn-cxt {% else %} btn-scp {% endif %}" id="btn-chkPincode"> Check</button>
+                                    <button class="{% if is_creative %} btn-cxt {% else %} btn-scp {% endif %}" id="btn-chkPincode"> Check
+                                    </button>
                                 </div>
                             </form>
                             {% else %} {% endif %}
@@ -189,7 +241,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Item SKU</th>
-                                                <td>ABC-DEF-HIJ-KLM </td>
+                                                <td>ABC-DEF-HIJ-KLM</td>
                                             </tr>
                                             <tr>
                                                 <th>Artist Name</th>

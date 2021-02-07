@@ -18,7 +18,7 @@
     font-size: .8rem;
 }
 
-.tags-common{
+.tags-common {
     color: var(--pri-color-darker);
     background-color: var(--pri-color-light);
 }
@@ -32,13 +32,14 @@
     color: #892cdc;
     background-color: #dcc0f5;
 }
-.tags-rare>a{
-    
-}
+
+.tags-rare>a {}
+
 .tags-event {
     color: #ea2c62;
     background-color: #f9c0d0;
 }
+
 
 /* Index Page */
 
@@ -202,6 +203,22 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff !important;
+    background-color: var(--pri-color) !important;
+}
+
+.nav-pills-options .nav-link {
+    color: var(--pri-color)!important;
+    margin: 0px 5px;
+}
+
+.nav-pills-options .nav-link:hover {
+    color: white !important;
+    background-color: var(--pri-color) !important;
+}
+
 
 
 /* Common Header */
@@ -707,6 +724,10 @@ select {
     background: transparent;
 }
 
+.dropdown-menu {
+    top: 40px !important;
+}
+
 
 /* Single Item Common OTHER PROD */
 
@@ -802,6 +823,7 @@ select {
 
 #addDisplay2{ display: none; }*/
 
+
 /* Track Order */
 
 .progress-bar {
@@ -841,3 +863,11 @@ select {
 /* .footer-logo {
     margin-bottom: 20px;
 } */
+
+.fa-shopping-cart.fa-2x {
+    font-size: 1.5em;
+}
+
+.fa-user.fa-2x {
+    font-size: 1.5em;
+}

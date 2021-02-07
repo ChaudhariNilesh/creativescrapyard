@@ -42,17 +42,27 @@ $(function() {
 
     var sidebarCollapse = function() {
         let loc = window.location.pathname;
+        //console.log(loc);
+        //  $('a[href^="' + loc + '"]').css("background-color", "yellow");
+        // var a = loc.split("/");
+        let sideBarLoc = loc.match(/(?:.*?\/){3}/);
+        if (loc == "/admin/") {
+            $('a[href="' + loc + '"]').css({ "opacity": "1" });
 
-        $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().parent().addClass("show").prev().css({ "opacity": "1" });
+        } else if (loc != sideBarLoc[0]) {
+            $('a[href="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().parent().addClass("show").prev().css({ "opacity": "1" });
+        } else {
+            $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().parent().addClass("show").prev().css({ "opacity": "1" });
+
+        }
+
     };
 
     var tableManager = function() {
         $('.tablemanager').tablemanager({
             firstSort: [
                 [1, 0],
-                [2, 0],
-                [3, 0],
-                [4, 0],
+
             ],
             // disable: ["last"],
             appendFilterby: true,
@@ -69,6 +79,8 @@ $(function() {
             showrows: [5, 10, 20, 50, 100],
             // disableFilterBy: [1]
         });
+
+
     }
     var loadMoreRows = function() {
         let i;
@@ -508,9 +520,9 @@ $(function() {
                 function() {
                     const email = $(this).text();
                     if (validateEmail(email)) {
-                        values.push(email);
-                    } else {
-                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + email + '</span><a class="email-remove">×</a></span>');
+                        if (!values.includes(email)) {
+                            values.push(email);
+                        }
                     }
 
                 });
@@ -532,7 +544,7 @@ $(function() {
                 e.preventDefault();
                 if (validateEmail(getEmail)) {
                     if (!values.includes(getEmail)) {
-                        $('.inputTag').before('<span class="email-chip"><span class="content">' + getEmail + '</span><a class="email-remove">×</a></span>');
+                        $('.inputTag').before('<span class="email-chip"><span class="content">' + getEmail + '</span><a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a></span>');
                         $inputTag.val('');
 
                         //email[i++] = getEmail
@@ -559,14 +571,15 @@ $(function() {
                 $("#user-email-list").val('');
                 $(".inputTag").siblings().remove('.email-chip');
                 $.each(data, function(key, val) {
+
                     if (validateEmail(val)) {
-                        $('.inputTag').before('<span class="email-chip"><span class="content">' + val + '</span><a class="email-remove">×</a></span>');
+                        $('.inputTag').before('<span class="email-chip"><span class="content">' + val + '</span><a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a></span>');
                         $inputTag.val('');
 
                         newEmail.push(val);
                         $("#user-email-list").val(newEmail)
                     } else {
-                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + val + '</span><a class="email-remove">×</a></span>');
+                        $('.inputTag').before('<span class="invalid-email-chip"><span class="content">' + val + '</span><a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a></span>');
                         $(".invalid-email").css('border', '1px solid red')
                     }
                 })
@@ -609,10 +622,13 @@ $(function() {
         });
 
 
-
     }
 
-
+    var readMsg = function() {
+        $(".read-msg").on("click", function() {
+            Swal.fire("Hello.....");
+        });
+    };
     $(function() {
         adminSideBar();
         logoutSwal();
@@ -620,7 +636,7 @@ $(function() {
         tableManager();
         loadMoreRows();
         disableBtn();
-        dyanmicBreads();
+        //dyanmicBreads();
         userViewDets();
         // userDocuDownload();
         verifyChk();
@@ -643,8 +659,8 @@ $(function() {
 
         selectUserEmail();
 
-
-
+        // readMsg();
+        //  reportTableManager();
     });
 
     /////////////// CREATIVE CATEGORIES ///////////////

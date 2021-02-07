@@ -58,29 +58,6 @@ body {
     color: white;
 }
 
-/*.social-icons {
-    list-style-type: none;
-}
-
-.btn-facebook {
-    background-color: #1874EB;
-    color: white;
-}
-
-.btn-facebook:hover {
-    background-color: #1874EB;
-    color: white;
-}
-
-.btn-twitter {
-    background-color: #00ACEE;
-    color: white;
-}
-
-.btn-twitter:hover {
-    background-color: #00ACEE;
-    color: white;
-}*/
 
 .link-effect {
     color: var(--pri-color);
@@ -118,6 +95,29 @@ body {
 .custom-checkbox .custom-control-input:focus~.custom-control-label::before {
     box-shadow: 0 0 0 1px var(--pri-color-dark), 0 0 0 0.2rem var(--pri-color);
 }
+
+.report-flag {
+    color: black;
+}
+
+.report-flag:hover {
+    color: var(--pri-color);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: var(--pri-color) !important;
+}
+
+.nav-pills-options .nav-link {
+    color: var(--pri-color)!important;
+}
+
+.nav-pills-options .nav-link:hover {
+    color: white;
+    background-color: var(--pri-color);
+}
+
 
 .fw-700 {
     font-weight: 700;

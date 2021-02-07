@@ -1,120 +1,139 @@
 {% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
-<div class="page-title">
-    Queries
-    <hr>
-</div>
-<div class="tab-inn">
-    <div class="table-responsive table-user">
-        <table class="table table-hover tablemanager">
-            <thead>
-                <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Email Id</th>
-                    <th class="text-center">Query Type</th>
-                    <th class="text-center">Subject</th>
-                    <th class="text-center">Submitted On</th>
-                    <th class="disableFilterBy text-center">Status</th>
-                    <th class="disableFilterBy disableSort text-center">Action</th>
 
 
-                </tr>
-            </thead>
-            <tbody>
-                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
-                <tr>
-                    <td class="text-center"><span class="list-enq-name">dummy</span>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
+<div class="shadow p-3 mb-5 bg-white rounded">
 
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">Complaint</span>
-                        <td class="text-center"><span class="list-enq-name">Order not delivered</span>
-                        </td>
-                        <td class="text-center">28/12/2020</td>
-                        <td class="text-center">
-                            <select class="p-1 ord-status">
-                            <option value="Pending" selected>Resolved</option>
-                            <option value="Completed">Pending</option>
-                            <option value="Cancelled">Rejected</option>
-                        </select>
-                        </td>
+    <div class="tab-content">
+        <div id="queries" class="tab-pane active"><br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box-inn-sp">
+                        <div class="page-title">
+                            Manage Queires
+                        </div>
+                        <div class="tab-inn">
+                            <div class="table-responsive table-user">
+                                <table class="table table-hover tablemanager">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Email Id</th>
+                                            <th class="text-center">Subject</th>
+                                            <th class="text-center">Submitted On</th>
+                                            <th class="disableFilterBy text-center">Status</th>
+                                            <th class="disableFilterBy disableSort text-center">Action</th>
 
-                        <td class="text-center">
-                            <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                            <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
 
-                        </td>
-                </tr>
-                {% endfor %} {% endwith %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                                        <tr>
+                                            <td class="text-center"><span class="list-enq-name">dummy</span>
+                                            </td>
+                                            <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
 
-            </tbody>
-        </table>
+                                            </td>
+                                            <td class="text-center"><span class="list-enq-name">Complaint</span></td>
+                                            </td>
+                                            <td class="text-center">28/12/2020</td>
+                                            <td class="text-center">
+                                                <select class="p-1 ord-status">
+                                                    <option value="Pending" selected>Resolved</option>
+                                                    <option value="Completed">Pending</option>
+                                                    <option value="Cancelled">Rejected</option>
+                                                </select>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal">View</button>
+                                                <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
+
+                                            </td>
+                                        </tr>
+                                        {% endfor %} {% endwith %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button id="loadmore-btn" class="btn-cxt">Load more</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button id="loadmore-btn" class="btn-cxt">Load more</button>
-</div>
 
 
-
-<!-- QUERY Modal -->
-<div class="modal fade" id="queryModal" tabindex="-1" role="dialog" aria-labelledby="queryModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="queryModalLabel">Order Not Delieverd</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- QUERY Modal -->
+    <div class="modal fade" id="queryModal" tabindex="-1" role="dialog" aria-labelledby="queryModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="queryModalLabel">Order Not Delieverd</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button data-toggle="modal" data-target="#queryReplyModal" type="button" class="btn-cxt">Reply</button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button data-toggle="modal" data-target="#queryReplyModal" type="button" class="btn-cxt">Reply</button>
+                </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
-<!-- QUERY REPLY Modal -->
-<div class="modal fade" id="queryReplyModal" tabindex="-1" role="dialog" aria-labelledby="queryReplyModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="queryReplyModalLabel">Send Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- QUERY REPLY Modal -->
+    <div class="modal fade" id="queryReplyModal" tabindex="-1" role="dialog" aria-labelledby="queryReplyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="queryReplyModalLabel">Send Email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group row border-top border-bottom">
-                        <label for="recipientEmail" class="col-sm-2 col-form-label">To</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control-plaintext border-left pl-1" id="recipientEmail" value="dummy@dummy.com">
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group row border-top border-bottom">
+                            <label for="recipientEmail" class="col-sm-2 col-form-label">To</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext border-left pl-1" id="recipientEmail" value="dummy@dummy.com">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row border-top border-bottom">
-                        <!-- <label for="subject" class="col-sm-2 col-form-label">Subject</label> -->
-                        <div class="col-sm-12 p-0">
-                            <input type="text" class="form-control-plaintext border-0 pl-2" id="subject" placeholder="Subject">
+                        <div class="form-group row border-top border-bottom">
+                            <!-- <label for="subject" class="col-sm-2 col-form-label">Subject</label> -->
+                            <div class="col-sm-12 p-0">
+                                <input type="text" class="form-control-plaintext border-0 pl-2" id="subject" placeholder="Subject">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row border-top border-bottom">
-                        <div class="col-sm-12  p-0">
-                            <textarea class="form-control-plaintext border-0 pl-2" placeholder="Message"></textarea>
+                        <div class="form-group row border-top border-bottom">
+                            <div class="col-sm-12  p-0">
+                                <textarea class="form-control-plaintext border-0 pl-2" placeholder="Message"></textarea>
+                            </div>
                         </div>
-                    </div>
 
-                </form>
+                    </form>
 
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn-cxt">Send</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-cxt">Send</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{% endblock %}
+</div>
+{% endblock %} {% block custom-script %}
+<script>
+    function readMsg(data) {
+        $(".read-msg").on("click", function() {
+            Swal.fire(data);
+        });
+    }
+</script>
+{%endblock%}

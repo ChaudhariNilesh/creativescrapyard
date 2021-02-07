@@ -1,6 +1,5 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}" />
- {% endblock %} {% block base %}
+<link rel="stylesheet" href="{% static 'css/nikul/order-details.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Order details
@@ -12,8 +11,7 @@
         <div class="col">
             <p class="ord-details-id">Order id: #2135</p>
             <p class="ord-details-time my-2">
-                <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25"
-                    height="25">
+                <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25" height="25">
                 <span class="ml-2 mt-2 mb-2"> March 28, 2020 At 12:43 PM</span>
             </p>
             <p class="ord-details-status">
@@ -83,83 +81,205 @@
 
 <div class="bx-shd my-3 pt-2 px-3">
     <h4 class="my-2 pb-2">Order Items</h4>
-    
-    {% with n='123' %}
-    {% for i in n %}
-    <div class="border-bottom py-3">
-        <div class="row d-flex">
-            <div class="col-2 pr-0">
-                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/1.jpg' %}" alt="">
-            </div>
-            <div class="col-10">
-                <div class="my-2 border-bottom">
-                    <span>ORDER ID : </span><span>10001</span>
-                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Dec 20, 2020</span></span>
+    <<<<<<< HEAD {% with n='123' %} {% for i in n %}======={ % with n='123' %} {% for i in n %}>>>>>>> b4849fb7b7a3743227e6822305541df2011bf67d
+        <div class="border-bottom py-3">
+            <div class="row d-flex">
+                <div class="col-2 pr-0">
+                    <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/1.jpg' %}" alt="">
                 </div>
-                <div class="my-1">
-                    <span class="h4">White Gray T shirt</span>
-                </div>
-
-                <div class="mt-1">
-                    <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span
-                            class="text-muted">2 </span></p>
-                    <p><span>COLOR: </span><span><img
-                                src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32"
-                                height="32"></span></p>
-                    <p><span>STATUS: </span><span class="text-warning">Pending</span></p>
-                </div>
-
-                <div class="d-flex flex-row-reverse mt-4">
-                    <div class="px-1">
-                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel=""
-                            style="font-size: small;"> Cancel Order</button>
-                    </div>
-                    <div class="px-1">
-                        <a href="{% url 'Home:Items:Order:orderTrack' %}">
-                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;"> Track
-                            </button>
+                <div class="col-10">
+                    <div class="my-2 border-bottom">
+                        <span>SKU : </span><span>ABC-SHJB-561-156</span>
+                        <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Dec 20, 2020</span></span>
+                        <span style="float: right;" class="mr-2">
+                        <a href="#" data-toggle="modal" data-target=".report_model_sm">
+                            <i class="fas fa-flag report-flag"></i>
                         </a>
+                    </span>
+
+                        <!-- Report model code    -->
+
+                        <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="model-header p-2 border-2 border-bottom">
+                                        <span class="text-dark">Report Item</span>
+                                    </div>
+                                    <div class="model-body p-2">
+                                        <form action="" method="post">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="reportMsg">Please tell us about the
+                                                issue</label>
+                                                <select class="form-control form-control-sm rounded">
+                                                <option selected>What's the issue?</option>
+                                                <option>Doesn't match product</option>
+                                                <option>Offensive or adult content</option>
+                                                <option>Is not clear</option>
+                                                <option>Other</option>
+                                            </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-dark" for="reportMsg">Comments (optional)</label>
+                                                <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
+                                            </div>
+                                            <div class="d-flex flex-row-reverse">
+                                                <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
+                                                <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close
+                                            </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Report model code end here    -->
+
                     </div>
-                    <div class="px-1">
-                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
+                    <div class="my-1">
+                        <span class="h4">White Gray T shirt</span>
+                    </div>
+
+                    <div class="mt-1">
+                        <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p>
+                        <p><span>COLOR: </span><span><img
+                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32" height="32"></span>
+                        </p>
+                        <p><span>STATUS: </span><span class="text-warning">Pending</span></p>
+                    </div>
+
+                    <div class="d-flex flex-row-reverse mt-4">
+                        <div class="px-1">
+                            <<<<<<< HEAD <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Order</button>
+                                =======
+                                <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Item
+                        </button> >>>>>>> b4849fb7b7a3743227e6822305541df2011bf67d
+                        </div>
+                        <div class="px-1">
+                            <a href="{% url 'Home:Items:Order:orderTrack' %}">
+                                <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;">
+                                Track
+                            </button>
+                            </a>
+                        </div>
+                        <div class="px-1">
+                            <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
                             Give Rating & Review
                           </button>
+                        </div>
+                        <div class="px-1">
+                            <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Return Item
+                        </button>
+                        </div>
                     </div>
-                </div>
 
+                    <<<<<<< HEAD <!-- <div class="mr-2">-->
+                        <!--                        <button class="btn btn-sm btn-danger  mb-2 btn-item-cancel" data-item-cancel="" style="font-size: small;" > Cancel Order</button>-->
+                        <!--                </div>-->
+                        <!--                <div class="form-group ml-2" style="float: right;">-->
+                        <!--                    <div class="form-group" style="float: right;">-->
+                        <!--                        <a href="{% url 'Home:Items:Order:orderTrack' %}">-->
+                        <!--                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;"> Track-->
+                        <!--                            </button>-->
+                        <!--                        </a>-->
+                        <!--                    </div>-->
+                        <!--                </div>-->
+
+                </div>
             </div>
         </div>
+        {% endfor %} {% endwith %}
+</div>
+
+{% endblock %}
+
+<div class="py-3 table-responsive">
+    <table class="table table-hover border-bottom tablemanager">
+
+        <thead>
+            <tr class="">
+                <th scope="col" class="text-left">Product ID</th>
+                <th scope="col" class="text-center">Product name</th>
+                <th scope="col" class="text-right">Quantity</th>
+                <th scope="col" class="text-right">Unit Price</th>
+                <th scope="col" class="text-right">Total</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            <tr>
+                <td scope="row" class="text-left">101</td>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+            <tr>
+                <td scope="row" class="text-left">101</td>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+            <tr>
+                <td scope="row" class="text-left">101</td>
+                <td class="text-center">Perfume</td>
+                <td class="text-right">5</td>
+                <td class="text-right">50</td>
+                <td class="text-right">250</td>
+            </tr>
+
+            <tr>
+                <td scope="row" class="text-left"></td>
+                <td class="text-center"></td>
+                <td class="text-right"></td>
+                <td class="text-right">Total</td>
+                <td class="text-right">750</td>
+            </tr>
+        </tbody>
+        maximum order should be 10.
+    </table>
+</div>
+
+
+<div class="item-card">
+    <h4 class="my-2 pb-2">Order Items</h4>
+    <div class="item-card-main row px-3">
+        <div class="col-12 col-sm-3 col-md-2 px-0">
+            <img src="{% static 'img/products/1.jpg' %}" class="img-fluid" height="250" width="150" alt="Responsive image"> =======
+        </div>
     </div>
-    {% endfor %}
-    {% endwith %}
+</div>
+{% endfor %} {% endwith %}
 
 </div>
 
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Rating & Review : </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Rating & Review : </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> >>>>>>> b4849fb7b7a3743227e6822305541df2011bf67d
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form action="" method="GET">
+                        <h6>Rate:</h6>
+                        <div id="review"></div>
+                        <h6>Review(Option):</h6>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn pri-bg-color">Send Review</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <div class="container">
-            <form action="" method="GET">
-            <h6>Rate:</h6>
-            <div id="review"></div>
-            <h6>Review(Option):</h6>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </form>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn pri-bg-color">Send Review</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 {% endblock %}

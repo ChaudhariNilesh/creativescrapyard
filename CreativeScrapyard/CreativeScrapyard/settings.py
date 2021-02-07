@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'hz6c9&=5rp!0lmu+*+@m(j7mx=q19-cs4bim@$+2jd=sacv)35'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True    
 
 ALLOWED_HOSTS = []
 
@@ -95,6 +97,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -120,9 +125,12 @@ USE_TZ = True
 
 SITE_ID =  1
 
+AUTH_USER_MODEL = 'Authentication.User'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# AUTH_USER_MODEL = "Authentication.BaseUser"
 
 STATIC_URL = '/static/'
 if DEBUG:
@@ -130,3 +138,12 @@ if DEBUG:
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"CreativeScrapyard","static","static-only")
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"CreativeScrapyard","static","media")    
     STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR),"CreativeScrapyard","static","static"),)
+
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

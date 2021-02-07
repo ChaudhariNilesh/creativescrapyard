@@ -6,6 +6,16 @@ from django.conf.urls.static import static
 app_name = "Authentication"
 
 urlpatterns = [
+    path('login/',login,name="login"),
+    path('signup/',signup,name="signup"),
+    path('password-reset-link/',passwordReset,name="passwordReset"),
+    path('password-reset-done/',passwordResetLink,name="passwordResetLink"),
+    path('new-password/',newPassword,name="newPassword"),
+    path('new-password-done/',newPasswordDone,name="newPasswordDone"),
+
+
+
+
     path('profile/', profile, name="profile"),
     path('dashboard/', dashboard, name="dashboard"),
     path('dashboard/product/creative/', creative_items, name="creative_items"),

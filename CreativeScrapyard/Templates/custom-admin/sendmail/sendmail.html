@@ -19,7 +19,9 @@
             <div class="col-md-10">
                 <div class="email-input">
                     <div class="emails emails-input">
-                        <span class="email-chip"><span class="content">example@example.com</span><a class="email-remove">×</a></span>
+                        <span class="email-chip"><span class="content">example@example.com</span>
+                        <a class="email-remove"><img src="https://s2.svgbox.net/materialui.svg?ic=cancel&color=13775a" width="15" height="15"></a>
+                        </span>
 
                         <span class="inputTag">
                             <input id="user-email" type="email" placeholder="Add email.....">
@@ -33,7 +35,7 @@
 
         <form method="POST" action="{% url 'CustomAdmin:sendmail' %}"> {% csrf_token %}
             <div class="form-group row ">
-                <input id="user-email-list" type="text" name="email" class="form-control">
+                <input id="user-email-list" type="hidden" name="email" class="form-control">
             </div>
 
             <div class="form-group row ">

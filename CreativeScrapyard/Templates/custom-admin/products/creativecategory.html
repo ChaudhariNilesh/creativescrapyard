@@ -1,13 +1,11 @@
-{% extends 'custom-admin/common.html' %} {% load static %} 
- {% block breadcrumb-link%}
- {% if dispSubCat %}
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {% block breadcrumb-link%} {% if dispSubCat %}
 <li class="breadcrumb-item"><a href="#productSubmenu" data-toggle="collapse" aria-expanded="false" class="collapsed" style="opacity: 1;">Products</a></li>
 <li class="breadcrumb-item"><a href="{% url 'CustomAdmin:creativeCat' %}">Creative Categories</a></li>
 <li class="breadcrumb-item active">{{ parentCat.crt_category_name}}</li>
-{% endif %}
-{%endblock%} 
-
-{%block content%}
+{% endif %} {%endblock%} {% endcomment %} {%block content%}
+<!-- <form action="{% url 'CustomAdmin:addMainCrtCat' 'addMain' %}" method="POST"> {% csrf_token %} {{form}}
+    <input type="submit"> {{form.non_field_errors}}
+</form> -->
 <div class="pl-3 page-title ">
     Creative Items Categories
     <hr/>

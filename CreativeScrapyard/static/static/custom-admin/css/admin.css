@@ -712,14 +712,17 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
     background-color: #d9dce1;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
     color: #fff;
     background-color: var(--pri-color);
 }
 
-.nav-pills .nav-link, .nav-pills .show > .nav-link {
-    color: var(--pri-color) ;
-    
+.nav-pills .nav-link,
+.nav-pills .show>.nav-link {
+    color: var(--pri-color);
+}
+
 
 /* EMAIL INPUT */
 
@@ -747,7 +750,7 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
     vertical-align: top;
     border-radius: 6.25rem;
     padding-left: 0.625rem;
-    padding-right: 1.5rem;
+    padding-right: 0.5rem;
     margin: 0.125rem;
     max-width: 100%;
     overflow: hidden;
@@ -814,4 +817,31 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
 button.btn-sm.btn-danger.text-white.rounded.cus {
     box-shadow: none!important;
     border: none!important;
+}
+
+
+/* REPORTED ITEM USER TABS */
+
+.tab-list {
+    list-style: none;
+    background: white;
+    padding-left: 0px !important;
+}
+
+.tab-list li a {
+    color: var(--pri-color);
+}
+
+.tab-list li a:hover {
+    color: white;
+    background: var(--pri-color);
+}
+
+.tab-active {
+    color: white !important;
+    background: var(--pri-color);
+}
+
+.errorlist {
+    color: red;
 }

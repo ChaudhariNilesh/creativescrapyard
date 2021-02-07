@@ -12,7 +12,7 @@ DELIVERY_STATUS = (
 )
 
 class tbl_orders_mst(models.Model):
-    order_id = models.PositiveIntegerField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+    order_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
     person_name = models.CharField(max_length=20, null=False, blank=False)
     contact_no = models.CharField(max_length=10, null=False, blank=False)   # set fixed length 10 on forms
     delivery_address = models.CharField(max_length=350, null=False, blank=False)
@@ -35,7 +35,7 @@ ITEM_STATUS = (
 )
 
 class tbl_orders_details(models.Model):
-    order_details_id = models.PositiveIntegerField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+    order_details_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
     crt_item_qty = models.PositiveIntegerField(validators=[MaxValueValidator(999)], default=1, null=False, blank=False)
     unit_price = models.DecimalField(max_digits=15, decimal_places=2, null=False, blank=False, validators=[MinValueValidator(0)])
     pickup_address = models.CharField(max_length=350, null=False, blank=False)            # *** it should be Charfield or reference from address table?

@@ -1,10 +1,5 @@
-{% extends 'common/common.html' %}
-{% load static %}
-{% block title %} SignUp {% endblock %}
-{% block link %}
-<link rel="stylesheet" href="{%  static 'css/style.css' %}"> {% endblock %}
-
-{% block content %}
+{% extends 'common/common.html' %} {% load static %} {% block title %} SignUp {% endblock %} {% block link %}
+<link rel="stylesheet" href="{%  static 'css/style.css' %}"> {% endblock %} {% block content %}
 
 <div id="main-wrapper">
     <div class="container-fluid px-0">
@@ -19,15 +14,16 @@
                             <div class="row no-gutters">
                                 <div class="col-11 col-lg-9 mx-auto">
                                     <div class="logo mt-5 mb-5 mb-md-0">
-                                    {% comment %} <a class="d-flex" href="#" title="LOGO"><img src="{% static 'img/logo/logo.png' %}" alt="LOGO" class="logo-sm"></a> {% endcomment %}
-                                            </div>
+                                        {% comment %}
+                                        <a class="d-flex" href="#" title="LOGO"><img src="{% static 'img/logo/logo.png' %}" alt="LOGO" class="logo-sm"></a> {% endcomment %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="row no-gutters my-auto">
                                 <div class="col-11 col-lg-9 mx-auto">
                                     <p class="text-4 line-height-4">Looks like you're new here!</p>
-                                    <h1 class="text-9 font-weight-600 mb-5">Join the largest Artist community in the
-                                        world.</h1>
+                                    <h1 class="text-9 font-weight-600 mb-5">Join the largest Artist community in the world.
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -42,79 +38,99 @@
                 <div class="container pt-5">
                     <div class="row">
                         <div class="col-11 col-md-11 mx-auto">
-                            <p class="text-right text-2 mb-0">Already have an account? <a
-                                    class="btn-link pri-color link-effect" href="{% url 'Home:login' %}">Sign In</a></p>
+                            <p class="text-right text-2 mb-0">Already have an account? <a class="btn-link pri-color link-effect" href="{% url 'Authentication:login' %}">Sign In</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="container my-auto py-5">
                     <div class="row">
                         <div class="col-11 col-md-10 col-lg-9 col-xl-8 mx-auto">
+
                             <h3 class="font-weight-600 mb-4 pri-color">Sign up to Creative Scrapyard</h3>
-<!--                            <div class="form-row mb-3">-->
-<!--                                <div class="col-4 col-sm-4 col-lg-6">-->
-<!--                                    <button type="button" class="btn btn-google btn-sm font-weight-400 shadow-none">-->
-<!--                                        <span class="mx-2"><i class="fab fa-google mx-1"></i>Sign in with Google</span>-->
-<!--                                    </button>-->
-<!--                                    <button type="button" class="btn btn-facebook btn-sm font-weight-400 shadow-none">-->
-<!--                                        <span class="mx-1"><i class="fab fa-facebook-f"></i></span></button>-->
-<!--                                    <button type="button" class="btn btn-twitter btn-sm font-weight-400 shadow-none">-->
-<!--                                      <span class="mx-1"><i class="fab fa-twitter"></i></span></button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="d-flex align-items-center my-4">-->
-<!--                                <hr class="flex-grow-1">-->
-<!--                                <span class="mx-3 text-2 text-muted">Or with Email</span>-->
-<!--                                <hr class="flex-grow-1">-->
-<!--                            </div>-->
+                            <!--                            <div class="form-row mb-3">-->
+                            <!--                                <div class="col-4 col-sm-4 col-lg-6">-->
+                            <!--                                    <button type="button" class="btn btn-google btn-sm font-weight-400 shadow-none">-->
+                            <!--                                        <span class="mx-2"><i class="fab fa-google mx-1"></i>Sign in with Google</span>-->
+                            <!--                                    </button>-->
+                            <!--                                    <button type="button" class="btn btn-facebook btn-sm font-weight-400 shadow-none">-->
+                            <!--                                        <span class="mx-1"><i class="fab fa-facebook-f"></i></span></button>-->
+                            <!--                                    <button type="button" class="btn btn-twitter btn-sm font-weight-400 shadow-none">-->
+                            <!--                                      <span class="mx-1"><i class="fab fa-twitter"></i></span></button>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="d-flex align-items-center my-4">-->
+                            <!--                                <hr class="flex-grow-1">-->
+                            <!--                                <span class="mx-3 text-2 text-muted">Or with Email</span>-->
+                            <!--                                <hr class="flex-grow-1">-->
+                            <!--                            </div>-->
 
 
-                            <form id="loginForm" method="post">
+                            <form id="signUpForm" action="{% url 'Authentication:signup' %}" method="post" data-validation="{% url 'Home:Validations:validationSignUpForm' %}"> {% csrf_token %}
 
                                 <div class="mx-0 px-0 row">
                                     <div class="form-group font-weight-500 col pl-0">
                                         <label for="firstName">First Name</label>
-                                        <input type="text" class="form-control bg-light border-1" id="firstName"
-                                               required placeholder="Enter First Name">
+                                        <input type="text" class="form-control bg-light border-1" id="first_name" name="first_name" required placeholder="Enter First Name">
                                     </div>
                                     <div class="form-group font-weight-500 col pr-0">
                                         <label for="lastName">Last Name</label>
-                                        <input type="text" class="form-control bg-light border-1" id="lastName" required
-                                               placeholder="Enter Last Name">
+                                        <input type="text" class="form-control bg-light border-1" id="last_name" name="last_name" required placeholder="Enter Last Name">
+                                    </div>
+                                </div>
+                                <div class="mx-0 px-0 row">
+                                    <div class="form-group font-weight-500 col pl-0">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control bg-light border-1" id="username" name="username" required placeholder="Enter  Username" value="aaa(">
+                                    </div>
+
+                                </div>
+                                <div class="mx-0 px-0 row">
+                                    <label class="">Gender </label>
+                                    <div class="form-group custom-control custom-radio mx-2">
+                                        <input type="radio" id="genderRadio1" name="user_gender" value="M" class="custom-control-input" required>
+                                        <label class="custom-control-label" for="genderRadio1">Male</label>
+                                    </div>
+                                    <div class="form-group custom-control custom-radio mx-2">
+                                        <input type="radio" id="genderRadio2" name="user_gender" value="F" class="custom-control-input">
+                                        <label class="custom-control-label" for="genderRadio2">Female</label>
+                                    </div>
+                                    <div class="form-group custom-control custom-radio mx-2">
+                                        <input type="radio" id="genderRadio3" name="user_gender" value="O" class="custom-control-input">
+                                        <label class="custom-control-label" for="genderRadio3">Other</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group font-weight-500">
                                     <label for="emailAddress">Email Address</label>
-                                    <input type="email" class="form-control bg-light border-1" id="emailAddress"
-                                           required placeholder="Enter Your Email">
+                                    <input type="email" class="form-control bg-light border-1" id="email" name="user_email" required placeholder="Enter Your Email">
                                 </div>
 
                                 <div class="form-group font-weight-500">
                                     <label for="password1">Password</label>
-                                    <input id="password1" type="password" class="form-control bg-light border-1" required
-                                           placeholder="Enter Password">
+                                    <input id="password1" type="password" class="form-control bg-light border-1" name="user_password" required placeholder=" Enter Password " autocomplete>
                                 </div>
 
-                                <div class="form-group font-weight-500">
-                                    <label for="password2">Confirm Password</label>
-                                    <input id="password2" type="password" class="form-control bg-light border-1" required
-                                           placeholder="Re-Enter Password">
+                                <div class="form-group font-weight-500 ">
+                                    <label for="password2 ">Confirm Password</label>
+                                    <input id="password2" type="password" class="form-control bg-light border-1 " name="user_confirm_password" required placeholder="Re-Enter Password" autocomplete>
                                 </div>
 
-                                <div class="form-group mt-4">
+                                <!-- <div class="form-group mt-4">
                                     <div class="form-check text-4 custom-control custom-checkbox">
                                         <input id="agree" name="agree" class="custom-control-input" type="checkbox">
                                         <label class="custom-control-label" for="agree">I agree to the <a href="#"
                                                                                                           class="link-effect">Terms</a>
                                             and <a href="#" class="link-effect">Privacy Policy</a>.</label>
                                     </div>
-                                </div>
+                                </div> -->
+                                <input value="SignUp" class="btn shadow-none my-2 px-5 py-2 pri-bg-color" type="submit">
 
-                                <button id="registerBtn" class="btn shadow-none my-2 px-5 py-2 pri-bg-color" type="submit">Sign up
-                                </button>
+                                <!-- <button class="btn shadow-none my-2 px-5 py-2 pri-bg-color" type="submit" id="btnSignUp">Sign up
+                                </button> -->
 
                             </form>
+
+
                         </div>
                     </div>
                 </div>
