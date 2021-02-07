@@ -122,6 +122,8 @@ USE_TZ = True
 
 SITE_ID =  1
 
+AUTH_USER_MODEL = 'Authentication.User'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
