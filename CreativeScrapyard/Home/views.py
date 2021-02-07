@@ -23,14 +23,6 @@ def achievers(request):
     template="achievers.html"
     return render(request,template,{'is_creative':True})    
 
-def login(request):
-    template="Home/login.html"
-    return render(request,template)
-
-def signup(request):
-    template="Home/registration.html"
-    return render(request,template)
-
 def contactus(request):
     template="contact-us.html"
     formData = QueryForm()
@@ -61,13 +53,12 @@ def contactus(request):
             except:
                 messages.error(request, 'Some error occured try after sometime.')
         else:
-            messages.warning(request, errorData)
+            messages.warning(request, 'Please correct the error below.')
             #'Please correct the error below.')
             # context['form']=formData
         # else:
             # return redirect("Home:contactus")
 
-  #  elif request.method=='GET':
     
     context={
         "is_creative":True,
@@ -84,18 +75,3 @@ def aboutus(request):
     template="about-us.html"
     return render(request,template,{'is_creative':True})
 
-def passwordReset(request):
-    template="account/password_reset.html"
-    return render(request,template)
-
-def passwordResetLink(request):
-    template="account/password_reset_done.html"
-    return render(request,template)
-
-def newPassword(request):
-    template="account/password_reset_from_key.html"
-    return render(request,template)
-
-def newPasswordDone(request):
-    template="account/password_reset_from_key_done.html"
-    return render(request,template)

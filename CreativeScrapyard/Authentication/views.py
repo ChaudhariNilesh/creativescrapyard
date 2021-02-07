@@ -1,11 +1,41 @@
 from django.shortcuts import render, redirect
 from .models import Photo
-from .forms import PhotoForm
+from .forms import *
 from django.http import JsonResponse
 from CustomAdmin.models import tbl_crt_categories, tbl_crt_subcategories
 
 
 # Create your views here.
+
+def login(request):
+    template="Home/login.html"
+    return render(request,template)
+
+def signup(request):
+    template="Home/registration.html"
+    if request.method=="POST":
+        pass
+        #print(request.POST)
+    return render(request,template)
+
+def passwordReset(request):
+    template="account/password_reset.html"
+    return render(request,template)
+
+def passwordResetLink(request):
+    template="account/password_reset_done.html"
+    return render(request,template)
+
+def newPassword(request):
+    template="account/password_reset_from_key.html"
+    return render(request,template)
+
+def newPasswordDone(request):
+    template="account/password_reset_from_key_done.html"
+    return render(request,template)
+
+#################################
+
 def profile(request):
     template = "account/profile.html"
     return render(request, template)

@@ -5,7 +5,6 @@ Seller Field: amt and total prd sold, action
 
 
 
-
 yash
 ------------------------
 give rating review
@@ -26,6 +25,7 @@ add report flag item link
 ------------------------
 
 
+********* >>CHECK DIAGRAMS ADMIN TABLE<< ******************
 
 
 
@@ -48,7 +48,7 @@ change images
 
 
 ****************************************
-
+>>password strentgth validate and signup user...
 login=>admin-user,forget password, reset password, email verify input.
 singup
 edit profile(User,admin)

@@ -1,6 +1,8 @@
 from .models import tbl_crt_categories,tbl_crt_subcategories,MainScrapCategory,SubScrapCategory
 from django import forms
 
+
+
 class MainCreativeCategoryForm(forms.ModelForm):
     class Meta:
         model = tbl_crt_categories

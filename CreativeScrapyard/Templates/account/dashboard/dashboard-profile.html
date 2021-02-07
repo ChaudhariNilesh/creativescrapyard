@@ -1,10 +1,5 @@
-{% extends 'account/base-dashboard.html' %}
-{% load static %}
-{% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/dashboard-profile.css' %}"/>
-{% endblock %}
-
-{% block base %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/dashboard-profile.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     User Profile
@@ -16,8 +11,7 @@
     <div class=" row py-1">
         <div class="col-lg-5 col-md-5 col-sm-12 col-12 py-1">
             <div class="profile-img-container">
-                <img src="{% static 'img/testimonial/4.jpg' %}"
-                     class="img-profile rounded-circle card-profile-image shadow">
+                <img src="{% static 'img/testimonial/4.jpg' %}" class="img-profile rounded-circle card-profile-image shadow">
                 <div class="custom-file text-center py-4">
                     <input type="file" class="custom-file-input" id="profilePicture" hidden>
                     <label class="btn btn-sm pri-bg-color" for="profilePicture">Upload profile</label>
@@ -44,8 +38,11 @@
             <form>
                 <div class="form-group">
                     <label for="profileEmail">Email</label>
-                    <input type="text" class="form-control form-control-sm" id="profileEmail"
-                           value="example@example.com" readonly>
+                    <input type="text" class="form-control form-control-sm" id="profileEmail" value="example@example.com" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="profileUsrName">Username</label>
+                    <input type="text" class="form-control form-control-sm" id="profileUsrName" value="user12345" readonly>
                 </div>
                 <div class="form-group">
                     <label for="profileBio">Bio</label>
@@ -56,13 +53,11 @@
                         <legend class="col-form-label col-sm-2 py-0">Gender</legend>
                         <div class="col-10 px-sm-5 px-md-4">
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderMale" value="Male"
-                                       name="profileGender" checked>
+                                <input class="form-check-input" type="radio" id="profileGenderMale" value="Male" name="profileGender" checked>
                                 <label class="form-check-label" for="profileGenderMale">Male</label>
                             </div>
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="Female"
-                                       name="profileGender">
+                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="Female" name="profileGender">
                                 <label class="form-check-label" for="profileGenderFemale">Female</label>
                             </div>
                         </div>
@@ -84,40 +79,35 @@
         <div class="allAddress">
             <table class="table table-sm my-2" style="font-size: 15px;">
                 <thead>
-                <tr class="thead-light">
-                    <th scope="col" class="text-center">Primary</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Pincode</th>
-                </tr>
+                    <tr class="thead-light">
+                        <th scope="col" class="text-center">Primary</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Pincode</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% with n='[1]' %}
-                {% for i in n %}
-                <tr>
-                    <td class="text-center"><input type="radio" name="primaryAddressGroup" id="#"/></td>
-                    <td>Nikul Prajapati</td>
-                    <td>Office</td>
-                    <td>6/F, Shanti society, Nigam Nagar, Chandkheda,
-                        Ahemdabad
-                    </td>
-                    <td>382424</td>
-                </tr>
-                {% endfor %}
-                {% endwith %}
+                    {% with n='[1]' %} {% for i in n %}
+                    <tr>
+                        <td class="text-center"><input type="radio" name="primaryAddressGroup" id="#" /></td>
+                        <td>Nikul Prajapati</td>
+                        <td>Office</td>
+                        <td>6/F, Shanti society, Nigam Nagar, Chandkheda, Ahemdabad
+                        </td>
+                        <td>382424</td>
+                    </tr>
+                    {% endfor %} {% endwith %}
                 </tbody>
             </table>
         </div>
         <div class="addFirstAddress mt-3">
-            <button type="button" class="btn btn-sm pri-bg-color btn-addAddress shadow-none" data-toggle="modal"
-                    data-target=".bd-example-modal-lg">Add address
+            <button type="button" class="btn btn-sm pri-bg-color btn-addAddress shadow-none" data-toggle="modal" data-target=".bd-example-modal-lg">Add address
             </button>
             <br/>
             <small>Add your address here to get your delivery.</small>
 
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                 aria-hidden="true">
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
@@ -133,20 +123,17 @@
                                 <div class="form-row">
                                     <div class="form-group col text-left">
                                         <label for="addFirstName">First Name</label>
-                                        <input type="text" class="form-control form-control-sm" id="addFirstName"
-                                               placeholder="first name">
+                                        <input type="text" class="form-control form-control-sm" id="addFirstName" placeholder="first name">
                                     </div>
                                     <div class="form-group col text-left">
                                         <label for="addLastName" class="text-left">Last Name</label>
-                                        <input type="text" class="form-control form-control-sm" id="addLastName"
-                                               placeholder="last name">
+                                        <input type="text" class="form-control form-control-sm" id="addLastName" placeholder="last name">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col text-left">
                                         <label for="addMobileNo">Mobile no</label>
-                                        <input type="tel" class="form-control form-control-sm" id="addMobileNo"
-                                               placeholder="mobile number">
+                                        <input type="tel" class="form-control form-control-sm" id="addMobileNo" placeholder="mobile number">
                                     </div>
                                     <div class="form-group col text-left">
                                         <label for="addType" class="text-left">Address Type</label>
@@ -160,19 +147,16 @@
                                 </div>
                                 <div class="form-row p-1">
                                     <label for="addressLine1">Address line 1</label>
-                                    <input type="text" class="form-control form-control-sm" id="addressLine1"
-                                           placeholder="Flat, House no., Building, Company, Apartment"/>
+                                    <input type="text" class="form-control form-control-sm" id="addressLine1" placeholder="Flat, House no., Building, Company, Apartment" />
                                 </div>
                                 <div class="form-row p-1">
                                     <label for="addressLine2">Address line 2</label>
-                                    <input typpe="text" class="form-control form-control-sm" id="addressLine2"
-                                           placeholder="Area, Colony, Street, Sector, Village"/>
+                                    <input typpe="text" class="form-control form-control-sm" id="addressLine2" placeholder="Area, Colony, Street, Sector, Village" />
                                 </div>
                                 <div class="form-row pt-1 px-1">
                                     <div class="form-group col text-left">
                                         <label for="addLandmark">Landmark</label>
-                                        <input type="text" class="form-control form-control-sm" id="addLandmark"
-                                               placeholder="landmark">
+                                        <input type="text" class="form-control form-control-sm" id="addLandmark" placeholder="landmark">
                                     </div>
                                     <div class="form-group col text-left">
                                         <label for="addCity">City</label>

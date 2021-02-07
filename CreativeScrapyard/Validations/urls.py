@@ -5,6 +5,6 @@ from .views import *
 app_name = 'Validations'
 
 urlpatterns = [
-    path('ajax/validate/contactform/',validationContactForm,name="validateContactForm")
+    path('ajax/validate/signup/',validationSignUpForm,name="validationSignUpForm")
 ]
 

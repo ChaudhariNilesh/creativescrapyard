@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
 from .models import *
-from .forms import MainCreativeCategoryForm, SubCreativeCategoryForm, MainScrapCategoryForm, SubScrapCategoryForm
+from .forms import *
 from django.http import HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
@@ -20,9 +20,11 @@ def login(request):
     if request.method == 'POST':
         user = request.POST['username']
         pwd = request.POST['password']
+                    
         if user=='admin' and pwd=='admin':
             request.session['admin'] = user
             return redirect('CustomAdmin:adminindex')
+
     return render(request,template)
 
 def adminindex(request):

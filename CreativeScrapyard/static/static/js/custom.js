@@ -195,7 +195,7 @@ $(function() {
 
     var func_expand = function() {
         let loc = window.location.pathname;
-        let sideBarLoc = loc.match(/(?:.*?\/){4,5}/)[0];
+        let sideBarLoc = loc.match(/(?:.*?\/){4,5}/); //[0]
 
         if (loc == "/accounts/dashboard/") {
             $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
@@ -423,17 +423,17 @@ $(function() {
         });
     }
 
-    var rating = function(){
-          $("#review").rating({
-              "click":function (e) {
-                console.log(e);// {stars: 3, event: E.Event}
+    var rating = function() {
+        $("#review").rating({
+            "click": function(e) {
+                console.log(e); // {stars: 3, event: E.Event}
                 alert(e.stars);
-                 
-              },
-              'half':true,
-            });
-        };
-        
+
+            },
+            'half': true,
+        });
+    };
+
     //   Dom Ready
     $(function() {
         responsiveTab();

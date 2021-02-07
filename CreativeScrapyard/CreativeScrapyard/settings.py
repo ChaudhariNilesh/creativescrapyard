@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'hz6c9&=5rp!0lmu+*+@m(j7mx=q19-cs4bim@$+2jd=sacv)35'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True    
 
 ALLOWED_HOSTS = []
 
@@ -97,6 +97,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -125,6 +128,7 @@ SITE_ID =  1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# AUTH_USER_MODEL = "Authentication.BaseUser"
 
 STATIC_URL = '/static/'
 if DEBUG:

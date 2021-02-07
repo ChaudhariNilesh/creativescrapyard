@@ -8,6 +8,8 @@ from .models import *
 #         fields = ('username','bio','full_name', 'user_mobile', 'user_gender')
 
 
+    
+
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo

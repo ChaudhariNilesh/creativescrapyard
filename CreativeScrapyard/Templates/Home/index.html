@@ -1,20 +1,15 @@
 {% extends 'common/common.html' %} {% load static %} {%block title %}Creative Scrapyard{%endblock%} {% block link %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" href="{% static 'css/creativestyle.css' %}">
-{% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/creativestyle.css' %}"> {% endblock %} {% block content %}
 
 <!-- <body style="background-color: #b8d5cd;"> -->
 <div class="shadow-sm  border-bottom py-3">
     <div class="row mx-2">
         <div class="col-md-8">
             <h4 class="my-0 mr-md-auto font-weight-bold">
-                <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-dark" style="font-size: 18px;"></span><span
-                        style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span
-                        style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span
-                        style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span>
+                <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-dark" style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span>
                     <span style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E</b></span></a><span>
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a
-                    href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark" style="font-size: 18px ;"><b>
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark" style="font-size: 18px ;"><b>
                         SCRAPYARD</b></a>
             </h4>
         </div>
@@ -40,13 +35,13 @@
                     <diV style="float: right;" class="d-flex">
 
                         <span>
-                            <a class="btn btn-outline-dark px-3" href="{% url 'Home:login'%}">Log In</a>
+                            <a class="btn btn-outline-dark px-3" href="{% url 'Authentication:login'%}">Log In</a>
                         </span>
 
 
 
                         <!-- <span class="dropdown custom-dropdown px-3">
-                            <a href="Home:Authentication:dashboard">
+                            <a href="Authentication:dashboard">
                                 <i class="fa fa-shopping-cart fa-2x m-1"></i>
                             </a>
                         </span>
