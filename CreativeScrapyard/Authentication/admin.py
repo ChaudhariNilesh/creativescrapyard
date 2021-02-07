@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import Photo
+# from django.contrib.auth.admin import UserAdmin
+from .models import *
 
 # Register your models here.
-admin.site.register(Photo)
+# admin.site.register(Photo)
+
+# class UserAdmin(UserAdmin):
+#     model = User
+#     list_display = ['user_id', 'username', 'first_name', 'last_name', 'email', 'password', 'is_active']
+
+admin.site.register(User)
+admin.site.register(Profile)

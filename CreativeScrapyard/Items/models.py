@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 # Create your models here.
 
 class tbl_creativeitems_mst(models.Model):
-    crt_item_id = models.PositiveIntegerField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+    crt_item_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
     crt_item_name = models.CharField(max_length=100, null=False, blank=False)
     crt_item_desc = models.TextField(blank=True, null=True)
     crt_created_on = models.DateTimeField(auto_now_add=True, null=False, blank=False)
@@ -43,7 +43,7 @@ ITEM_STATUS = (
 )
 
 class tbl_creativeitems_details(models.Model):
-    crt_item_details_id = models.PositiveIntegerField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+    crt_item_details_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
     crt_item_color = models.CharField(max_length=7)
     crt_item_size = models.CharField(max_length=3, choices=ITEM_SIZES, null=True, blank=True)
     crt_item_price = models.DecimalField(blank=False, null=False, decimal_places=2, max_digits=10, validators=[MinValueValidator(0)])  # *** set default price add minvalue
@@ -60,7 +60,7 @@ class tbl_creativeitems_details(models.Model):
 
 
 class tbl_crtimages(models.Model):
-    crt_img_id = models.PositiveIntegerField(primary_key=True, validators=[MaxValueValidator(99999)])
+    crt_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
     crt_img_url = models.ImageField(max_length=150, null=True, upload_to='photos/')
     is_primary = models.BooleanField(default=False, null=False)
     crt_item_details = models.ForeignKey(tbl_creativeitems_details, on_delete=models.CASCADE)
