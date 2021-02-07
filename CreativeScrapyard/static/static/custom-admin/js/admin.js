@@ -238,38 +238,31 @@ $(function() {
 
     var addBadgesInput = function() {
         $('#addBadge').on("click", function() {
-            swal("Enter the badge name :", {
-                    content: "input",
-                })
-                .then((value) => {
-                    swal(`${value} Badge Added`);
-                });
+            const { value: text } = Swal.fire({
+                title: 'Enter New Badge Name : ',
+                input: 'text',
+                inputLabel: 'Badge Name:',
+                inputPlaceholder: 'Badge Name'
+              })
+              
+              if (text) {
+                Swal.fire(`Entered Badge: ${text}`)
+              }
         });
     }
     var badgeDelete = function() {
         $('#badge').on("click", function() {
-            swal({
-                title: "Are you sure you want to delete this badge?",
-                text: "You will not be able to see the badge entries of this anymore!",
-                icon: "warning",
-                buttons: [
-                    'No, cancel it!',
-                    'Yes, I am sure!'
-                ],
-                dangerMode: true,
-            }).then(function(isConfirm) {
-                if (isConfirm) {
-                    swal({
-                        title: 'Deleted',
-                        text: 'The Badge is deleted success fully',
-                        icon: 'success'
-                    }).then(function() {
-                        form.submit();
-                    });
-                } else {
-                    swal("Cancelled", "The Badge is safe :)", "error");
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire("Badge Deleted", "", "success");
                 }
-            });
+            })
         });
     }
 
