@@ -27,6 +27,7 @@
                                     <form id="contact-form" action="{% url 'Home:contactus' %}" method="post">{% csrf_token %}
                                         <div class="form-row py-2">
                                             <div class="col">
+
                                                 <!-- <input type="text" class="form-control rounded {% if form.errors.first_name == None %}is-valid{% elif form.errors.first_name != None  %}is-invalid{% endif %}" name="first_name" placeholder="First name" aria-describedby="inputGroupPrepend3 validateName"
                                                     value="{{ form.first_name.value|default:'' }}" required> -->
                                                 <input type="text" class="form-control rounded {% if errorData.first_name.is_valid != None and errorData.first_name.is_valid %}is-valid{% elif errorData.first_name.is_valid != None and not errorData.first_name.is_valid %}is-invalid{% endif %}" name="first_name"

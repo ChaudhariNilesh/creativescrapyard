@@ -1,7 +1,7 @@
 $(function() {
     'use strict';
     var signUpForm = () => {
-        $("form").submit(function(e) {
+        $("#signUpForm").submit(function(e) {
             e.preventDefault();
             var form = $(this);
             $.ajax({

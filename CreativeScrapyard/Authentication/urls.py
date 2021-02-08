@@ -1,4 +1,5 @@
-from django.urls import path, include
+from django.urls import path, include,re_path
+from django.conf.urls import url
 from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
@@ -6,12 +7,16 @@ from django.conf.urls.static import static
 app_name = "Authentication"
 
 urlpatterns = [
-    path('login/',login,name="login"),
+    path('login/',UserLogin,name="login"),
     path('signup/',signup,name="signup"),
+    path('email-verification-sent/',EmailverificationSent,name="EmailverificationSent"),
+    path('activate/<slug:uidb64>/<slug:token>/',activateAccount, name='activateAccount'),
+    # path('activate-done/',activateAccountDone, name='activateAccountDone'),
     path('password-reset-link/',passwordReset,name="passwordReset"),
     path('password-reset-done/',passwordResetLink,name="passwordResetLink"),
     path('new-password/',newPassword,name="newPassword"),
     path('new-password-done/',newPasswordDone,name="newPasswordDone"),
+    path('logout/',logout,name="logout"),
 
 
 

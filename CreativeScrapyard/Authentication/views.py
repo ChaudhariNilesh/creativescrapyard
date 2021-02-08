@@ -1,22 +1,116 @@
-from django.shortcuts import render, redirect
-from .models import Photo
+from django.shortcuts import render, redirect,HttpResponse
+from .models import *
 from .forms import *
 from django.http import JsonResponse
-from CustomAdmin.models import tbl_crt_categories, tbl_crt_subcategories
-
+from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .token import account_activation_token
+from django.core.mail import EmailMessage
+from django.contrib.auth import authenticate,login
 
 # Create your views here.
-
-def login(request):
+def UserLogin(request):
     template="Home/login.html"
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username,password=password)
+        #print(user)
+        if user:
+            user = User.objects.get(username=username)
+            #print(user)
+            if not user.is_superuser and user.is_active:
+                user_sess = {'user_name':user.username,'user_email':user.email}
+                #print(user_sess)
+                request.session['user'] = user_sess
+                request.session['user_email'] = user.email
+                login(request, user)
+                return redirect("Home:home")
+            else:
+                messages.error(request, 'Invalid Credentials, Try Again.')
+        else:
+            messages.error(request, 'Invalid Credentials, Try Again.')
+            
+        #return JsonResponse({"account":"no"})
     return render(request,template)
 
 def signup(request):
     template="Home/registration.html"
+    if request.method == "GET":
+        # userFormData=UserForm()
+        # profileFormData=ProfileForm()
+        return render(request,template)
+
     if request.method=="POST":
-        pass
         #print(request.POST)
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        username = request.POST.get('username', '')
+        gender = request.POST.get('user_gender', '')
+        email = request.POST.get('user_email', '')
+        password = request.POST.get('user_password', '')
+
+        try:
+            #userSignUp = User(username=username,first_name=first_name,\
+             #   last_name=last_name,email=email,password=password) 
+            userSignUp = User.objects.create_user(username,\
+               email,password,first_name=first_name,last_name=last_name)
+            userSignUp.is_active=False
+            userSignUp.save()
+            userProfile = Profile(user_id=userSignUp,user_gender=gender)
+            userProfile.save()
+            
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your account.'
+            message = render_to_string('account/account_active_email.html', {
+                'user': userSignUp,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(userSignUp.user_id)),
+                'token':account_activation_token.make_token(userSignUp),
+            })
+            to_email = email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return redirect("Authentication:EmailverificationSent")
+        except Exception as e:
+            print(e)
+            messages.error(request, 'Some error occured try after sometime.')
     return render(request,template)
+
+def EmailverificationSent(request):
+    template = 'account/verification_link.html'
+    return render(request,template)
+
+
+def activateAccount(request,uidb64,token):
+    template = 'account/account_active_email_done.html'
+    
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return render(request,template,{"activated":True})
+        #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return render(request,template,{"activated":False})
+
+
+# def activateAccountDone(request):
+#     template = 'account/account_active_email_done.html'
+#     return render(request,template)
+    
 
 def passwordReset(request):
     template="account/password_reset.html"
@@ -33,6 +127,16 @@ def newPassword(request):
 def newPasswordDone(request):
     template="account/password_reset_from_key_done.html"
     return render(request,template)
+
+def logout(request):
+    if (request.session.get('user') != None):
+        print("exist")
+        request.session.delete()
+        return redirect('Home:home')
+    else:
+        return redirect('Authentication:login')
+
+    # return render(request,template)
 
 #################################
 

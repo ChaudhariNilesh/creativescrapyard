@@ -14,7 +14,7 @@
                 <img src="{% static 'img/testimonial/4.jpg' %}" class="img-profile rounded-circle card-profile-image shadow">
                 <div class="custom-file text-center py-4">
                     <input type="file" class="custom-file-input" id="profilePicture" hidden>
-                    <label class="btn btn-sm pri-bg-color" for="profilePicture">Upload profile</label>
+                    <label class="btn btn-sm pri-bg-color" for="profilePicture">Edit</label>
                 </div>
             </div>
         </div>
@@ -36,6 +36,28 @@
                 </div>
             </div>
             <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="admin-FirstName">First name</label>
+                        <input type="text" class="form-control {% if form.errors.first_name == None and form.is_bound %} is-valid {% elif form.errors.first_name != None %} is-invalid {% endif %}" id="admin-FirstName" name="first_name" placeholder="First name" value="{{form.last_name.value | default:user.first_name}}"
+                            aria-describedby="inputGroupPrepend3 validateFirstName" required>
+                        <div id="validateFirstName" class="invalid-feedback">
+                            {{ form.first_name.errors.as_text}}
+                        </div>
+
+
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="profileLastName">Last name</label>
+                        <input type="text" class="form-control {% if form.errors.last_name == None and form.is_bound %} is-valid {% elif form.errors.last_name != None %} is-invalid {% endif %}" id="profileLastName" name="last_name" placeholder="Last name" value="{{form.last_name.value | default:user.last_name}}"
+                            aria-describedby="inputGroupPrepend3 validateLastName" required>
+                        <div id="validateLastName" class="invalid-feedback">
+                            {{ form.last_name.errors.as_text}}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="profileEmail">Email</label>
                     <input type="text" class="form-control form-control-sm" id="profileEmail" value="example@example.com" readonly>
