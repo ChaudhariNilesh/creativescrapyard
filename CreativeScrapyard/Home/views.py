@@ -9,6 +9,7 @@ from django.contrib import messages
 # Create your views here.
 def home(request):
     template="Home/index.html"
+    #print(request.user)
     return render(request,template,{'is_home':True})
 
 def creativestore(request):
@@ -38,8 +39,8 @@ def contactus(request):
         query_message = request.POST.get('query_subject','')
 
 
-        errorData = validate(email=email,fname=first_name,lname=last_name,sub=query_subject)
-        print(errorData)
+        errorData = validate(email=email,fname=first_name,lname=last_name,sub=query_subject,chkTakenEmail=False,chkTakenUsrname=False)
+        #print(errorData)
        
         if not errorData['errors']:
             QryModel=Query(first_name=first_name,last_name=last_name,email=email,query_subject=query_subject,\

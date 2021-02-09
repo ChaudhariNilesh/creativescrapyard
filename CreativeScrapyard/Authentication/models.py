@@ -23,12 +23,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-
 class Profile(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     bio = models.TextField(max_length=200, null=True, blank=True)
     user_image = models.ImageField(upload_to='user_photo', null=True)
-    user_mobile = models.CharField(max_length=10, unique=True, null=False, blank=False)
+    #user_mobile = models.CharField(max_length=10, unique=True, null=False, blank=False)
     user_gender = models.CharField(max_length=1, choices=GENDER_TYPE, null=False)
     is_verified = models.BooleanField(null=False, default=False)
     user_rating = models.DecimalField(decimal_places=1, max_digits=2)
@@ -37,7 +36,7 @@ class Profile(models.Model):
         db_table = 'tbl_profile_mst'
 
     def __str__(self):
-        return self.user_id
+        return self.user_id.username
 
 class Documents(models.Model):
     doc_id =models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])

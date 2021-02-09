@@ -50,13 +50,17 @@ change images
 ****************************************
 >>password strentgth validate and signup user...
 login=>admin-user,forget password, reset password, email verify input.
-singup
+--singup
+
 edit profile(User,admin)
+
 add/edit document 
 add new address 
+
 add product
 edit product
-contact us
+
+--contact us
 reported modal
 send mail=> queries,
 categories
@@ -94,3 +98,22 @@ issue_id, iss_type, issue_sub, message ref_id, 	date, 	sendUId
 101	  1	inappt      --       1001        d1      2001
 102       2     inappt       abc     1001	 d2	 3001
 
+
+
+                    {{ form.first_name.errors.as_text}}
+                    
+                    
+                    {{form.errors.first_name}}
+                    {% for key, key_errors in form.errors.as_data.items %}
+                        {% comment %} {{ key }}  {% endcomment %}
+                        
+                        {% for error in key_errors %}
+                        {% comment %} {{error.code}} {% endcomment %}
+                            {% if error.code == 'invalid'%}
+                                {% comment %} {{error.message}} {% endcomment %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+
+                                                        {{form.errors.first_name}}                                   

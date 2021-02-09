@@ -1,11 +1,8 @@
-{% extends 'custom-admin/common.html' %} {% load static %} 
-{% comment %} {% block breadcrumb-link%}
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {% block breadcrumb-link%}
 <li class="breadcrumb-item"><a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="collapsed" style="opacity: 1;">USERS</a></li>
-<li class="breadcrumb-item"><a href="{% url 'CustomAdmin:verifyusers' %}">Verify User</a></li> 
-<li class="breadcrumb-item active">{{ is_verified | yesno:"Verified User ,Pending User "}}</li>
-{%endblock%}  {% endcomment %}
-
- {%block content%}
+<li class="breadcrumb-item"><a href="{% url 'CustomAdmin:verifyusers' %}">Verify User</a></li>
+<li class="breadcrumb-item active">{{ is_verified | yesno:"Verified User ,Pending User"}}</li>
+{%endblock%} {% endcomment %} {%block content%}
 
 <div class="shadow p-3 mb-5 bg-white rounded">
 

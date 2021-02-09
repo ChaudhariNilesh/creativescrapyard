@@ -1,36 +1,52 @@
 {% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
 
 <div class="shadow p-3 mb-5 border">
-                    <div class="page-title">
-                    My Account
-                </div>
+    <div class="page-title">
+        My Account
+    </div>
     <div class="py-3">
-        <form>
+        <form method="POST">{% csrf_token %}
             <div class="form-row">
 
                 <div class="form-group col-md-6">
                     <label for="admin-usrn">Username</label>
-                    <input type="text" class="form-control" id="admin-usrn" value="admin">
+                    <input type="text" class="form-control" id="admin-usrn" value="{{user.username }}" readonly>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="admin-email">E-mail</label>
-                    <input type="text" class="form-control" id="admin-email" value="admin@admin.com">
-                </div>
-            </div>
-            <div class="form-row">
 
                 <div class="form-group col-md-6">
+                    <label for="admin-email">E-mail</label>
+                    <input type="text" class="form-control" id="admin-email" value="{{user.email}}" readonly>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <label for="admin-FirstName">First name</label>
-                    <input type="text" class="form-control" id="admin-FirstName" placeholder="First name">
+                    <input type="text" class="form-control {% if form.errors.first_name == None and form.is_bound %} is-valid {% elif form.errors.first_name != None %} is-invalid {% endif %}" id="admin-FirstName" name="first_name" placeholder="First name" value="{{form.last_name.value | default:user.first_name}}"
+                        aria-describedby="inputGroupPrepend3 validateFirstName" required>
+                    <div id="validateFirstName" class="invalid-feedback">
+                        {{ form.first_name.errors.as_text}}
+                    </div>
+
+
+
                 </div>
                 <div class="form-group col-md-6">
                     <label for="profileLastName">Last name</label>
-                    <input type="text" class="form-control" id="profileLastName" placeholder="Last name">
+                    <input type="text" class="form-control {% if form.errors.last_name == None and form.is_bound %} is-valid {% elif form.errors.last_name != None %} is-invalid {% endif %}" id="profileLastName" name="last_name" placeholder="Last name" value="{{form.last_name.value | default:user.last_name}}"
+                        aria-describedby="inputGroupPrepend3 validateLastName" required>
+                    <div id="validateLastName" class="invalid-feedback">
+                        {{ form.last_name.errors.as_text}}
+                    </div>
                 </div>
             </div>
 
             <button type="submit" class="btn-cxt btn-sm pri-bg-color">Save Changes</button>
         </form>
+        <diV class="mt-4">
+            {% include 'includes/messages.html' %}
+        </diV>
+
     </div>
 </div>
 {%endblock%}
