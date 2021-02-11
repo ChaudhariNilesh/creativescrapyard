@@ -121,3 +121,7 @@ issue_id, iss_type, issue_sub, message ref_id, 	date, 	sendUId
                 </div>
 
                                                         {{form.errors.first_name}}                                   
+
+
+
+git rm --cached filename                                            
