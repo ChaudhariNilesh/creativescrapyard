@@ -103,7 +103,8 @@ $(function() {
     }
     var disableBtn = function() {
         $('.disable-btn').on("click", function() {
-
+            // console.log($(this).attr("data"));
+            const email = $(this).attr("data")
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -112,14 +113,82 @@ $(function() {
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.ajax({
-                        url: "",
-                        success: function(data) {
-                            if (true) {
-                                Swal.fire("User disabled successfully.", "", "success");
-                            }
+                    (async() => {
+                        const { value: text } = await Swal.fire({
+                            input: 'textarea',
+                            inputLabel: 'Reason',
+                            inputPlaceholder: 'Type your message here...',
+                            inputAttributes: {
+                                'aria-label': 'Type your message here'
+                            },
+                            inputValidator: (value) => {
+                                if (!value) {
+                                    return 'You need to write something!'
+                                }
+                                if (!(/^[a-zA-Z0-9\s]+$/.test(value))) {
+                                    return 'Only alphabets and number are accepted.'
+                                }
+                            },
+                            showCancelButton: true
+                        });
+                        if (text) {
+                            // Swal.fire(`Message:${text}`)
+                            $.ajax({
+                                url: "/admin/send-mail/",
+                                type: "POST",
+                                data: {
+                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                                    action: 'post',
+                                    email: email,
+                                    message: text,
+                                    type: "user",
+                                },
+                                dataype: "json",
+                                beforeSend: function() {
+                                    swal.fire({
+                                        title: 'Sending Mail...',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        onOpen: () => {
+                                            swal.showLoading();
+                                        }
+                                    });
+                                },
+                                complete: function() {},
+                                success: function(data) {
+                                    swal.close();
+
+                                    console.log(data.send);
+                                    if (data.send) {
+                                        //Swal.fire(data.msg, "", "success");
+                                        Swal.fire("User disabled successfully.", "", "success");
+                                    }
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+
+
+                                    swal.close();
+                                    Swal.fire(
+                                        jqXHR.status + "",
+                                        textStatus + " : " + errorThrown,
+                                        'error'
+                                    )
+                                }
+                            });
+
+                            // $.ajax({
+                            //     url: "",
+                            //     success: function(data) {
+                            //         if (true) {
+                            //             Swal.fire("User disabled successfully.", "", "success");
+                            //         }
+                            //     }
+                            // });
+
                         }
-                    });
+
+                    })()
+
                 }
             })
 
@@ -225,42 +294,109 @@ $(function() {
 
     var verifyChk = function() {
         $(".verifyChk").on("click", function() {
-            $.ajax({
-                url: $(this).attr("data-verify-url"),
-                datatype: JSON,
-                success: function(data) {
-                    if (data.is_verified) {
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                Swal.fire("User Verified", "", "success");
-                            }
-                        })
-                    }
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: $(this).attr("data-verify-url"),
+                        datatype: JSON,
+                        success: function(data) {
+                            Swal.fire("User Verified", "", "success");
+
+                        }
+                    })
                 }
-            });
+
+            })
+
+            // $.ajax({
+            // url: $(this).attr("data-verify-url"),
+            //datatype: JSON,
+            //     success: function(data) {
+            //         if (data.is_verified) {
+            //             Swal.fire({
+            //                 title: 'Are you sure?',
+            //                 icon: 'warning',
+            //                 showCancelButton: true,
+            //                 cancelButtonColor: '#d33',
+            //                 confirmButtonText: 'Yes'
+            //             }).then((result) => {
+            //                 if (result.isConfirmed) {
+            //                     Swal.fire("User Verified", "", "success");
+            //                 }
+            //             })
+            //         }
+            //     }
+            // });
+        });
+
+        $(".verifyChk.reject").on("click", function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: $(this).attr("data-verify-url"),
+                        datatype: JSON,
+                        success: function(data) {
+                            Swal.fire("User application rejected.", "", "success");
+
+                        }
+                    })
+                }
+
+            })
         });
     }
 
 
     var addBadgesInput = function() {
         $('#addBadge').on("click", function() {
-            const { value: text } = Swal.fire({
-                title: 'Enter New Badge Name : ',
-                input: 'text',
-                inputLabel: 'Badge Name:',
-                inputPlaceholder: 'Badge Name'
-              })
-              
-              if (text) {
-                Swal.fire(`Entered Badge: ${text}`)
-              }
+            // const { value: text } = Swal.fire({
+            //     title: 'Enter New Badge Name : ',
+            //     input: 'text',
+            //     inputLabel: 'Badge Name:',
+            //     inputPlaceholder: 'Badge Name'
+            // })
+
+            // if (text) {
+            //     Swal.fire(`Entered Badge: ${text}`)
+            // }
+
+            (async() => {
+
+                const { value: text } = await Swal.fire({
+                    title: 'Enter New Badge Name : ',
+                    input: 'text',
+                    inputLabel: 'Badge Name:',
+                    inputPlaceholder: 'Badge Name',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'You need to write something!'
+                        }
+                        if (!(/^[a-zA-Z\s]+$/.test(value))) {
+                            return 'Only alphabets are accepted.'
+                        }
+                    }
+                })
+
+                if (text) {
+                    Swal.fire(`Entered Badge:${text}`)
+                }
+
+            })()
         });
+
+
     }
     var badgeDelete = function() {
         $('#badge').on("click", function() {
@@ -477,6 +613,27 @@ $(function() {
     var disableProdBtn = function() {
         $('.prod-disable').on("click", function() {
 
+            // Swal.fire({
+            //     title: 'Are you sure?',
+            //     icon: 'warning',
+            //     showCancelButton: true,
+            //     cancelButtonColor: '#d33',
+            //     confirmButtonText: 'Yes'
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         $.ajax({
+            //             url: "",
+            //             success: function(data) {
+            //                 if (true) {
+            //                     Swal.fire("Product disabled successfully.", "", "success");
+            //                 }
+            //             }
+            //         });
+            //     }
+            // })
+
+            // console.log($(this).attr("data"));
+            const email = $(this).attr("data")
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -485,17 +642,76 @@ $(function() {
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.ajax({
-                        url: "",
-                        success: function(data) {
-                            if (true) {
-                                Swal.fire("Product disabled successfully.", "", "success");
-                            }
+                    (async() => {
+                        const { value: text } = await Swal.fire({
+                            input: 'textarea',
+                            inputLabel: 'Reason for disabled product',
+                            inputPlaceholder: 'Type your message here...',
+                            inputAttributes: {
+                                'aria-label': 'Type your message here'
+                            },
+                            inputValidator: (value) => {
+                                if (!value) {
+                                    return 'You need to write something!'
+                                }
+                                if (!(/^[a-zA-Z0-9\s]+$/.test(value))) {
+                                    return 'Only alphabets and number are accepted.'
+                                }
+                            },
+                            showCancelButton: true
+                        });
+                        if (text) {
+                            // Swal.fire(`Message:${text}`)
+                            $.ajax({
+                                url: "/admin/send-mail/",
+                                type: "POST",
+                                data: {
+                                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                                    action: 'post',
+                                    email: email,
+                                    message: text,
+                                    type: 'product'
+                                },
+                                dataype: "json",
+                                beforeSend: function() {
+                                    swal.fire({
+                                        title: 'Sending Mail...',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        onOpen: () => {
+                                            swal.showLoading();
+                                        }
+                                    });
+                                },
+                                complete: function() {},
+                                success: function(data) {
+                                    swal.close();
+                                    // console.log(data.send);
+                                    if (data.send) {
+                                        //Swal.fire(data.msg, "", "success");
+                                        Swal.fire("Product disabled successfully.", "", "success");
+                                    }
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    swal.close();
+                                    Swal.fire(
+                                        jqXHR.status + "",
+                                        textStatus + " : " + errorThrown,
+                                        'error'
+                                    )
+                                }
+                            });
+
                         }
-                    });
+
+                    })()
+
                 }
             })
+
         });
+
+
     }
 
     /* SEND EMAILS */

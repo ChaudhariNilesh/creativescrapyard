@@ -10,6 +10,11 @@ from django.template.loader import render_to_string
 from .token import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import authenticate,login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
+
 
 # Create your views here.
 def UserLogin(request):
@@ -81,7 +86,7 @@ def signup(request):
             return redirect("Authentication:EmailverificationSent")
         except Exception as e:
             print(e)
-            messages.error(request, 'Some error occured try after sometime.')
+            messages.error(request, 'Some error occured try after sometime')
     return render(request,template)
 
 def EmailverificationSent(request):
@@ -112,25 +117,11 @@ def activateAccount(request,uidb64,token):
 #     return render(request,template)
     
 
-def passwordReset(request):
-    template="account/password_reset.html"
-    return render(request,template)
 
-def passwordResetLink(request):
-    template="account/password_reset_done.html"
-    return render(request,template)
-
-def newPassword(request):
-    template="account/password_reset_from_key.html"
-    return render(request,template)
-
-def newPasswordDone(request):
-    template="account/password_reset_from_key_done.html"
-    return render(request,template)
 
 def logout(request):
     if (request.session.get('user') != None):
-        print("exist")
+        #print("exist")
         request.session.delete()
         return redirect('Home:home')
     else:
@@ -142,7 +133,10 @@ def logout(request):
 
 def profile(request):
     template = "account/profile.html"
-    return render(request, template)
+    context={
+        "is_creative":True,
+    }
+    return render(request, template, context)
 
 
 def creative_items(request):
@@ -174,11 +168,12 @@ def add_creative_product(request, id=None):
         return JsonResponse(data)
 
 
+
 def product_photo_remove(request, pk):
     Photo.objects.get(pk=pk).delete()
     return redirect('Authentication:add_creative_product')
 
-
+@login_required
 def dashboard(request):
     template = "account/dashboard/dashboard.html"
     return render(request, template)
@@ -188,10 +183,86 @@ def add_document(request):
     template = "account/dashboard/document.html"
     return render(request, template)
 
-
-def dashboard_profile(request):
+@login_required
+def dashboard_profile(request,action=None):
     template = "account/dashboard/dashboard-profile.html"
-    return render(request, template)
+    UserFormData=EditUserFormData()
+    profileFormData=EditProfileForm()
+    
+    #print(request.FILES)
+    #print(action)
+    if request.method == "POST" and action == "editImage":
+        #print(request.POST)
+        profileForm = EditProfileImage(request.POST or None ,request.FILES or None, instance=request.user.profile)
+     
+        if profileForm.is_valid():
+            #Profile.user_image.delete()
+            #profileForm.save()
+            #print(request.FILES)
+            if request.FILES.get('user_image', None) != None:
+                try:
+                    old_img = Profile.objects.get(user_id=request.user.user_id).user_image
+                    
+                    if old_img:
+                        os.remove(old_img.path)
+                except Exception as e:
+                    messages.error(request,"Some error occured during image upload. Refreash page and try again please."+str(e))
+                else:
+                    request.user.profile.user_image = request.FILES['user_image']
+                    request.user.profile.save()
+                    messages.success(request,"Profile Image Change Successfully.")
+                    return redirect('Authentication:dashboard_profile')                  
+        else:
+            err=profileForm.errors['user_image']
+            messages.error(request,err)
+    
+    if action == "removeImage":       
+        try:
+            old_img = Profile.objects.get(user_id=request.user.user_id).user_image
+            if old_img:
+                os.remove(old_img.path)
+        except Exception as e:
+            messages.error(request,"Some error occured during image upload. Refreash page and try again please.")
+        else:
+            old_img = Profile.objects.get(user_id=request.user.user_id)
+            old_img.user_image=None
+            old_img.save()
+            messages.success(request,"Profile Image Change Successfully.")
+            return redirect('Authentication:dashboard_profile')    
+##################################################################################
+    if request.method == "POST" and action == "editProfile":
+        #print(request.POST)
+        profileFormData = EditProfileForm(request.POST or None, instance=request.user.profile)
+        UserFormData = EditUserFormData(request.POST or None, instance=request.user)
+
+        if UserFormData.is_valid() and profileFormData.is_valid():
+            
+            UserFormData.save()
+            #profileFormData.save()
+
+            request.user.profile.bio = request.POST.get("bio")
+            request.user.profile.user_gender = request.POST.get("user_gender")
+            request.user.profile.save()
+          
+            #mPr = Profile(request.user.profile.user_id)
+            #mPr.bio=request.POST.get("bio")
+            #mPr.user_gender = request.POST.get("user_gender")
+            #mPr.save()
+            
+            messages.success(request,"Updated Successfully.")
+            UserFormData=EditUserFormData()
+            profileFormData=EditProfileForm()
+            return redirect('Authentication:dashboard_profile')                  
+            
+        else:
+            messages.warning(request,"Please correct above errors.")
+            
+    context={
+        "Userform":UserFormData,
+        "Profileform":profileFormData,
+    }
+    
+    return render(request, template,context)
 
 
 def order_creative(request):
@@ -222,7 +293,161 @@ def dashboard_payments(request):
     template = "account/dashboard/payments.html"
     return render(request, template)
 
-
+######################## ACCOUNT SETTING ###########################
+@login_required
 def dashboard_settings(request):
     template = "account/dashboard/settings.html"
     return render(request, template)
+
+@login_required
+def changePassword(request):
+    template = 'account/dashboard/settings.html'
+    #print('GET')
+    if request.method == 'POST':
+        #print(request.POST)
+        old = request.POST['password']
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        if pass1 == pass2:
+            if 'user' in request.session:
+                #print('got session')
+                email = request.session.get('user_email')
+                #print(email)
+                try:
+                    print(pass1)
+                    #validate_password(pass1) # for length and strength check
+                except Exception as e:
+                    messages.error(request,*e)
+                    return redirect('Authentication:changePassword')
+                else:
+                    usr = User.objects.get(email__iexact=email)
+                    
+                    if check_password(old,usr.password):
+                        # print('old and new same')
+                        usr.set_password(pass1)
+                        usr.save()
+                        request.session.delete()
+                        return redirect('Authentication:login')
+                    else:
+                        messages.error(request,"Old Password is incorrect.")
+                        return redirect('Authentication:changePassword')
+
+        else:
+            messages.error(request,"Passwords do not match.")
+            return redirect('Authentication:changePassword')
+
+    return render(request,template)
+
+def passwordReset(request):
+    template="account/password_reset.html"
+    #print(request.POST)
+    if request.method == 'POST':
+        email = request.POST.get('email',None)
+        try:
+            validate_email(email)
+        except Exception as e:
+            print(e)
+            messages.error(request,*e)
+        else:
+            is_email = User.objects.filter(email__iexact=email).exists()
+            if is_email:
+                usr = User.objects.get(email__iexact=email)
+                current_site = get_current_site(request)
+                mail_subject = 'Password Reset Link'
+                message = render_to_string('account/password_reset_email.html', {
+                    'user': usr,
+                    'domain': current_site.domain,
+                    'uid':urlsafe_base64_encode(force_bytes(usr.user_id)),
+                    'token':account_activation_token.make_token(usr),
+                })
+                to_email = email
+                sendemailmsg = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                #print(sendemailmsg)
+                sendemailmsg.send()
+                #request.session.delete()
+                request.session["reset_password_EMAIL"] = email
+                return redirect("Authentication:passwordResetLink")
+
+    return render(request,template)
+
+    
+
+def passwordResetLink(request):
+    template="account/password_reset_done.html"
+    return render(request,template)
+
+def resetVerified(request,uidb64,token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        return redirect("Authentication:newPassword")
+        #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return render(request,"account/account_active_email_done.html",{"activated":False})
+
+def newPassword(request):
+    template="account/password_reset_from_key.html"
+    if request.method == 'POST':
+        password = request.POST.get('password1',None)
+        c_password = request.POST.get('password2',None)
+
+        if password == c_password:
+            email = request.session.get('reset_password_EMAIL')
+            if email:
+                try:
+                    print(password)
+                    #validate_password(pass1) # for length and strength check
+                except Exception as e:
+                    messages.error(request,*e)
+                else:
+
+                    usr = User.objects.get(email=email)
+                    usr.set_password(password)
+                    usr.save()
+                    request.session.delete()
+                    return redirect('Authentication:newPasswordDone')
+            else:
+                return render(request,"account/account_active_email_done.html",{"activated":False})
+
+    return render(request,template)
+
+def newPasswordDone(request):
+    template="account/password_reset_from_key_done.html"
+    return render(request,template)
+
+@login_required
+def deactiveAccount(request):
+    template = 'account/dashboard/settings.html'
+    if request.method == "POST":
+        givenEmail  = request.POST.get("email",None)
+        is_email = User.objects.filter(email__iexact=givenEmail).exists()
+        if is_email:
+            emailSess = request.session.get('user_email')
+            try:
+                validate_email(givenEmail)
+            except Exception as e:
+                print(e)
+                messages.error(request,*e)
+            else:
+                usr = User.objects.get(email=givenEmail)
+                
+                if emailSess == usr.email:
+                    #print(emailSess,usrEmail)
+                    #user = request.user
+                    usr.is_active=False
+                    usr.save()
+                    #messages.success(request,"Success")
+                    return redirect('Home:home')
+                else:
+                    messages.error(request,"Please enter your registered email.")
+                    return redirect('Authentication:settings')
+        else:
+            messages.error(request,"Please enter your registered email.")
+            return redirect('Authentication:settings')
+    return render(request,template)
+
