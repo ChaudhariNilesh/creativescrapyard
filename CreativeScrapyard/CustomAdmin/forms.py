@@ -17,7 +17,7 @@ class AdminForm(forms.ModelForm):
         #last_name = cleaned_data.get("last_name",None)
 
         if not first_name.isalpha():
-            self.add_error("first_name",forms.ValidationError('Invalid first name only. Alphabets are accepted.' ,code='invalid'))
+            self.add_error("first_name",forms.ValidationError('Invalid first name. Only Alphabets are accepted.' ,code='invalid'))
         #if not last_name.isalpha():
          #   self.add_error("last_name",forms.ValidationError('Invalid last name only. Alphabets are accepted.' ,code='invalid'))
 
@@ -29,7 +29,7 @@ class AdminForm(forms.ModelForm):
         last_name = cleaned_data.get("last_name",None)
 
         if not last_name.isalpha():
-              self.add_error("last_name",forms.ValidationError('Invalid last name only. Alphabets are accepted.' ,code='invalid'))
+              self.add_error("last_name",forms.ValidationError('Invalid last name. Only Alphabets are accepted.' ,code='invalid'))
 
         return last_name    
     

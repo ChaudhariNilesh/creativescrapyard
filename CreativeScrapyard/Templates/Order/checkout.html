@@ -65,11 +65,13 @@
                                 {% csrf_token %}
                                 <div class="form-row my-3">
                                     <button type="button" class="btn col mx-1 pri-bg-color" data-toggle="modal"
-                                            data-target=".bd-select-address-lg">change address
+                                            data-target=".bd-select-address-lg">Change address
                                     </button>
-                                    <button type="button" class="btn col mx-1 pri-bg-color" data-toggle="modal"
-                                            data-target=".bd-new-address-lg">New address
-                                    </button>
+                                   <a href="{% url 'Authentication:addAddress' %}"> <button type="button" class="btn col mx-1 pri-bg-color" 
+                                            {% comment %} data-toggle="modal"
+                                            data-target=".bd-new-address-lg" {% endcomment %}
+                                            >New address
+                                    </button></a>
 
                                     <div class="modal fade bd-select-address-lg" tabindex="-1" role="dialog"
                                          aria-labelledby="myLargeModalLabel" aria-hidden="true">

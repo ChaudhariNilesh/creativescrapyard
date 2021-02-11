@@ -37,6 +37,7 @@ urlpatterns = [
     
 
 
+    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/history/<str:action>', order_history, name="order_tab_history"),
