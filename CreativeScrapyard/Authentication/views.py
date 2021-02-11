@@ -24,7 +24,7 @@ def UserLogin(request):
         if user:
             user = User.objects.get(username=username)
             #print(user)
-            if not user.is_superuser and user.is_active:
+            if user.is_superuser and user.is_active:
                 user_sess = {'user_name':user.username,'user_email':user.email}
                 #print(user_sess)
                 request.session['user'] = user_sess
@@ -184,10 +184,6 @@ def dashboard(request):
     return render(request, template)
 
 
-def add_document(request):
-    template = "account/dashboard/document.html"
-    return render(request, template)
-
 
 def dashboard_profile(request):
     template = "account/dashboard/dashboard-profile.html"
@@ -226,3 +222,52 @@ def dashboard_payments(request):
 def dashboard_settings(request):
     template = "account/dashboard/settings.html"
     return render(request, template)
+
+
+
+def add_document(request):
+    if request.session.get('user'):
+        template = "account/dashboard/document.html"
+        documentData=UserDocument()
+        if request.method=='POST':
+            documentData=UserDocument(request.POST,instance=request.user)
+            if documentData.is_valid():
+                print("Heloo")
+
+            else:
+                print(documentData.errors)
+                messages.warning(request,"Please correct above errors.")
+            
+        context={
+            "form":documentData,
+        }
+        return render(request,template,context)
+    else:
+        return redirect('Authentication:login')
+
+
+def addAddress(request):
+    if request.session.get('user'): 
+        template = 'account/dashboard/add-address.html'
+        addressFormData=AddressForm()
+        if request.method=='POST':
+            addressFormData=AddressForm(request.POST, instance=request.user)
+            if addressFormData.is_valid():
+                print("hello world")
+               # addressFormData.save()
+               # messages.success(request,"Updated Successfully.")
+               # addressFormData=AddressForm()
+               # redirect("Authentication:dashboard_profile")
+
+            else:
+                print(addressFormData.errors)
+                messages.warning(request,"Please correct above errors.")
+            
+        context={
+            "form":addressFormData,
+        }
+        return render(request,template,context)
+    else:
+        return redirect('Authentication:login')
+
+

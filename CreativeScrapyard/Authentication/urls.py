@@ -29,6 +29,7 @@ urlpatterns = [
     path('dashboard/product/creative/add/get-sub-crt-cat/<int:pk>', add_creative_product, name="get_crt_sub_cat"),
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
+    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/history/<str:action>', order_history, name="order_tab_history"),

@@ -38,6 +38,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user_id.username
 
+
 class Documents(models.Model):
     doc_id =models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
