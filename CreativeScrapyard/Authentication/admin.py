@@ -11,3 +11,10 @@ from .models import *
 
 admin.site.register(User)
 admin.site.register(Profile)
+admin.site.register(Address)
+admin.site.register(Cities)
+admin.site.register(States)
+admin.site.register(Documents)
+
+
+

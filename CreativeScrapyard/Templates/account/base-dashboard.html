@@ -123,7 +123,7 @@
     </main>
 </div>
 
-{% block custom-script %}
+{% block custom-script %} {% block customscript %} {% endblock customscript %}
 <!-- <script>
     function logout(e) {
         e.preventDefault();
@@ -151,11 +151,11 @@
 </script> -->
 
 
-{% endblock custom-script %} {% block customscript%} {% block baseScript %} {% endblock %} {% endblock %} {% comment %}
+{% endblock custom-script %} {% endblock %} {% comment %} {% block customscript%} {% block baseScript %} {% endblock %} {% endblock %}
 <script>
     function func_expand() {
         $(this).find("a").css({
             'color': 'red'
         });
     }
-</script> {% endcomment %} {% endblock %}
+</script> {% endcomment %}

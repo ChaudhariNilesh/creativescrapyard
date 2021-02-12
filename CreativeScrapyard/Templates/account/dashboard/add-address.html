@@ -12,64 +12,76 @@
                 <div class="form-group col text-left">
                     <label for="addFirstName">Name : </label>
                     <input type="text" class="form-control form-control-sm  {% if form.errors.person_name == None and form.is_bound %} is-valid {% elif form.errors.person_name != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.person_name.value | default:'' }}"
-                      aria-describedby="inputGroupPrepend3 validateName"  name="person_name">
+                        aria-describedby="inputGroupPrepend3 validateName" name="person_name">
 
                     <div id="validateName" class="invalid-feedback">
-                    {{form.person_name.errors}}
+                        {{form.person_name.errors.as_text}}
                     </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col text-left">
                     <label for="addMobileNo">Mobile no</label>
-                    <input type="tel" class="form-control form-control-sm {% if form.errors.contact_no == None and form.is_bound %} is-valid {% elif form.errors.contact_no != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.contact_no.value | default:'' }}" id="addMobileNo" placeholder="Mobile number"
-                        aria-describedby="inputGroupPrepend3 validateContact" name="contact_no" value="{{form.contact_no.value | default:'' }}">
+                    <input type="tel" class="form-control form-control-sm {% if form.errors.contact_no == None and form.is_bound %} is-valid {% elif form.errors.contact_no != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.contact_no.value | default:'' }}"
+                        id="addMobileNo" placeholder="Mobile number" aria-describedby="inputGroupPrepend3 validateContact" name="contact_no" value="{{form.contact_no.value | default:'' }}">
                     <div id="validateContact" class="invalid-feedback">
-                    {{form.contact_no.errors}}
+                        {{form.contact_no.errors.as_text}}
                     </div>
                 </div>
                 <div class="form-group col text-left">
                     <label for="addType" class="text-left">Address Type</label>
-                    <select id="addType" class="form-control form-control-sm {% if form.errors.type == None and form.is_bound %} is-valid {% elif form.errors.type != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.type.value | default:'' }}" name="type" aria-describedby="inputGroupPrepend3 validateType">
+                    <select id="addType" class="form-control form-control-sm {% if form.errors.type == None and form.is_bound %} is-valid {% elif form.errors.type != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.type.value | default:'' }}" name="type"
+                        aria-describedby="inputGroupPrepend3 validateType">
                         <option value="none">Choose...</option>
                         <option value="Home" {% if form.type.value == 'Home' %} selected {% endif %}>Home</option>
                         <option value="Office" {% if form.type.value == 'Office' %} selected {% endif %}>Office</option>
                         <option value="Other" {% if form.type.value == 'Other' %} selected {% endif %}>Other</option>
                     </select>
                     <div id="validateType" class="invalid-feedback">
-                      {{form.type.errors}}
+                        {{form.type.errors.as_text}}
                     </div>
-                    
+
 
                 </div>
             </div>
             <div class="form-row p-1">
                 <label for="addressLine1">Address line 1</label>
-                <input type="text" name="line1" class="form-control form-control-sm {% if form.errors.line1 == None and form.is_bound %} is-valid {% elif form.errors.line1 != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.line1.value | default:'' }}" id="addressLine1"
-                    aria-describedby="inputGroupPrepend3 validateLine1" placeholder="Flat, House no., Building, Company, Apartment" value="{{form.line1.value | default:'' }}"/>
-                    <div id="validateLine1" class="invalid-feedback">
-                        {{form.line1.errors}}
-                    </div>
-           
+                <input type="text" name="line1" class="form-control form-control-sm {% if form.errors.line1 == None and form.is_bound %} is-valid {% elif form.errors.line1 != None %} is-invalid {% endif %}" id="addressLine1" aria-describedby="inputGroupPrepend3 validateLine1"
+                    placeholder="Flat, House no., Building, Company, Apartment" value="{{form.line1.value | default:'' }}" />
+                <div id="validateLine1" class="invalid-feedback">
+                    {{form.line1.errors.as_text}}
+                </div>
+
             </div>
             <div class="form-row p-1">
                 <label for="addressLine2">Address line 2</label>
-                <input typpe="text" name="lin2" class="form-control form-control-sm {% if form.errors.line2 == None and form.is_bound %} is-valid {% elif form.errors.line2 != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.line2.value | default:'' }}" id="addressLine2" aria-describedby="inputGroupPrepend3 validateLine2"
-                    placeholder="Area, Colony, Street, Sector, Village" value="{{form.line2.value | default:'' }}"/>
-                
-                     <div id="validateLine1" class="invalid-feedback">
-                        {{form.line2.errors}}
-                    </div>
+                <input typpe="text" name="line2" class="form-control form-control-sm {% if form.errors.line2 == None and form.is_bound %} is-valid {% elif form.errors.line2 != None %} is-invalid {% endif %}" id="addressLine2" aria-describedby="inputGroupPrepend3 validateLine2"
+                    placeholder="Area, Colony, Street, Sector, Village" value="{{form.line2.value | default:'' }}" />
+
+                <div id="validateLine1" class="invalid-feedback">
+                    {{form.line2.errors.as_text}}
+                </div>
             </div>
             <div class="form-row pt-1 px-1">
                 <div class="form-group col text-left">
-                    <label for="addLandmark">Landmark(Optional)</label>
-                    <input type="text" name="landmark" class="form-control form-control-sm " id="addLandmark"
-                        placeholder="Landmark" value="{{form.landmark.value | default:'' }}">
+                    <label for="addLandmark">Landmark(Optional)</label> {% comment %} {% if form.errors.landmark == None and form.is_bound %} is-valid {% elif form.errors.landmark != None %} is-invalid {% endif %} {% endcomment %}
+                    <input type="text" name="landmark" class="form-control form-control-sm " id="addLandmark" placeholder="Landmark" value="{{form.landmark.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatelandmark"> {% comment %}
+                    <div id="validatelandmark" class="invalid-feedback">
+                        {{form.landmark.errors.as_text}}
+                    </div> {% endcomment %}
                 </div>
                 <div class="form-group col text-left">
-                    <label for="addState">State</label>
-                    <select id="addState" class="form-control form-control-sm {% if form.errors.state_id == None and form.is_bound %} is-valid {% elif form.errors.state_id != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.state_id.value | default:'' }}" name="state_id" aria-describedby="inputGroupPrepend3 validateState">
+                    <label for="addState">State {{form.state.value}}</label>
+                    <select id="addState" onchange="getCity();" class="form-control form-control-sm {% if form.errors.state == None and form.is_bound %} is-valid {% elif form.errors.state != None %} is-invalid {% endif %}" name="state" aria-describedby="inputGroupPrepend3 validateState">
+                        <option value="">--Select Your State--</option>
+                        {% for state in states %}
+
+                            <option {% if state.state_id == form.state.value|add:"0" %}selected{% endif %} value="{{ state.state_id }}">{{ state.state_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- <label for="addState">State</label>
+                    <select id="addState" class="form-control form-control-sm {% if form.errors.state_id == None and form.is_bound %} is-valid {% elif form.errors.state_id != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.state_id.value | default:'' }}"
+                        name="state_id" aria-describedby="inputGroupPrepend3 validateState">
                         <option value="" selected disabled>--Select Your State--</option>
                         <option value="1">Gujarat</option>
                         <option value="2">Rajasthan</option>
@@ -79,9 +91,9 @@
                         <option>Rajasthan</option>
                         <option>Madhya Pradesh</option>
                         <option>Maharashtra</option>
-                    </select>
-                     <div id="validateState" class="invalid-feedback">
-                        {{form.state_id.errors}}
+                    </select> -->
+                    <div id="validateState" class="invalid-feedback">
+                        {{form.state.errors.as_text}}
                     </div>
 
                 </div>
@@ -89,23 +101,30 @@
             </div>
             <div class="form-row p-1">
                 <div class="form-group col text-left">
-                    <label for="addCity">City</label>
-                    <select id="addCity" name="city_id" class="form-control form-control-sm {% if form.errors.city_id == None and form.is_bound %} is-valid {% elif form.errors.city_id != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.city_id.value | default:'' }}" aria-describedby="inputGroupPrepend3 validateCity">
-                        <option value="" selected disabled>--Select Your City--</option>
-                        <option value="1">Ahmedabad</option>
-                        <option value="2">Surat</option>
-                        <option value="3">Rajkot</option>
+                    <label for="addCity">City {{selectedCity.city_name}}</label>
+                    <select id="addCity" name="city" class="form-control form-control-sm {% if form.errors.city == None and form.is_bound %} is-valid {% elif form.errors.city != None %} is-invalid {% endif %}" value="{{form.city.value | default:'' }}" aria-describedby="inputGroupPrepend3 validateCity">
+                        
+                        {% if selectedCity and form.errors.city == None and form.is_bound %} <option value="{{selectedCity.city_id}}">{{selectedCity.city_name}}</option> {%else %} <option value="">--Select Your City--</option> {% endif %}
+                        
                     </select>
                     <div id="validateState" class="invalid-feedback">
-                        {{form.city_id.errors}}
+                        {{form.city.errors.as_text}}
                     </div>
-
+                    <!-- ----- -->
+                    {% comment %}
+                    <option value="" selected disabled>--Select Your City--</option>
+                    <option value="1">Ahmedabad</option>
+                    <option value="2">Surat</option>
+                    <option value="3">Rajkot</option>
+                    </select> {% endcomment %}
+                    <!-- ---  -->
                 </div>
                 <div class="form-group col text-left">
                     <label for="addPincode">Pincode</label>
-                    <input type="text" class="form-control form-control-sm {% if form.errors.pincode == None and form.is_bound %} is-valid {% elif form.errors.pincode != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.pincode.value | default:'' }}" id="addPincode" name="pincode" value="{{form.pincode.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatePincode">
+                    <input type="text" class="form-control form-control-sm {% if form.errors.pincode == None and form.is_bound %} is-valid {% elif form.errors.pincode != None %} is-invalid {% endif %}" placeholder="6 digit pincode" value="{{form.pincode.value | default:'' }}"
+                        id="addPincode" name="pincode" value="{{form.pincode.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatePincode">
                     <div id="validatePincode" class="invalid-feedback">
-                        {{form.pincode.errors}}
+                        {{form.pincode.errors.as_text}}
                     </div>
                 </div>
             </div>
@@ -117,4 +136,35 @@
     </div>
 </div>
 
-{% endblock base%}
+
+{% endblock base%} {% block customscript %}
+<script>
+    function getCity() {
+        const stateId = $("#addState").val()
+        $("#addCity").empty();
+        $.ajax({
+
+            dataType: "json",
+            url: "ajax/get-cities/" + stateId,
+            success: function(data) {
+                if (data != null) {
+                    $.each(data.cities, function(k, v) {
+                        //console.log(v.city_name); {% if form.city.value|add:'0' != 0  and form.is_bound %}selected{% endif %}
+                        var opts = "<option" + " value=" + v.city_id + ">" + v.city_name + "</option>";
+                        $("#addCity").append(opts);
+                    })
+
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // console.log(jqXHR.status);
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+{% endblock %}

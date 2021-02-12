@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import PermissionDenied
 
 
 # Create your views here.
@@ -29,7 +30,7 @@ def UserLogin(request):
         if user:
             user = User.objects.get(username=username)
             #print(user)
-            if user.is_superuser and user.is_active:
+            if not user.is_superuser and user.is_active:
                 user_sess = {'user_name':user.username,'user_email':user.email}
                 #print(user_sess)
                 request.session['user'] = user_sess
@@ -105,7 +106,7 @@ def activateAccount(request,uidb64,token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        #login(request, user)
         return render(request,template,{"activated":True})
         #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
@@ -179,16 +180,18 @@ def dashboard(request):
     return render(request, template)
 
 
-def add_document(request):
-    template = "account/dashboard/document.html"
-    return render(request, template)
+# def add_document(request):
+#     template = "account/dashboard/document.html"
+#     return render(request, template)
 
 @login_required
 def dashboard_profile(request,action=None):
     template = "account/dashboard/dashboard-profile.html"
     UserFormData=EditUserFormData()
     profileFormData=EditProfileForm()
+    UserAddressData = Address.objects.filter(user_id=request.user.user_id)
     
+
     #print(request.FILES)
     #print(action)
     if request.method == "POST" and action == "editImage":
@@ -260,6 +263,7 @@ def dashboard_profile(request,action=None):
     context={
         "Userform":UserFormData,
         "Profileform":profileFormData,
+        "UserAddress":UserAddressData,
     }
     
     return render(request, template,context)
@@ -457,13 +461,23 @@ def add_document(request):
         template = "account/dashboard/document.html"
         documentData=UserDocument()
         if request.method=='POST':
-            documentData=UserDocument(request.POST,instance=request.user)
+            # print(request.user.user_id)
+            documentData=UserDocument(request.POST or None,request.FILES or None)
+            #print("Docu Valid",request.user)
             if documentData.is_valid():
-                print("Heloo")
+                print("Docu Valid",request.user)
+                document = documentData.save(commit=False)
+                # usr= User.objects.get(username=request.user)
+                document.user = request.user
+                
+                #print("Docu Valid",request.user.user_id)
 
+                documentData.pan_img_url = request.FILES['pan_img_url']
+               
+                document.save()
             else:
-                print(documentData.errors)
-                messages.warning(request,"Please correct above errors.")
+                #print(documentData.errors.as_json)
+                messages.error(request,"Please correct above errors.")
             
         context={
             "form":documentData,
@@ -472,29 +486,72 @@ def add_document(request):
     else:
         return redirect('Authentication:login')
 
-
+@login_required
 def addAddress(request):
+
+    template = 'account/dashboard/add-address.html'
+    state = States.objects.all().order_by("state_name")
+    city=None
     if request.session.get('user'): 
-        template = 'account/dashboard/add-address.html'
         addressFormData=AddressForm()
         if request.method=='POST':
-            addressFormData=AddressForm(request.POST, instance=request.user)
+            # print(request.POST)
+            city_id = request.POST.get("city")
+            state_id = request.POST.get("state")
+            addressFormData=AddressForm(request.POST or None)
             if addressFormData.is_valid():
-                print("hello world")
-               # addressFormData.save()
-               # messages.success(request,"Updated Successfully.")
-               # addressFormData=AddressForm()
-               # redirect("Authentication:dashboard_profile")
+                #print("valid")
+                address = addressFormData.save(commit=False)
+                address.user = request.user                
+                address.city = Cities.objects.get(city_id=city_id)
+                address.state = States.objects.get(state_id=state_id)
+                #print(ref_city.city_id)
+
+                address.save()
+                messages.success(request,"Your address saved Successfully.")
+                addressFormData=AddressForm()
+                redirect("Authentication:dashboard_profile")
 
             else:
-                print(addressFormData.errors)
+                city = Cities.objects.get(city_id=city_id)
+                #print(city)
                 messages.warning(request,"Please correct above errors.")
             
         context={
             "form":addressFormData,
+            "states":state,
+            "selectedCity":city,
         }
+    
         return render(request,template,context)
+    
     else:
         return redirect('Authentication:login')
+    
 
+def getCities(request,id):
+    if request.is_ajax():
+        if id:
+            #print("rec")
+            cities=Cities.objects.filter(state_id=id).values().order_by("city_name")
+            return JsonResponse({"cities":list(cities)})
+    else:
+        raise PermissionDenied
+
+def setDefault(request,id):
+    if request.is_ajax():
+        if id:
+            # print("rec")
+            address = Address.objects.get(is_default=True)
+            address.is_default=False
+            address.save()
+            newDefAddress = Address.objects.get(address_id=id)
+            newDefAddress.is_default = True
+            newDefAddress.save()          
+            return JsonResponse({"changed":True})
+        else:
+            return JsonResponse({"changed":False})
+
+    else:
+        raise PermissionDenied
 

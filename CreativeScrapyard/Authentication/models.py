@@ -8,6 +8,15 @@ GENDER_TYPE = (
     ('F', 'Female'),
     ('M', 'Male'),
 )
+# BANK_NAME = (
+#     (1, 'State Bank of India'),
+#     (2, 'Bank of Baroda'),
+#     (3, 'ICICI Bank'),
+#     (4, 'HDFC Bank'),
+#     (5, 'Bank of India'),
+#     (6, 'Axis Bank'),
+# )
+
 
 def get_filename_ext(filepath):
     base_name = os.path.basename(filepath)
@@ -37,7 +46,7 @@ class User(AbstractUser):
         return self.username
 
 class Profile(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     bio = models.TextField(max_length=200, null=True, blank=True)
     user_image = models.ImageField(upload_to=user_photo,null=True,default=None)
     #user_mobile = models.CharField(max_length=10, unique=True, null=False, blank=False)
@@ -46,12 +55,12 @@ class Profile(models.Model):
     user_rating = models.DecimalField(null=True,decimal_places=1, max_digits=2,blank=True)
 
     def __str__(self):
-        return self.user_id.username
+        return self.user.username
 
 
 class Documents(models.Model):
     doc_id =models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     acc_no=models.CharField(max_length=20,null=False,blank=False)
     acc_name=models.CharField(max_length=50,null=False,blank=False)
     bank_name=models.CharField(max_length=50,null=False,blank=False)
@@ -64,7 +73,7 @@ class Documents(models.Model):
         db_table = 'tbl_user_documents'
 
     def __str__(self):
-        return self.doc_id
+        return self.user.username
 
 class States(models.Model):
     state_id=models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
@@ -74,23 +83,23 @@ class States(models.Model):
         db_table = 'tbl_states'
 
     def __str__(self):
-        return self.state_id
+        return self.state_name
 
 
 class Cities(models.Model):
     city_id=models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
     city_name=models.CharField(max_length=30,blank=False,null=False)
-    state_id=models.ForeignKey(States,on_delete=models.CASCADE)
+    state=models.ForeignKey(States,on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'tbl_cities'
 
     def __str__(self):
-        return self.city_id
+        return self.city_name
 
 class Address(models.Model):
     address_id=models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
-    user_id=models.ForeignKey(User,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
     person_name=models.CharField(max_length=20,null=False,blank=False)
     contact_no=models.CharField(max_length=10,null=False,blank=False)
     pincode=models.CharField(max_length=6,null=False,blank=False)
@@ -99,14 +108,14 @@ class Address(models.Model):
     landmark=models.TextField(max_length=50,null=False,blank=False)
     is_default=models.BooleanField(null=False, default=False)
     type=models.CharField(max_length=6,null=False,blank=False)
-    city_id=models.ForeignKey(Cities,on_delete=models.DO_NOTHING)
-    state_id=models.ForeignKey(States,on_delete=models.DO_NOTHING)
+    city=models.ForeignKey(Cities,on_delete=models.DO_NOTHING)
+    state=models.ForeignKey(States,on_delete=models.DO_NOTHING)
     
     class Meta:
         db_table = 'tbl_address'
 
     def __str__(self):
-        return self.address_id
+        return self.person_name
 
 
 class Photo(models.Model):

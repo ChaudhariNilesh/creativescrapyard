@@ -1,10 +1,7 @@
-{% extends 'custom-admin/common.html' %} {% load static %}  
-{% comment %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {% endcomment %}
-{%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
 <!-- Modal -->
-<div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,23 +11,23 @@
                 </button>
             </div>
             <div class="modal-body mx-auto d-block">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleFormControlFile1">User Email:</label>
-                            <input type="text" class="form-control" id="exampleFormControlFile1">
-                            <label for="exampleFormControlFile1">Badge Name:</label>
-                            <select class="custom-select">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">User Email:</label>
+                        <input type="email" class="form-control" id="exampleFormControlFile1">
+                        <label for="exampleFormControlFile1">Badge Name:</label>
+                        <select class="custom-select">
                                 <option selected>Choose a Badge</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
-                        </div>
-                    </form>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn-cxt">Save changes</button>
+                <button type="submit" class="btn-cxt">Save changes</button>
             </div>
         </div>
     </div>
@@ -44,8 +41,7 @@
 
                 </div>
                 <h4 class="mx-auto d-block">
-                    <hr>
-                    All Badges
+                    <hr> All Badges
                     <hr>
                 </h4>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
@@ -62,8 +58,7 @@
                     <hr>
                     <div>
                         <span class="">Badges Achievers</span>
-                        <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal"
-                            data-target="#assignBadgeModal">Assign Badge</span>
+                        <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal" data-target="#assignBadgeModal">Assign Badge</span>
                     </div>
 
                     <hr>
@@ -98,7 +93,7 @@
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
-                                                    <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                        <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
                                     </td>
                                     {% comment %}
                                     <td>
@@ -128,7 +123,7 @@
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
-                                                    <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                        <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
                                     </td>
                                     {% comment %}
                                     <td>

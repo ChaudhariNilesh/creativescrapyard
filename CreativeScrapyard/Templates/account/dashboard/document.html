@@ -1,30 +1,29 @@
-{% extends 'account/base-dashboard.html' %}
-{% load static %}
-{% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/add-document.css' %}"/>
-{% endblock %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/add-document.css' %}" /> {% endblock %} {% block base %}
 
-{% block base %}
 
 <div class="page-title">
     Become an Artist
 </div>
 <hr/>
-<form action="{% url 'Authentication:add_document' %}" method="POST">
-{% csrf_token %}
+
+<form action="{% url 'Authentication:add_document' %}" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="accountNo">Account Number</label>
-            <input type="text" class="form-control  {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" id="accountNo" placeholder="Account number" name="acc_no" value="{{form.acc_no.value | default:'' }}" aria-describedby="inputGroupPrepend3 validateAcNo">
+            <input type="text" class="form-control  {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" id="accountNo" placeholder="Account number" name="acc_no" value="{{form.acc_no.value | default:'' }}"
+                aria-describedby="inputGroupPrepend3 validateAcNo">
             <div id="validateAcNo" class="invalid-feedback">
-            {{form.acc_no.errors}}
+                {{form.acc_no.errors.as_text}}
             </div>
         </div>
         <div class="form-group col-md-6">
             <label for="accountHolder">Account Holder Name</label>
-            <input type="text" class="form-control  {% if form.errors.acc_name == None and form.is_bound %} is-valid {% elif form.errors.acc_name != None %} is-invalid {% endif %}" id="accountHolder" placeholder="Account Holder Name" name="acc_name" value="{{form.acc_name.value | default:'' }}" aria-describedby="inputGroupPrepend3 validateName"> 
+            <input type="text" class="form-control  {% if form.errors.acc_name == None and form.is_bound %} is-valid {% elif form.errors.acc_name != None %} is-invalid {% endif %}" id="accountHolder" placeholder="Account Holder Name" name="acc_name" value="{{form.acc_name.value | default:'' }}"
+                aria-describedby="inputGroupPrepend3 validateName">
             <div id="validateName" class="invalid-feedback">
-            {{form.acc_name.errors}}
+                {{form.acc_name.errors.as_text}}
             </div>
         </div>
     </div>
@@ -33,23 +32,24 @@
         <div class="form-group col-md-6">
             <label for="bankName">Bank Name</label>
             <select id="bankName" class="form-control {% if form.errors.bank_name == None and form.is_bound %} is-valid {% elif form.errors.bank_name != None %} is-invalid {% endif %}" name="bank_name" aria-describedby="inputGroupPrepend3 validateBankName">
-                <option value="none" selected>Select</option>
-                <option>State Bank of India</option>
-                <option>Bank of Baroda</option>
-                <option>ICICI Bank</option>
-                <option>HDFC Bank</option>
-                <option>Bank of India</option>
-                <option>Axis Bank</option>
+                <option value="none" selected>Select {{form.bank_name.value|default:''}}</option>
+                <option >State Bank of India</option>
+                <option >Bank of Baroda</option>
+                <option >ICICI Bank</option>
+                <option >HDFC Bank</option>
+                <option >Bank of India</option>
+                <option >Axis Bank</option>
             </select>
             <div id="validateBankName" class="invalid-feedback">
-            {{form.IFSC_code.errors}}
+                {{form.bank_name.errors.as_text}}
             </div>
         </div>
         <div class="form-group col-md-6">
             <label for="ifscCode">IFSC code</label>
-            <input type="text" class="form-control  {% if form.errors.IFSC_code == None and form.is_bound %} is-valid {% elif form.errors.IFSC_code != None %} is-invalid {% endif %}" id="ifscCode" placeholder="IFSC Code" name="IFSC_code" value="{{form.IFSC_code.value | default:'' }}" aria-describedby="inputGroupPrepend3 validateIFSC">
+            <input type="text" class="form-control  {% if form.errors.IFSC_code == None and form.is_bound %} is-valid {% elif form.errors.IFSC_code != None %} is-invalid {% endif %}" id="ifscCode" placeholder="IFSC Code" name="IFSC_code" value="{{form.IFSC_code.value | default:'' }}"
+                aria-describedby="inputGroupPrepend3 validateIFSC">
             <div id="validateIFSC" class="invalid-feedback">
-            {{form.IFSC_code.errors}}
+                {{form.IFSC_code.errors.as_text}}
             </div>
         </div>
     </div>
@@ -57,18 +57,20 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="panNo">Pan Number</label>
-            <input type="text" class="form-control  {% if form.errors.pan_no == None and form.is_bound %} is-valid {% elif form.errors.pan_no != None %} is-invalid {% endif %}" id="panNo" placeholder="Pan Number" name="pan_no" value="{{form.pan_no.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatePanNo">
+            <input type="text" class="form-control  {% if form.errors.pan_no == None and form.is_bound %} is-valid {% elif form.errors.pan_no != None %} is-invalid {% endif %}" id="panNo" placeholder="Pan Number" name="pan_no" value="{{form.pan_no.value | default:'' }}"
+                aria-describedby="inputGroupPrepend3 validatePanNo">
             <div id="validatePanNo" class="invalid-feedback">
-            {{form.pan_no.errors}}
+                {{form.pan_no.errors.as_text}}
             </div>
         </div>
         <div class="form-group col-md-6">
             <label for="panName">Pan Name</label>
-            <input type="text" class="form-control  {% if form.errors.pan_no == None and form.is_bound %} is-valid {% elif form.errors.pan_no != None %} is-invalid {% endif %}" id="panName" placeholder="Pan name" name="pan_name" value="{{form.pan_name.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatePanName">
+            <input type="text" class="form-control  {% if form.errors.pan_no == None and form.is_bound %} is-valid {% elif form.errors.pan_no != None %} is-invalid {% endif %}" id="panName" placeholder="Pan name" name="pan_name" value="{{form.pan_name.value | default:'' }}"
+                aria-describedby="inputGroupPrepend3 validatePanName">
             <div id="validatePanName" class="invalid-feedback">
-            {{form.pan_name.errors}}
+                {{form.pan_name.errors.as_text}}
             </div>
-            <small id="panNameHelp" class="form-text text-muted" >
+            <small id="panNameHelp" class="form-text text-muted">
                 Enter name according to your pan card.
             </small>
         </div>
@@ -78,12 +80,20 @@
         <div class="form-group col-md-6">
             <label for="customFile1">Pan Image</label>
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile1" name="pan_img_url" value="{{form.pan_img_url.value | default:'' }}">
-                <label class="custom-file-label" for="customFile1">pan_img.png</label>
+                <!-- <input type="file" class="custom-file-input" id="customFile1" name="pan_img_url" value="{{form.pan_img_url.value | default:'' }}">
+                <label class="custom-file-label" for="customFile1">pan_img.png</label> -->
+                <input type="file" class="{% if form.errors.pan_img_url == None and form.is_bound %} is-valid {% elif form.errors.pan_img_url != None %} is-invalid {% endif %}" id="" accept="image/*" name="pan_img_url" value="{{form.pan_img_url.value | default:'' }}"
+                    aria-describedby="inputGroupPrepend3 validatePanImg">
+                <div id="validatePanImg" class="invalid-feedback">
+                    {{form.pan_img_url.errors.as_text}}
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="mt-4">
+        {% include 'includes/messages.html' %}
+    </div>
     <button type="submit" class="btn btn-block pri-bg-color px-4">Submit</button>
 </form>
 

@@ -25,19 +25,24 @@ urlpatterns = [
     path('profile/', profile, name="profile"),
     
     path('dashboard/', dashboard, name="dashboard"),
+    
+    
     path('dashboard/product/creative/', creative_items, name="creative_items"),
     path('dashboard/product/scrap/', scrap_items, name="scrap_items"),
     path('dashboard/product/creative/add', add_creative_product, name="add_creative_product"),
     path('dashboard/product/creative/add/get-sub-crt-cat/<int:pk>', add_creative_product, name="get_crt_sub_cat"),
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
-    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileImage"),
-    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileData"),
+    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+    
+    path('dashboard/profile/ajax/get-cities/<int:id>',getCities,name="getCities"),
+    path('dashboard/profile/ajax/set-default/<int:id>',setDefault,name="setDefault"),
 
     
-
-
-    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileImage"),
+    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileData"),
+   
+   
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/history/<str:action>', order_history, name="order_tab_history"),
