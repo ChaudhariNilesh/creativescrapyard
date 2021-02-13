@@ -29,7 +29,7 @@ def UserLogin(request):
         if user:
             user = User.objects.get(username=username)
             #print(user)
-            if user.is_superuser and user.is_active:
+            if not user.is_superuser and user.is_active:
                 user_sess = {'user_name':user.username,'user_email':user.email}
                 #print(user_sess)
                 request.session['user'] = user_sess
@@ -126,7 +126,7 @@ def logout(request):
         return redirect('Home:home')
     else:
         return redirect('Authentication:login')
-
+ 
     # return render(request,template)
 
 #################################

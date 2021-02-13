@@ -21,6 +21,7 @@
                         <label class="btn btn-sm pri-bg-color mt-2" id="chooseLbl" for="profilePicture">Choose</label>
                         <input class="btn btn-sm pri-bg-color" id="submitPic" type="submit" value="Save" hidden>
 
+
                         <!--  -->
                         {% if user.profile.user_image  and user.profile.user_image.url != '/media/users/default.png' %}
                         <!--  -->
@@ -115,9 +116,11 @@
                 <button type="submit" class="btn btn-sm pri-bg-color">Save changes</button>
             </form>
         </div>
-
     </div>
+    
 </div>
+            {% comment %} <a href="{% url 'Authentication:profile' %}"><button class="btn m-2 pull-right btn-sm pri-bg-color">View Profile</button></a> {% endcomment %}
+
 
 
 <div class="bx-shd my-4 py-2 px-3 border">

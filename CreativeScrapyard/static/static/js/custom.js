@@ -489,7 +489,7 @@ $(function() {
         // scrollGal();
         //flatZoom();
         ArtistProductGal();
-        changeProdHover();
+    //    changeProdHover();
         priceSlider();
         prodLens();
         sideNav();

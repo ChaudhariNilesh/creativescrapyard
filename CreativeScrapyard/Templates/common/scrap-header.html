@@ -4,7 +4,11 @@
 
             <div class="col-md-8">
                 <h4 class="my-0 mr-md-auto font-weight-bold">
-                    <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-light" style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span>
+                    <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-light"
+                        style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span
+                            style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
+                            style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
+                            style="color:#96ceb4"><b>I</b></span>
                         <span style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E</b></span>
                     </a>
                     <span> <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span>
@@ -13,15 +17,7 @@
                 </h4>
             </div>
 
-
-
-            <!-- If not logined in -->
-            <!-- <a class="btn btn-outline-dark" href="#">Log In</a> -->
-
-            <!-- If logged in-->
-            <!-- -->
             <div class="col-md-4">
-
                 <div class="row">
                     <div class="col-md-8 w-75">
                         <form class="form-inline mt-2 mt-md-0">
@@ -46,7 +42,8 @@
                                 <a class="btn btn-outline-light px-3" href="{% url 'Authentication:login'%}">Log In</a>
                             </span> -->
 
-
+                            <!-- If not logined in -->
+                            {%if user.is_authenticated%}
                             <span class="dropdown custom-dropdown px-3">
                                 <a href="{% url 'Home:Items:Cart:addToCart' %}">
                                     <i class="fa fa-shopping-cart fa-2x m-1"></i>
@@ -62,6 +59,12 @@
                                     <a class="dropdown-item" href="#">Logout</a>
                                 </div>
                             </span>
+                            <!-- If logged in-->
+                            {%else%}
+                            <span>
+                                <a class="btn btn-outline-light px-3" href="{% url 'Authentication:login'%}">Log In</a>
+                            </span>
+                            {%endif%}
                         </diV>
                     </div>
 
@@ -74,13 +77,15 @@
         <!-- </div> -->
         <!-- <div class="row"> -->
         <div class="container-fluid ">
-            <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example">
+            <div class="btn-group mt-3 nav d-flex justify-content-center" role="group"
+                aria-label="Basic outlined example">
                 <div>
                     <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">Crockery</a>
@@ -92,7 +97,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Fabrics</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Fabrics</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">Footwear and Wearables</a>
@@ -104,7 +110,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Metals</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Metals</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">Home Utensils</a>
@@ -116,7 +123,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Plastic</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Plastic</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">Utensils</a>
@@ -128,7 +136,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Paper</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Paper</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">Newspaper & Used Paper</a>
@@ -140,7 +149,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Rubber & Leather</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Rubber & Leather</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">Tires</a>
@@ -151,7 +161,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold  dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Electronics</button>
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold  dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Electronics</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <a class="dropdown-item" href="#">E-Waste</a>
@@ -161,7 +172,8 @@
                 </div>
                 <div>
                     <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Woods &
+                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Woods &
                             Furniture</button>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">

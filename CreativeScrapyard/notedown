@@ -125,3 +125,57 @@ issue_id, iss_type, issue_sub, message ref_id, 	date, 	sendUId
 
 
 git rm --cached filename                                            
+
+
+         <!-- {% with n='[1,2,3,4,5]' %}
+            <div class="d-md-flex row ">
+                {% for i in n %}
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {% include 'shop/product-grid.html' %}
+                </div>
+                {%endfor%}
+            </div>
+            {%endwith%} -->
+
+
+         {% with n='[1,2,3,4,5]' %}
+            <div class="d-md-flex row ">
+                {% for i in n %}
+                <div class="col-12 col-sm-6 col-lg-3">
+                    {% include 'shop/product-grid.html' %}
+                </div>
+                {%endfor%}
+            </div>
+            {%endwith%}
+
+
+                                        {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                                <tr>
+                                    <td><a href="#"><span class="list-enq-name">Marsha Hogan</span></a>
+                                    </td>
+                                    <td>dummy@dummy.com</td>
+                                    <td>
+                                        <span class="p-2 listing">Artist</span>
+
+                                    </td>
+                                    <td>
+                                        <span class="listing"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                                    <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                    </td>
+                                    {% comment %}
+                                    <td>
+                                        <a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                                                aria-hidden="true"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
+                                                aria-hidden="true"></i></a>
+                                    </td> {% endcomment %}
+                                </tr>
+                                {% endfor %} {% endwith %}
