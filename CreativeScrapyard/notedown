@@ -49,28 +49,32 @@ change images
 
 ****************************************
 >>password strentgth validate and signup user...
-login=>admin-user,forget password, reset password, email verify input.
---singup
+>> queries,->SKIP
+>>shop cart javascript validate << POST WORK
+>> send contact derts for scrap 
 
-edit profile(User,admin)
+--login=>admin-user,forget password, reset password, email verify input.
+
+--singup
+--edit profile(User,admin)
+--contact us
+--categories
+--deactivate account validate
+--sendmail
+--disable reason input
 
 add/edit document 
 add new address 
+assign/add badges input validate
+
 
 add product
 edit product
 
---contact us
 reported modal
-send mail=> queries,
-categories
-disable reason input 
-assign/add badges input validate
-
 verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
-deactivate account validate
 
->>shop cart javascript validate<< POST WORK
+
 
 ****************************************
 
@@ -117,3 +121,7 @@ issue_id, iss_type, issue_sub, message ref_id, 	date, 	sendUId
                 </div>
 
                                                         {{form.errors.first_name}}                                   
+
+
+
+git rm --cached filename                                            

@@ -14,6 +14,7 @@ urlpatterns = [
     # path('activate-done/',activateAccountDone, name='activateAccountDone'),
     path('password-reset-link/',passwordReset,name="passwordReset"),
     path('password-reset-done/',passwordResetLink,name="passwordResetLink"),
+    path('reset-password/<slug:uidb64>/<slug:token>/',resetVerified, name='resetVerified'),
     path('new-password/',newPassword,name="newPassword"),
     path('new-password-done/',newPasswordDone,name="newPasswordDone"),
     path('logout/',logout,name="logout"),
@@ -22,6 +23,7 @@ urlpatterns = [
 
 
     path('profile/', profile, name="profile"),
+    
     path('dashboard/', dashboard, name="dashboard"),
     path('dashboard/product/creative/', creative_items, name="creative_items"),
     path('dashboard/product/scrap/', scrap_items, name="scrap_items"),
@@ -29,6 +31,12 @@ urlpatterns = [
     path('dashboard/product/creative/add/get-sub-crt-cat/<int:pk>', add_creative_product, name="get_crt_sub_cat"),
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
+    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileImage"),
+    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileData"),
+
+    
+
+
     path('dashboard/profile/addAddress', addAddress, name="addAddress"),
     path('dashboard/profile/edit-document/', editDocument, name="editDocument"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
@@ -37,8 +45,13 @@ urlpatterns = [
     path('dashboard/orders/details/', order_details, name="order_details"),
     path('dashboard/payments/', dashboard_payments, name="payments"),
     path('dashboard/settings/', dashboard_settings, name="settings"),
+    path('dashboard/settings/change-password', changePassword, name="changePassword"),
+    path('dashboard/settings/deactive-account', deactiveAccount, name="deactiveAccount"),
+
     path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
+
+    
 ]
 
 if settings.DEBUG:

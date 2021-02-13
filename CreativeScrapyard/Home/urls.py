@@ -15,6 +15,8 @@ urlpatterns = [
 
     path('contact-us/', contactus, name="contactus"),
     path('about-us/', aboutus, name="aboutus"),    
+    path('contact-scrapseller/',sendContactDetails,name="sendContactDetails"),
+
     # path('accounts',include('Authentication.urls')),
 
 

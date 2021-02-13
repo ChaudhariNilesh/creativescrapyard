@@ -22,7 +22,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="admin-FirstName">First name</label>
-                    <input type="text" class="form-control {% if form.errors.first_name == None and form.is_bound %} is-valid {% elif form.errors.first_name != None %} is-invalid {% endif %}" id="admin-FirstName" name="first_name" placeholder="First name" value="{{form.last_name.value | default:user.first_name}}"
+                    <input type="text" class="form-control {% if form.errors.first_name == None and form.is_bound %} is-valid {% elif form.errors.first_name != None %} is-invalid {% endif %}" id="admin-FirstName" name="first_name" placeholder="First name" value="{{form.first_name.value | default:user.first_name}}"
                         aria-describedby="inputGroupPrepend3 validateFirstName" required>
                     <div id="validateFirstName" class="invalid-feedback">
                         {{ form.first_name.errors.as_text}}

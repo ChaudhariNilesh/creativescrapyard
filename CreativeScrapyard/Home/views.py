@@ -4,8 +4,13 @@ from .forms import QueryForm
 from .models import *
 from Home.validate import *
 from django.contrib import messages
-
-
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from Authentication.models import *
+from django.template.loader import render_to_string
+from django.http import JsonResponse,HttpResponse
 # Create your views here.
 def home(request):
     template="Home/index.html"
@@ -67,7 +72,7 @@ def contactus(request):
         "errorData":errorData,
     }
 
-    print(context)
+    #print(context)
 
     return render(request,template,context)
 
@@ -76,3 +81,39 @@ def aboutus(request):
     template="about-us.html"
     return render(request,template,{'is_creative':True})
 
+def sendContactDetails(request):
+    
+    template="Home/scrapyard.html"
+    
+    if request.is_ajax() and request.method == "POST":
+        if request.user.is_authenticated:
+            try:                
+                current_site = get_current_site(request)
+                mail_subject = "Buyer showed interest in your scrap item"
+                #get user related to scrap
+                seller = User.objects.get(email__iexact="nileshchaudhary89.nc@gmail.com")
+                print(seller.email)
+                message = render_to_string('common/email.html', {
+                    'message':"shared mail id with you. Please contact him/her from this email.",
+                    'user':request.user,
+                    'seller':seller, # here get the product related email
+                    'type':"contactuser"
+                    
+                })
+                to_email = seller.email
+                email = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                email.send()
+
+            except Exception as e:
+                return redirect({"send":True,"msg":str(e),"auth":True})           
+            else:
+                return JsonResponse({"send":True,"msg":"Mail Sent","auth":True})
+        else:
+            return JsonResponse({"send":False,"msg":"","auth":False})
+
+    else:
+        raise PermissionDenied
+
+    return render(request,template,{'is_scrap':True})         

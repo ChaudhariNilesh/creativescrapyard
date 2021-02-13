@@ -9,7 +9,7 @@
                 </div>
                 <div class="tab-inn">
                     <div class="table-responsive table-user">
-                        <table class="table table-hover tablemanager">
+                        <table class="table table-hover tablemanager">{% csrf_token %}
                             <thead>
                                 <tr>
                                     <th class="text-center">Item ID</th>
@@ -48,7 +48,8 @@
                                     </td>
                                     <td class="text-center">
                                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="#" class="prod-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+
                                     </td>
                                 </tr>
 

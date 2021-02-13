@@ -1,5 +1,4 @@
 from CreativeScrapyard import settings
-
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
@@ -17,7 +16,14 @@ from django.http import Http404
 from django.core import serializers
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
-
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.contrib.auth.hashers import check_password
+from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
 
 ####### AUTH RELATED #######
 def AdminLogin(request):
@@ -69,16 +75,17 @@ def adminAccount(request):
         adminFormData = AdminForm()
        
         if request.method == 'POST':
-   
 
             adminFormData = AdminForm(request.POST, instance=request.user)
+        
+
             #print(request.POST)
             # #print(adminFormData.errors.get_json_data())
             if adminFormData.is_valid():
                 adminFormData.save()
                 messages.success(request,"Updated Successfully.")
                 adminFormData=AdminForm()
-                redirect("CustomAdmin:adminAccount")
+                return redirect("CustomAdmin:adminAccount")
 
             else:
                 # errors=adminFormData.errors.get_json_data()
@@ -94,10 +101,45 @@ def adminAccount(request):
         return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
-        
+
+@login_required        
 def changePassword(request):
     if request.session.get('user'):    
         template = 'custom-admin/account-settings/change-password.html'
+
+        if request.method == 'POST':
+            print(request.POST)
+            old = request.POST['password']
+            pass1 = request.POST['password1']
+            pass2 = request.POST['password2']
+            if pass1 == pass2:
+                if 'user' in request.session:
+                    #print('got session')
+                    email = request.session.get('user_email')
+                    #print(email)
+                    try:
+                        print(pass1)
+                        #validate_password(pass1) # for length and strength check
+                    except Exception as e:
+                        messages.error(request,*e)
+                        return redirect('CustomAdmin:changePassword')
+                    else:
+                        usr = User.objects.get(email__iexact=email)
+                        
+                        if check_password(old,usr.password):
+                            # print('old and new same')
+                            usr.set_password(pass1)
+                            usr.save()
+                            request.session.delete()
+                            return redirect('CustomAdmin:login')
+                        else:
+                            messages.error(request,"Old Password is incorrect.")
+                            return redirect('CustomAdmin:changePassword')
+
+            else:
+                messages.error(request,"Passwords do not match.")
+                return redirect('CustomAdmin:changePassword')
+
         return render(request,template)
     else:
         return redirect('CustomAdmin:login')
@@ -248,7 +290,10 @@ def creativeCat(request,id=None,action=None):
                         return JsonResponse({"saved":False,"message":"Database Error!!"})
                     return JsonResponse({"saved":True,"message":""})
                 else:
-                    return JsonResponse({"saved":False,"message":"Invalid Data!!"})
+                    err=newSubCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err})                    
+                    
             else:
                 raise PermissionDenied
                # return HttpResponseNotFound("404 Page not found.")
@@ -266,7 +311,10 @@ def creativeCat(request,id=None,action=None):
                         return JsonResponse({"updated":False,"message":"Database Error!!"})
                     return JsonResponse({"updated":True,"message":""})
                 else:
-                    return JsonResponse({"updated":False,"message":"Invalid Data!!"})
+                    err=editMainCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err})  
+
             elif request.method=="GET" and request.is_ajax():
                 print("ajax")
                 mainCrtCat = get_object_or_404(tbl_crt_categories, pk=id)
@@ -286,7 +334,9 @@ def creativeCat(request,id=None,action=None):
                         return JsonResponse({"updated":False,"message":"Database Error!!"})
                     return JsonResponse({"updated":True,"message":""})
                 else:
-                    return JsonResponse({"updated":False,"message":"Invalid Data!!"})
+                    err=editSubCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err})                     
             elif request.method=="GET" and request.is_ajax():
                 #print("ajax")
                 subCrtCat = get_object_or_404(tbl_crt_subcategories, pk=id)
@@ -570,16 +620,102 @@ def issues(request,opts="reportedCrtItem"):
     else:
         return redirect('CustomAdmin:login')
 ####### SEND EMAIL RELATED #######
-def sendmail(request):
+@login_required
+def sendmail(request,action=None):
     if request.session.get('user'):    
         template = 'custom-admin/sendmail/sendmail.html'
-        if request.method == "POST":
+       
+        if request.method == "POST" and not request.is_ajax():
             email = request.POST.get('email', '')
             subject = request.POST.get('subject', '')
-            message = request.POST.get('message', '')
-            print(email.split(","),subject,message)
-        return render(request,template)
+            emailmessage = request.POST.get('message', '')
+            print(request.POST)
+            if not subject or not emailmessage:
+                if action=="queryReply":
+                    messages.error(request,"Subject or message cannot be empty.")
+                    return redirect("CustomAdmin:query")
+                else:
+                    messages.error(request,"Subject or message cannot be empty.")
+                    return redirect("CustomAdmin:sendmail")
+            else:
+                #print(email.split(","),subject,emailmessage)
+                try:
+                    emailList=email.split(",")
+                    current_site = get_current_site(request)
+                    mail_subject = subject
+                    message = render_to_string('common/email.html', {
+                        'message':str("\n")+emailmessage,
+                        'user':User.objects.get(email__iexact=email)
+                    })
+                    to_email = email
+                    email = EmailMessage(
+                                mail_subject, message, to=emailList
+                    )
+                    email.send()
+                
+                except Exception as e:
+                    messages.error(request,"Some error occured. Please try after sometime.")
+                finally:
+                    return redirect("CustomAdmin:sendmail")
 
+        if request.is_ajax() and request.method=="POST":
+            # print(request.POST)
+            email = request.POST.get('email', '')
+            emailmessage = request.POST.get('message', '')
+            typeFor = request.POST.get('type', '')
+
+            if not email or not emailmessage:
+                return JsonResponse({"send":True,"msg":"empty email field is not allowed."})
+            else:
+                if typeFor == "user":
+                    #print(email.split(","),subject,emailmessage)
+                    try:
+                        emailList=email.split(",")
+                        current_site = get_current_site(request)
+                        mail_subject = "Your account is disabled"
+                        message = render_to_string('common/email.html', {
+                            'message':str("\n")+emailmessage,
+                            'user':User.objects.get(email__iexact=email),
+                            'type':"user",
+                        })
+                        to_email = email
+                        email = EmailMessage(
+                                    mail_subject, message, to=emailList
+                        )
+                        email.send()
+                    
+                    except Exception as e:
+                        return redirect({"send":True,"msg":str(e)})           
+                    else:
+                        return JsonResponse({"send":True,"msg":"Mail Sent"})
+                elif typeFor == "product":
+                    try:                
+                        emailList=email.split(",")
+                        current_site = get_current_site(request)
+                        mail_subject = "Your Product is disabled"
+                        message = render_to_string('common/email.html', {
+                            'message':str("\n")+emailmessage,
+                            'user':User.objects.get(email__iexact=email),
+                            'type':"product"
+                            # here get the product obj
+                        })
+                        to_email = email
+                        email = EmailMessage(
+                                    mail_subject, message, to=emailList
+                        )
+                        email.send()
+                
+                    except Exception as e:
+                        return redirect({"send":True,"msg":str(e)})           
+                    else:
+                        return JsonResponse({"send":True,"msg":"Mail Sent"})
+                
+                    
+            #return JsonResponse({"send":True,"msg":"Mail Sent"})
+
+
+
+        return render(request,template)
     else:
         return redirect('CustomAdmin:login')    
 
