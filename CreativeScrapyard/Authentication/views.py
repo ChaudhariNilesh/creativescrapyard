@@ -127,7 +127,7 @@ def logout(request):
         return redirect('Home:home')
     else:
         return redirect('Authentication:login')
-
+ 
     # return render(request,template)
 
 #################################
@@ -491,6 +491,33 @@ def add_document(request):
         return redirect('Authentication:login')
 
 @login_required
+def editDocument(request):
+    if request.session.get('user'): 
+        template = 'account/dashboard/dashboard-profile.html'
+        editedData=EditUserDocument()
+        if request.method=='POST':
+            editedData=EditUserDocument(request.POST, instance=request.user)
+            if editedData.is_valid():
+                print("hello world")
+               # addressFormData.save()
+               # messages.success(request,"Updated Successfully.")
+               # addressFormData=AddressForm()
+               # redirect("Authentication:dashboard_profile")
+
+            else:
+                print(editedData.errors)
+                messages.warning(request,"Please correct above errors.")
+            
+        context={
+            "form":editedData,
+        }
+        return render(request,template,context)
+    else:
+        return redirect('Authentication:login')
+
+
+
+
 def addAddress(request):
 
     template = 'account/dashboard/add-address.html'

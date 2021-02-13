@@ -16,8 +16,9 @@
         </div>
         <div class="col-2">
             <div class="dropdown">
-                <button class="btn btn-outline-dark dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By : Relevence</button>
+                <button class="btn btn-outline-dark dropdown-toggle" id="dropdownMenuButton" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
+                    Relevence</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#">Revelence</a>
                     <a class="dropdown-item" href="#">Low to High Price</a>
@@ -30,131 +31,297 @@
 
         </div>
     </div>
+    <div class="row p-3">
+        <div class="col-3 card shadow-sm mt-3   " style="height: fit-content">
+            <h4 class="text-center my-2">Filters</h4>
 
-    <div class="container-fluid">
+            <div class="">
 
-        <div class="row p-3">
-            <div class="col-3 card shadow-sm mt-3   " style="height: fit-content">
-                <h4 class="text-center my-2">Filters</h4>
+                <div class="text-bold border-bottom my-2 p-2">By Category:</div>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="#">Home Decor</a>
+                        </li>
+                        <li>
+                            <a href="#">Lifestyle</a>
+                        </li>
+                        <li>
+                            <a href="#">Accesories</a>
+                        </li>
+                        <li>
+                            <a href="#">Jewellories</a>
+                        </li>
+                        <li>
+                            <a href="#">Toys</a>
+                        </li>
+                        <li>
+                            <a href="#">Electronics</a>
+                        </li>
+                        <li>
+                            <a href="#">Arts and Crafts</a>
+                        </li>
+                        <li>
+                            <a href="#">Others</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="inFilter" id="byprice">
+                    <div class="text-bold border-bottom my-2 p-2">By Price:</div>
+                    <div class="priceFilter py-2">
+                        <div id="slider-range"></div>
+                        <form method="post" action="">
+                            <input type="hidden" id="amount1">
+                            <input type="hidden" id="amount2">
+                        </form>
+                        <p>
+                            Range: <span id="amount"></span>
+                        </p>
+                    </div>
+                </div>
 
-                <div class="">
-
-                    <div class="text-bold border-bottom my-2 p-2">By Category:</div>
-                    <div>
+                <div>
+                    <div class="text-bold border-bottom my-2 p-2">By Color:</div>
+                    <div class="widget-info color-filter clearfix py-2">
                         <ul>
-                            <li>
-                                <a href="#">Home Decor</a>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                    class="color color-3"></span>Red<span class="count">59</span>
                             </li>
-                            <li>
-                                <a href="#">Lifestyle</a>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                    class="color color-4"></span>Blue<span class="count">45</span>
                             </li>
-                            <li>
-                                <a href="#">Accesories</a>
-                            </li>
-                            <li>
-                                <a href="#">Jewellories</a>
-                            </li>
-                            <li>
-                                <a href="#">Toys</a>
-                            </li>
-                            <li>
-                                <a href="#">Electronics</a>
-                            </li>
-                            <li>
-                                <a href="#">Arts and Crafts</a>
-                            </li>
-                            <li>
-                                <a href="#">Others</a>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
+                                    class="color color-6"></span>Green<span class="count">10</span>
                             </li>
                         </ul>
                     </div>
-                    <div class="inFilter" id="byprice">
-                        <div class="text-bold border-bottom my-2 p-2">By Price:</div>
-                        <div class="priceFilter py-2">
-                            <div id="slider-range"></div>
-                            <form method="post" action="">
-                                <input type="hidden" id="amount1">
-                                <input type="hidden" id="amount2">
-                            </form>
-                            <p>
-                                Range: <span id="amount"></span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-bold border-bottom my-2 p-2">By Color:</div>
-                        <div class="widget-info color-filter clearfix py-2">
-                            <ul>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
-                                        class="color color-3"></span>Red<span class="count">59</span>
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
-                                        class="color color-4"></span>Blue<span class="count">45</span>
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"><span
-                                        class="color color-6"></span>Green<span class="count">10</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-bold border-bottom my-2 p-2">By Size:</div>
-                        <div class="py-2">
-                            <ul>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XS
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">S
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">M
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">L
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XL
-                                </li>
-                                <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XXL
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
 
-            </div>
-            <div class="col-9">
-                {% with n='[1,2,3,4,5]' %}
-                <div class="d-md-flex row ">
-                    {% for i in n %}
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        {% include 'shop/product-grid.html' %}
-                    </div>
-                    {%endfor%}
-                </div>
-                {%endwith%}
-            </div>
-            <div class="row mx-auto mt-3">
-                <div class="col-md-12">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span class="" aria-hidden="true">&laquo;</span>
-                                </a>
+                <div>
+                    <div class="text-bold border-bottom my-2 p-2">By Size:</div>
+                    <div class="py-2">
+                        <ul>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XS
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">S
+                            </li>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">M
+                            </li>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">L
+                            </li>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XL
+                            </li>
+                            <li><input class="form-check-input" type="checkbox" value="" id="defaultCheck1">XXL
                             </li>
                         </ul>
-                    </nav>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-9">
+   
+            <div class="d-md-flex row ">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="product_card border-0 rounded px-0 mt-3">
+                        <div class="imgbx py-0">
+                            <a
+                                href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                <img class="img-fluid prod-thumb-img grid img-responsive" src="{% static 'img/products/creative/wallstickers.jpg' %}" style="height: 280px; width: 220px;"
+                                    alt="" change-src="{% static 'img/products/creative/wallstickers.jpg' %}">
+                                <div class="contentbx m-0 px-3 py-3"
+                                    style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                    <div class="caption">
+
+                                        <p class="product-name pb-1"
+                                            style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                            Minimilistic Tree Wall Stickers</p>
+                                        <p class="price mb-2 "
+                                            style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                            &#8377; 300</p>
+
+                                    </div>
+                                    <a href="#">
+                                        <button id="contactBtn"
+                                            class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">
+                                            {%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}
+                                        </button>
+                                    </a>
+                                    {% if is_creative and tab == 'creative' %}
+                                    <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
+                                            class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
+                                                aria-hidden="true"></i></button></a> {% else %} {% endif %}
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="product_card border-0 rounded px-0 mt-3">
+                        <div class="imgbx py-0">
+                            <a
+                                href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                <img class="img-fluid prod-thumb-img grid img-responsive" src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" style="height: 280px; width: 220px;"
+                                    alt="" change-src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}">    
+                                <div class="contentbx m-0 px-3 py-3"
+                                    style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                    <div class="caption">
+
+                                        <p class="product-name pb-1"
+                                            style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                            Ceramic Air Freshner</p>
+                                        <p class="price mb-2 "
+                                            style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                            &#8377; 699</p>
+
+                                    </div>
+                                    <a href="#">
+                                        <button id="contactBtn"
+                                            class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">
+                                            {%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}
+                                        </button>
+                                    </a>
+                                    {% if is_creative and tab == 'creative' %}
+                                    <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
+                                            class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
+                                                aria-hidden="true"></i></button></a> {% else %} {% endif %}
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="product_card border-0 rounded px-0 mt-3">
+                        <div class="imgbx py-0">
+                            <a
+                                href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                <img class="img-fluid prod-thumb-img grid img-responsive" src="{% static 'img/products/creative/customizedbottles.jpg' %}" style="height: 280px; width: 220px;"
+                                    alt="" change-src="{% static 'img/products/creative/customizedbottles.jpg' %}">
+                                <div class="contentbx m-0 px-3 py-3"
+                                    style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                    <div class="caption">
+
+                                        <p class="product-name pb-1"
+                                            style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                            Customized Pots</p>
+                                        <p class="price mb-2 "
+                                            style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                            &#8377; 120</p>
+
+                                    </div>
+                                    <a href="#">
+                                        <button id="contactBtn"
+                                            class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">
+                                            {%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}
+                                        </button>
+                                    </a>
+                                    {% if is_creative and tab == 'creative' %}
+                                    <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
+                                            class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
+                                                aria-hidden="true"></i></button></a> {% else %} {% endif %}
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="product_card border-0 rounded px-0 mt-3">
+                        <div class="imgbx py-0">
+                            <a
+                                href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                <img class="img-fluid prod-thumb-img grid img-responsive" src="{% static 'img/products/creative/customizedglasses.jpg' %}" style="height: 280px; width: 220px;"
+                                    alt="" change-src="{% static 'img/products/creative/customizedglasses.jpg' %}">
+                                <div class="contentbx m-0 px-3 py-3"
+                                    style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                    <div class="caption">
+
+                                        <p class="product-name pb-1"
+                                            style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                            Customized Glasses</p>
+                                        <p class="price mb-2 "
+                                            style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                            &#8377; 99</p>
+
+                                    </div>
+                                    <a href="#">
+                                        <button id="contactBtn"
+                                            class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">
+                                            {%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}
+                                        </button>
+                                    </a>
+                                    {% if is_creative and tab == 'creative' %}
+                                    <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
+                                            class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
+                                                aria-hidden="true"></i></button></a> {% else %} {% endif %}
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="product_card border-0 rounded px-0 mt-3">
+                        <div class="imgbx py-0">
+                            <a
+                                href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                <img class="img-fluid prod-thumb-img grid img-responsive" src="{% static 'img/products/creative/chaicup.jpg' %}" style="height: 280px; width: 220px;"
+                                    alt="" change-src="{% static 'img/products/creative/chaicup.jpg' %}">
+                                <div class="contentbx m-0 px-3 py-3"
+                                    style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                    <div class="caption">
+
+                                        <p class="product-name pb-1"
+                                            style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                            Handmade Chaai Cups (3 Units)</p>
+                                        <p class="price mb-2 "
+                                            style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                            &#8377; 179</p>
+
+                                    </div>
+                                    <a href="#">
+                                        <button id="contactBtn"
+                                            class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">
+                                            {%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}
+                                        </button>
+                                    </a>
+                                    {% if is_creative and tab == 'creative' %}
+                                    <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
+                                            class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
+                                                aria-hidden="true"></i></button></a> {% else %} {% endif %}
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row mx-auto mt-3">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span class="" aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
+</div>
 
-    {%endblock%}
+{%endblock%}

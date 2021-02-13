@@ -11,16 +11,9 @@
             </span>
             <div class="store-btn-container float-left mx-3 mt-1">
                 <a href="{%url 'Home:creativestore'%}" class="btn btn-sm btn-dark btn-cre shadow-none">
-                    <span style="color:#94c5ae">C</span>
-                    <span style="color:#ffc425">R</span>
-                    <span style="color:#ff6f69">E</span>
-                    <span style="color:#ffcc5c">A</span>
-                    <span style="color:#88d8b0">T</span>
-                    <span style="color:#96ceb4">I</span>
-                    <span style="color:#ffc425">V</span>
-                    <span style="color:#ff6f69">E</span>
+                    <span style="color:#94c5ae">C</span><span style="color:#ffc425">R</span><span style="color:#ff6f69">E</span><span style="color:#ffcc5c">A</span><span style="color:#88d8b0">T</span><span style="color:#96ceb4">I</span><span style="color:#ffc425">V</span><span style="color:#ff6f69">E</span>
                 </a>
-                <a href="{%url 'Home:scrapyard'%}" class="btn btn-sm btn-scr shadow-none">SCRAPYARD</a>
+                <a href="{%url 'Home:scrapyard'%}" class="btn btn-sm btn-dark btn-cre shadow-none">SCRAPYARD</a>
             </div>
             <span class="float-right">
                 <img src="{% if  user.profile.user_image.url is not null %} {{ user.profile.user_image.url| default:'../../../media/users/default.png' }} {% else %} ../../../media/users/default.png {% endif %}" class="rounded-circle main-img"/>

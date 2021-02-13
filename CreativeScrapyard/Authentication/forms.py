@@ -52,6 +52,49 @@ class EditProfileImage(forms.ModelForm):
 
         return cleaned_data   
 
+class EditUserDocument(forms.ModelForm):
+
+    class Meta:
+        model=Documents
+        fields=("acc_no","acc_name","bank_name","IFSC_code")
+        exclude=("pan_no","pan_name","pan_img_url")
+
+    def clean_acc_no(self):
+        acc_no=self.cleaned_data.get("acc_no",None)
+
+        if not acc_no.isdigit() or len(acc_no) > 20 or len(acc_no) < 9:
+            self.add_error("acc_no",forms.ValidationError('Enter Valid Account Number.'))
+        
+        return acc_no
+    
+    def clean_acc_name(self):
+        acc_name=self.cleaned_data.get("acc_name",None)
+
+        if not  bool(re.match('[a-zA-Z\s]+$', acc_name)):
+            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit"))
+
+        return acc_name
+
+    def clean_bank_name(self):
+        bank_name=self.cleaned_data.get("bank_name",None)
+
+        if bank_name=="none":
+            self.add_error("bank_name",forms.ValidationError("Select Bank Name"))
+
+        return bank_name
+
+    def clean_IFSC_code(self):
+        IFSC_code=self.cleaned_data.get("IFSC_code",None)
+
+        if not len(IFSC_code)==11 and not IFSC_code[0:4].isalpha() and not IFSC_code[4]=="0" and not IFSC_code[5:11].isdigit():
+            self.add_error("IFSC_code",forms.ValidationError("Enter Valid IFSC code"))
+
+        return IFSC_code
+
+
+
+
+
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile

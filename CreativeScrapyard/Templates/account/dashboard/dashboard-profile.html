@@ -21,6 +21,7 @@
                         <label class="btn btn-sm pri-bg-color mt-2" id="chooseLbl" for="profilePicture">Choose</label>
                         <input class="btn btn-sm pri-bg-color" id="submitPic" type="submit" value="Save" hidden>
 
+
                         <!--  -->
                         {% if user.profile.user_image and user.profile.user_image.url != '/media/users/default.png' %}
                         <!--  -->
@@ -97,11 +98,11 @@
                         <legend class="col-form-label col-sm-2 py-0">Gender</legend>
                         <div class="col-10 px-sm-5 px-md-4">
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderMale" value="M" name="user_gender" {% if user.profile.user_gender == 'M' %} checked {% endif %}/>
+                                <input class="form-check-input" type="radio" id="profileGenderMale" value="M" name="user_gender" {% if user.profile.user_gender=='M' %} checked {% endif %}/>
                                 <label class="form-check-label" for="profileGenderMale">Male</label>
                             </div>
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="F" name="user_gender" {% if user.profile.user_gender == 'F' %} checked {% endif %}/>
+                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="F" name="user_gender" {% if user.profile.user_gender=='F' %} checked {% endif %}/>
                                 <label class="form-check-label" for="profileGenderFemale">Female</label>
                             </div>
                         </div>
@@ -111,9 +112,11 @@
                 <button type="submit" class="btn btn-sm pri-bg-color">Save changes</button>
             </form>
         </div>
-
     </div>
+
 </div>
+{% comment %} <a href="{% url 'Authentication:profile' %}"><button class="btn m-2 pull-right btn-sm pri-bg-color">View Profile</button></a> {% endcomment %}
+
 
 
 <div class="bx-shd my-4 py-2 px-3 border">
@@ -159,8 +162,7 @@
             <br/>
             <small>Add your address here to get your delivery.</small>
 
-
-            <div class="modal {% if form.is_bound %} show {% endif %} fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" {% if form.is_bound %} style="display:block;" {% endif %}>
+            <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
@@ -260,33 +262,48 @@
     <span class="card-title">Bank Details</span>
     <div class="py-3">
 
-        <form method="" action="">{% csrf_token %}
+        <form method="POST" action="{% url 'Authentication:editDocument' %}">{% csrf_token %}
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="accountNo">Account Number</label>
-                    <input type="text" class="form-control" name="accountNo" id="accountNo" value="9988-7766-5544-2310">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACNO" class="form-control {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" name="acc_no" id="accountNo" value="{{form.acc_no.value | default:'' }}">
+                    <div id="validateACNO" class="invalid-feedback">
+                        {{form.acc_no.errors}}
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="accountHolder">Account Holder</label>
-                    <input type="text" class="form-control" name="accountNo" id="accountHolder" value="Mr. John Doe">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACName" class="form-control {% if form.errors.acc_name == None and form.is_bound %} is-valid {% elif form.errors.acc_name != None %} is-invalid {% endif %}" name="acc_name" id="accountHolder"
+                        value="{{form.acc_name.value | default:'' }}">
+                    <div id="validateACName" class="invalid-feedback">
+                        {{form.acc_name.errors}}
+                    </div>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="bankName">Bank Name</label>
-                    <select name="bankName" id="bankName" class="form-control">
-                        <option selected>State Bank of India</option>
+                    <select name="bank_name" aria-describedby="inputGroupPrepend3 validateBank" id="bankName" class="form-control {% if form.errors.bank_name == None and form.is_bound %} is-valid {% elif form.errors.bank_name != None %} is-invalid {% endif %}">
+                        <option value="none" selected>State Bank of India</option>
                         <option value="">Bank of Baroda</option>
                         <option value="">ICICI Bank</option>
                         <option value="">HDFC Bank</option>
                         <option value="">Bank of India</option>
                         <option value="">Axis Bank</option>
                     </select>
+                    <div id="validateBank" class="invalid-feedback">
+                        {{form.bank_name.errors}}
+                    </div>
                 </div>
+
                 <div class="form-group col-md-6">
                     <label for="ifscCode">IFSC code</label>
-                    <input type="text" class="form-control" name="ifscCode" id="ifscCode" value="SBI778899">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateIFSC" class="form-control {% if form.errors.IFSC_code == None and form.is_bound %} is-valid {% elif form.errors.IFSC_code != None %} is-invalid {% endif %}" name="IFSC_code" id="ifscCode"
+                        value="{{form.IFSC_code.value | default:'' }}">
+                    <div id="validateIFSC" class="invalid-feedback">
+                        {{form.IFSC_code.errors}}
+                    </div>
                 </div>
 
             </div>
