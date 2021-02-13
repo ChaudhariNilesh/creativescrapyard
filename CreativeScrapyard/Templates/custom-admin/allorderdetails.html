@@ -45,8 +45,187 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {%if title == 'Processing Orders' %}
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">1001</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">2001</span></a>
+                                    </td>
 
-                                {% for i in '012'|make_list %}
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Raghav Agrwal
+                                                </span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nikul Prajapati</span></a>
+                                    </td>
+
+                                    <td class="text-center"><span class="list-enq-name">2</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;400.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;800.0</span>
+                                    </td>
+                                    <td class="text-center">
+
+                                        {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
+                                        <a href="#" class="pay-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a> {% endif %}
+
+                                        <a href="{% url 'CustomAdmin:orderdetails' 20 %}" class="order-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">1002</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">2003</span></a>
+                                    </td>
+
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nilesh Chaudhari
+                                                </span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nikul Prajapati</span></a>
+                                    </td>
+
+                                    <td class="text-center"><span class="list-enq-name">1</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;300.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;300.0</span>
+                                    </td>
+                                    <td class="text-center">
+
+                                        {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
+                                        <a href="#" class="pay-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a> {% endif %}
+
+                                        <a href="{% url 'CustomAdmin:orderdetails' 20 %}" class="order-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                {% endif %} {%if title == 'Delivered Orders' %}
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">1003</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">2004</span></a>
+                                    </td>
+
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nilesh Chaudhari
+                                                </span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nikul Prajapati</span></a>
+                                    </td>
+
+                                    <td class="text-center"><span class="list-enq-name">1</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;250.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;250.0</span>
+                                    </td>
+                                    <td class="text-center">
+
+                                        {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
+                                        <a href="#" class="pay-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a> {% endif %}
+
+                                        <a href="{% url 'CustomAdmin:orderdetails' 20 %}" class="order-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                {% endif %} {%if title == 'Returned Orders' %}
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">1005</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">2006</span></a>
+                                    </td>
+
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nishika Shah
+                                                </span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nikul Prajapati</span></a>
+                                    </td>
+
+                                    <td class="text-center"><span class="list-enq-name">1</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;700.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;700.0</span>
+                                    </td>
+                                    <td class="text-center">
+
+                                        {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
+                                        <a href="#" class="pay-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a> {% endif %}
+
+                                        <a href="{% url 'CustomAdmin:orderdetails' 20 %}" class="order-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                {% endif %} {%if title == 'Cancelled Orders' %}
+                                <tr>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">101</span></a>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">1004</span>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">2006</span></a>
+                                    </td>
+
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Raghav Agrwal
+                                                </span></a>
+                                    </td>
+                                    <td class="text-center"><a href=""><span class="list-enq-name">Nikul Prajapati</span></a>
+                                    </td>
+
+                                    <td class="text-center"><span class="list-enq-name">2</span>
+                                    </td>
+                                    <td class="text-center"><span class="list-enq-name">&#8377;500.0</span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="list-enq-name">&#8377;1000.0</span>
+                                    </td>
+                                    <td class="text-center">
+
+                                        {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
+                                        <a href="#" class="pay-view"><button class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff"
+                                                    width="20" height="20"></button></a> {% endif %}
+
+                                        <a href="{% url 'CustomAdmin:orderdetails' 20 %}" class="order-view"><button
+                                                class="btn btn-sm pri-bg-color"><img
+                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                                                    width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <!-- {% for i in '012'|make_list %}
                                 <tr>
                                     <td class="text-center"><a href=""><span class="list-enq-name">10111101</span></a>
                                     </td>
@@ -82,7 +261,7 @@
                                                     width="20" height="20"></button></a>
                                     </td>
                                 </tr>
-                                {% endfor %}
+                                {% endfor %} -->
 
                             </tbody>
                         </table>

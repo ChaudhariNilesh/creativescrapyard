@@ -131,7 +131,7 @@ class UserDocument(forms.ModelForm):
     
     def clean_pan_img_url(self):
         cleaned_data=self.cleaned_data
-        #print(cleaned_data)
+        #print(cleaned_data) {"name":value}
         pan_img_url = cleaned_data.get("pan_img_url",False)
     
         if pan_img_url:
@@ -143,7 +143,7 @@ class AddressForm(forms.ModelForm):
     
     class Meta:
         model = Address
-        fields = ("person_name","contact_no","type","line1","line2","pincode")
+        fields = ("person_name","contact_no","type","line1","line2","pincode","landmark")
 
     def clean_person_name(self):
         cleaned_data=self.cleaned_data
@@ -189,17 +189,17 @@ class AddressForm(forms.ModelForm):
 
         return line2
 
-    # def clean_landmark(self):
-    #     landmark=self.cleaned_data.get("landmark",None)
-    #     #print(landmark)
-    #     try:
-    #         if landmark :
-    #             if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',landmark)):
-    #                 self.add_error("landmark",forms.ValidationError('Only alphabets and number are accepted.'))
-    #     except :
-    #         pass
+    def clean_landmark(self):
+        landmark=self.cleaned_data.get("landmark",None)
+        #print(landmark)
+        try:
+            if landmark :
+                if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',landmark)):
+                    self.add_error("landmark",forms.ValidationError('Only alphabets and number are accepted.'))
+        except :
+            pass
             
-    #     return landmark
+        return landmark
         
             
 

@@ -41,10 +41,10 @@ def contactus(request):
         first_name = request.POST.get('first_name','')
         last_name = request.POST.get('last_name','')
         query_subject = request.POST.get('query_subject','')
-        query_message = request.POST.get('query_subject','')
+        query_message = request.POST.get('query_message','')
 
 
-        errorData = validate(email=email,fname=first_name,lname=last_name,sub=query_subject,chkTakenEmail=False,chkTakenUsrname=False)
+        errorData = validate(email=email,fname=first_name,lname=last_name,sub=query_subject,msg=query_message,chkTakenEmail=False,chkTakenUsrname=False)
         #print(errorData)
        
         if not errorData['errors']:

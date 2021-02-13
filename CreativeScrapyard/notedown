@@ -48,7 +48,11 @@ change images
 
 
 ****************************************
-Remain After -> add new address
+Remain After -> 
+add new address from checkout
+(chnage validation in signup and contact form TO forms.isvalid())
+edit and remove address
+
 -----------------
 >>password strentgth validate and signup user...
 >> queries,->SKIP
@@ -69,11 +73,8 @@ Remain After -> add new address
 --add new address 
 
 assign/add badges input validate
-
-
 add product
 edit product
-
 reported modal
 verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
 

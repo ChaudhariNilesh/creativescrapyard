@@ -140,9 +140,7 @@
                         </td>
                         <td>382424 </td>
                     </tr>
-                    {% endfor %} {% endwith %}
-                    
-                    {% for adrs in UserAddress %}
+                    {% endfor %} {% endwith %} {% for adrs in UserAddress %}
                     <tr>
                         <td class="text-center"><input type="radio" id="radDefault" onclick="setDefault(this);" value="{{adrs.address_id}}" {% if adrs.is_default %} checked {%endif%} name="primaryAddressGroup" id="#" /></td>
                         <td>{{adrs.person_name}}</td>
@@ -303,7 +301,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
-            <button type="submit" class="btn btn-sm pri-bg-color">Reveal</button>
+            <!-- <button type="submit" class="btn btn-sm pri-bg-color">Reveal</button> -->
         </form>
     </div>
 </div>
@@ -335,7 +333,8 @@
 
 
     }
-    function setDefault(context){
+
+    function setDefault(context) {
         const addrsId = $(context).val();
         console.log(addrsId);
         $.ajax({
@@ -343,9 +342,9 @@
             dataType: "json",
             url: "ajax/set-default/" + addrsId,
             success: function(data) {
-                if(data.changed){
+                if (data.changed) {
                     $(this).setAttr("checked");
-                }else{
+                } else {
                     Swal.fire(
                         "warning",
                         "Some Error Occured. Try Again"

@@ -22,7 +22,7 @@
             <div class="form-row">
                 <div class="form-group col text-left">
                     <label for="addMobileNo">Mobile no</label>
-                    <input type="tel" class="form-control form-control-sm {% if form.errors.contact_no == None and form.is_bound %} is-valid {% elif form.errors.contact_no != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.contact_no.value | default:'' }}"
+                    <input type="tel" class="form-control form-control-sm {% if form.errors.contact_no == None and form.is_bound %} is-valid {% elif form.errors.contact_no != None %} is-invalid {% endif %}" placeholder="10-digit mobile number" value="{{form.contact_no.value | default:'' }}"
                         id="addMobileNo" placeholder="Mobile number" aria-describedby="inputGroupPrepend3 validateContact" name="contact_no" value="{{form.contact_no.value | default:'' }}">
                     <div id="validateContact" class="invalid-feedback">
                         {{form.contact_no.errors.as_text}}
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group col text-left">
                     <label for="addType" class="text-left">Address Type</label>
-                    <select id="addType" class="form-control form-control-sm {% if form.errors.type == None and form.is_bound %} is-valid {% elif form.errors.type != None %} is-invalid {% endif %}" placeholder="Person Name" value="{{form.type.value | default:'' }}" name="type"
+                    <select id="addType" class="form-control form-control-sm {% if form.errors.type == None and form.is_bound %} is-valid {% elif form.errors.type != None %} is-invalid {% endif %}" placeholder="Address Type" value="{{form.type.value | default:'' }}" name="type"
                         aria-describedby="inputGroupPrepend3 validateType">
                         <option value="none">Choose...</option>
                         <option value="Home" {% if form.type.value == 'Home' %} selected {% endif %}>Home</option>
@@ -64,11 +64,12 @@
             </div>
             <div class="form-row pt-1 px-1">
                 <div class="form-group col text-left">
-                    <label for="addLandmark">Landmark(Optional)</label> {% comment %} {% if form.errors.landmark == None and form.is_bound %} is-valid {% elif form.errors.landmark != None %} is-invalid {% endif %} {% endcomment %}
-                    <input type="text" name="landmark" class="form-control form-control-sm " id="addLandmark" placeholder="Landmark" value="{{form.landmark.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatelandmark"> {% comment %}
+                    <label for="addLandmark">Landmark(Optional)</label>
+                    <input type="text" name="landmark" class="form-control form-control-sm   {% if form.errors.landmark == None and form.is_bound %} is-valid {% elif form.errors.landmark != None %} is-invalid {% endif %}" id="addLandmark" placeholder="Landmark" value="{{form.landmark.value | default:'' }}"
+                        aria-describedby="inputGroupPrepend3 validatelandmark">
                     <div id="validatelandmark" class="invalid-feedback">
                         {{form.landmark.errors.as_text}}
-                    </div> {% endcomment %}
+                    </div>
                 </div>
                 <div class="form-group col text-left">
                     <label for="addState">State {{form.state.value}}</label>

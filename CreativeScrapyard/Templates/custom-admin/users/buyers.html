@@ -1,7 +1,5 @@
-{% extends 'custom-admin/common.html' %} {% load static %} 
-{% comment %} {%block breadcumb %}{% block breadcrumb-link%}<li class="breadcrumb-item active">User</li> {%endblock%} 
-{%endblock%}  {% endcomment %}
-{%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="col-md-12">
@@ -18,15 +16,15 @@
                                     <th scope="col" class="text-center">Name</th>
                                     <th scope="col" class="text-center">Email</th>
                                     <th scope="col" class="text-center">Bought Items</th>
-                                    <th scope="col" class="text-center">Total Amt.</th>
+                                    <th scope="col" class="text-center">Total Amt(&#8377;).</th>
                                     <th class="disableFilterBy text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                                <!-- {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                                 <tr>
                                     <td class="text-center">10001</td>
-                                    <td class="text-center" ><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
                                     <td class="text-center">dummy@dummy.com</td>
                                     <td class="text-center"><span class="listing">20</span></td>
                                     <td><span class="listing text-center">100</span></td>
@@ -34,8 +32,31 @@
                                         <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
                                     </td>
                                 </tr>
-                                {% endfor %} {% endwith %}
+                                {% endfor %} {% endwith %} -->
 
+                                {% for buyer in buyers %}
+                                <tr>
+                                    <td class="text-center">{{buyer.user_id}}</td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">{{buyer.first_name|capfirst}} {{buyer.last_name|capfirst}}</span></a></td>
+                                    <td class="text-center">{{buyer.email}}</td>
+                                    <td class="text-center"><span class="listing">20</span></td>
+                                    <td><span class="listing text-center">100</span></td>
+                                    <td class="text-center">
+                                        <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                <tr>
+                                    <td class="text-center">7</td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">Kenneth D'sliva</span></a></td>
+                                    <td class="text-center">kenneth.dsliva@gmail.com</td>
+                                    <td class="text-center"><span class="listing">1</span></td>
+                                    <td><span class="listing text-center">500</span></td>
+                                    <td class="text-center">
+                                        <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -1,10 +1,18 @@
 from django.db import models
 from django.core.validators import MaxValueValidator,MinValueValidator
 from Items.models import tbl_creativeitems_details
-
+from django.contrib.auth.models import AbstractUser
+from Authentication.models import User
 # Create your models here.
 
 DELIVERY_STATUS = (
+    ("PENDING", "Pending"),
+    ("DISPATCHED", "Dispatched"),
+    ("DELIVERED", "Delivered"),
+    ("CANCELLED", "Cancelled",)
+)
+
+PAYMENT_STATUS = (
     ("PENDING", "Pending"),
     ("DISPATCHED", "Dispatched"),
     ("DELIVERED", "Delivered"),
@@ -46,4 +54,20 @@ class tbl_orders_details(models.Model):
     def __str__(self):
         return self.order_details_id
     
+# class Payments(models.Model):
+#     payment_id=models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+#     transaction_id = models.CharField(max_length=50, null=False, blank=False)            
+#     payment_mode = models.CharField(max_length=15, null=False, blank=False)            
+#     payment_date=models.DateTimeField(auto_now_add=True, null=False, blank=False)
+#     payment_amt = models.DecimalField(null=False,decimal_places=2, max_digits=5,blank=False)
+#     # payment_status
+   
+#     payment_remark=models.TextField(max_length=50,null=True,blank=True)
+#     order=models.ForeignKey(tbl_orders_mst,on_delete=models.CASCADE)
+    
+#     class Meta:
+#         db_table = 'tbl_payments'
+
+#     def __str__(self):
+#         return self.order.person_name
     

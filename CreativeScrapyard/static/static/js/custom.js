@@ -255,13 +255,15 @@ $(function() {
 
     var func_expand = function() {
         let loc = window.location.pathname;
-        let sideBarLoc = loc.match(/(?:.*?\/){4,5}/); //[0]
+        let sideBarLoc = loc.match(/(?:.*?\/){4,5}/);
 
         if (loc == "/accounts/dashboard/") {
             $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
         } else if (sideBarLoc != loc) {
+            console.log("dd" + sideBarLoc);
             $('a[href="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         } else {
+            console.log(sideBarLoc);
             $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         }
 
@@ -419,6 +421,7 @@ $(function() {
         $("#fileupload").fileupload({
             dataType: 'json',
             sequentialUploads: true,
+
             /* 1. SEND THE FILES ONE BY ONE */
             start: function(e) { /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
                 $("#modal-progress").modal("show");

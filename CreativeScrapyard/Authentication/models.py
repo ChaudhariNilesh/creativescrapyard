@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator, validate_image_file_extension
 import random
 import os
+from Items.models import tbl_creativeitems_details
 
 GENDER_TYPE = (
     ('F', 'Female'),
@@ -105,7 +106,7 @@ class Address(models.Model):
     pincode=models.CharField(max_length=6,null=False,blank=False)
     line1=models.TextField(max_length=100,null=False,blank=False)
     line2=models.TextField(max_length=100,null=False,blank=False)
-    landmark=models.TextField(max_length=50,null=False,blank=False)
+    landmark=models.TextField(max_length=50,null=True,blank=True)
     is_default=models.BooleanField(null=False, default=False)
     type=models.CharField(max_length=6,null=False,blank=False)
     city=models.ForeignKey(Cities,on_delete=models.DO_NOTHING)
@@ -122,3 +123,17 @@ class Photo(models.Model):
     title = models.CharField(max_length=255, blank=True)
     file = models.ImageField(upload_to='photos/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+# class Review(models.Model):
+#     review_id=models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+#     user=models.ForeignKey(User,on_delete=models.CASCADE)
+#     item_rating = models.DecimalField(null=False,decimal_places=1, max_digits=2,blank=False)
+#     item_review=models.TextField(max_length=500,null=True,blank=True)
+#     review_date=models.DateTimeField(auto_now_add=True, null=False, blank=False)
+#     tbl_creativeitems_details_id=models.ForeignKey(tbl_creativeitems_details,on_delete=models.CASCADE)
+    
+#     class Meta:
+#         db_table = 'tbl_review'
+
+#     def __str__(self):
+#         return self.user.username

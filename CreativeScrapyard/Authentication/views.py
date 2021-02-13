@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,HttpResponse
-from .models import *
+from .models import*
 from .forms import *
 from django.http import JsonResponse
 from django.contrib import messages
@@ -175,9 +175,13 @@ def product_photo_remove(request, pk):
     return redirect('Authentication:add_creative_product')
 
 @login_required
+
 def dashboard(request):
-    template = "account/dashboard/dashboard.html"
-    return render(request, template)
+    if not request.user.is_superuser:
+        template = "account/dashboard/dashboard.html"
+        return render(request, template)
+    else:
+        return redirect("Authentication:login")
 
 
 # def add_document(request):
