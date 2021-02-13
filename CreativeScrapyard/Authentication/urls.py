@@ -30,6 +30,7 @@ urlpatterns = [
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
     path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+    path('dashboard/profile/edit-document/', editDocument, name="editDocument"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/history/<str:action>', order_history, name="order_tab_history"),
