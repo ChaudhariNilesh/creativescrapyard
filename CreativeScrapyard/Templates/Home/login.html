@@ -34,7 +34,7 @@
                 <div class="container pt-5">
                     <div class="row">
                         <div class="col-11 col-md-11 mx-auto">
-                            <p class="text-right text-2 mb-0">Not a member? <a class="btn-link pri-color link-effect" href="{% url 'Authentication:signup' %}">Sign Up</a></p>
+                            <p class="text-right text-2 mb-0">Not a member? <a class="btn-link pri-color link-effect" href="{% url 'Authentication:signup' %}">Sign Up</a> | <a class="btn-link pri-color link-effect" href="{%url 'Home:home'%}">Explore Website -></a></p>
                         </div>
                     </div>
                 </div>
@@ -56,8 +56,8 @@
                             <!--                            </div>-->
                             <form id="loginForm" method="post">{% csrf_token %}
                                 <div class="form-group font-weight-500">
-                                    <label for="emailAddress">Email Address</label>
-                                    <input type="email" class="form-control bg-light border-1" id="emailAddress" name="email" required placeholder="Enter Your Email">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control bg-light border-1" id="username" name="username" required placeholder="Enter Your Username">
 
                                     <label for="loginPassword" class="pt-2">Password</label>
                                     <a class="btn-link float-right text-2 pt-2 link-effect" href="{% url 'Authentication:passwordReset' %}">Forgot Password ?</a>
@@ -66,6 +66,9 @@
                                     <button class="btn shadow-none my-3 px-5 py-2 pri-bg-color" type="submit">Sign in</button>
                                 </div>
                             </form>
+                            <div>
+                                {% include 'includes/messages.html' %}
+                            </div>
                         </div>
                     </div>
                 </div>

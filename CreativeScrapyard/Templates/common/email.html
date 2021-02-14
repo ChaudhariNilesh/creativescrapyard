@@ -1,0 +1,17 @@
+{% autoescape off %} 
+    {% if type == 'product' %}
+    Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
+        Product ID
+        {{message}} 
+    {% elif type == 'user' %}
+    Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
+        USER 
+        {{message}} 
+    {% elif type == 'contactuser' %}
+        Hi, {{seller.first_name|capfirst}} {{seller.last_name|capfirst}}
+        {{user.first_name|capfirst}} {{user.last_name|capfirst}} {{message}} 
+        {{seller.email}}
+    {% else %}
+        {{message}}
+    {% endif %}
+ {% endautoescape %}

@@ -169,10 +169,70 @@ $(function() {
     var contact = function() {
         $("#contactBtn.btn-scp").click(function(e) {
             e.preventDefault();
-            swal("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
-                buttons: ["Nope", "Send"],
-            });
-        }, );
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "We will share mail ID to the seller so that seller can contact you.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#20C993',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/contact-scrapseller/",
+                            type: "POST",
+                            data: {
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                                action: 'post',
+                                type: "contactuser",
+                            },
+                            dataype: "json",
+                            beforeSend: function() {
+                                swal.fire({
+                                    title: 'Sending Mail...',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    didOpen: () => {
+                                        swal.showLoading();
+                                    }
+                                });
+                            },
+                            complete: function(response) {
+                                //console.log(data.auth);
+
+                            },
+                            success: function(data) {
+                                swal.close();
+                                // console.log(data.send);
+                                if (data.auth) {
+                                    if (data.send) {
+                                        //Swal.fire(data.msg, "", "success");
+                                        Swal.fire("Your mail id is shared with our seller.", "", "success");
+                                    }
+                                } else {
+                                    window.location.href = "/accounts/login/";
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                swal.close();
+                                // console.log(jqXHR.status);
+                                Swal.fire(
+                                    jqXHR.status + "",
+                                    textStatus + " : " + errorThrown,
+                                    'error'
+                                )
+                            }
+                        });
+
+
+                    }
+                })
+                // Swal.fire("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
+                //     buttons: ["Nope", "Send"],
+                // });
+        });
     }
 
     var priceSlider = function() {
@@ -323,17 +383,6 @@ $(function() {
         });
     }
 
-    var addBadgesInput = function() {
-        $('#addBadge').on("click", function() {
-            swal("Write something here:", {
-                    content: "input",
-                })
-                .then((value) => {
-                    swal(`You typed: ${value}`);
-                });
-        });
-    }
-
     var loadMoreRows = function() {
         let i;
         for (i = 0; i < 5; i++) { $('.tablemanager').find("tbody tr").eq(i).addClass('active'); }
@@ -433,7 +482,6 @@ $(function() {
             "click": function(e) {
                 console.log(e); // {stars: 3, event: E.Event}
                 alert(e.stars);
-
             },
             'half': true,
         });
@@ -463,8 +511,7 @@ $(function() {
         // scrollGal();
         //flatZoom();
         ArtistProductGal();
-        changeProdHover();
-        addBadgesInput();
+    //    changeProdHover();
         priceSlider();
         prodLens();
         sideNav();

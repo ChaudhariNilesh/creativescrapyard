@@ -6,7 +6,7 @@ app_name="CustomAdmin"
 urlpatterns = [
 
     path('',adminindex,name="adminindex"),
-    path('login/',login,name="login"),
+    path('login/',AdminLogin,name="login"),
     path('users/',users,name="users"),
     path('change-password/',changePassword,name="changePassword"),
     path('admin-account/',adminAccount,name="adminAccount"),
@@ -59,5 +59,7 @@ urlpatterns = [
 
     ######MAIL######
     path('send-mail/',sendmail,name="sendmail"),
+    path('send-mail/<str:action>',sendmail,name="sendmail"),
+
 
 ]

@@ -12,8 +12,8 @@
                         <option {%if issueType == 3 %}selected{%endif%} value="3">Reported Users Items</option>
                         <option {%if issueType == 4 %}selected{%endif%} value="4">Order Issues</option>
                     </select>
-
             </form>
+
         </div>
     </div>
     <div class="row mt-2">
@@ -60,15 +60,15 @@
                             <td class="text-center">
                                 {% if issueType == 1 %}
                                 <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <a href="#" class="disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
                                 <!--  -->
                                 {% elif issueType == 2 %}
                                 <a href="{% url 'Home:Items:scrapSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <a href="#" class="user-disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
                                 <!--  -->
                                 {%elif issueType == 3 %}
                                 <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <a href="#" class="disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn " aria-hidden="true">DISABLE</button>
 
                                 <!--  -->
                                 {% elif issueType == 4 %}

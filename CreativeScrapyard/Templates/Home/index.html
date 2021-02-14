@@ -7,9 +7,14 @@
     <div class="row mx-2">
         <div class="col-md-8">
             <h4 class="my-0 mr-md-auto font-weight-bold">
-                <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-dark" style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span>
+                <a href="{%url 'Home:creativestore'%}" class=" btn btn-outline-dark"
+                    style="font-size: 18px;"></span><span style="color:#94c5ae"><b>C</b></span><span
+                        style="color:#ffc425"><b>R</b></span><span style="color:#ff6f69"><b>E</b></span><span
+                        style="color:#ffcc5c"><b>A</b></span><span style="color:#88d8b0"><b>T</b></span><span
+                        style="color:#96ceb4"><b>I</b></span>
                     <span style="color:#ffc425"><b>V</b></span><span style="color:#ff6f69"><b>E</b></span></a><span>
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark" style="font-size: 18px ;"><b>
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked></span><a
+                    href="{%url 'Home:scrapyard'%}" class="btn btn-outline-dark" style="font-size: 18px ;"><b>
                         SCRAPYARD</b></a>
             </h4>
         </div>
@@ -34,18 +39,13 @@
 
                     <diV style="float: right;" class="d-flex">
 
-                        <span>
-                            <a class="btn btn-outline-dark px-3" href="{% url 'Authentication:login'%}">Log In</a>
-                        </span>
-
-
-
-                        <!-- <span class="dropdown custom-dropdown px-3">
-                            <a href="Authentication:dashboard">
+                        {% if user.is_authenticated %}
+                        <span class="dropdown custom-dropdown px-3">
+                            <a href="{% url 'Home:Items:Cart:addToCart' %}">
                                 <i class="fa fa-shopping-cart fa-2x m-1"></i>
                             </a>
                         </span>
-                        <span class="dropdown  custom-dropdown">
+                        <span class="dropdown custom-dropdown">
                             <a href="" data-toggle="dropdown">
                                 <i class="fa fa-user fa-2x m-1"></i>
                             </a>
@@ -54,7 +54,16 @@
                                 <a class="dropdown-item" href="#">My Order</a>
                                 <a class="dropdown-item" href="#">Logout</a>
                             </div>
-                        </span> -->
+                        </span>
+                        {%else%}
+                        <span>
+                            <a class="btn btn-outline-dark px-3" href="{% url 'Authentication:login'%}">Log In</a>
+                        </span>
+                        {%endif%}
+
+
+
+
                     </diV>
                 </div>
 
@@ -228,7 +237,8 @@
                         <li><a class="c-footer-links" href="{% url 'Home:creativestore' %}">Creative Store</a></li>
                         <li><a class="c-footer-links" href="{% url 'Home:scrapyard' %}">Scrapyard</a></li>
                         <li><a class="c-footer-links" href="{% url 'Home:Items:Cart:addToCart' %}">Your Cart</a></li>
-                        <li><a class="c-footer-links" href="{% url 'Authentication:order_history' %}">Your Orders</a></li>
+                        <li><a class="c-footer-links" href="{% url 'Authentication:order_history' %}">Your Orders</a>
+                        </li>
                         <li><a class="c-footer-links" href="{% url 'Authentication:payments' %}">Your Payments</a></li>
                 </div>
                 <div class="col">
@@ -236,7 +246,8 @@
                         <li><a class="c-footer-links" href="{% url 'Home:achievers' %}">Artists Of The Month</a></li>
                         <li><a class="c-footer-links" href="{% url 'Home:contactus' %}">Contact Us</a></li>
                         <li><a class="c-footer-links" href="{% url 'Home:aboutus' %}">About Us</a></li>
-                        <li><a class="c-footer-links" href="{% url 'Authentication:dashboard' %}">Your Dashboard</a></li>
+                        <li><a class="c-footer-links" href="{% url 'Authentication:dashboard' %}">Your Dashboard</a>
+                        </li>
                         <li><a class="c-footer-links" href="{% url 'Home:home' %}">Home</a></li>
                     </ul>
                 </div>

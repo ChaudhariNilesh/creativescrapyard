@@ -1,5 +1,4 @@
 from CreativeScrapyard import settings
-
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
@@ -9,26 +8,57 @@ from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
 from .models import *
+from Authentication.models import User
 from .forms import *
 from django.http import HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.core import serializers
+from django.contrib.auth import authenticate,login
+from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.contrib.auth.hashers import check_password
+from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
+
 ####### AUTH RELATED #######
-def login(request):
+def AdminLogin(request):
     template = 'custom-admin/login.html'
     if request.method == 'POST':
-        user = request.POST['username']
-        pwd = request.POST['password']
-                    
-        if user=='admin' and pwd=='admin':
-            request.session['admin'] = user
-            return redirect('CustomAdmin:adminindex')
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username,password=password)
+        # print(user)
+        if user:
+            #user = User.objects.get(username=username)
+            #print(user)
+            if user.is_superuser and user.is_active:
+                # print(request.user)
+                user_sess = {'user_name':user.username,'user_email':user.email}
+                #print(user_sess)
+                request.session['user'] = user_sess
+                request.session['user_email'] = user.email
+                login(request, user)
+                return redirect('CustomAdmin:adminindex')
+            else:
+                messages.error(request, 'Invalid Credentials, Try Again.')
+        else:
+            messages.error(request, 'Invalid Credentials, Try Again.')
+
+        # if user=='admin' and pwd=='admin':
+            
+        #     request.session['admin'] = user
+        #     return redirect('CustomAdmin:adminindex')
 
     return render(request,template)
 
 def adminindex(request):
-    if request.session.get('admin'):
+    if request.session.get('user'):
         template='custom-admin/admin-dashboard.html'
         
         return render(request,template)
@@ -36,21 +66,86 @@ def adminindex(request):
         return redirect('CustomAdmin:login')
 
 def adminAccount(request):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         template = 'custom-admin/account-settings/admin-account.html'
-        return render(request,template)
+        # admin = request.user.is_authenticated
+        # context={
+        #     "admin":admin
+        # }
+        adminFormData = AdminForm()
+       
+        if request.method == 'POST':
+
+            adminFormData = AdminForm(request.POST, instance=request.user)
+        
+
+            #print(request.POST)
+            # #print(adminFormData.errors.get_json_data())
+            if adminFormData.is_valid():
+                adminFormData.save()
+                messages.success(request,"Updated Successfully.")
+                adminFormData=AdminForm()
+                return redirect("CustomAdmin:adminAccount")
+
+            else:
+                # errors=adminFormData.errors.get_json_data()
+                messages.warning(request,"Please correct above errors.")
+                #print(errors)
+                #print(adminFormData.errors.get_json_data())
+
+        context={
+            "form":adminFormData,
+            
+        }
+        #print(adminFormData)
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
-        
+
+@login_required        
 def changePassword(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/account-settings/change-password.html'
+
+        if request.method == 'POST':
+            print(request.POST)
+            old = request.POST['password']
+            pass1 = request.POST['password1']
+            pass2 = request.POST['password2']
+            if pass1 == pass2:
+                if 'user' in request.session:
+                    #print('got session')
+                    email = request.session.get('user_email')
+                    #print(email)
+                    try:
+                        print(pass1)
+                        #validate_password(pass1) # for length and strength check
+                    except Exception as e:
+                        messages.error(request,*e)
+                        return redirect('CustomAdmin:changePassword')
+                    else:
+                        usr = User.objects.get(email__iexact=email)
+                        
+                        if check_password(old,usr.password):
+                            # print('old and new same')
+                            usr.set_password(pass1)
+                            usr.save()
+                            request.session.delete()
+                            return redirect('CustomAdmin:login')
+                        else:
+                            messages.error(request,"Old Password is incorrect.")
+                            return redirect('CustomAdmin:changePassword')
+
+            else:
+                messages.error(request,"Passwords do not match.")
+                return redirect('CustomAdmin:changePassword')
+
         return render(request,template)
     else:
         return redirect('CustomAdmin:login')
 
 def logout(request):
-    if request.session.get('admin') != None:
+    if (request.session.get('user') != None):
         request.session.delete()
         return redirect('CustomAdmin:login')
     else:
@@ -61,28 +156,28 @@ def logout(request):
 ####### USERS RELATED #######
 
 def users(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):
         template = 'custom-admin/users/users.html'
         return render(request,template)
     else:
         return redirect('CustomAdmin:login')
 
 def buyers(request):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         template = 'custom-admin/users/buyers.html'
         return render(request,template)
     else:
         return redirect('CustomAdmin:login')
 
 def sellers(request):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         template = 'custom-admin/users/sellers.html'
         return render(request,template)
     else:
         return redirect('CustomAdmin:login')
 
 def verifyusers(request,tab="pending"):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         template = 'custom-admin/users/verify-users.html'
         
         if tab=='pending':
@@ -99,7 +194,7 @@ def verifyusers(request,tab="pending"):
 
 ####### AJAX VERIFY USERS #######
 def viewDets(request):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         data={"bankName":"SBI","bankifscCode":"ABC0123","accNo":"1234567890","accName":"Dummy Dummy",\
             "panNo":"ABCD123456","panName":"Dummy Dummy"}
         return JsonResponse(data)
@@ -107,7 +202,7 @@ def viewDets(request):
         return redirect('CustomAdmin:login')
 
 def docuDownload(request):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         filename = 'pansample.jpeg'
         file_path = settings.MEDIA_ROOT + '/documents/' + filename
 
@@ -122,7 +217,7 @@ def docuDownload(request):
         return redirect('CustomAdmin:login')
 
 def verifyChk(request):
-    if request.session.get('admin'): 
+    if request.session.get('user'): 
         data={"is_verified":True}
         return JsonResponse(data)
     else:
@@ -132,7 +227,7 @@ def verifyChk(request):
 ### CREATIVE ###
 
 def creativeCat(request,id=None,action=None):
-    if request.session.get('admin'):
+    if request.session.get('user'):
         crtMainCats=tbl_crt_categories.objects.all()
         template = 'custom-admin/products/creativecategory.html' 
         mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
@@ -163,7 +258,10 @@ def creativeCat(request,id=None,action=None):
                     return JsonResponse({"saved":True,"message":""})
                 else:
                     # print(mainCrtCat.errors.get_json_data(escape_html=True))
+
                     err=mainCrtCat.errors.get_json_data(escape_html=True)
+                    #print(mainCrtCat)
+                    #print(err)
                     err=err['__all__'][0]['message']
                     #print(err)
                     #print(mainCrtCat.errors)
@@ -181,6 +279,7 @@ def creativeCat(request,id=None,action=None):
             if request.method=="POST" and request.is_ajax():
                 
                 newSubCrtCat=SubCreativeCategoryForm(request.POST or None)
+                
                 if newSubCrtCat.is_valid():
                     #sub_crt_Cat = newSubCrtCat.cleaned_data['crt_sub_category_name']
                     newSubCrtCat = newSubCrtCat.save(commit=False)
@@ -191,7 +290,10 @@ def creativeCat(request,id=None,action=None):
                         return JsonResponse({"saved":False,"message":"Database Error!!"})
                     return JsonResponse({"saved":True,"message":""})
                 else:
-                    return JsonResponse({"saved":False,"message":"Invalid Data!!"})
+                    err=newSubCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err})                    
+                    
             else:
                 raise PermissionDenied
                # return HttpResponseNotFound("404 Page not found.")
@@ -209,7 +311,10 @@ def creativeCat(request,id=None,action=None):
                         return JsonResponse({"updated":False,"message":"Database Error!!"})
                     return JsonResponse({"updated":True,"message":""})
                 else:
-                    return JsonResponse({"updated":False,"message":"Invalid Data!!"})
+                    err=editMainCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err})  
+
             elif request.method=="GET" and request.is_ajax():
                 print("ajax")
                 mainCrtCat = get_object_or_404(tbl_crt_categories, pk=id)
@@ -229,7 +334,9 @@ def creativeCat(request,id=None,action=None):
                         return JsonResponse({"updated":False,"message":"Database Error!!"})
                     return JsonResponse({"updated":True,"message":""})
                 else:
-                    return JsonResponse({"updated":False,"message":"Invalid Data!!"})
+                    err=editSubCrtCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err})                     
             elif request.method=="GET" and request.is_ajax():
                 #print("ajax")
                 subCrtCat = get_object_or_404(tbl_crt_subcategories, pk=id)
@@ -273,7 +380,7 @@ def creativeCat(request,id=None,action=None):
 
 
 def creativeitems(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/products/creativeitems.html'
         return render(request,template,{"dispSubCat":False})
     else:
@@ -283,7 +390,7 @@ def creativeitems(request):
 ### SCRAP ###
 def scrapCat(request,id=None,action=None):
    # print("SCRAPCAT FUNC")
-    if request.session.get('admin'):   
+    if request.session.get('user'):   
         scpMainCats=MainScrapCategory.objects.all() 
         template = 'custom-admin/products/scrapcategory.html'
         print("OUT")
@@ -410,7 +517,7 @@ def scrapCat(request,id=None,action=None):
 
         
 def scrapitems(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/products/scrapitems.html'
         return render(request,template)
     else:
@@ -418,7 +525,7 @@ def scrapitems(request):
 
 ####### ORDERS RELATED #######
 def allorders(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/allorders.html'
         return render(request,template)
     else:
@@ -426,7 +533,7 @@ def allorders(request):
 
 
 def orderdetails(request,id):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/orderdetails.html'
         return render(request,template)
     else:
@@ -434,7 +541,7 @@ def orderdetails(request,id):
 
 def allorderdetails(request,action='delivered'):
     
-    if request.session.get('admin'):  
+    if request.session.get('user'):  
         #print(action)
         if action == 'delivered':
             title = "Delivered Orders"
@@ -453,14 +560,14 @@ def allorderdetails(request,action='delivered'):
 #######    PAYMENT     #######
 
 def payment(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/payment.html'
         return render(request,template)
     else:
         return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
 def badges(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/manage-badges.html'
         return render(request,template)
 
@@ -469,7 +576,7 @@ def badges(request):
 
 ####### QUERIES RELATED #######
 def queries(request):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/queries/queries.html'
         return render(request,template)
 
@@ -477,7 +584,7 @@ def queries(request):
         return redirect('CustomAdmin:login')    
 
 def issues(request,opts="reportedCrtItem"):
-    if request.session.get('admin'):    
+    if request.session.get('user'):    
         template = 'custom-admin/queries/issues.html'
         title = "Reported Creative Items"
         issueType=1
@@ -513,16 +620,102 @@ def issues(request,opts="reportedCrtItem"):
     else:
         return redirect('CustomAdmin:login')
 ####### SEND EMAIL RELATED #######
-def sendmail(request):
-    if request.session.get('admin'):    
+@login_required
+def sendmail(request,action=None):
+    if request.session.get('user'):    
         template = 'custom-admin/sendmail/sendmail.html'
-        if request.method == "POST":
+       
+        if request.method == "POST" and not request.is_ajax():
             email = request.POST.get('email', '')
             subject = request.POST.get('subject', '')
-            message = request.POST.get('message', '')
-            print(email.split(","),subject,message)
-        return render(request,template)
+            emailmessage = request.POST.get('message', '')
+            print(request.POST)
+            if not subject or not emailmessage:
+                if action=="queryReply":
+                    messages.error(request,"Subject or message cannot be empty.")
+                    return redirect("CustomAdmin:query")
+                else:
+                    messages.error(request,"Subject or message cannot be empty.")
+                    return redirect("CustomAdmin:sendmail")
+            else:
+                #print(email.split(","),subject,emailmessage)
+                try:
+                    emailList=email.split(",")
+                    current_site = get_current_site(request)
+                    mail_subject = subject
+                    message = render_to_string('common/email.html', {
+                        'message':str("\n")+emailmessage,
+                        'user':User.objects.get(email__iexact=email)
+                    })
+                    to_email = email
+                    email = EmailMessage(
+                                mail_subject, message, to=emailList
+                    )
+                    email.send()
+                
+                except Exception as e:
+                    messages.error(request,"Some error occured. Please try after sometime.")
+                finally:
+                    return redirect("CustomAdmin:sendmail")
 
+        if request.is_ajax() and request.method=="POST":
+            # print(request.POST)
+            email = request.POST.get('email', '')
+            emailmessage = request.POST.get('message', '')
+            typeFor = request.POST.get('type', '')
+
+            if not email or not emailmessage:
+                return JsonResponse({"send":True,"msg":"empty email field is not allowed."})
+            else:
+                if typeFor == "user":
+                    #print(email.split(","),subject,emailmessage)
+                    try:
+                        emailList=email.split(",")
+                        current_site = get_current_site(request)
+                        mail_subject = "Your account is disabled"
+                        message = render_to_string('common/email.html', {
+                            'message':str("\n")+emailmessage,
+                            'user':User.objects.get(email__iexact=email),
+                            'type':"user",
+                        })
+                        to_email = email
+                        email = EmailMessage(
+                                    mail_subject, message, to=emailList
+                        )
+                        email.send()
+                    
+                    except Exception as e:
+                        return redirect({"send":True,"msg":str(e)})           
+                    else:
+                        return JsonResponse({"send":True,"msg":"Mail Sent"})
+                elif typeFor == "product":
+                    try:                
+                        emailList=email.split(",")
+                        current_site = get_current_site(request)
+                        mail_subject = "Your Product is disabled"
+                        message = render_to_string('common/email.html', {
+                            'message':str("\n")+emailmessage,
+                            'user':User.objects.get(email__iexact=email),
+                            'type':"product"
+                            # here get the product obj
+                        })
+                        to_email = email
+                        email = EmailMessage(
+                                    mail_subject, message, to=emailList
+                        )
+                        email.send()
+                
+                    except Exception as e:
+                        return redirect({"send":True,"msg":str(e)})           
+                    else:
+                        return JsonResponse({"send":True,"msg":"Mail Sent"})
+                
+                    
+            #return JsonResponse({"send":True,"msg":"Mail Sent"})
+
+
+
+        return render(request,template)
     else:
         return redirect('CustomAdmin:login')    
 
@@ -531,7 +724,7 @@ def sendmail(request):
 
 ######################################################
 # def loadSubCrtCats(request,id=None):
-#     if request.session.get('admin'):
+#     if request.session.get('user'):
 #         if request.is_ajax() :
 #             main={"mainCatName":[{"Home Decor":["a","b","c"]},{"LifeStyle-Men":["d","e","f","g"]}]}
 #             return JsonResponse(main)

@@ -9,7 +9,7 @@
                 </div>
                 <div class="tab-inn">
                     <div class="table-responsive table-user">
-                        <table class="table table-hover tablemanager">
+                        <table class="table table-hover tablemanager">{% csrf_token %}
                             <thead>
                                 <tr>
                                     <th class="text-center">Item ID</th>
@@ -26,33 +26,139 @@
                             <tbody>
                                 <tr>
                                     <td class="text-center"><a href="#"><span class="list-enq-name">101</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Broken Cup</span></a>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">Minimilistic Tree Wall Stickers</span></a>
                                     </td>
                                     <td>
-                                        <span class="listing">dummy@dummy.com</span>
+                                        <span class="listing ">raghu123@gmail.com</span>
                                     </td>
                                     <td>
-                                        <span class="listing">20</span>
+                                        <span class="listing">12</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">&#8377; 100.00</span>
+                                        <span class="listing ">&#8377; 300.00</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">ABC-DEF-GHI-JKL</span>
+                                        <span class="listing ">CRE-HOM-WAL-MEW</span>
                                     </td>
                                     <td>
-                                        <span class="listing text-center text-danger">Inactive</span>
+                                        <span class="listing text-center text-danger">Active</span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="listing">1/01/2021</span>
+                                        <span class="listing">01/01/2021</span>
                                     </td>
                                     <td class="text-center">
                                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="#" class="disable"><button id="" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
                                     </td>
                                 </tr>
-
-
+                                <tr>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">102</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">Ceramic Air Freshner</span></a>
+                                    </td>
+                                    <td>
+                                        <span class="listing">nileshchaudhary1905@gmail.com</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing">4</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">&#8377; 699.00</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">CRE-HOM-OTH-MLW</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-center text-danger">Active</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="listing">01/01/2021</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
+                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">103</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">Customized Pot</span></a>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-break">raghu123@gmail.com</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing">100</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">&#8377; 120.00</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">CRE-HOM-DIN-CSP</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-center text-danger">Active</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="listing">01/01/2021</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
+                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">104</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">Customized Glasses</span></a>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-break">nileshchaudhary1905@gmail.com</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing">50</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">&#8377; 99.00</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">CRE-HOM-DIN-OPP</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-center text-danger">Active</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="listing">01/01/2021</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
+                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">105</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">Handmade Chaai Cups(3 Units)</span></a>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-break">raghu123@gmail.com</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing">100</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">&#8377; 120.00</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing ">CRE-HOM-DIN-OKP</span>
+                                    </td>
+                                    <td>
+                                        <span class="listing text-center text-danger">Active</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="listing">01/01/2021</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
+                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

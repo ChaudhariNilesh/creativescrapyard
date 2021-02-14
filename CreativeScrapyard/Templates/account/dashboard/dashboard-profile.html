@@ -8,13 +8,32 @@
 
 <div class="bx-shd py-2 px-3 border">
     <span class="card-title">Public info</span>
+
     <div class=" row py-1">
         <div class="col-lg-5 col-md-5 col-sm-12 col-12 py-1">
             <div class="profile-img-container">
-                <img src="{% static 'img/testimonial/4.jpg' %}" class="img-profile rounded-circle card-profile-image shadow">
+            
+
+                <img src="{% if  user.profile.user_image.url is not null %} {{ user.profile.user_image.url | default:'../../../media/users/default.png' }} {% else %} ../../../media/users/default.png {% endif %}" class="img-profile rounded-circle card-profile-image shadow">
                 <div class="custom-file text-center py-4">
-                    <input type="file" class="custom-file-input" id="profilePicture" hidden>
-                    <label class="btn btn-sm pri-bg-color" for="profilePicture">Upload profile</label>
+                    <form method="POST" id="profileImgForm" enctype="multipart/form-data" action="{% url 'Authentication:editProfileImage' 'editImage' %}">{% csrf_token %}
+                        <input type="file" name="user_image" id="profilePicture" accept="image/*" onchange="chooseImage(event);" hidden>
+                        <label class="btn btn-sm pri-bg-color mt-2" id="chooseLbl" for="profilePicture">Choose</label>
+                        <input class="btn btn-sm pri-bg-color" id="submitPic" type="submit" value="Save" hidden>
+
+
+                        <!--  -->
+                        {% if user.profile.user_image  and user.profile.user_image.url != '/media/users/default.png' %}
+                        <!--  -->
+                        <a href="{% url 'Authentication:editProfileImage' 'removeImage' %}"><button  class="btn btn-sm btn-danger" type="button">Remove</button></a>
+                        <!--  -->
+                        {% endif %}
+                        <!--  -->
+                    </form>
+
+                    <div class="mt-4">
+                        {% include 'includes/messages.html' %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,29 +54,59 @@
                     </ul>
                 </div>
             </div>
-            <form>
+            <form action="{% url 'Authentication:editProfileData' 'editProfile' %}" method="POST">{% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="admin-FirstName">First name</label>
+                        <input type="text" class="form-control {% if Userform.errors.first_name == None and Userform.is_bound %} is-valid {% elif Userform.errors.first_name != None %} is-invalid {% endif %}" id="admin-FirstName" name="first_name" placeholder="First name" value="{{Userform.first_name.value | default:user.first_name}}"
+                            aria-describedby="inputGroupPrepend3 validateFirstName" required>
+                        <div id="validateFirstName" class="invalid-feedback">
+                            {{ Userform.first_name.errors.as_text}}
+                        </div>
+
+
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="profileLastName">Last name</label>
+                        <input type="text" class="form-control
+                         {% if Userform.errors.last_name == None and Userform.is_bound %} is-valid {% elif Userform.errors.last_name != None %} is-invalid {% endif %}" id="profileLastName" name="last_name" placeholder="Last name"
+                          value="{{Userform.last_name.value | default:user.last_name}}"
+                            aria-describedby="inputGroupPrepend3 validateLastName" required>
+                        <div id="validateLastName" class="invalid-feedback">
+                            {{ Userform.last_name.errors.as_text}}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="profileEmail">Email</label>
-                    <input type="text" class="form-control form-control-sm" id="profileEmail" value="example@example.com" readonly>
+                    <input type="text" class="form-control form-control-sm" id="profileEmail" value="{{user.email}}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="profileUsrName">Username</label>
-                    <input type="text" class="form-control form-control-sm" id="profileUsrName" value="user12345" readonly>
+                    <input type="text" class="form-control form-control-sm" id="profileUsrName" value="{{user.username}}" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="profileBio">Bio</label>
-                    <textarea class="form-control form-control-sm" id="profileBio" rows="3"></textarea>
+                    <label for="profileBio">Bio </label>
+                    <textarea class="form-control form-control-sm {% if Profileform.errors.bio == None and Profileform.is_bound %} is-valid {% elif Profileform.errors.bio != None %} is-invalid {% endif %}" 
+                    id="profileBio" rows="3" name="bio"
+                    aria-describedby="inputGroupPrepend3 validateBio"
+                    >{{Profileform.bio.value | default:user.profile.bio}}</textarea>
+                        <div id="validateBio" class="invalid-feedback">
+                            {{ Profileform.bio.errors.as_text}}
+                        </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <legend class="col-form-label col-sm-2 py-0">Gender</legend>
                         <div class="col-10 px-sm-5 px-md-4">
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderMale" value="Male" name="profileGender" checked>
+                                <input class="form-check-input" type="radio" id="profileGenderMale" value="M" name="user_gender" {% if user.profile.user_gender == 'M' %} checked {% endif %}/>
                                 <label class="form-check-label" for="profileGenderMale">Male</label>
                             </div>
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="Female" name="profileGender">
+                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="F" name="user_gender" {% if user.profile.user_gender == 'F' %} checked {% endif %}/>
                                 <label class="form-check-label" for="profileGenderFemale">Female</label>
                             </div>
                         </div>
@@ -66,11 +115,12 @@
                 </div>
                 <button type="submit" class="btn btn-sm pri-bg-color">Save changes</button>
             </form>
-
         </div>
-
     </div>
+    
 </div>
+            {% comment %} <a href="{% url 'Authentication:profile' %}"><button class="btn m-2 pull-right btn-sm pri-bg-color">View Profile</button></a> {% endcomment %}
+
 
 
 <div class="bx-shd my-4 py-2 px-3 border">
@@ -102,80 +152,89 @@
             </table>
         </div>
         <div class="addFirstAddress mt-3">
-            <button type="button" class="btn btn-sm pri-bg-color btn-addAddress shadow-none" data-toggle="modal" data-target=".bd-example-modal-lg">Add address
-            </button>
+           <a href='{% url 'Authentication:addAddress' %}'><button type="button" class="btn btn-sm pri-bg-color btn-addAddress shadow-none">Add address
+            </button></a>
             <br/>
             <small>Add your address here to get your delivery.</small>
+            
 
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
+            >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Add new address</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <a href="{% url 'Authentication:dashboard_profile' %}"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
-                            </button>
+                            </button></a>
                         </div>
-
+                          
                         <div class="model-body py-2 px-4">
-                            <form action="">
+                            <form action="{% url 'Authentication:addAddress' %}" method="POST">
+                                {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group col text-left">
-                                        <label for="addFirstName">First Name</label>
-                                        <input type="text" class="form-control form-control-sm" id="addFirstName" placeholder="first name">
-                                    </div>
-                                    <div class="form-group col text-left">
-                                        <label for="addLastName" class="text-left">Last Name</label>
-                                        <input type="text" class="form-control form-control-sm" id="addLastName" placeholder="last name">
+                                        <label for="addFirstName">Name : </label>
+                                        <input type="text" class="form-control form-control-sm" id="addFirstName" placeholder="Person Name" name="person_name">
+                                        {{form.person_name.errors}}
+                                       
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col text-left">
                                         <label for="addMobileNo">Mobile no</label>
-                                        <input type="tel" class="form-control form-control-sm" id="addMobileNo" placeholder="mobile number">
+                                        <input type="tel" class="form-control form-control-sm" id="addMobileNo" placeholder="mobile number" name="contact_no">
                                     </div>
                                     <div class="form-group col text-left">
                                         <label for="addType" class="text-left">Address Type</label>
-                                        <select id="addType" class="form-control form-control-sm">
+                                        <select id="addType" class="form-control form-control-sm" name="type">
                                             <option selected>Choose...</option>
-                                            <option>Home</option>
-                                            <option>Office</option>
-                                            <option>Other</option>
+                                            <option value="1">Home</option>
+                                            <option value="2">Office</option>
+                                            <option value="3">Other</option>
                                         </select>
+                                        {{form.type.errors}}
+
                                     </div>
                                 </div>
                                 <div class="form-row p-1">
                                     <label for="addressLine1">Address line 1</label>
-                                    <input type="text" class="form-control form-control-sm" id="addressLine1" placeholder="Flat, House no., Building, Company, Apartment" />
+                                    <input type="text" name="line1" class="form-control form-control-sm" id="addressLine1" placeholder="Flat, House no., Building, Company, Apartment" />
                                 </div>
                                 <div class="form-row p-1">
                                     <label for="addressLine2">Address line 2</label>
-                                    <input typpe="text" class="form-control form-control-sm" id="addressLine2" placeholder="Area, Colony, Street, Sector, Village" />
+                                    <input typpe="text" name="lin2" class="form-control form-control-sm" id="addressLine2" placeholder="Area, Colony, Street, Sector, Village" />
                                 </div>
                                 <div class="form-row pt-1 px-1">
                                     <div class="form-group col text-left">
                                         <label for="addLandmark">Landmark</label>
-                                        <input type="text" class="form-control form-control-sm" id="addLandmark" placeholder="landmark">
+                                        <input type="text" name="landmark" class="form-control form-control-sm" id="addLandmark" placeholder="landmark">
                                     </div>
-                                    <div class="form-group col text-left">
-                                        <label for="addCity">City</label>
-                                        <input type="text" class="form-control form-control-sm" id="addCity">
+                                       <div class="form-group col text-left">
+                                        <label for="addState">State</label>
+                                        <select id="addState" class="form-control form-control-sm" name="state_id">
+                                            <option value="" selected disabled>--Select Your State--</option>
+                                            <option value="1">Gujarat</option>
+                                            <option value="2">Rajasthan</option>
+                                            <option value="3">Madhya Pradesh</option>
+                                            <option>Maharashtra</option>
+                                            <option>Gujarat</option>
+                                            <option>Rajasthan</option>
+                                            <option>Madhya Pradesh</option>
+                                            <option>Maharashtra</option>
+                                        </select>
                                     </div>
+                                    
                                 </div>
                                 <div class="form-row p-1">
                                     <div class="form-group col text-left">
-                                        <label for="addState">State</label>
-                                        <select id="addState" class="form-control form-control-sm">
-                                            <option value="" selected disabled>--Select Your State--</option>
-                                            <option>Gujarat</option>
-                                            <option>Rajasthan</option>
-                                            <option>Madhya Pradesh</option>
-                                            <option>Maharashtra</option>
-                                            <option>Gujarat</option>
-                                            <option>Rajasthan</option>
-                                            <option>Madhya Pradesh</option>
-                                            <option>Maharashtra</option>
+                                        <label for="addCity">City</label>
+                                        <select id="addCity" name="city_id" class="form-control form-control-sm">
+                                            <option value="" selected disabled>--Select Your City--</option>
+                                            <option value="1">Ahmedabad</option>
+                                            <option value="2">Surat</option>
+                                            <option value="3">Rajkot</option>
                                         </select>
                                     </div>
                                     <div class="form-group col text-left">
@@ -202,33 +261,46 @@
     <span class="card-title">Bank Details</span>
     <div class="py-3">
 
-        <form method="" action="#">{% csrf_token %}
+        <form method="POST" action="{% url 'Authentication:editDocument' %}">{% csrf_token %}
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="accountNo">Account Number</label>
-                    <input type="text" class="form-control" name="accountNo" id="accountNo" value="9988-7766-5544-2310">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACNO" class="form-control {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" name="acc_no" id="accountNo" value="{{form.acc_no.value | default:'' }}">
+                    <div id="validateACNO" class="invalid-feedback">
+                        {{form.acc_no.errors}}
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="accountHolder">Account Holder</label>
-                    <input type="text" class="form-control" name="accountNo" id="accountHolder" value="Mr. John Doe">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACName" class="form-control {% if form.errors.acc_name == None and form.is_bound %} is-valid {% elif form.errors.acc_name != None %} is-invalid {% endif %}" name="acc_name" id="accountHolder" value="{{form.acc_name.value | default:'' }}">
+                    <div id="validateACName" class="invalid-feedback">
+                        {{form.acc_name.errors}}
+                    </div>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="bankName">Bank Name</label>
-                    <select name="bankName" id="bankName" class="form-control">
-                        <option selected>State Bank of India</option>
+                    <select name="bank_name" aria-describedby="inputGroupPrepend3 validateBank" id="bankName" class="form-control {% if form.errors.bank_name == None and form.is_bound %} is-valid {% elif form.errors.bank_name != None %} is-invalid {% endif %}">
+                        <option value="none" selected>State Bank of India</option>
                         <option value="">Bank of Baroda</option>
                         <option value="">ICICI Bank</option>
                         <option value="">HDFC Bank</option>
                         <option value="">Bank of India</option>
                         <option value="">Axis Bank</option>
                     </select>
+                    <div id="validateBank" class="invalid-feedback">
+                        {{form.bank_name.errors}}
+                    </div>
                 </div>
+
                 <div class="form-group col-md-6">
                     <label for="ifscCode">IFSC code</label>
-                    <input type="text" class="form-control" name="ifscCode" id="ifscCode" value="SBI778899">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateIFSC" class="form-control {% if form.errors.IFSC_code == None and form.is_bound %} is-valid {% elif form.errors.IFSC_code != None %} is-invalid {% endif %}" name="IFSC_code" id="ifscCode" value="{{form.IFSC_code.value | default:'' }}">
+                    <div id="validateIFSC" class="invalid-feedback">
+                        {{form.IFSC_code.errors}}
+                    </div>
                 </div>
 
             </div>
@@ -243,9 +315,37 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
-            <button type="submit" class="btn btn-sm pri-bg-color">Reveal</button>
         </form>
     </div>
 </div>
+
+{% endblock %} {% block customscript%}
+<script>
+    function validate(e) {
+        if ($("#profilePicture").get(0).files.length === 0) {
+            //console.log("No files selected.");
+            e.preventDefault();
+            $("#submitPic").attr("disabled");
+            Swal.fire({
+                text: "No files selected.",
+                icon: 'warning',
+
+            })
+        } else {
+
+            this.off('submit');
+            this.submit();
+        }
+    }
+
+    function chooseImage(e) {
+        if ($("#profilePicture").get(0).files.length !== 0) {
+            $("#submitPic").removeAttr("hidden")
+            $("#profileImgForm").after("<div class='alert alert-success' ><strong> Success! </strong> Click on save to upload image.</div>")
+        }
+
+
+    }
+</script>
 
 {% endblock %}

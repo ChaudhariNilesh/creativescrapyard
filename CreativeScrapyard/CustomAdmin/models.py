@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 
 # Create your models here.
+
 class tbl_crt_categories(models.Model):
     crt_category_id =  models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
     crt_category_name = models.CharField(max_length=40)

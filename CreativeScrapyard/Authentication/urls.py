@@ -1,21 +1,28 @@
-from django.urls import path, include
+from django.urls import path, include,re_path
+from django.conf.urls import url
 from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
 app_name = "Authentication"
 urlpatterns = [
-    path('login/',login,name="login"),
+    path('login/',UserLogin,name="login"),
     path('signup/',signup,name="signup"),
+    path('email-verification-sent/',EmailverificationSent,name="EmailverificationSent"),
+    path('activate/<slug:uidb64>/<slug:token>/',activateAccount, name='activateAccount'),
+    # path('activate-done/',activateAccountDone, name='activateAccountDone'),
     path('password-reset-link/',passwordReset,name="passwordReset"),
     path('password-reset-done/',passwordResetLink,name="passwordResetLink"),
+    path('reset-password/<slug:uidb64>/<slug:token>/',resetVerified, name='resetVerified'),
     path('new-password/',newPassword,name="newPassword"),
     path('new-password-done/',newPasswordDone,name="newPasswordDone"),
+    path('logout/',logout,name="logout"),
 
 
 
 
     path('profile/', profile, name="profile"),
+
     path('dashboard/', dashboard, name="dashboard"),
     path('dashboard/product/creative/', creative_items, name="creative_items"),
     path('dashboard/product/scrap/', scrap_items, name="scrap_items"),
@@ -36,6 +43,14 @@ urlpatterns = [
 
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
+    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileImage"),
+    path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileData"),
+
+
+
+
+    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+    path('dashboard/profile/edit-document/', editDocument, name="editDocument"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/history/<str:action>', order_history, name="order_tab_history"),
@@ -43,7 +58,13 @@ urlpatterns = [
     path('dashboard/payments/', dashboard_payments, name="payments"),
     path('dashboard/settings/', dashboard_settings, name="settings"),
     # path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
+    path('dashboard/settings/change-password', changePassword, name="changePassword"),
+    path('dashboard/settings/deactive-account', deactiveAccount, name="deactiveAccount"),
+
+    path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
+
+
 ]
 
 

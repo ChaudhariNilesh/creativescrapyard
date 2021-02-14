@@ -11,4 +11,4 @@ urlpatterns = [
     path('cart/',include('Cart.urls')), 
     path('order/',include('Order.urls')),
 
-    ]
+]

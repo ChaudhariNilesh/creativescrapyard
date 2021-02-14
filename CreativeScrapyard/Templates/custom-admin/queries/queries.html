@@ -2,10 +2,13 @@
 
 
 <div class="shadow p-3 mb-5 bg-white rounded">
-
+    <diV class="mt-4">
+        {% include 'includes/messages.html' %}
+    </diV>
     <div class="tab-content">
         <div id="queries" class="tab-pane active"><br>
             <div class="row">
+
                 <div class="col-md-12">
                     <div class="box-inn-sp">
                         <div class="page-title">
@@ -85,7 +88,7 @@
         </div>
 
     </div>
-
+    <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=someone@gmail.com" target="_blank">Title</a> -->
     <!-- QUERY REPLY Modal -->
     <div class="modal fade" id="queryReplyModal" tabindex="-1" role="dialog" aria-labelledby="queryReplyModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -96,32 +99,32 @@
                     <span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{% url 'CustomAdmin:sendmail' 'queryReply' %}" method="POST" enctype="multipart/form-data" name="EmailForm">{% csrf_token %}
                         <div class="form-group row border-top border-bottom">
                             <label for="recipientEmail" class="col-sm-2 col-form-label">To</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control-plaintext border-left pl-1" id="recipientEmail" value="dummy@dummy.com">
+                                <input type="email" class="form-control-plaintext border-left pl-1" id="recipientEmail" name="email" value="nileshchaudhary1905@gmail.com" required>
                             </div>
                         </div>
 
                         <div class="form-group row border-top border-bottom">
                             <!-- <label for="subject" class="col-sm-2 col-form-label">Subject</label> -->
                             <div class="col-sm-12 p-0">
-                                <input type="text" class="form-control-plaintext border-0 pl-2" id="subject" placeholder="Subject">
+                                <input type="text" name="subject" class="form-control-plaintext border-0 pl-2" id="subject" placeholder="Subject">
                             </div>
                         </div>
 
                         <div class="form-group row border-top border-bottom">
                             <div class="col-sm-12  p-0">
-                                <textarea class="form-control-plaintext border-0 pl-2" placeholder="Message"></textarea>
+                                <textarea name="message" class="form-control-plaintext border-0 pl-2" placeholder="Message" required></textarea>
                             </div>
                         </div>
 
+                        <div class="modal-footer">
+                            <input type="submit" class="btn-cxt" value="Send">
+                        </div>
                     </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn-cxt">Send</button>
                 </div>
             </div>
         </div>
