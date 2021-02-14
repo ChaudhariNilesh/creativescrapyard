@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from CreativeScrapyard import settings
 from Authentication.models import Address
+
 # Create your views here.
 def checkout(request):
     template="Order/checkout.html"

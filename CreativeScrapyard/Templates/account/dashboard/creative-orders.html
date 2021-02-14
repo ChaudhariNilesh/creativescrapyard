@@ -1,10 +1,5 @@
-{% extends 'account/base-dashboard.html' %}
-{% load static %}
-{% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/creative-orders.css' %}"/>
-{% endblock %}
-
-{% block base %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-orders.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Creative Orders
@@ -17,36 +12,60 @@
     <div class="py-3">
         <table class="table table-hover border-bottom tablemanager">
             <thead>
-            <tr>
-                <th scope="col" class="text-center fs-9">Order Id</th>
-                <th scope="col" class="text-center fs-9">Person name</th>
-                <th scope="col" class="text-center fs-9">Order date</th>
-                <th scope="col" class="text-center fs-9">Delivery Date</th>
-                <th scope="col" class="text-center fs-9">Deliver Address</th>
-                <th scope="col" class="text-center fs-9">Deliver Status</th>
-                <th scope="col" class="text-center fs-9" style="width: 125px;">Commission</th>
-                <th scope="col" class="text-center fs-9">Total price</th>
-                <th scope="col" class="text-center fs-9 disableFilterBy disableSort">Action</th>
-            </tr>
+                <tr>
+                    <th scope="col" class="text-center fs-9">Order Id</th>
+                    <th scope="col" class="text-center fs-9">Person name</th>
+                    <th scope="col" class="text-center fs-9">Order date</th>
+                    <th scope="col" class="text-center fs-9">Delivery Date</th>
+                    <th scope="col" class="text-center fs-9">Deliver Address</th>
+                    <th scope="col" class="text-center fs-9">Deliver Status</th>
+                    <th scope="col" class="text-center fs-9" style="width: 125px;">Commission</th>
+                    <th scope="col" class="text-center fs-9">Total price</th>
+                    <th scope="col" class="text-center fs-9 disableFilterBy disableSort">Action</th>
+                </tr>
             </thead>
             <tbody>
-            {% with n='[1,2,3,4,5,6]' %}
-            {% for i in n %}
-            <tr>
-                <td scope="row" class="text-center">#5647</td>
-                <td class="text-center">Yash Kukreja</td>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">15/1/20</td>
-                <td class="text-center">B-5, Shantigram, Chandkheda, Ahmedabad - 380005</td>
-                <td class="text-center"><span class="ord-status ord-status-run">Pending</span></td>
-                <td class="text-center">&#8377; 50</td>
-                <td class="text-center">&#8377; 450</td>
-                <td class="text-center">
-                    <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a>
-                </td>
-            </tr>
-            {% endfor %}
-            {% endwith %}
+                <tr>
+                    <td scope="row" class="text-center">101</td>
+                    <td class="text-center">Nikul Prajapati</td>
+                    <td class="text-center">11/1/2021</td>
+                    <td class="text-center">15/1/2021</td>
+                    <td class="text-center">B-5, Shantigram, Chandkheda, Ahmedabad - 380005</td>
+                    <td class="text-center"><span class="">Pending</span></td>
+                    <td class="text-center">&#8377; 75</td>
+                    <td class="text-center">&#8377; 300</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="row" class="text-center">102</td>
+                    <td class="text-center">Nikul Prajapati</td>
+                    <td class="text-center">11/1/2021</td>
+                    <td class="text-center">15/1/2021</td>
+                    <td class="text-center">54, Shree Krishna Society, Bavla, Ahmedabad - 382213</td>
+                    <td class="text-center"><span class="">Delivered</span></td>
+                    <td class="text-center">&#8377; 250</td>
+                    <td class="text-center">&#8377; 1000</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a>
+                    </td>
+                </tr>
+                <!-- {% with n='[1,2,3,4,5,6]' %} {% for i in n %}
+                <tr>
+                    <td scope="row" class="text-center">101</td>
+                    <td class="text-center">Nikul Prajapati</td>
+                    <td class="text-center">11/1/2021</td>
+                    <td class="text-center">15/1/2021</td>
+                    <td class="text-center">B-5, Shantigram, Chandkheda, Ahmedabad - 380005</td>
+                    <td class="text-center"><span class="ord-status ord-status-run">Pending</span></td>
+                    <td class="text-center">&#8377; 75</td>
+                    <td class="text-center">&#8377; 300</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a>
+                    </td>
+                </tr>
+                {% endfor %} {% endwith %} -->
             </tbody>
         </table>
     </div>

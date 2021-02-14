@@ -194,6 +194,7 @@ def dashboard_profile(request,action=None):
     UserFormData=EditUserFormData()
     profileFormData=EditProfileForm()
     UserAddressData = Address.objects.filter(user_id=request.user.user_id)
+    UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
     
 
     #print(request.FILES)
@@ -268,6 +269,7 @@ def dashboard_profile(request,action=None):
         "Userform":UserFormData,
         "Profileform":profileFormData,
         "UserAddress":UserAddressData,
+        "UserDocument":UserDocumentData,
     }
     
     return render(request, template,context)
@@ -495,21 +497,32 @@ def editDocument(request):
     if request.session.get('user'): 
         template = 'account/dashboard/dashboard-profile.html'
         editedData=EditUserDocument()
+        UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
+        print(UserDocumentData.acc_name)
         if request.method=='POST':
-            editedData=EditUserDocument(request.POST, instance=request.user)
+            # print(request.POST)
+            editedData=EditUserDocument(request.POST)
             if editedData.is_valid():
-                print("hello world")
-               # addressFormData.save()
-               # messages.success(request,"Updated Successfully.")
-               # addressFormData=AddressForm()
-               # redirect("Authentication:dashboard_profile")
+                #print("edit valid")
+                editedDocu = editedData.save(commit=False)
+               
+                UserDocumentData.acc_no=   editedDocu.acc_no
+                UserDocumentData.acc_name= editedDocu.acc_name
+                UserDocumentData.bank_name=editedDocu.bank_name
+                UserDocumentData.IFSC_code=editedDocu.IFSC_code
+                UserDocumentData.save()
+
+                messages.success(request,"Updated Successfully.")
+                editedData=EditUserDocument()
+                redirect("Authentication:dashboard_profile")
 
             else:
-                print(editedData.errors)
+                # print(editedData.errors)
                 messages.warning(request,"Please correct above errors.")
             
         context={
             "form":editedData,
+            "UserDocument":UserDocumentData,
         }
         return render(request,template,context)
     else:

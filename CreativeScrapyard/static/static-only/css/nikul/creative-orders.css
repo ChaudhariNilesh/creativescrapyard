@@ -15,12 +15,14 @@
     font-weight: 500;
 }
 
+
+/* 
 th.tb-head {
     padding-top: 7px;
     padding-bottom: 7px;
     color: #b3b3b3;
     font-weight: 500;
-}
+} */
 
 .ord-status {
     padding: 3px 20px;
@@ -48,10 +50,43 @@ th.tb-head {
     background-color: #d9dce1;
 }
 
+.fs-9 {
+    font-size: .8rem;
+}
+
+/*.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: var(--pri-color) !important;
+}
+
+.nav-pills .nav-link, .nav-pills .show>.nav-link {
+    color: var(--pri-color);
+    background-color: #fff !important;
+}*/
+
+.order-tab-list {
+    list-style: none;
+    background: white;
+    padding-left: 0px !important;
+}
+
+.order-tab-list li a {
+    color: var(--pri-color);
+}
+
+.order-tab-list li a:hover {
+    color: white;
+    background: var(--pri-color);
+}
+
+.tab-active {
+    color: white !important;
+    background: var(--pri-color);
+}
 
 @media only screen and (max-width: 600px) {
-  .page-title {
-    font-size: 1rem;
-    font-weight: 500;
-  }
+    .page-title {
+        font-size: 1rem;
+        font-weight: 500;
+    }
 }

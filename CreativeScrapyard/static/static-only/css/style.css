@@ -12,6 +12,34 @@
     --pri-color-scp-bg: #343a40;
 }
 
+.tags {
+    padding: 3px 20px;
+    border-radius: 16px;
+    font-size: .8rem;
+}
+
+.tags-common {
+    color: var(--pri-color-darker);
+    background-color: var(--pri-color-light);
+}
+
+.tags-special {
+    color: #2d62b1;
+    background-color: #c0d0e8;
+}
+
+.tags-rare {
+    color: #892cdc;
+    background-color: #dcc0f5;
+}
+
+.tags-rare>a {}
+
+.tags-event {
+    color: #ea2c62;
+    background-color: #f9c0d0;
+}
+
 
 /* Index Page */
 
@@ -175,6 +203,22 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff !important;
+    background-color: var(--pri-color) !important;
+}
+
+.nav-pills-options .nav-link {
+    color: var(--pri-color)!important;
+    margin: 0px 5px;
+}
+
+.nav-pills-options .nav-link:hover {
+    color: white !important;
+    background-color: var(--pri-color) !important;
+}
+
 
 
 /* Common Header */
@@ -680,6 +724,10 @@ select {
     background: transparent;
 }
 
+.dropdown-menu {
+    top: 40px !important;
+}
+
 
 /* Single Item Common OTHER PROD */
 
@@ -767,6 +815,15 @@ select {
 }
 
 
+/*.address-view-model {
+    overflow-x: scroll;
+    display: grid;
+    grid-template-columns: repeat(2, 100%);
+}
+
+#addDisplay2{ display: none; }*/
+
+
 /* Track Order */
 
 .progress-bar {
@@ -806,3 +863,11 @@ select {
 /* .footer-logo {
     margin-bottom: 20px;
 } */
+
+.fa-shopping-cart.fa-2x {
+    font-size: 1.5em;
+}
+
+.fa-user.fa-2x {
+    font-size: 1.5em;
+}

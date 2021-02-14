@@ -397,7 +397,9 @@ $(function() {
             var last = $rows.filter('.active:last').index();
 
             if ((last + 1) == rlen) {
-                swal("All Records loaded");
+                Swal.fire("All Records loaded");
+
+
             } else {
                 $rows.filter(':lt(' + (last + 10) + ')').addClass('active').css({ "display": "" });
 
@@ -492,7 +494,7 @@ $(function() {
         // scrollGal();
         //flatZoom();
         ArtistProductGal();
-    //    changeProdHover();
+        //    changeProdHover();
         priceSlider();
         prodLens();
         sideNav();

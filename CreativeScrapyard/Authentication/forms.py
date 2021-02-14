@@ -71,7 +71,7 @@ class EditUserDocument(forms.ModelForm):
         acc_name=self.cleaned_data.get("acc_name",None)
 
         if not  bool(re.match('[a-zA-Z\s]+$', acc_name)):
-            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit"))
+            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit or Special Characters"))
 
         return acc_name
 
@@ -86,7 +86,7 @@ class EditUserDocument(forms.ModelForm):
     def clean_IFSC_code(self):
         IFSC_code=self.cleaned_data.get("IFSC_code",None)
 
-        if not len(IFSC_code)==11 and not IFSC_code[0:4].isalpha() and not IFSC_code[4]=="0" and not IFSC_code[5:11].isdigit():
+        if not len(IFSC_code)==11 or not IFSC_code[0:4].isalpha() or not IFSC_code[4]=="0" or not IFSC_code[5:11].isdigit():
             self.add_error("IFSC_code",forms.ValidationError("Enter Valid IFSC code"))
 
         return IFSC_code
@@ -110,6 +110,7 @@ class EditProfileForm(forms.ModelForm):
         if not res:
             self.add_error("bio",forms.ValidationError('Invalid bio. Only Alphabet letter (a-z) and numbers (0-9) are accepted' ,code='invalid'))
         return cleaned_data           
+
 class UserDocument(forms.ModelForm):
 
     class Meta:
@@ -151,7 +152,7 @@ class UserDocument(forms.ModelForm):
     def clean_IFSC_code(self):
         IFSC_code=self.cleaned_data.get("IFSC_code",None)
 
-        if not len(IFSC_code)==11 and not IFSC_code[0:4].isalpha() and not IFSC_code[4]=="0" and not IFSC_code[5:11].isdigit():
+        if not len(IFSC_code)==11 or not IFSC_code[0:4].isalpha() or not IFSC_code[4]=="0" or not IFSC_code[5:11].isdigit():
             self.add_error("IFSC_code",forms.ValidationError("Enter Valid IFSC code"))
 
         return IFSC_code
