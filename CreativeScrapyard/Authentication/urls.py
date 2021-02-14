@@ -4,7 +4,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 app_name = "Authentication"
-
 urlpatterns = [
     path('login/',login,name="login"),
     path('signup/',signup,name="signup"),
@@ -20,8 +19,21 @@ urlpatterns = [
     path('dashboard/', dashboard, name="dashboard"),
     path('dashboard/product/creative/', creative_items, name="creative_items"),
     path('dashboard/product/scrap/', scrap_items, name="scrap_items"),
-    path('dashboard/product/creative/add', add_creative_product, name="add_creative_product"),
-    path('dashboard/product/creative/add/get-sub-crt-cat/<int:pk>', add_creative_product, name="get_crt_sub_cat"),
+
+    path('dashboard/product/creative/add/', add_creative_product, name="add_creative_product"),
+    path('dashboard/product/creative/add/<int:id>/', get_sub_category, name="get_sub_category"),
+    path('dashboard/product/creative/add/<str:action>/', add_creative_product, name="add_base_detail"),
+
+    path('dashboard/product/creative/add/item/<int:id>/', add_creative_product_detail, name="add_product_detail"),
+    path('dashboard/upload-image/<int:id>/', upload_image, name="upload_image"),
+    # path('dashboard/add-photo/<int:id>/', add_photo, name="add_photo"),
+
+    path('dashboard/product/creative/edit/<int:id>/', edit_creative_product,name="edit_creative_product"),
+    path('dashboard/product/scrap/edit/<int:id>/', edit_scrap_product,name="edit_scrap_product"),
+
+    path('dashboard/product/scrap/add/', add_scrap_product, name="add_scrap_product"),
+    path('dashboard/product/scrap/add/<int:id>/', get_scp_sub_category, name="get_scp_sub_category"),
+
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
@@ -30,9 +42,10 @@ urlpatterns = [
     path('dashboard/orders/details/', order_details, name="order_details"),
     path('dashboard/payments/', dashboard_payments, name="payments"),
     path('dashboard/settings/', dashboard_settings, name="settings"),
-    path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
+    # path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

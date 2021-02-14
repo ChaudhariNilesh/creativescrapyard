@@ -1,18 +1,18 @@
 <div id="dragDropProductImage" class="well text-muted text-center" style="padding-top: 3rem; padding-bottom: 3rem;">
-    <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
     <h3 class="pri-color">Drop Photos Here to Upload</h3>
     <button type="button" class="btn pri-bg-color js-upload-photos">
         <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
     </button>
 </div>
 
-
-<input id="fileupload" type="file" name="file" multiple
+{% block comment %}
+<input id="fileupload" type="file" name="crt_img_url" multiple
        accept=".jpg, .jpeg, .png"
        style="display: none;"
-       data-url="{% url 'Authentication:add_creative_product' %}"
-       data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
-
+       data-url="url for upload photo"
+       data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+>
+{% endblock %}
 <table id="gallery" class="table table-bordered">
     <thead>
     <tr>

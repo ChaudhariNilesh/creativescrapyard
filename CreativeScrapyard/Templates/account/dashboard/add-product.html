@@ -6,40 +6,16 @@
 </div>
 <hr/>
 <div class="main-page">
-    <form>
+    <form method="post" >
         <div class="form-group">
             <label for="productName">Product Name</label>
-            <input type="text" class="form-control" id="productName" placeholder="Product Name">
+            <input type="text" name="crt_item_name" class="form-control" id="productName" placeholder="Product Name">
         </div>
         <div class="form-group">
             <label for="productDescription">Product Description</label>
-            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+            <textarea class="form-control" name="crt_item_desc" id="productDescription" rows="3"></textarea>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="itemCategory">Category</label>
-                    <select id="itemCategory" class="form-control">
-                        <option selected>Choose...</option>
-                        {% for cat in crtCategory %}
-                        <option id="{{ cat.crt_category_id }}"
-                                data-get-sub-crt="{% url 'Authentication:get_crt_sub_cat' cat.crt_category_id %}">
-                            {{cat.crt_category_name}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="itemSubCategory">Sub-Category</label>
-                    <select id="itemSubCategory" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+    </form>
 
         <div class="row">
             <div class="col">
@@ -55,8 +31,48 @@
                 <div class="form-group">
                     <label for="height">Height</label>
                     <select id="height" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="width">Width</label>
+                    <select id="width" class="form-control">
                         <option selected>Choose...</option>
                         <option>...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="itemCategory">Category</label>
+                    <form action="{% url 'Authentication:get_crt_sub_cat' 'getsub' %}" method="POST">{% csrf_token %}
+                    <select id="itemCategory" name="itemCategory" class="form-control" onchange="this.form.submit();">
+                        <option value="0">Choose...</option>
+                        {% for cat in crtCategory %}
+                        <option value="{{ cat.crt_category_id }}" {%if cat.crt_category_id == crt_id %}selected{%endif%}>
+                            {{cat.crt_category_name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="itemSubCategory">Sub-Category</label>
+                    <select id="itemSubCategory" class="form-control">
+                        <option selected>Choose...</option>
+                        {% for cat in crtSubCategory %}
+                        <option value="{{ cat.crt_sub_category_id }}">
+                            {{cat.crt_sub_category_name}}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -133,7 +149,6 @@
             <a href="# " class="btn-link pri-color link-effect">+Add</a>
         </div>
         <button type="submit " class="btn btn-block pri-bg-color px-4 ">Add Product</button>
-    </form>
 </div>
 
 {% endblock %}
@@ -158,7 +173,6 @@
             }
             event.preventDefault();
         }
-
 
 
 </script>
