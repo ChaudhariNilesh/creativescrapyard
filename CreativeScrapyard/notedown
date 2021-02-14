@@ -48,6 +48,12 @@ change images
 
 
 ****************************************
+Remain After -> 
+add new address from checkout
+(chnage validation in signup and contact form TO forms.isvalid())
+edit and remove address
+
+-----------------
 >>password strentgth validate and signup user...
 >> queries,->SKIP
 >>shop cart javascript validate << POST WORK
@@ -63,18 +69,14 @@ change images
 --sendmail
 --disable reason input
 
-add/edit document 
-add new address 
+--add/edit document 
+--add new address 
+
 assign/add badges input validate
-
-
 add product
 edit product
-
 reported modal
 verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
-
-
 
 ****************************************
 

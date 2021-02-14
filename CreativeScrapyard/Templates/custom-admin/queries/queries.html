@@ -30,7 +30,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                                        <!-- {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                                         <tr>
                                             <td class="text-center"><span class="list-enq-name">dummy</span>
                                             </td>
@@ -50,11 +50,41 @@
 
                                             <td class="text-center">
                                                 <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal">View</button>
+                                                <button class="btn btn-sm pri-bg-color">Save</button>
                                                 <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
 
                                             </td>
+
                                         </tr>
-                                        {% endfor %} {% endwith %}
+                                        {% endfor %} {% endwith %} -->
+
+                                        {% for qry in queries %}
+                                        <tr>
+                                            <td class="text-center"><span class="list-enq-name">{{qry.first_name}}{{qry.last_name}}</span>
+                                            </td>
+                                            <td class="text-center"><span class="list-enq-name">{{qry.email}}</span>
+
+                                            </td>
+                                            <td class="text-center"><span class="list-enq-name">{{qry.query_subject}}</span></td>
+                                            </td>
+                                            <td class="text-center">{{qry.query_date}}</td>
+                                            <td class="text-center">
+                                                <select class="p-1 ord-status">
+                                                    <option value="Pending" {% if qry.query_status == "Resolved" %}selected{% endif %}>Resolved</option>
+                                                    <option value="Completed" {% if qry.query_status == "Pending" %}selected{% endif %}>Pending</option>
+                                                    <option value="Cancelled" {% if qry.query_status == "Rejected" %}selected{% endif %}>Rejected</option>
+                                                </select>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal{{qry.query_id}}">View</button>
+                                                <button class="btn btn-sm pri-bg-color">Save</button>
+                                                <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal{{qry.query_id}}"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
+
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
 
                                     </tbody>
                                 </table>
@@ -67,30 +97,31 @@
         </div>
     </div>
 
-
+    {% for qry in queries %}
     <!-- QUERY Modal -->
-    <div class="modal fade" id="queryModal" tabindex="-1" role="dialog" aria-labelledby="queryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="queryModal{{qry.query_id}}" tabindex="-1" role="dialog" aria-labelledby="queryModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="queryModalLabel">Order Not Delieverd</h5>
+                    <h5 class="modal-title" id="queryModalLabel">{{qry.query_subject}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    {{qry.query_message|default:"N/A"}}
                 </div>
                 <div class="modal-footer">
-                    <button data-toggle="modal" data-target="#queryReplyModal" type="button" class="btn-cxt">Reply</button>
+                    <!-- <button data-toggle="modal" data-target="#queryReplyModal" type="button" class="btn-cxt">Reply</button> -->
                 </div>
             </div>
         </div>
-
     </div>
+    {% endfor %}
     <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=someone@gmail.com" target="_blank">Title</a> -->
+    {% for qry in queries %}
     <!-- QUERY REPLY Modal -->
-    <div class="modal fade" id="queryReplyModal" tabindex="-1" role="dialog" aria-labelledby="queryReplyModalLabel" aria-hidden="true">
+    <div class="modal fade" id="queryReplyModal{{qry.query_id}}" tabindex="-1" role="dialog" aria-labelledby="queryReplyModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,18 +130,18 @@
                     <span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{% url 'CustomAdmin:sendmail' 'queryReply' %}" method="POST" enctype="multipart/form-data" name="EmailForm">{% csrf_token %}
+                    <form action="{% url 'CustomAdmin:replyQry' qry.query_id %}" method="POST" enctype="multipart/form-data" name="EmailForm">{% csrf_token %}
                         <div class="form-group row border-top border-bottom">
                             <label for="recipientEmail" class="col-sm-2 col-form-label">To</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control-plaintext border-left pl-1" id="recipientEmail" name="email" value="nileshchaudhary1905@gmail.com" required>
+                                <input type="email" class="form-control-plaintext border-left pl-1" id="recipientEmail" value="{{qry.email}}" required readonly>
                             </div>
                         </div>
 
                         <div class="form-group row border-top border-bottom">
                             <!-- <label for="subject" class="col-sm-2 col-form-label">Subject</label> -->
                             <div class="col-sm-12 p-0">
-                                <input type="text" name="subject" class="form-control-plaintext border-0 pl-2" id="subject" placeholder="Subject">
+                                <input type="text" name="subject" class="form-control-plaintext border-0 pl-2" id="subject" placeholder="Subject" required>
                             </div>
                         </div>
 
@@ -129,7 +160,7 @@
             </div>
         </div>
     </div>
-
+    {% endfor %}
 </div>
 {% endblock %} {% block custom-script %}
 <script>

@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 app_name = "Authentication"
+
 urlpatterns = [
     path('login/',UserLogin,name="login"),
     path('signup/',signup,name="signup"),
@@ -22,7 +23,7 @@ urlpatterns = [
 
 
     path('profile/', profile, name="profile"),
-
+    
     path('dashboard/', dashboard, name="dashboard"),
     path('dashboard/product/creative/', creative_items, name="creative_items"),
     path('dashboard/product/scrap/', scrap_items, name="scrap_items"),
@@ -43,13 +44,18 @@ urlpatterns = [
 
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
+    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+
+    path('dashboard/profile/ajax/get-cities/<int:id>',getCities,name="getCities"),
+    path('dashboard/profile/ajax/set-default/<int:id>',setDefault,name="setDefault"),
+
+
     path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileImage"),
     path('dashboard/profile/<str:action>', dashboard_profile, name="editProfileData"),
 
+    
 
-
-
-    path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+    # path('dashboard/profile/addAddress', addAddress, name="addAddress"),
     path('dashboard/profile/edit-document/', editDocument, name="editDocument"),
     path('dashboard/orders/creative/', order_creative, name="order_creative"),
     path('dashboard/orders/history/', order_history, name="order_history"),
@@ -61,10 +67,10 @@ urlpatterns = [
     path('dashboard/settings/change-password', changePassword, name="changePassword"),
     path('dashboard/settings/deactive-account', deactiveAccount, name="deactiveAccount"),
 
-    path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
+    #path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
 
-
+    
 ]
 
 

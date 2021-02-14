@@ -1,6 +1,6 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}"/>
-<link rel="stylesheet" href="{% static 'css/fancy_fileupload.css' %}"/> {% endblock %} {% block base %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}" />
+<link rel="stylesheet" href="{% static 'css/fancy_fileupload.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     <span class="card-title">Creative Items</span>
@@ -19,18 +19,153 @@
     <div class="py-3">
         <table class="table table-hover border-bottom tablemanager">
             <thead>
-            <tr>
-                <th scope="col" class="text-center">Item name</th>
-                <th scope="col" class="text-center">Quantity</th>
-                <th scope="col" class="text-center disableFilterBy disableSort">Color</th>
-                <th scope="col" class="text-center">Price</th>
-                <th scope="col" class="text-center">Status</th>
-                <th scope="col" class="text-center">Created On</th>
-                <th scope="col" class="text-center disableFilterBy disableSort">Action</th>
-            </tr>
+                <tr>
+                    <th scope="col" class="text-center">Item name</th>
+                    <th scope="col" class="text-center">Quantity</th>
+                    <th scope="col" class="text-center disableFilterBy disableSort">Color</th>
+                    <th scope="col" class="text-center">Price</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Created On</th>
+                    <th scope="col" class="text-center disableFilterBy disableSort">Action</th>
+                </tr>
             </thead>
             <tbody>
-            {% with n='[1,2,3,4,5,6]' %}
+
+
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Minimilistic Tree Wall Stickers</a></td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">
+                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=4C555C" width="32" height="32">
+                    </td>
+                    <td class="text-center">&#8377; 300</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Active</option>
+                            <option value="Shipping">Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Ceramic Air Freshner</a></td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">
+                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=CAD2C3" width="32" height="32">
+                    </td>
+                    <td class="text-center">&#8377; 699</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Active</option>
+                            <option value="Shipping">Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">27/1/21</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Customized Pots</a></td>
+                    <td class="text-center">3</td>
+                    <td class="text-center">
+                        --
+                        <!-- <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=CAD2C3" width="32" height="32"> -->
+                    </td>
+                    <td class="text-center">&#8377; 120</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Active</option>
+                            <option value="Shipping">Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">11/2/21</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Customized Glasses</a></td>
+                    <td class="text-center">6</td>
+                    <td class="text-center">
+                        --
+                        <!-- <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=CAD2C3" width="32" height="32"> -->
+                    </td>
+                    <td class="text-center">&#8377; 99</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Active</option>
+                            <option value="Shipping">Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">12/2/21</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Handmade Chaai Cups</a></td>
+                    <td class="text-center">6</td>
+                    <td class="text-center">
+
+                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=F7B619" width="32" height="32">
+                    </td>
+                    <td class="text-center">&#8377; 179</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" selected>Active</option>
+                            <option value="Shipping">Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">12/2/21</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Designer Cup</a></td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">
+
+                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=A75144" width="32" height="32">
+                    </td>
+                    <td class="text-center">&#8377; 79</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" >Active</option>
+                            <option value="Shipping" selected>Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">15/2/21</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- {% with n='[1,2,3,4,5,6]' %}
             {% for i in n %}
             <tr>
                 <td scope="row" class="text-center">
@@ -54,7 +189,7 @@
                 </td>
             </tr>
             {% endfor %}
-            {% endwith %}
+            {% endwith %} -->
             </tbody>
         </table>
     </div>
@@ -62,8 +197,7 @@
 </div>
 
 <!--Model popup-->
-<div class="modal fade bd-example-modal-lg-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-     aria-hidden="true">
+<div class="modal fade bd-example-modal-lg-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content product-view-modal">
             <div id="view-data">
@@ -81,9 +215,7 @@
                         <div class="col">
                             <h3 class="pri-color">Product name</h3>
                             <p class="text-justify  fs-9">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type specimen book.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                             </p>
                             <div class="row mt-1 py-1 fs-9">
                                 <div class="col">
@@ -163,8 +295,7 @@
                     <form>
                         <div class="form-group">
                             <label for="productName">Product Name</label>
-                            <input type="text" class="form-control form-control-sm" id="productName"
-                                   value="My product name">
+                            <input type="text" class="form-control form-control-sm" id="productName" value="My product name">
                         </div>
                         <div class="form-group">
                             <label for="productDescription">Product Descritption</label>
@@ -256,8 +387,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text" style="height:31px;">&#8377;</div>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm" id="productUnitPrice"
-                                               placeholder="price">
+                                        <input type="text" class="form-control form-control-sm" id="productUnitPrice" placeholder="price">
                                     </div>
                                 </div>
                             </div>
@@ -274,28 +404,25 @@
     </div>
 </div>
 
-{% endblock %}
-
-{% block baseScript %}
+{% endblock %} {% block baseScript %}
 <script>
-        var deletePhoto = function(event, id) {
-            $.ajax({
-                url: 'http://127.0.0.1:8000/accounts/photo-delete/' + id,
-                success: function() {
-                    is_done(true);
-                }
-            });
-
-            function is_done(ans) {
-                if(ans) {
-                    var trID = '#photo-list-' + id;
-                    $(trID).remove();
-                }else{
-                    alert("Technical issue.");
-                }
+    var deletePhoto = function(event, id) {
+        $.ajax({
+            url: 'http://127.0.0.1:8000/accounts/photo-delete/' + id,
+            success: function() {
+                is_done(true);
             }
-            event.preventDefault();
-        }
+        });
 
+        function is_done(ans) {
+            if (ans) {
+                var trID = '#photo-list-' + id;
+                $(trID).remove();
+            } else {
+                alert("Technical issue.");
+            }
+        }
+        event.preventDefault();
+    }
 </script>
 {% endblock %}

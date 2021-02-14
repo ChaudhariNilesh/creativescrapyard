@@ -1,3 +1,4 @@
+from django.http.request import QueryDict
 from CreativeScrapyard import settings
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,8 @@ from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
 from .models import *
-from Authentication.models import User
+from Authentication.models import User,Profile
+from Home.models  import Query
 from .forms import *
 from django.http import HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
@@ -58,7 +60,7 @@ def AdminLogin(request):
     return render(request,template)
 
 def adminindex(request):
-    if request.session.get('user'):
+    if request.user.is_superuser:
         template='custom-admin/admin-dashboard.html'
         
         return render(request,template)
@@ -156,38 +158,68 @@ def logout(request):
 ####### USERS RELATED #######
 
 def users(request):
-    if request.session.get('user'):
+    if request.user.is_superuser:
         template = 'custom-admin/users/users.html'
-        return render(request,template)
+        user=User.objects.filter(is_superuser=False)
+        context={
+            "Users":user,
+        }
+
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
 def buyers(request):
-    if request.session.get('user'): 
+    if  request.user.is_superuser: 
         template = 'custom-admin/users/buyers.html'
-        return render(request,template)
+        buyers = User.objects.filter(is_superuser=False,is_active=True)
+        context = {
+            "buyers":buyers,
+        }
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
 def sellers(request):
-    if request.session.get('user'): 
+    if  request.user.is_superuser: 
         template = 'custom-admin/users/sellers.html'
-        return render(request,template)
+        #user=User.objects.filter(is_superuser=False)
+        
+        #user=User.objects.filter(is_superuser=False,is_active=True)
+        #print(user)
+        sellers = Profile.objects.filter(is_verified=True)
+
+        context={
+            "sellers":sellers,
+        }
+
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
 def verifyusers(request,tab="pending"):
     if request.session.get('user'): 
         template = 'custom-admin/users/verify-users.html'
-        
+        context={}
         if tab=='pending':
             is_verified=False
+            # get data from user documents
+            pendingUser = True  # objects of user document
+            verifiedUser=""
+            
         elif tab == 'verified':
             is_verified=True
-
+            verifiedUser = Profile.objects.filter(is_verified=True)
+            pendingUser=False
+            
+            
+      
         context={
-            "is_verified":is_verified
+            "is_verified":is_verified,
+            "verifiedUser":verifiedUser,
+            "pendingUser":pendingUser,
         }
+        print(context)
         return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
@@ -576,9 +608,15 @@ def badges(request):
 
 ####### QUERIES RELATED #######
 def queries(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/queries/queries.html'
-        return render(request,template)
+        Qry = Query.objects.all()
+
+
+        context={
+            "queries":Qry,
+        }
+        return render(request,template,context)
 
     else:
         return redirect('CustomAdmin:login')    
@@ -621,7 +659,7 @@ def issues(request,opts="reportedCrtItem"):
         return redirect('CustomAdmin:login')
 ####### SEND EMAIL RELATED #######
 @login_required
-def sendmail(request,action=None):
+def sendmail(request):
     if request.session.get('user'):    
         template = 'custom-admin/sendmail/sendmail.html'
        
@@ -631,12 +669,8 @@ def sendmail(request,action=None):
             emailmessage = request.POST.get('message', '')
             print(request.POST)
             if not subject or not emailmessage:
-                if action=="queryReply":
-                    messages.error(request,"Subject or message cannot be empty.")
-                    return redirect("CustomAdmin:query")
-                else:
-                    messages.error(request,"Subject or message cannot be empty.")
-                    return redirect("CustomAdmin:sendmail")
+                messages.error(request,"Subject or message cannot be empty.")
+                return redirect("CustomAdmin:sendmail")
             else:
                 #print(email.split(","),subject,emailmessage)
                 try:
@@ -645,18 +679,19 @@ def sendmail(request,action=None):
                     mail_subject = subject
                     message = render_to_string('common/email.html', {
                         'message':str("\n")+emailmessage,
-                        'user':User.objects.get(email__iexact=email)
+                        # 'user':User.objects.get(email__iexact=email)
                     })
-                    to_email = email
+                    # to_email = emailList
                     email = EmailMessage(
                                 mail_subject, message, to=emailList
                     )
                     email.send()
                 
                 except Exception as e:
-                    messages.error(request,"Some error occured. Please try after sometime.")
+                    messages.error(request,"Some error occured. Please try after sometime."+str(e))
                 finally:
                     return redirect("CustomAdmin:sendmail")
+
 
         if request.is_ajax() and request.method=="POST":
             # print(request.POST)
@@ -719,6 +754,50 @@ def sendmail(request,action=None):
     else:
         return redirect('CustomAdmin:login')    
 
+####### REPLY QRY ####################
+
+@login_required
+def replyQry(request,id):
+    if request.user.is_superuser:    
+        template = 'custom-admin/queries/queries.html'
+       
+        if request.method == "POST" and not request.is_ajax():
+            # email = request.POST.get('email', '')
+            subject = request.POST.get('subject', '')
+            emailmessage = request.POST.get('message', '')
+            print(request.POST)
+            if not subject or not emailmessage:
+                messages.error(request,"Subject or message cannot be empty.")
+                return redirect("CustomAdmin:query")
+            else:
+                #print(email.split(","),subject,emailmessage)
+                try:
+                    qtyObj = Query.objects.get(query_id=id)
+                    #emailList=email.split(",")
+                    current_site = get_current_site(request)
+                    mail_subject = subject
+                    message = render_to_string('common/email.html', {
+                        'message':str("\n")+emailmessage,
+                        'QrySender':qtyObj,
+                        'type':'queryReply',
+                        
+                    })
+                    # to_email = emailList
+                    email = EmailMessage(
+                                mail_subject, message, to=[qtyObj.email]
+                    )
+                    email.send()
+                
+                except Exception as e:
+                    messages.error(request,"Some error occured. Please try after sometime.")
+                finally:
+                    return redirect("CustomAdmin:query")
+
+
+
+        return render(request,template)
+    else:
+        return redirect('CustomAdmin:login') 
 
 
 

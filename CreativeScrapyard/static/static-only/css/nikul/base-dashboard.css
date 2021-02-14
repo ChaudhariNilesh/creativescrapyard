@@ -22,7 +22,6 @@
 header {
     grid-area: 1 / 2 / 2 / 3;
     background-color: var(--pri-color-dark);
-    overflow: hidden;
     vertical-align: middle;
 }
 
@@ -58,12 +57,30 @@ main::-webkit-scrollbar {
 
 .header-child {
     width: 200px;
-    overflow: hidden;
+    overflow: visible;
     display: inline-block;
 }
 
 .main-img {
     height: 40px
+}
+
+
+.btn-cre {
+    letter-spacing: 0px;
+    border: solid #343a40 2px;
+    font-weight: 700;
+}
+
+.btn-scr {
+    letter-spacing: 0px;
+    border: none;
+    font-weight: 700;
+}
+
+.btn-scr:hover {
+    background-color: black;
+    color: white;
 }
 
 .img-profile-title {
@@ -74,6 +91,18 @@ main::-webkit-scrollbar {
 }
 
 /* Dashboard Left Panel Css */
+#dashTitleSpan {
+    opacity: .8;
+    transition: opacity .5s;
+}
+#dashTitleSpan:hover {
+    opacity: 1;
+}
+#dashTitleSpan a.title-link {
+    color: #fff;
+    text-decoration: none;
+}
+
 div#sideNav {
     padding: 1em .5em;
 }

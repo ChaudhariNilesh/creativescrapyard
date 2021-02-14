@@ -58,36 +58,18 @@ body {
     color: white;
 }
 
-.social-icons {
-    list-style-type: none;
-}
-
-.btn-facebook {
-    background-color: #1874EB;
-    color: white;
-}
-
-.btn-facebook:hover {
-    background-color: #1874EB;
-    color: white;
-}
-
-.btn-twitter {
-    background-color: #00ACEE;
-    color: white;
-}
-
-.btn-twitter:hover {
-    background-color: #00ACEE;
-    color: white;
-}
 
 .link-effect {
     color: var(--pri-color);
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .link-effect:hover {
-    color: var(--pri-color-dark);
+    color: var(--pri-color-darker);
+    text-decoration: none;
+    transition: color 0.4s;
+    cursor: pointer;
 }
 
 .form-control:focus {
@@ -114,6 +96,29 @@ body {
     box-shadow: 0 0 0 1px var(--pri-color-dark), 0 0 0 0.2rem var(--pri-color);
 }
 
+.report-flag {
+    color: black;
+}
+
+.report-flag:hover {
+    color: var(--pri-color);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: var(--pri-color) !important;
+}
+
+.nav-pills-options .nav-link {
+    color: var(--pri-color)!important;
+}
+
+.nav-pills-options .nav-link:hover {
+    color: white;
+    background-color: var(--pri-color);
+}
+
+
 .fw-700 {
     font-weight: 700;
 }
@@ -122,6 +127,9 @@ body {
     font-weight: 600;
 }
 
+.fs-9{
+    font-size: .9rem;
+}
 
 /* css for profile.html */
 
@@ -132,3 +140,168 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+
+/* Creative-items */
+
+.product-view-modal {
+    overflow-x: scroll;
+    display: grid;
+    grid-template-columns: repeat(4, 100%);
+}
+
+#edit-data-1, #edit-data-2 {
+    display: none;
+}
+
+.item-inactive {
+    color: red;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Add-product */
+
+.remove-product-image {
+    border-radius: 2px;
+    background-color: var(--pri-color-light);
+}
+
+#dragDropProductImage {
+    border: 2px var(--pri-color) dashed;
+}
+
+/* dashboard-profile */
+
+.addFirstAddress {
+
+}
+
+.addFirstAddress     {
+    text-align: center;
+}
+
+.btn-addAddress:hover {
+    box-shadow: var(--pri-color) 0px 2px 8px 0px;
+}
+
+
+
+
+
+
+/* Custom table filter css */
+table {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.table th {
+    padding: 15px;
+}
+
+.table td {
+    padding: 15px 0px;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+.tablemanager th.sorterHeader {
+    cursor: pointer;
+}
+
+.tablemanager th.sorterHeader:after {
+    content: " \f0dc";
+    font-family: "FontAwesome";
+}
+
+
+/*Style sort desc*/
+
+.tablemanager th.sortingDesc:after {
+    content: " \f0dd";
+    font-family: "FontAwesome";
+}
+
+
+/*Style sort asc*/
+
+.tablemanager th.sortingAsc:after {
+    content: " \f0de";
+    font-family: "FontAwesome";
+}
+
+
+/*Style disabled*/
+
+.tablemanager th.disableSort {}
+
+#for_numrows {
+    padding: 10px;
+    float: left;
+}
+
+#numrows {
+    padding: 8px 8px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#for_numrows label {
+    color: var(--pri-color-dark);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+#for_filter_by {
+    padding: 10px;
+    float: right;
+}
+
+#for_filter_by label {
+    color: var(--pri-color-dark);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+#filter_by {
+    padding: 8px 8px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#filter_input {
+    padding: 5px 5px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* swal css */
+
+button.swal2-confirm.swal2-styled {
+    background-color: var(--pri-color);
+}
+
+

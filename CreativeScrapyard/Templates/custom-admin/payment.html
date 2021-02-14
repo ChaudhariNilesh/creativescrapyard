@@ -19,19 +19,32 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-center"><span class="list-enq-name">00004</span>
+                    <td class="text-center"><span class="list-enq-name">20210213</span>
                     </td>
-                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' 20 %}">001101</span></a>
+                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' 20 %}">101</span></a>
                     </td>
                     <td class="text-center"><span class="list-enq-name">Debit Card</span>
                     </td>
-                    <td class="text-center">&#8377;400.0</td>
+                    <td class="text-center">&#8377;250.0</td>
                     <td class="text-center"> Successful
                     </td>
                     <td class="text-center">Bought Item
                     </td>
                 </tr>
-                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                <tr>
+                    <td class="text-center"><span class="list-enq-name">20200124</span>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' 20 %}">102</span></a>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">Debit Card</span>
+                    </td>
+                    <td class="text-center">&#8377;700.0</td>
+                    <td class="text-center"> Successful
+                    </td>
+                    <td class="text-center">Item Returned
+                    </td>
+                </tr>
+                <!-- {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                  <tr>
                     <td class="text-center"><span class="list-enq-name">00011   </span>
                     </td>
@@ -45,7 +58,7 @@
                     <td class="text-center">Sold Item
                     </td>
                 </tr>
-                {% endfor %} {% endwith %}
+                {% endfor %} {% endwith %} -->
 
             </tbody>
         </table>

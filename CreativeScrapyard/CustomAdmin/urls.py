@@ -60,6 +60,8 @@ urlpatterns = [
     ######MAIL######
     path('send-mail/',sendmail,name="sendmail"),
     path('send-mail/<str:action>',sendmail,name="sendmail"),
+    path('reply-query/<int:id>',replyQry,name="replyQry"),
+
 
 
 ]

@@ -9,10 +9,10 @@
 <div class="bx-shd my-3 py-2 px-3">
     <div class="row py-3">
         <div class="col">
-            <p class="ord-details-id">Order id: #2135</p>
+            <p class="ord-details-id">Order id: #101</p>
             <p class="ord-details-time my-2">
                 <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25" height="25">
-                <span class="ml-2 mt-2 mb-2"> March 28, 2020 At 12:43 PM</span>
+                <span class="ml-2 mt-2 mb-2"> Jan 1, 2021 At 12:43 PM</span>
             </p>
             <p class="ord-details-status">
                 <span>Status: </span>
@@ -43,7 +43,7 @@
             <div class="contact-details border-top py-2">
                 <p>
                     <img src="https://s2.svgbox.net/hero-solid.svg?ic=mail&color=20c993" width="20" height="20">
-                    <a class="link-effect px-2" href="mailto:example@example.com">example@example.com</a>
+                    <a class="link-effect px-2" href="mailto:example@example.com">nikulprajapati1901@gmail.com</a>
                 </p>
                 <p>
                     <img src="https://s2.svgbox.net/materialui.svg?ic=call&color=20c993" width="20" height="20">
@@ -60,19 +60,19 @@
         <div class="pr-3">
             <p class="py-2 row">
                 <span class="col-6 col-sm-9 text-left">Subtotal</span>
-                <span class="col fw-500 text-right">&#8377;500.00</span>
+                <span class="col fw-500 text-right">&#8377;250.00</span>
             </p>
             <p class="py-2 row">
                 <span class="col-6 col-sm-9 text-left">Delivery Charges</span>
                 <span class="col fw-500 text-right">&#8377;50.00</span>
             </p>
-            <p class="py-2 row">
+            <!-- <p class="py-2 row">
                 <span class="col-6 col-sm-9 text-left">Tax</span>
                 <span class="col fw-500 text-right">&#8377;00.00</span>
-            </p>
+            </p> -->
             <p class="bg-light py-3 pl-3 row">
                 <span class="col-6 col-sm-9 fw-500 text-left">Total paid by customer</span>
-                <span class="col fw-500 text-right">&#8377;550.00</span>
+                <span class="col fw-500 text-right">&#8377;300.00</span>
             </p>
         </div>
 
@@ -80,6 +80,184 @@
 </div>
 
 <div class="bx-shd my-3 pt-2 px-3">
+    <h4 class="my-2 pb-2">Order Items</h4>
+ 
+    <div class="border-bottom py-3">
+        <div class="row d-flex">
+            <div class="col-2 pr-0">
+                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/creative/GreenLantern.jpg' %}" alt="">
+            </div>
+            <div class="col-10">
+                <div class="my-2 border-bottom">
+                    <span>SKU : </span><span>CRT-DEC-LAN-A41F</span>
+                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Jan 1, 2021</span></span>
+                    <span style="float: right;" class="mr-2">
+                        <a href="#" data-toggle="modal" data-target=".report_model_sm">
+                            <i class="fas fa-flag report-flag"></i>
+                        </a>
+                    </span>
+
+                    <!-- Report model code    -->
+
+                    <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="model-header p-2 border-2 border-bottom">
+                                    <span class="text-dark">Report Item</span>
+                                </div>
+                                <div class="model-body p-2">
+                                    <form action="" method="post">
+                                        <div class="form-group">
+                                            <label class="text-dark" for="reportMsg">Please tell us about the
+                                                issue</label>
+                                            <select class="form-control form-control-sm rounded">
+                                                <option selected>What's the issue?</option>
+                                                <option>Doesn't match product</option>
+                                                <option>Offensive or adult content</option>
+                                                <option>Is not clear</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-dark" for="reportMsg">Comments (optional)</label>
+                                            <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
+                                        </div>
+                                        <div class="d-flex flex-row-reverse">
+                                            <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
+                                            <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report model code end here    -->
+
+                </div>
+                <div class="my-1">
+                    <span class="h4">German Lantern</span>
+                </div>
+
+                <div class="mt-1">
+                    {% comment %} <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %}
+                    <p><span>COLOR: </span><span><img
+                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=0F0" width="32" height="32"></span>
+                    </p>
+                    <p><span>STATUS: </span><span class="text-warning">Pending</span></p>
+                </div>
+
+                <div class="d-flex flex-row-reverse mt-4">
+                    <div class="px-1">
+                        <!-- <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Order</button> -->
+
+                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Item
+                        </button>
+                    </div>
+                    <div class="px-1">
+                        <a href="{% url 'Home:Items:Order:orderTrack' %}">
+                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;">
+                                Track
+                            </button>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+</div>
+<div class="bx-shd my-3 pt-2 px-3">
+    <h4 class="my-2 pb-2">Order Items</h4>
+ 
+    <div class="border-bottom py-3">
+        <div class="row d-flex">
+            <div class="col-2 pr-0">
+                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/creative/customizedbottles.jpg' %}" alt="">
+            </div>
+            <div class="col-10">
+                <div class="my-2 border-bottom">
+                    <span>SKU : </span><span> CRT-DEC-FLO-A41F</span>
+                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Jan 1, 2021</span></span>
+                    <span style="float: right;" class="mr-2">
+                        <a href="#" data-toggle="modal" data-target=".report_model_sm">
+                            <i class="fas fa-flag report-flag"></i>
+                        </a>
+                    </span>
+
+                    <!-- Report model code    -->
+
+                    <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="model-header p-2 border-2 border-bottom">
+                                    <span class="text-dark">Report Item</span>
+                                </div>
+                                <div class="model-body p-2">
+                                    <form action="" method="post">
+                                        <div class="form-group">
+                                            <label class="text-dark" for="reportMsg">Please tell us about the
+                                                issue</label>
+                                            <select class="form-control form-control-sm rounded">
+                                                <option selected>What's the issue?</option>
+                                                <option>Doesn't match product</option>
+                                                <option>Offensive or adult content</option>
+                                                <option>Is not clear</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-dark" for="reportMsg">Comments (optional)</label>
+                                            <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
+                                        </div>
+                                        <div class="d-flex flex-row-reverse">
+                                            <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
+                                            <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report model code end here    -->
+
+                </div>
+                <div class="my-1">
+                    <span class="h4">Flower Vase</span>
+                </div>
+
+                <div class="mt-1">
+                    {% comment %} <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %}
+                    {% comment %} <p><span>COLOR: </span><span><img
+                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32" height="32"></span>
+                    </p> {% endcomment %}
+                    <p><span>STATUS: </span><span class="text-success">Delivered</span></p>
+                </div>
+
+                <div class="d-flex flex-row-reverse mt-4">
+
+                    <div class="px-1">
+                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
+                            Give Rating & Review
+                          </button>
+                    </div>
+                    <div class="px-1">
+                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Return Item
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+</div>
+{% comment %} <div class="bx-shd my-3 pt-2 px-3">
     <h4 class="my-2 pb-2">Order Items</h4>
     {% with n='123' %} {% for i in n %}
     <div class="border-bottom py-3">
@@ -90,7 +268,7 @@
             <div class="col-10">
                 <div class="my-2 border-bottom">
                     <span>SKU : </span><span>ABC-SHJB-561-156</span>
-                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Dec 20, 2020</span></span>
+                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Jan 1, 2021</span></span>
                     <span style="float: right;" class="mr-2">
                         <a href="#" data-toggle="modal" data-target=".report_model_sm">
                             <i class="fas fa-flag report-flag"></i>
@@ -189,7 +367,7 @@
         </div>
     </div>
     {% endfor %} {% endwith %}
-</div>
+</div> {% endcomment %}
 
 
 

@@ -11,6 +11,10 @@
         Hi, {{seller.first_name|capfirst}} {{seller.last_name|capfirst}}
         {{user.first_name|capfirst}} {{user.last_name|capfirst}} {{message}} 
         {{seller.email}}
+    {% elif type == 'queryReply' %}
+        Hi, {{QrySender.first_name|capfirst}} {{QrySender.last_name|capfirst}}
+        {{message}} 
+        
     {% else %}
         {{message}}
     {% endif %}

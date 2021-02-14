@@ -14,19 +14,21 @@
                     <th class="text-center">No. Of Items</th>
                     <th class="text-center">Total Amount</th>
                     <th class="disableFilterBy text-center">Status</th>
+                    <th class="disableFilterBy disableSort text-center">Action</th>
+
 
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">00004</span></a>
+                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">101</span></a>
                     </td>
                     <td class="text-center"><span class="list-enq-name">11/01/2021</span>
                     </td>
-                    <td class="text-center"><span class="list-enq-name">aNilesh</span>
+                    <td class="text-center"><span class="list-enq-name">Nikul Prajapati	</span>
                     </td>
                     <td class="text-center">4</td>
-                    <td class="text-center">&#8377; 4700.0
+                    <td class="text-center">&#8377; 1375.0
                     </td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -35,8 +37,53 @@
                             <option value="Cancelled">Cancelled</option>
                         </select>
                     </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm pri-bg-color">Save</button>
+                    </td>
                 </tr>
-                {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+                <tr>
+                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">102</span></a>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">13/01/2021</span>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">Nikul Prajapati</span>
+                    </td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">&#8377; 700.0
+                    </td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Pending" selected>Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm pri-bg-color">Save</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">103</span></a>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">21/01/2021</span>
+                    </td>
+                    <td class="text-center"><span class="list-enq-name">Kenneth D'sliva</span>
+                    </td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">&#8377; 500.0
+                    </td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Pending" selected>Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm pri-bg-color">Save</button>
+                    </td>
+                </tr>
+                <!-- {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                 <tr>
                     <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">00001</span></a>
                     </td>
@@ -54,8 +101,11 @@
                             <option value="Cancelled">Cancelled</option>
                         </select>
                     </td>
+                    <td class="text-center">
+                        <button class="btn btn-sm pri-bg-color">Save</button>
+                    </td>
                 </tr>
-                {% endfor %} {% endwith %}
+                {% endfor %} {% endwith %} -->
 
             </tbody>
         </table>

@@ -122,12 +122,15 @@ $(function() {
     };
 
     var changeProdHover = function() {
+        const firstSrc = $(".prod-thumb-img").attr("src");
         $(".prod-thumb-img").on({
             mouseenter: function() {
-                $(this).attr("src", "../../static/img/products/2.jpg");
+                const secondSrc = $(this).attr("change-src");
+                $(this).attr("src", secondSrc);
             },
             mouseleave: function() {
-                $(this).attr("src", "../../static/img/products/1.jpg");
+
+                $(this).attr("src", firstSrc);
             }
         });
 
@@ -162,6 +165,76 @@ $(function() {
         }, );
     }
 
+
+    var contact = function() {
+        $("#contactBtn.btn-scp").click(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "We will share mail ID to the seller so that seller can contact you.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#20C993',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/contact-scrapseller/",
+                            type: "POST",
+                            data: {
+                                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                                action: 'post',
+                                type: "contactuser",
+                            },
+                            dataype: "json",
+                            beforeSend: function() {
+                                swal.fire({
+                                    title: 'Sending Mail...',
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    didOpen: () => {
+                                        swal.showLoading();
+                                    }
+                                });
+                            },
+                            complete: function(response) {
+                                //console.log(data.auth);
+
+                            },
+                            success: function(data) {
+                                swal.close();
+                                // console.log(data.send);
+                                if (data.auth) {
+                                    if (data.send) {
+                                        //Swal.fire(data.msg, "", "success");
+                                        Swal.fire("Your mail id is shared with our seller.", "", "success");
+                                    }
+                                } else {
+                                    window.location.href = "/accounts/login/";
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                swal.close();
+                                // console.log(jqXHR.status);
+                                Swal.fire(
+                                    jqXHR.status + "",
+                                    textStatus + " : " + errorThrown,
+                                    'error'
+                                )
+                            }
+                        });
+
+
+                    }
+                })
+                // Swal.fire("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
+                //     buttons: ["Nope", "Send"],
+                // });
+        });
+    }
+
     var priceSlider = function() {
         let sym = "&#8377;"
         $("#slider-range").slider({
@@ -182,14 +255,238 @@ $(function() {
 
     var func_expand = function() {
         let loc = window.location.pathname;
+        let sideBarLoc = loc.match(/(?:.*?\/){4,5}/);
+
         if (loc == "/accounts/dashboard/") {
             $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
-        } else if ((loc == "/accounts/dashboard/product/creative/add") || (loc == "/accounts/dashboard/product/scrapyard/add")) {
-            $('a[href="' + "/accounts/dashboard/product/creative/" + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        } else if (sideBarLoc != loc) {
+            console.log("dd" + sideBarLoc);
+            $('a[href="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         } else {
+            console.log(sideBarLoc);
             $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         }
+
+        // else if ((loc == "/accounts/dashboard/product/creative/add") || (loc == "/accounts/dashboard/product/scrapyard/add")) {
+        //     $('a[href="' + "/accounts/dashboard/product/creative/" + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+        // }
     };
+
+    var productViewModel = function() {
+        //        forward on model
+        $('#editProductNext').click(function() {
+            $('#view-data').hide("slide", { direction: "left" }, 1000);
+            $('#edit-data-1').show("slide", { direction: "right" }, 1000);
+        });
+
+        $('#editProductNext1').click(function() {
+            $('#edit-data-1').hide("slide", { direction: "left" }, 1000);
+            $('#edit-data-2').show("slide", { direction: "right" }, 1000);
+        });
+
+        //       backward on model
+        $("#editProductBack1").click(function() {
+            $('#edit-data-1').hide("slide", { direction: "right" }, 1000);
+            $('#view-data').show("slide", { direction: "left" }, 1000);
+        });
+
+        $("#editProductBack2").click(function() {
+            $('#edit-data-2').hide("slide", { direction: "right" }, 1000);
+            $('#view-data').show("slide", { direction: "left" }, 1000);
+        });
+    }
+
+    /*
+    var CustomFileUploader = function() {
+        $('#productFileUploader').FancyFileUpload({
+            'params': {
+                action: 'fileuploader'
+            },
+            'maxfilesize': 1000000,
+            'edit': true,
+            'retries': 3,
+        });
+    }
+    var uploadImageName = function() {
+        $("#primaryImage").on("change", function() {
+
+            $(this).siblings(".custom-file-label").addClass("selected").html("Added Product Image...");
+            let priDiv = document.getElementById("pri-img-div");
+            priDiv.removeAttribute("hidden");
+
+            $("#pri-prod-img-name").html("<p>" + document.getElementById("primaryImage").files[0].name + "</p>");
+            //$('#pri-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[0]) + "'/>");
+            $('#pri-image_preview').append("<li data-toggle='modal' data-target='#pri-img-modal' class='m-1'><a href='#pri-gallery' data-slide-to='0'><img class='img-thumbnail' width='80px' height='80px' src='" + URL.createObjectURL(event.target.files[0]) + "'></a></li>");
+
+            //alert(model_img);
+            $("#pri-gallery .carousel-inner").append("<div class='carousel-item active'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[0]) + "'></div>");
+        });
+
+        $("#otherImages").on("change", function() {
+            // console.log($(this).val());
+            // var fileName = $(this).val().split("\\").pop();
+            // var filesname = document.getElementById("otherImages").files[0].name;
+            // for (var i = 0; i < total_file; i++)
+            //     console.log(filesname);
+            // $("#pri-prod-img-names").append("<p>" + document.getElementById("primaryImage").files[i].name + "</p>")
+
+
+            let total_file = document.getElementById("otherImages").files.length;
+            if (total_file != 7) {
+                swal("Oh no!", "Please add 7 images.", "error");
+
+            } else {
+                let secDiv = document.getElementById("sec-img-div");
+                $(this).siblings(".custom-file-label").addClass("selected").html("Added Product Images...");
+
+                secDiv.removeAttribute("hidden");
+                for (var i = 0; i < total_file; i++) {
+                    $("#sec-prod-img-names").append("<p>" + document.getElementById("otherImages").files[i].name + "</p>")
+                        //$('#sec-image_preview').append("<img class='px-1' width='50px' height='50px' src='" + URL.createObjectURL(event.target.files[i]) + "'/>");
+                    $('#sec-image_preview').append("<li data-toggle='modal' data-target='#sec-img-modal' class='m-1'><a href='#sec-gallery' data-slide-to='0'><img class='img-thumbnail' width='80px' height='80px' src='" + URL.createObjectURL(event.target.files[i]) + "'></a></li>");
+                    if (i == 0) {
+                        $("#sec-gallery .carousel-inner").append("<div class='carousel-item active'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[i]) + "'></div>");
+                    } else {
+                        $("#sec-gallery .carousel-inner").append("<div class='carousel-item'><img class='d-block w-100' src='" + URL.createObjectURL(event.target.files[i]) + "'></div>");
+
+                    }
+
+                }
+            }
+
+        });
+
+    }
+    */
+
+    //table filters
+    var tableManager = function() {
+        $('.tablemanager').tablemanager({
+            firstSort: [
+                [1, 0],
+                [3, 0],
+                [4, 0],
+                [5, 1]
+            ],
+            appendFilterby: true,
+            dateFormat: [
+                [2, "mm-dd-yyyy"]
+            ],
+            debug: false,
+            vocabulary: {
+                voc_filter_by: 'Search By',
+                voc_type_here_filter: 'Search...',
+                voc_show_rows: 'Rows Per Page'
+            },
+            pagination: false,
+            showrows: [5, 10, 20, 50, 100],
+            disableFilterBy: []
+
+        });
+    }
+
+    var loadMoreRows = function() {
+        let i;
+        for (i = 0; i < 5; i++) { $('.tablemanager').find("tbody tr").eq(i).addClass('active'); }
+
+        $('#loadmore-btn').on("click", function() {
+            var rows = $('.tablemanager').find("tbody tr"),
+                rlen = rows.length;
+
+            var $rows = $('.tablemanager').find("tbody tr")
+            var last = $rows.filter('.active:last').index();
+
+            if ((last + 1) == rlen) {
+                Swal.fire("All Records loaded");
+
+
+            } else {
+                $rows.filter(':lt(' + (last + 10) + ')').addClass('active').css({ "display": "" });
+
+            }
+
+        });
+    }
+
+    var gridPagination = function() {
+
+    }
+
+    // new file uploader js SIBTC
+    var newFileUploader = function() {
+
+        $(".js-upload-photos").click(function() {
+            $("#fileupload").click();
+        });
+
+        /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
+        $("#fileupload").fileupload({
+            dataType: 'json',
+            sequentialUploads: true,
+
+            /* 1. SEND THE FILES ONE BY ONE */
+            start: function(e) { /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
+                $("#modal-progress").modal("show");
+            },
+            stop: function(e) { /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
+                $("#modal-progress").modal("hide");
+                setTimeout(function() { $("#modal-progress").modal("hide") }, 1000);
+            },
+            progressall: function(e, data) { /* 4. UPDATE THE PROGRESS BAR */
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                var strProgress = progress + "%";
+                $(".progress-bar").css({ "width": strProgress });
+                $(".progress-bar").text(strProgress);
+            },
+            done: function(e, data) {
+                if (data.result.is_valid) {
+                    $("#gallery tbody").prepend(
+                        "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a></td><td><a href=" + 'http://127.0.0.1:8000/accounts/photo-delete/' + data.result.id + "><span class='remove-product-image p-1'><img src='https://s.svgbox.net/materialui.svg?ic=delete&fill=13775a' width='26' height='26'></span></a></td></tr>"
+                    );
+                }
+            }
+        });
+    }
+
+    //   Dom Ready
+    var orderItemCancel = () => {
+        $('.btn-item-cancel').on('click', function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#20C993',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Cancelled!',
+                        'order item is cancelled.',
+                        'success'
+                    );
+                }
+            });
+        });
+    }
+
+    var btnLoading = () => {
+        $('.btn-load').click(function() {
+            $('.btn-load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
+        });
+    }
+
+    var rating = function() {
+        $("#review").rating({
+            "click": function(e) {
+                console.log(e); // {stars: 3, event: E.Event}
+                alert(e.stars);
+            },
+            'half': true,
+        });
+    };
+
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -197,14 +494,30 @@ $(function() {
         // scrollGal();
         //flatZoom();
         ArtistProductGal();
-        changeProdHover();
+        //    changeProdHover();
         priceSlider();
         prodLens();
         sideNav();
+        contact();
         func_expand();
+        productViewModel();
+        // CustomFileUploader();
+        //CustomFileUploader();
+        tableManager();
+        loadMoreRows();
         // expandDashboard();
+        // uploadImageName();
+        gridPagination();
+        newFileUploader();
+        orderItemCancel();
+        btnLoading();
+        rating();
     });
 });
+
+
+
+
 
 
 // $(document).ready(function() {

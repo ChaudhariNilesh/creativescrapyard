@@ -39,7 +39,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% with n='[1,2,3,4,5,6]' %} {% for i in n %}
+                <tr>
+                    <td class="text-center"><a class="link-effect">104</a></td>
+                    <td class="text-center">15/2/2021</td>
+                    <td class="text-center">20/3/2021</td>
+                    <td class="text-center">&#8377; 500</td>
+                    <td class="text-center"><a href="{% url 'Authentication:order_details' %}" class="btn btn-sm pri-bg-color">View</a></td>
+                </tr>
+                <!-- {% with n='[1,2,3,4,5,6]' %} {% for i in n %}
                 <tr>
                     <td class="text-center"><a class="link-effect">#5647</a></td>
                     <td class="text-center">27/1/2021</td>
@@ -47,7 +54,7 @@
                     <td class="text-center">&#8377; 500</td>
                     <td class="text-center"><a href="{% url 'Authentication:order_details' %}" class="btn btn-sm pri-bg-color">View</a></td>
                 </tr>
-                {% endfor %} {% endwith %}
+                {% endfor %} {% endwith %} -->
             </tbody>
         </table>
     </div>

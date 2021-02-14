@@ -162,10 +162,10 @@ def validate(**kwargs):
         if kwargs['sub']:
             inp_sub = kwargs['sub']
             
-            if not inp_sub.isalpha():
+            if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',inp_sub)): 
                 sub = {
                     'is_valid': False,
-                    'msg': "Invalid Subject Name."
+                    'msg': "Invalid subject no special character are allowed."
                 }
                 data["errors"]=True
             else:
@@ -181,6 +181,23 @@ def validate(**kwargs):
             }
             data["errors"]=True
             data["sub"] = sub
+########################### MESSAGES #########################            
+    if 'msg' in kwargs:
+        if kwargs['msg']:
+            inp_msg= kwargs['msg']
+            
+            if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',inp_msg)): 
+                CtMessage = {
+                    'is_valid': False,
+                    'msg': "Invalid ."
+                }
+                data["errors"]=True
+            else:
+                CtMessage = {
+                    'is_valid': True,
+                    'msg': ""
+                }
+            data["CtMessage"] = CtMessage
 
 
     if 'pswd1' in kwargs and 'pswd1' in kwargs:

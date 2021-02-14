@@ -71,7 +71,7 @@ class EditUserDocument(forms.ModelForm):
         acc_name=self.cleaned_data.get("acc_name",None)
 
         if not  bool(re.match('[a-zA-Z\s]+$', acc_name)):
-            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit"))
+            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit or Special Characters"))
 
         return acc_name
 
@@ -86,7 +86,7 @@ class EditUserDocument(forms.ModelForm):
     def clean_IFSC_code(self):
         IFSC_code=self.cleaned_data.get("IFSC_code",None)
 
-        if not len(IFSC_code)==11 and not IFSC_code[0:4].isalpha() and not IFSC_code[4]=="0" and not IFSC_code[5:11].isdigit():
+        if not len(IFSC_code)==11 or not IFSC_code[0:4].isalpha() or not IFSC_code[4]=="0" or not IFSC_code[5:11].isdigit():
             self.add_error("IFSC_code",forms.ValidationError("Enter Valid IFSC code"))
 
         return IFSC_code
@@ -110,16 +110,17 @@ class EditProfileForm(forms.ModelForm):
         if not res:
             self.add_error("bio",forms.ValidationError('Invalid bio. Only Alphabet letter (a-z) and numbers (0-9) are accepted' ,code='invalid'))
         return cleaned_data           
+
 class UserDocument(forms.ModelForm):
 
     class Meta:
         model=Documents
-        fields=("acc_no","acc_name","bank_name","IFSC_code","pan_no","pan_name","pan_img_url")
+        fields=("acc_no","acc_name","IFSC_code","pan_no","pan_name","bank_name","pan_img_url",)
 
     def clean_acc_no(self):
         acc_no=self.cleaned_data.get("acc_no",None)
 
-        if not acc_no.isdigit() or len(acc_no) > 20 or len(acc_no) < 9:
+        if not acc_no.isdigit() or len(acc_no) < 9 or len(acc_no) > 20  :
             self.add_error("acc_no",forms.ValidationError('Enter Valid Account Number.'))
         
         return acc_no
@@ -127,7 +128,7 @@ class UserDocument(forms.ModelForm):
     def clean_acc_name(self):
         acc_name=self.cleaned_data.get("acc_name",None)
 
-        if not  bool(re.match('[a-zA-Z\s]+$', acc_name)):
+        if not bool(re.match('[a-zA-Z\s]+$',acc_name)):
             self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit"))
 
         return acc_name
@@ -141,9 +142,9 @@ class UserDocument(forms.ModelForm):
         return bank_name
 
     # def clean_bank_name(self):
-    #     bank_name=self.cleaned_data.get()
+    #     bank_name=self.cleaned_data.get("bank_name",None)
 
-    #     if not bank_name.isalpha():
+    #     if not bool(re.match('[a-zA-Z\s]+$',bank_name)):
     #         self.add_error("bank_name",forms.ValidationError("Bank Name Shouldn't Contain Digit"))
 
     #     return bank_name
@@ -151,13 +152,10 @@ class UserDocument(forms.ModelForm):
     def clean_IFSC_code(self):
         IFSC_code=self.cleaned_data.get("IFSC_code",None)
 
-        if not len(IFSC_code)==11 and not IFSC_code[0:4].isalpha() and not IFSC_code[4]=="0" and not IFSC_code[5:11].isdigit():
+        if not len(IFSC_code)==11 or not IFSC_code[0:4].isalpha() or not IFSC_code[4]=="0" or not IFSC_code[5:11].isdigit():
             self.add_error("IFSC_code",forms.ValidationError("Enter Valid IFSC code"))
 
         return IFSC_code
-
-
-
 
     def clean_pan_no(self):
         pan_no=self.cleaned_data.get("pan_no",None)
@@ -170,17 +168,26 @@ class UserDocument(forms.ModelForm):
     def clean_pan_name(self):
         pan_name=self.cleaned_data.get("pan_name",None)
 
-        if not pan_name.isalpha():
+        if not bool(re.match('[a-zA-Z\s]+$',pan_name)):
             self.add_error("pan_name",forms.ValidationError("Pan Name Shouldn't Contain Digit"))
         
         return pan_name
+    
+    def clean_pan_img_url(self):
+        cleaned_data=self.cleaned_data
+        #print(cleaned_data) {"name":value}
+        pan_img_url = cleaned_data.get("pan_img_url",False)
+    
+        if pan_img_url:
+            validate_image_file_extension(pan_img_url)
+        return pan_img_url
 
 
 class AddressForm(forms.ModelForm):
     
     class Meta:
         model = Address
-        fields = ("person_name","contact_no","type","line1","line2","landmark","city_id","state_id","pincode")
+        fields = ("person_name","contact_no","type","line1","line2","pincode","landmark")
 
     def clean_person_name(self):
         cleaned_data=self.cleaned_data
@@ -213,7 +220,7 @@ class AddressForm(forms.ModelForm):
     def clean_line1(self):
         line1=self.cleaned_data.get("line1",None)
 
-        if len(line1)==0:
+        if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',line1)):
             self.add_error("line1",forms.ValidationError('Please Enter Address Line 1'))
 
         return line1
@@ -221,10 +228,24 @@ class AddressForm(forms.ModelForm):
     def clean_line2(self):
         line2=self.cleaned_data.get("line2",None)
 
-        if len(line2)==0:
+        if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',line2)):
             self.add_error("line2",forms.ValidationError('Please Enter Address Line 2'))
 
         return line2
+
+    def clean_landmark(self):
+        landmark=self.cleaned_data.get("landmark",None)
+        #print(landmark)
+        try:
+            if landmark :
+                if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',landmark)):
+                    self.add_error("landmark",forms.ValidationError('Only alphabets and number are accepted.'))
+        except :
+            pass
+            
+        return landmark
+        
+            
 
     def clean_pincode(self):
         pincode=self.cleaned_data.get("pincode",None)
@@ -233,6 +254,33 @@ class AddressForm(forms.ModelForm):
             self.add_error("pincode",forms.ValidationError("Please Enter Valid Pincode"))
         
         return pincode
+
+    # def clean_state(self):
+    #     state=self.cleaned_data.get("state",None)
+
+
+    #     stateExist = States.objects.filter(state_id=state.state_id).exists()
+    #     if not stateExist:
+    #         self.add_error("state",forms.ValidationError("Please select your state."))
+    #     # print(state.state_id)
+    #     if not state:
+    #         #print("not selec")
+    #         self.add_error("state",forms.ValidationError("Please select your state."))
+    #     return state.state_id
+    
+    # def clean_city(self):
+    #     city=self.cleaned_data.get("city",None)
+
+
+    #     cityExist = Cities.objects.filter(city_id=city.city_id).exists()
+    #     cityObj = Cities.objects.filter(city_id=city.city_id).values()
+    #     if not cityExist:
+    #         self.add_error("city",forms.ValidationError("Please select your city."))
+    #     # print(city.city)
+    #     if not city:
+    #         # print("not selec")
+    #         self.add_error("city",forms.ValidationError("Please select your city."))
+    #     return city
     
 
 

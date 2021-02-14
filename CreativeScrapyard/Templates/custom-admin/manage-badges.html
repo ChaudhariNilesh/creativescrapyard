@@ -1,10 +1,7 @@
-{% extends 'custom-admin/common.html' %} {% load static %}  
-{% comment %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {% endcomment %}
-{%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">Badges</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
 <!-- Modal -->
-<div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="assignBadgeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,23 +11,23 @@
                 </button>
             </div>
             <div class="modal-body mx-auto d-block">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleFormControlFile1">User Email:</label>
-                            <input type="text" class="form-control" id="exampleFormControlFile1">
-                            <label for="exampleFormControlFile1">Badge Name:</label>
-                            <select class="custom-select">
+                <form method="" action="#">
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">User Email:</label>
+                        <input type="email" name="email" class="form-control" id="exampleFormControlFile1" required>
+                        <label for="exampleFormControlFile1">Badge Name:</label>
+                        <select class="custom-select" name="badge">
                                 <option selected>Choose a Badge</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
-                        </div>
-                    </form>
+                    </div>
+                    <button type="submit" class="btn-cxt float-right">Save changes</button>
+
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn-cxt">Save changes</button>
             </div>
         </div>
     </div>
@@ -44,8 +41,7 @@
 
                 </div>
                 <h4 class="mx-auto d-block">
-                    <hr>
-                    All Badges
+                    <hr> All Badges
                     <hr>
                 </h4>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
@@ -62,8 +58,7 @@
                     <hr>
                     <div>
                         <span class="">Badges Achievers</span>
-                        <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal"
-                            data-target="#assignBadgeModal">Assign Badge</span>
+                        <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal" data-target="#assignBadgeModal">Assign Badge</span>
                     </div>
 
                     <hr>
@@ -74,11 +69,11 @@
                         <table class="table table-hover tablemanager">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Badge Name</th>
-                                    <th class="disableFilterBy">Artist</th>
-                                    <th class="disableFilterBy disableSort">Action</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Badge Name</th>
+                                    <th class="disableFilterBy text-center">Artist</th>
+                                    <th class="disableFilterBy disableSort text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,24 +84,24 @@
                                     <td>
                                         <span class="p-2 listing">Artist</span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
-                                                    <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
-                                    </td>
+                                        <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                    </td class="text-center">
                                     {% comment %}
-                                    <td>
+                                    <td class="text-center">
                                         <a href="user-edit.html"><i
                                                 class="fa fa-pencil-square-o text-white p-2 rounded cus"
                                                 aria-hidden="true"></i></a>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
                                                 aria-hidden="true"></i></a>
                                     </td> {% endcomment %}
@@ -122,20 +117,19 @@
                                         <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
-                                                    <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                        <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
                                     </td>
                                     {% comment %}
-                                    <td>
-                                        <a href="user-edit.html"><i
-                                                class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                                    <td class="text-center">
+                                        <a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus"
                                                 aria-hidden="true"></i></a>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
                                                 aria-hidden="true"></i></a>
                                     </td> {% endcomment %}
