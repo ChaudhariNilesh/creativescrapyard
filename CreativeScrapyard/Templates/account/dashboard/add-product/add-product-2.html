@@ -1,0 +1,113 @@
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}"/> {% endblock %} {% block base %}
+
+<div class="page-title">
+    Add Product detail
+</div>
+<hr/>
+<div class="main-page">
+
+    <div class="card-body">
+
+        <form method="POST" enctype="multipart/form-data" action="{% url 'Authentication:add_product_detail' item_id %}">{% csrf_token %}
+
+            <div class="py-2">
+                <h3 class="text-center">Upload product images</h3>
+                <div class="custom-file my-1">
+                    <input type="file" id="customFile" name="crt_img_url" required multiple
+                         class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}"
+                         aria-describedby="inputGroupPrepend3 validateImages">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <div id="validateImages" class="invalid-feedback">
+                        {{ image_error }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="color " class="col-sm-2 col-form-label">Product Color</label>
+                <div class="col-sm-2 ">
+                    <input type="color" id="color " class="form-control" name="crt_item_color" value="" required>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label for="itemSize" class="col-sm-2 col-form-label ">Size</label>
+                <div class="col-sm-4">
+                    <select id="itemSize" name="crt_item_size"
+                            class="form-control {% if form.errors.crt_item_size == None and form.is_bound %} is-valid {% elif form.errors.crt_item_size != None %} is-invalid {% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateSize">
+                        <option>Choose...</option>
+                        <option value="XXL" {%if form.crt_item_size.value == 'XXL' %} selected{%endif%}>XXL</option>
+                        <option value="XL" {%if form.crt_item_size.value == 'XL' %} selected{%endif%}>XL</option>
+                        <option value="L" {%if form.crt_item_size.value == 'L' %} selected{%endif%}>L</option>
+                        <option value="M" {%if form.crt_item_size.value == 'M' %} selected{%endif%}>M</option>
+                        <option value="S" {%if form.crt_item_size.value == 'S' %} selected{%endif%}>S</option>
+                        <option value="XS" {%if form.crt_item_size.value == 'XS' %} selected{%endif%}>XS</option>
+                    </select>
+                    <div id="validateSize" class="invalid-feedback">
+                        {{ form.crt_item_size.errors.as_text}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label for="itemQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                <div class="col-sm-4 ">
+                    <input id="itemQuantity" name="crt_item_qty" type="number" min="1" step="1"
+                           class="form-control {% if form.errors.crt_item_qty == None and form.is_bound %} is-valid {% elif form.errors.crt_item_qty != None %} is-invalid {% endif %}"
+                           value="{{ form.crt_item_qty.value | default:1 }}"
+                           aria-describedby="inputGroupPrepend3 validateQuantity">
+                    <div id="validateQuantity" class="invalid-feedback">
+                        {{ form.crt_item_qty.errors.as_text}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label for="itemUnitPrice" class="col-sm-2 col-form-label">Unit Price</label>
+                <div class="col-sm-4 ">
+                    <input type="number" id="itemUnitPrice" name="crt_item_price" step="0.25" min="1"
+                           class="form-control {% if form.errors.crt_item_price == None and form.is_bound %} is-valid {% elif form.errors.crt_item_price != None %} is-invalid {% endif %}"
+                           value="{{ form.crt_item_price.value | default:1.00 }}"
+                           aria-describedby="inputGroupPrepend3 validateUnitPrice">
+                    <div id="validateUnitPrice" class="invalid-feedback">
+                        {{ form.crt_item_price.errors.as_text}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="submit" class="btn btn-block btn-sm pri-bg-color" value="Done"/>
+                </div>
+                <div class="col">
+                    <input type="submit" class="btn btn-block btn-sm pri-bg-color" value="Add new"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block customscript %}
+<script>
+        var deletePhoto = function(event, id) {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/accounts/photo-delete/' + id,
+                success: function() {
+                    is_done(true);
+                }
+            });
+
+            function is_done(ans) {
+                if(ans) {
+                    var trID = '#photo-list-' + id;
+                    $(trID).remove();
+                }else{
+                    alert("Technical issue.");
+                }
+            }
+            event.preventDefault();
+        }
+
+</script>
+{% endblock %}

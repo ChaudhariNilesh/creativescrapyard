@@ -1,30 +1,107 @@
 from django import forms
 from .models import *
+import re
 
 
 class tbl_creativeitems_mst_form(forms.ModelForm):
     class Meta:
         model = tbl_creativeitems_mst
-        fields = ('crt_item_name', 'crt_item_desc',)
-    #     print("heloFomr")
+        fields = ('crt_item_name', 'crt_item_desc', 'crt_item_weight', 'crt_item_height', 'crt_item_width')
 
-    # def clean_crt_items_name(self,*args):
-    #
-    #     print(dict(args[0])["crt_item_name"])
-    #     name=dict(args[0])["crt_item_name"]
-    #
-    #     if len(*name) < 5 :
-    #         print("HelInvalid")
-    #         return False
-    #     else:
-    #         print("Nikul pagal ")
-    #         return True
-    # return crt_items_name[0].upper() + crt_items_name[1:].lower()
+    def clean_crt_item_name(self):
+        cleaned_data = self.cleaned_data
+
+        crt_item_name = cleaned_data.get('crt_item_name', None)
+        if not bool(re.match('[a-zA-Z0-9\s]+$', crt_item_name)):
+            self.add_error("crt_item_name",
+                           forms.ValidationError('Invalid item name. Only alphabets and numeric are accepted.',
+                                                 code='invalid'))
+
+        return crt_item_name
+
+    def clean_crt_item_desc(self):
+        cleaned_data = self.cleaned_data
+
+        crt_item_desc = cleaned_data.get('crt_item_desc', None)
+        if not bool(re.match('[a-zA-Z0-9\s]+$', crt_item_desc)):
+            self.add_error("crt_item_desc",
+                           forms.ValidationError('Invalid item description. Only alphabets and numeric are accepted.',
+                                                 code='invalid'))
+
+        return crt_item_desc
+
+    def clean_crt_item_weight(self):
+        cleaned_data = self.cleaned_data
+
+        crt_item_weight = cleaned_data.get('crt_item_weight', None)
+        # print("===>", crt_item_weight)
+        options = ['1', '2', '3', '4', '5']
+        if not crt_item_weight in options:
+            self.add_error("crt_item_weight",
+                           forms.ValidationError('some is wrong',
+                                                 code='invalid'))
+
+        return crt_item_weight
+
+    def clean_crt_item_height(self):
+        cleaned_data = self.cleaned_data
+        crt_item_height = cleaned_data.get('crt_item_height', None)
+        crt_item_height = int(crt_item_height)
+        print("form ==> ", crt_item_height)
+        if crt_item_height < 1:
+            self.add_error("crt_item_height", forms.ValidationError('Invalid item height.', code='invalid'))
+
+        return crt_item_height
+
+    def clean_crt_item_width(self):
+        cleaned_data = self.cleaned_data
+        crt_item_width = cleaned_data.get('crt_item_width', None)
+        crt_item_width = int(crt_item_width)
+        if int(crt_item_width) < 1:
+            self.add_error("crt_item_height", forms.ValidationError('Invalid item width.', code='invalid'))
+
+        return crt_item_width
 
 
 class tbl_creativeitems_details_form(forms.ModelForm):
     class Meta:
         model = tbl_creativeitems_details
-        fields = (
-        'crt_item_color', 'crt_item_size', 'crt_item_price', 'crt_item_qty', 'crt_item_weight', 'crt_item_height',
-        'crt_item_width', 'crt_item_status')
+        fields = ('crt_item_color', 'crt_item_size', 'crt_item_price', 'crt_item_qty')
+
+
+class tbl_crtimages_form(forms.ModelForm):
+    class Meta:
+        model = tbl_crtimages
+        fields = ('crt_img_url',)
+
+
+class tbl_scrapitems_form(forms.ModelForm):
+    class Meta:
+        model = tbl_scrapitems
+        fields = ('scp_item_name', 'scp_item_desc', 'scp_item_price', 'scp_item_qty',)
+
+    def clean_scp_item_name(self):
+        cleaned_data = self.cleaned_data
+
+        scp_item_name = cleaned_data.get('scp_item_name', None)
+        if not bool(re.match('[a-zA-Z0-9\s]+$', scp_item_name)):
+            self.add_error("scp_item_name",
+                           forms.ValidationError('Invalid item name. Only alphabets and numeric are accepted.',
+                                                 code='invalid'))
+
+        return scp_item_name
+
+    def clean_scp_item_desc(self):
+        cleaned_data = self.cleaned_data
+
+        scp_item_desc = cleaned_data.get('scp_item_desc', None)
+        if not bool(re.match('[a-zA-Z0-9\s]+$', scp_item_desc)):
+            self.add_error("scp_item_desc", forms.ValidationError(
+                'Invalid item description. Only alphabets and numeric are accepted.', code='invalid'))
+
+        return scp_item_desc
+
+class tbl_scrapimages_form(forms.ModelForm):
+    class Meta:
+        model = tbl_scrapimages
+        fields = ('scp_img_url',)

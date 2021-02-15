@@ -422,6 +422,7 @@ $(function() {
         /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
         $("#fileupload").fileupload({
             dataType: 'json',
+            limitMultiFileUploads: 6,
             sequentialUploads: true,
 
             /* 1. SEND THE FILES ONE BY ONE */
@@ -438,11 +439,15 @@ $(function() {
                 $(".progress-bar").css({ "width": strProgress });
                 $(".progress-bar").text(strProgress);
             },
+
             done: function(e, data) {
-                if (data.result.is_valid) {
+
+                if (data.result.data.is_valid) {
+
                     $("#gallery tbody").prepend(
-                        "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a></td><td><a href=" + 'http://127.0.0.1:8000/accounts/photo-delete/' + data.result.id + "><span class='remove-product-image p-1'><img src='https://s.svgbox.net/materialui.svg?ic=delete&fill=13775a' width='26' height='26'></span></a></td></tr>"
+                        "<tr><td><a href='" + data.result.data.url + "'>" + data.result.data.image_name + "</a></td><td><a href=" + 'http://127.0.0.1:8000/accounts/photo-delete/' + data.result.data.id + "><span class='remove-product-image p-1'><img src='https://s.svgbox.net/materialui.svg?ic=delete&fill=13775a' width='26' height='26'></span></a></td></tr>"
                     );
+
                 }
             }
         });
@@ -487,6 +492,23 @@ $(function() {
         });
     };
 
+
+    var loadSubCategory = function() {
+        $('#itemCategory').change( function() {
+            var id = $(this).val();
+            const url = '/accounts/dashboard/product/creative/add/get-sub-crt-cat/' + id
+            console.log(url);
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+//            event.preventDefault();
+        });
+    }
+
     //   Dom Ready
     $(function() {
         responsiveTab();
@@ -512,6 +534,7 @@ $(function() {
         orderItemCancel();
         btnLoading();
         rating();
+//        loadSubCategory();
     });
 });
 

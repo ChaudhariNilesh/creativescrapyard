@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect,HttpResponse
 from .models import*
 from .forms import *
+from CustomAdmin.models import *
+from Items.forms import *
+from Items.models import *
+from django.contrib import messages
 from django.http import JsonResponse
+import random
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -41,9 +46,10 @@ def UserLogin(request):
                 messages.error(request, 'Invalid Credentials, Try Again.')
         else:
             messages.error(request, 'Invalid Credentials, Try Again.')
-            
+
         #return JsonResponse({"account":"no"})
     return render(request,template)
+
 
 def signup(request):
     template="Home/registration.html"
@@ -63,14 +69,14 @@ def signup(request):
 
         try:
             #userSignUp = User(username=username,first_name=first_name,\
-             #   last_name=last_name,email=email,password=password) 
+             #   last_name=last_name,email=email,password=password)
             userSignUp = User.objects.create_user(username,\
                email,password,first_name=first_name,last_name=last_name)
             userSignUp.is_active=False
             userSignUp.save()
             userProfile = Profile(user_id=userSignUp,user_gender=gender)
             userProfile.save()
-            
+
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('account/account_active_email.html', {
@@ -97,7 +103,7 @@ def EmailverificationSent(request):
 
 def activateAccount(request,uidb64,token):
     template = 'account/account_active_email_done.html'
-    
+
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -116,7 +122,7 @@ def activateAccount(request,uidb64,token):
 # def activateAccountDone(request):
 #     template = 'account/account_active_email_done.html'
 #     return render(request,template)
-    
+
 
 
 
@@ -127,7 +133,7 @@ def logout(request):
         return redirect('Home:home')
     else:
         return redirect('Authentication:login')
- 
+
     # return render(request,template)
 
 #################################
@@ -144,35 +150,166 @@ def creative_items(request):
     template = "account/dashboard/creative-items.html"
     return render(request, template)
 
+
 def scrap_items(request):
     template = "account/dashboard/scrap-items.html"
     return render(request, template)
 
 
-def add_creative_product(request, id=None):
-    if request.is_ajax() and id != None:
-        crtSubCategory = tbl_crt_subcategories.objects.filter(crt_category=id)
-        return JsonResponse(crtSubCategory)
-
+def add_creative_product(request, action=None):
+    # print("action: ", action)
+    itemMainData = tbl_creativeitems_mst_form()
+    crtCategory = tbl_crt_categories.objects.all()
+    template = "account/dashboard/add-product/add-product-1.html"
     if request.method == 'GET':
-        photos_list = Photo.objects.all()
         crtCategory = tbl_crt_categories.objects.all()
-        template = "account/dashboard/add-product.html"
-        return render(request, template, {'photos': photos_list, 'crtCategory': crtCategory})
-    elif request.method == 'POST':
-        form = PhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            photo = form.save()
-            data = {'id': photo.id, 'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
+        context = {'crtCategory': crtCategory}
+        # return render(request, template)
+
+    elif request.method == "POST" and action == 'mainDetail':
+        itemMainData = tbl_creativeitems_mst_form(request.POST)  # instance=request.user
+
+        if itemMainData.is_valid():
+            crt_id = request.POST.get('itemSubCategory')
+
+            obj = itemMainData.save(commit=False)
+            crtSubCategoryObject = get_object_or_404(tbl_crt_subcategories, pk=crt_id)
+            obj.crt_sub_category = crtSubCategoryObject
+            obj.save()
+
+            obj_id = obj.crt_item_id
+            request.session['itemMstId'] = obj_id
+            url = '/accounts/dashboard/product/creative/add/item/' + str(obj_id)
+            return redirect(url)
+
         else:
-            data = {'is_valid': False}
-        return JsonResponse(data)
+            messages.warning(request, "Please correct above errors.")
+            context = {"form": itemMainData, 'crtCategory': crtCategory, }
+
+    return render(request, template, context)
+
+
+def add_creative_product_detail(request, id=None):
+    template = "account/dashboard/add-product/add-product-2.html"
+    context = {'item_id': id, 'error' : False}
+    # item = get_object_or_404(tbl_creativeitems_mst, pk=id)
+
+    # check requesting user is related to the requested item.
+    # if item.user != request.user:
+    #     generate error
+
+    if request.method == 'POST':
+        ItemDetaildata = tbl_creativeitems_details_form(request.POST, request.FILES or None)  # instance=request.user
+
+        imageslist = request.FILES.getlist('crt_img_url')
+        totImage=0
+        for image in imageslist:
+            totImage += 1
+            print(image)
+            imageValidExt = imageValidLen = True
+            print(validate_file_ext(image))
+            if validate_file_ext(image):
+                imageValidExt = False
+                break
+            elif totImage > 6:
+                imageValidLen = False
+                break
+
+
+        if ItemDetaildata.is_valid() and imageValidExt and imageValidLen :
+
+            obj = ItemDetaildata.save(commit=False)
+            crt_mst_id = get_object_or_404(tbl_creativeitems_mst,crt_item_id=id)
+            obj.crt_item = crt_mst_id
+            obj.crt_item_SKU = 'ABC-EFG' + str(random.randint(3, 9000))
+            obj.save()
+            sub_cat_id = obj.crt_item_details_id
+            first = True
+            for image in imageslist:
+                tbl_crtimages.objects.create(crt_img_url=image, is_primary=first ,crt_item_details=obj)
+                first = False
+                # else:
+                #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=False, crt_item_details=obj)
+            context = {
+                'item_id': id,
+                'sub_cat_id': sub_cat_id,
+            }
+
+        else:
+            messages.warning(request, "Please correct above errors.")
+            # print(ItemDetaildata.errors.as_json)
+            if imageValidExt or imageValidLen:
+                context = {
+                    "form": ItemDetaildata,
+                    'item_id': id,
+                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
+                    'error':True,
+                }
+            else:
+                context = {
+                    "form": ItemDetaildata,
+                    'item_id': id,
+                }
+
+
+    return render(request, template, context)
+
+
+# def add_photo(request, id=None):
+#     if request.is_ajax() and request.method == 'POST':
+#         form = tbl_crtimages_form(request.POST, request.FILES)
+#         # print(request.POST)
+#         # print(request.FILES)
+#
+#         if form.is_valid():
+#             photo = form.save(commit=False)
+#             sub_crt_object = get_object_or_404(tbl_creativeitems_details, crt_item_details_id=id)
+#             photo.crt_item_details = sub_crt_object
+#             photo.save()
+#             basename=os.path.basename(photo.crt_img_url.path)
+#             print(basename)
+#             data = {'id': photo.crt_img_id,'image_name':basename,'url': photo.crt_img_url.path, 'is_valid': True}
+#         else:
+#             print(form.errors.as_json)
+#             data = {'is_valid': False}
+#         return JsonResponse({"data":data})
+
+def upload_image(request, id=None):
+    form = tbl_crtimages_form(request.POST, request.FILES)
+
+    if form.is_valid():
+        photo = form.save(commit=False)
+        sub_crt_object = get_object_or_404(tbl_creativeitems_details, crt_item_details_id=id)
+        photo.crt_item_details = sub_crt_object
+        photo.save()
+
+    else:
+        messages.warning(request, "Please correct above errors.")
+        context = {'form': form}
+
+
+def get_sub_category(request, id):
+    subCrtCat = {}
+    crtSubCategory = tbl_crt_subcategories.objects.filter(crt_category=id).values()
+
+    return JsonResponse({"subCrtCat": list(crtSubCategory)})
 
 
 
-def product_photo_remove(request, pk):
-    Photo.objects.get(pk=pk).delete()
-    return redirect('Authentication:add_creative_product')
+
+
+# def product_photo_remove(request, pk):
+#     template = 'account/dashboard/add-product/add-product-2.html'
+#     img_obj = get_object_or_404(tbl_crtimages, crt_img_id=pk)
+#     sub_cat_object = img_obj.crt_item_details.crt_item_details_id
+#     item_id = img_obj.crt_item_details.crt_item.crt_item_id
+#     context = {
+#         'item_id': item_id,
+#         'sub_cat_id': sub_cat_object,
+#     }
+#     tbl_crtimages.objects.get(crt_img_id=pk).delete()
+#     return redirect('Authentication:add_creative_product_detail', item_id='item_id')
+#     # return render(request, template, context)
 
 @login_required
 
@@ -196,7 +333,7 @@ def dashboard_profile(request,action=None):
     UserAddressData = Address.objects.filter(user_id=request.user.user_id)
    
     UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
-    
+
 
     #print(request.FILES)
     #print(action)
@@ -281,7 +418,7 @@ def order_creative(request):
     return render(request, template)
 
 
-def order_history(request,action='current'):
+def order_history(request, action='current'):
     if action == 'current':
         title = "Current Orders"
     elif action == 'complete':
@@ -291,7 +428,6 @@ def order_history(request,action='current'):
     elif action == 'return':
         title = 'Returned Orders'
 
-
     template = "account/dashboard/order-history.html"
     return render(request, template, {'title': title})
 
@@ -299,6 +435,7 @@ def order_history(request,action='current'):
 def order_details(request):
     template = "account/dashboard/order-details.html"
     return render(request, template)
+
 
 def dashboard_payments(request):
     template = "account/dashboard/payments.html"
@@ -332,7 +469,7 @@ def changePassword(request):
                     return redirect('Authentication:changePassword')
                 else:
                     usr = User.objects.get(email__iexact=email)
-                    
+
                     if check_password(old,usr.password):
                         # print('old and new same')
                         usr.set_password(pass1)
@@ -383,7 +520,7 @@ def passwordReset(request):
 
     return render(request,template)
 
-    
+
 
 def passwordResetLink(request):
     template="account/password_reset_done.html"
@@ -446,7 +583,7 @@ def deactiveAccount(request):
                 messages.error(request,*e)
             else:
                 usr = User.objects.get(email=givenEmail)
-                
+
                 if emailSess == usr.email:
                     #print(emailSess,usrEmail)
                     #user = request.user
@@ -476,11 +613,11 @@ def add_document(request):
                 document = documentData.save(commit=False)
                 # usr= User.objects.get(username=request.user)
                 document.user = request.user
-                
+
                 #print("Docu Valid",request.user.user_id)
 
                 documentData.pan_img_url = request.FILES['pan_img_url']
-               
+
                 document.save()
             else:
                 #print(documentData.errors.as_json)
@@ -495,7 +632,7 @@ def add_document(request):
 
 @login_required
 def editDocument(request):
-    if request.session.get('user'): 
+    if request.session.get('user'):
         template = 'account/dashboard/dashboard-profile.html'
         editedData=EditUserDocument()
         UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
@@ -506,7 +643,7 @@ def editDocument(request):
             if editedData.is_valid():
                 #print("edit valid")
                 editedDocu = editedData.save(commit=False)
-               
+
                 UserDocumentData.acc_no=   editedDocu.acc_no
                 UserDocumentData.acc_name= editedDocu.acc_name
                 UserDocumentData.bank_name=editedDocu.bank_name
@@ -520,7 +657,7 @@ def editDocument(request):
             else:
                 # print(editedData.errors)
                 messages.warning(request,"Please correct above errors.")
-            
+
         context={
             "form":editedData,
             "UserDocument":UserDocumentData,
@@ -537,7 +674,7 @@ def addAddress(request):
     template = 'account/dashboard/add-address.html'
     state = States.objects.all().order_by("state_name")
     city=None
-    if request.session.get('user'): 
+    if request.session.get('user'):
         addressFormData=AddressForm()
         if request.method=='POST':
             # print(request.POST)
@@ -547,7 +684,7 @@ def addAddress(request):
             if addressFormData.is_valid():
                 #print("valid")
                 address = addressFormData.save(commit=False)
-                address.user = request.user                
+                address.user = request.user
                 address.city = Cities.objects.get(city_id=city_id)
                 address.state = States.objects.get(state_id=state_id)
                 #print(ref_city.city_id)
@@ -561,18 +698,18 @@ def addAddress(request):
                 city = Cities.objects.get(city_id=city_id)
                 #print(city)
                 messages.warning(request,"Please correct above errors.")
-            
+
         context={
             "form":addressFormData,
             "states":state,
             "selectedCity":city,
         }
-    
+
         return render(request,template,context)
-    
+
     else:
         return redirect('Authentication:login')
-    
+
 
 def getCities(request,id):
     if request.is_ajax():
@@ -592,7 +729,7 @@ def setDefault(request,id):
             address.save()
             newDefAddress = Address.objects.get(address_id=id)
             newDefAddress.is_default = True
-            newDefAddress.save()          
+            newDefAddress.save()
             return JsonResponse({"changed":True})
         else:
             return JsonResponse({"changed":False})
@@ -600,3 +737,179 @@ def setDefault(request,id):
     else:
         raise PermissionDenied
 
+
+
+
+def add_scrap_product(request):
+    template = "account/dashboard/scp-add-product.html"
+    scpCategory = MainScrapCategory.objects.all()
+
+    if request.method == 'GET':
+        context = {'scpCategory': scpCategory}
+
+    elif request.method == 'POST':
+        scpData = tbl_scrapitems_form(request.POST, request.FILES or None)
+
+        imageslist = request.FILES.getlist('scp_img_url')
+        totImage = 0
+
+        for image in imageslist:
+            totImage += 1
+            print(image)
+            imageValidExt = imageValidLen = True
+            print(validate_file_ext(image))
+            if validate_file_ext(image):
+                imageValidExt = False
+                break
+            elif totImage > 6:
+                imageValidLen = False
+                break
+
+        if scpData.is_valid() and imageValidExt and imageValidLen:
+            # scpData.save(commit=False)
+
+            obj = scpData.save(commit=False)
+            obj.scp_item_SKU = 'SCP-EFG-' + str(random.randint(3, 9000))
+            obj.save()
+
+            first = True
+            for image in imageslist:
+                tbl_scrapimages.objects.create(scp_img_url=image, is_primary=first, scp_item=obj)
+                first = False
+            return redirect('Authentication:scrap_items')
+            # context = {"form": scpData, 'scpCategory': scpCategory, }
+        else:
+            messages.warning(request, "Please correct above errors.")
+            if imageValidExt or imageValidLen:
+                context = {
+                    "form": scpData,
+                    'scpCategory': scpCategory,
+                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
+                    'error':True,
+                }
+            else:
+                context = {"form": scpData, 'scpCategory': scpCategory, }
+
+    return render(request, template, context)
+
+def get_scp_sub_category(request, id):
+    subScpCat = {}
+    scpSubCategory = SubScrapCategory.objects.filter(scp_category=id).values()
+    print(scpSubCategory)
+    return JsonResponse({"subScpCat": list(scpSubCategory)})
+
+
+def edit_creative_product(request, id=None):
+    template = "account/dashboard/add-product/edit-product.html"
+    crtCategory = tbl_crt_categories.objects.all()
+
+    if request.method == "GET":
+        context = {'crtCategory': crtCategory, 'id': id}
+
+    elif request.method == "POST":
+        mst_data = tbl_creativeitems_mst_form(request.POST or None)
+        detail_data = tbl_creativeitems_details_form(request.POST or None, request.FILES or None)
+
+        imageslist = request.FILES.getlist('crt_img_url')
+        totImage = 0
+
+        for image in imageslist:
+            totImage += 1
+            print(image)
+            imageValidExt = imageValidLen = True
+            print(validate_file_ext(image))
+            if validate_file_ext(image):
+                imageValidExt = False
+                break
+            elif totImage > 6:
+                imageValidLen = False
+                break
+
+
+        if mst_data.is_valid() and detail_data.is_valid() and imageValidExt and imageValidLen:
+
+            # first = True
+            # for image in imageslist:
+            #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=first, crt_item_details=obj)
+            #     first = False
+
+            url = '/accounts/dashboard/product/creative/add/item/' + str(obj_id)
+            return redirect(url)
+        else:
+            messages.warning(request, "Please correct above errors.")
+
+            if imageValidExt or imageValidLen:
+                context = {
+                    "mst": mst_data,
+                    'detail': detail_data,
+                    'crtCategory': crtCategory,
+                    'id': id,
+                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
+                    'error':True,
+                }
+            else:
+                context = {"mst": mst_data, 'detail': detail_data, 'crtCategory': crtCategory, 'id': id}
+
+    return render(request, template, context)
+
+
+def edit_scrap_product(request, id=None):
+    template = "account/dashboard/scp-edit-product.html"
+    scpCategory = MainScrapCategory.objects.all()
+
+    if request.method == 'GET':
+        context = {'scpCategory': scpCategory}
+
+    elif request.method == 'POST':
+        scpData = tbl_scrapitems_form(request.POST, request.FILES or None)
+        # scpImgData = tbl_scrapimages_form(request.POST, request.FILES or None)
+
+        imageslist = request.FILES.getlist('scp_img_url')
+        print(request.FILES)
+        totImage=0
+
+        for image in imageslist:
+            totImage+=1
+            print(image)
+            imageValidExt=imageValidLen=True
+            print(validate_file_ext(image))
+            if  validate_file_ext(image):
+                imageValidExt = False
+                break
+            elif totImage>6:
+                imageValidLen = False
+                break
+
+
+        if scpData.is_valid() and imageValidExt and imageValidLen:
+            # scpData.save(commit=False)
+
+            # obj = scpData.save(commit=False)
+            # obj.scp_item_SKU = 'SCP-EFG-' + str(random.randint(3, 9000))
+            # obj.save()
+            #
+            # first = True
+            # for image in imageslist:
+            #     tbl_scrapimages.objects.create(scp_img_url=image, is_primary=first, scp_item=obj)
+            #     first = False
+
+            return redirect('Authentication:scrap_items')
+        else:
+            messages.warning(request, "Please correct above errors.")
+            if imageValidExt or imageValidLen:
+
+                context = {
+                    "form": scpData,
+                    'scpCategory': scpCategory,
+                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
+                    'error':True,
+                }
+            else:
+                context = {"form": scpData, 'scpCategory': scpCategory}
+
+    return render(request, template, context)
+
+
+def validate_file_ext(value):
+    if not value.name.endswith(('.jpg','.jpeg','.png')):
+       return True
