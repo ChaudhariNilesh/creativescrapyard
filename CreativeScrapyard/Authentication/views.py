@@ -194,6 +194,7 @@ def dashboard_profile(request,action=None):
     UserFormData=EditUserFormData()
     profileFormData=EditProfileForm()
     UserAddressData = Address.objects.filter(user_id=request.user.user_id)
+   
     UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
     
 
