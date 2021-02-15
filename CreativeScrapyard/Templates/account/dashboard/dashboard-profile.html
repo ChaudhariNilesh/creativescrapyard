@@ -122,6 +122,7 @@
 <div class="bx-shd my-4 py-2 px-3 border">
     <span class="card-title">My Addresses</span>
     <div class="py-3">
+    {% if UserAddress %}
         <div class="allAddress">
             <table class="table table-sm my-2" style="font-size: 15px;">
                 <thead>
@@ -134,7 +135,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% with n='[1]' %} {% for i in n %}
+                    {% comment %} {% with n='[1]' %} {% for i in n %}
                     <tr>
                         <td class="text-center"><input type="radio" name="primaryAddressGroup" id="#" /></td>
                         <td>Nikul Prajapati</td>
@@ -143,7 +144,8 @@
                         </td>
                         <td>382424 </td>
                     </tr>
-                    {% endfor %} {% endwith %} {% for adrs in UserAddress %}
+                    {% endfor %} {% endwith %} {% endcomment %}
+                    {% for adrs in UserAddress %}
                     <tr>
                         <td class="text-center"><input type="radio" id="radDefault" onclick="setDefault(this);" value="{{adrs.address_id}}" {% if adrs.is_default %} checked {%endif%} name="primaryAddressGroup" id="#" /></td>
                         <td>{{adrs.person_name}}</td>
@@ -156,13 +158,150 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
         <div class="addFirstAddress mt-3">
             <a href="{% url 'Authentication:addAddress' %}"><button type="button" class="btn btn-sm pri-bg-color btn-addAddress shadow-none">Add address
             </button></a>
             <br/>
             <small>Add your address here to get your delivery.</small>
 
-            <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+        </div>
+    </div>
+    
+</div>
+
+
+<!--only visible to artist or one who add their bank details for become an artist-->
+{% if UserDocument %}
+<div class="bx-shd my-4 py-2 px-3 border">
+    <span class="card-title">Bank Details</span>
+    <div class="py-3">
+
+        <form method="POST" action="{% url 'Authentication:editDocument' %}">{% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="accountNo">Account Number</label>
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACNO" class="form-control {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" name="acc_no" id="accountNo" 
+                    value="{{form.acc_no.value | default:UserDocument.acc_no  }}">
+                    <div id="validateACNO" class="invalid-feedback">
+                        {{form.acc_no.errors}}
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="accountHolder">Account Holder</label>
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACName" class="form-control {% if form.errors.acc_name == None and form.is_bound %} is-valid {% elif form.errors.acc_name != None %} is-invalid {% endif %}" name="acc_name" id="accountHolder"
+                        value="{{form.acc_name.value | default:UserDocument.acc_name }}">
+                    <div id="validateACName" class="invalid-feedback">
+                        {{form.acc_name.errors}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="bankName">Bank Name</label>
+                    <select name="bank_name" aria-describedby="inputGroupPrepend3 validateBank" id="bankName" class="form-control {% if form.errors.bank_name == None and form.is_bound %} is-valid {% elif form.errors.bank_name != None %} is-invalid {% endif %}" required>
+                        <option value="none">--Select Bank-- </option>
+                        <option value="State Bank of India" {% if UserDocument.bank_name == 'State Bank of India'  %} selected {% endif %}>State Bank of India</option>
+                        <option value="Bank of Baroda" {% if UserDocument.bank_name == 'Bank of Baroda' %} selected {% endif %}>Bank of Baroda</option>
+                        <option value="ICICI Bank" {% if UserDocument.bank_name == 'ICICI Bank' %} selected {% endif %}>ICICI Bank</option>
+                        <option value="HDFC Bank" {% if UserDocument.bank_name == 'HDFC Bank' %} selected {% endif %}>HDFC Bank</option>
+                        <option value="Bank of India" {% if UserDocument.bank_name == 'Bank of India' %} selected {% endif %}>Bank of India</option>
+                        <option value="Axis Bank" {% if UserDocument.bank_name == 'Axis Bank' %} selected {% endif %}>Axis Bank</option>
+                    </select>
+                    <div id="validateBank" class="invalid-feedback">
+                        {{form.bank_name.errors}}
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="ifscCode">IFSC code</label>
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateIFSC" class="form-control {% if form.errors.IFSC_code == None and form.is_bound %} is-valid {% elif form.errors.IFSC_code != None %} is-invalid {% endif %}" name="IFSC_code" id="ifscCode"
+                        value="{{form.IFSC_code.value | default:UserDocument.IFSC_code }}">
+                    <div id="validateIFSC" class="invalid-feedback">
+                        {{form.IFSC_code.errors}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="panNo">PAN Number</label>
+                    <input type="text" class="form-control" readonly id="panNo" value="{{UserDocument.pan_no}}" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="panName">PAN Name</label>
+                    <input type="text" class="form-control" readonly id="panName" value="{{UserDocument.pan_name}}" disabled>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
+            <!-- <button type="submit" class="btn btn-sm pri-bg-color">Reveal</button> -->
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %} {% block customscript%}
+<script>
+    function validate(e) {
+        if ($("#profilePicture").get(0).files.length === 0) {
+            //console.log("No files selected.");
+            e.preventDefault();
+            $("#submitPic").attr("disabled");
+            Swal.fire({
+                text: "No files selected.",
+                icon: 'warning',
+
+            })
+        } else {
+
+            this.off('submit');
+            this.submit();
+        }
+    }
+
+    function chooseImage(e) {
+        if ($("#profilePicture").get(0).files.length !== 0) {
+            $("#submitPic").removeAttr("hidden")
+            $("#profileImgForm").after("<div class='alert alert-success' ><strong> Success! </strong> Click on save to upload image.</div>")
+        }
+
+
+    }
+
+    function setDefault(context) {
+        const addrsId = $(context).val();
+        console.log(addrsId);
+        $.ajax({
+
+            dataType: "json",
+            url: "ajax/set-default/" + addrsId,
+            success: function(data) {
+                if (data.changed) {
+                    $(this).setAttr("checked");
+                } else {
+                    Swal.fire(
+                        "warning",
+                        "Some Error Occured. Try Again"
+                    )
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // console.log(jqXHR.status);
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+
+{% endblock %}
+
+            {% comment %} <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
@@ -251,134 +390,4 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!--only visible to artist or one who add their bank details for become an artist-->
-<div class="bx-shd my-4 py-2 px-3 border">
-    <span class="card-title">Bank Details</span>
-    <div class="py-3">
-
-        <form method="POST" action="{% url 'Authentication:editDocument' %}">{% csrf_token %}
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="accountNo">Account Number</label>
-                    <input type="text" aria-describedby="inputGroupPrepend3 validateACNO" class="form-control {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" name="acc_no" id="accountNo" value="{{form.acc_no.value | default:UserDocument.acc_no }}">
-                    <div id="validateACNO" class="invalid-feedback">
-                        {{form.acc_no.errors}}
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="accountHolder">Account Holder</label>
-                    <input type="text" aria-describedby="inputGroupPrepend3 validateACName" class="form-control {% if form.errors.acc_name == None and form.is_bound %} is-valid {% elif form.errors.acc_name != None %} is-invalid {% endif %}" name="acc_name" id="accountHolder"
-                        value="{{form.acc_name.value | default:UserDocument.acc_name }}">
-                    <div id="validateACName" class="invalid-feedback">
-                        {{form.acc_name.errors}}
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="bankName">Bank Name</label>
-                    <select name="bank_name" aria-describedby="inputGroupPrepend3 validateBank" id="bankName" class="form-control {% if form.errors.bank_name == None and form.is_bound %} is-valid {% elif form.errors.bank_name != None %} is-invalid {% endif %}" required>
-                        <option value="none">--Select Bank-- </option>
-                        <option value="State Bank of India" {% if UserDocument.bank_name == 'State Bank of India'  %} selected {% endif %}>State Bank of India</option>
-                        <option value="Bank of Baroda" {% if UserDocument.bank_name == 'Bank of Baroda' %} selected {% endif %}>Bank of Baroda</option>
-                        <option value="ICICI Bank" {% if UserDocument.bank_name == 'ICICI Bank' %} selected {% endif %}>ICICI Bank</option>
-                        <option value="HDFC Bank" {% if UserDocument.bank_name == 'HDFC Bank' %} selected {% endif %}>HDFC Bank</option>
-                        <option value="Bank of India" {% if UserDocument.bank_name == 'Bank of India' %} selected {% endif %}>Bank of India</option>
-                        <option value="Axis Bank" {% if UserDocument.bank_name == 'Axis Bank' %} selected {% endif %}>Axis Bank</option>
-                    </select>
-                    <div id="validateBank" class="invalid-feedback">
-                        {{form.bank_name.errors}}
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="ifscCode">IFSC code</label>
-                    <input type="text" aria-describedby="inputGroupPrepend3 validateIFSC" class="form-control {% if form.errors.IFSC_code == None and form.is_bound %} is-valid {% elif form.errors.IFSC_code != None %} is-invalid {% endif %}" name="IFSC_code" id="ifscCode"
-                        value="{{form.IFSC_code.value | default:UserDocument.IFSC_code }}">
-                    <div id="validateIFSC" class="invalid-feedback">
-                        {{form.IFSC_code.errors}}
-                    </div>
-                </div>
-
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="panNo">PAN Number</label>
-                    <input type="text" class="form-control" readonly id="panNo" value="{{UserDocument.pan_no}}" disabled>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="panName">PAN Name</label>
-                    <input type="text" class="form-control" readonly id="panName" value="{{UserDocument.pan_name}}" disabled>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-sm pri-bg-color">Save Changes</button>
-            <!-- <button type="submit" class="btn btn-sm pri-bg-color">Reveal</button> -->
-        </form>
-    </div>
-</div>
-
-{% endblock %} {% block customscript%}
-<script>
-    function validate(e) {
-        if ($("#profilePicture").get(0).files.length === 0) {
-            //console.log("No files selected.");
-            e.preventDefault();
-            $("#submitPic").attr("disabled");
-            Swal.fire({
-                text: "No files selected.",
-                icon: 'warning',
-
-            })
-        } else {
-
-            this.off('submit');
-            this.submit();
-        }
-    }
-
-    function chooseImage(e) {
-        if ($("#profilePicture").get(0).files.length !== 0) {
-            $("#submitPic").removeAttr("hidden")
-            $("#profileImgForm").after("<div class='alert alert-success' ><strong> Success! </strong> Click on save to upload image.</div>")
-        }
-
-
-    }
-
-    function setDefault(context) {
-        const addrsId = $(context).val();
-        console.log(addrsId);
-        $.ajax({
-
-            dataType: "json",
-            url: "ajax/set-default/" + addrsId,
-            success: function(data) {
-                if (data.changed) {
-                    $(this).setAttr("checked");
-                } else {
-                    Swal.fire(
-                        "warning",
-                        "Some Error Occured. Try Again"
-                    )
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // console.log(jqXHR.status);
-                Swal.fire(
-                    jqXHR.status + "",
-                    textStatus + " : " + errorThrown,
-                    'error'
-                )
-            }
-        })
-    }
-</script>
-
-{% endblock %}
+            </div> {% endcomment %}

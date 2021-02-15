@@ -74,7 +74,7 @@ def signup(request):
                email,password,first_name=first_name,last_name=last_name)
             userSignUp.is_active=False
             userSignUp.save()
-            userProfile = Profile(user_id=userSignUp,user_gender=gender)
+            userProfile = Profile(user_id=userSignUp.user_id,user_gender=gender)
             userProfile.save()
 
             current_site = get_current_site(request)
@@ -330,9 +330,14 @@ def dashboard_profile(request,action=None):
     template = "account/dashboard/dashboard-profile.html"
     UserFormData=EditUserFormData()
     profileFormData=EditProfileForm()
-    UserAddressData = Address.objects.filter(user_id=request.user.user_id)
-   
-    UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
+    try:
+        UserAddressData = Address.objects.filter(user_id=request.user.user_id)
+        UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
+    except (Address.DoesNotExist, Documents.DoesNotExist):
+        UserAddressData = None
+        UserDocumentData = None
+
+
 
 
     #print(request.FILES)
