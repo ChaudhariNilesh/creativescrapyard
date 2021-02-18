@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from Authentication.models import User
+
 
 # Create your models here.
 
@@ -39,4 +41,28 @@ class SubScrapCategory(models.Model):
 
     def __str__(self):
         return self.scp_sub_category_name
+
+
+class Badges(models.Model):
+    badge_id=models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
+    badge_name=models.CharField(max_length=50)
+
+
+    class Meta:
+        db_table = "tbl_badges"
+
+    def __str__(self):
+        return self.badges_name
+
+class BadgeEntries(models.Model):
+    entry_id=models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
+    badge_id=models.ForeignKey(Badges, on_delete=models.CASCADE)
+    user_id=models.ForeignKey(User, on_delete=models.CASCADE)
+
     
+
+    class Meta:
+        db_table = "tbl_badges_entries"
+
+    def __str__(self):
+        return self.badge_entries

@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator, validate_image_file_extension
 import random
 import os
-from Items.models import tbl_creativeitems_details
+from .models import *
 
 GENDER_TYPE = (
     ('F', 'Female'),
