@@ -21,7 +21,6 @@
                         <label class="btn btn-sm pri-bg-color mt-2" id="chooseLbl" for="profilePicture">Choose</label>
                         <input class="btn btn-sm pri-bg-color" id="submitPic" type="submit" value="Save" hidden>
 
-
                         <!--  -->
                         {% if user.profile.user_image and user.profile.user_image.url != '/media/users/default.png' %}
                         <!--  -->
@@ -30,6 +29,7 @@
                         {% endif %}
                         <!--  -->
                     </form>
+                    <p class="text-muted" style="font-size:12px;">Maximum 2 MB image size is allowed.</p>
 
                     <div class="mt-4">
                         {% include 'includes/messages.html' %}
@@ -122,16 +122,17 @@
 <div class="bx-shd my-4 py-2 px-3 border">
     <span class="card-title">My Addresses</span>
     <div class="py-3">
-    {% if UserAddress %}
+        {% if UserAddress %}
         <div class="allAddress">
             <table class="table table-sm my-2" style="font-size: 15px;">
                 <thead>
                     <tr class="thead-light">
                         <th scope="col" class="text-center">Primary</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Pincode</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Type</th>
+                        <th scope="col" class="text-center">Address</th>
+                        <th scope="col" class="text-center">Pincode</th>
+                        <th scope="col" class="text-center disableSort disableFilterBy">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,15 +145,19 @@
                         </td>
                         <td>382424 </td>
                     </tr>
-                    {% endfor %} {% endwith %} {% endcomment %}
-                    {% for adrs in UserAddress %}
+                    {% endfor %} {% endwith %} {% endcomment %} {% for adrs in UserAddress %}
                     <tr>
                         <td class="text-center"><input type="radio" id="radDefault" onclick="setDefault(this);" value="{{adrs.address_id}}" {% if adrs.is_default %} checked {%endif%} name="primaryAddressGroup" id="#" /></td>
-                        <td>{{adrs.person_name}}</td>
-                        <td>{{adrs.type}}</td>
-                        <td>{{adrs.line1}} {{adrs.line2}} {{adrs.city}} {{adrs.state}}
+                        <td  class="text-center">{{adrs.person_name}}</td>
+                        <td class="text-center">{{adrs.type}}</td>
+                        <td class="text-center">{{adrs.line1}} {{adrs.line2}} {{adrs.city}} {{adrs.state}}
                         </td>
-                        <td>{{adrs.pincode}}</td>
+                        <td class="text-center">{{adrs.pincode}}</td>
+                        <td class="text-center">
+                            <a href="{% url 'Authentication:editAddress' adrs.address_id %}" class="btn btn-sm pri-bg-color">Edit</a>
+                            <a href="{% url 'Authentication:delAddress' adrs.address_id %}" class="btn btn-sm bg-danger"><img src=" https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></a>
+                        </td>
+                        
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -168,7 +173,7 @@
 
         </div>
     </div>
-    
+
 </div>
 
 
@@ -182,8 +187,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="accountNo">Account Number</label>
-                    <input type="text" aria-describedby="inputGroupPrepend3 validateACNO" class="form-control {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" name="acc_no" id="accountNo" 
-                    value="{{form.acc_no.value | default:UserDocument.acc_no  }}">
+                    <input type="text" aria-describedby="inputGroupPrepend3 validateACNO" class="form-control {% if form.errors.acc_no == None and form.is_bound %} is-valid {% elif form.errors.acc_no != None %} is-invalid {% endif %}" name="acc_no" id="accountNo" value="{{form.acc_no.value | default:UserDocument.acc_no  }}">
                     <div id="validateACNO" class="invalid-feedback">
                         {{form.acc_no.errors}}
                     </div>
@@ -240,9 +244,7 @@
         </form>
     </div>
 </div>
-{% endif %}
-
-{% endblock %} {% block customscript%}
+{% endif %} {% endblock %} {% block customscript%}
 <script>
     function validate(e) {
         if ($("#profilePicture").get(0).files.length === 0) {
@@ -262,24 +264,41 @@
     }
 
     function chooseImage(e) {
-        if ($("#profilePicture").get(0).files.length !== 0) {
-            $("#submitPic").removeAttr("hidden")
-            $("#profileImgForm").after("<div class='alert alert-success' ><strong> Success! </strong> Click on save to upload image.</div>")
-        }
+        $(".alert").remove();
+        const validFileExtensions = ['jpeg', 'jpg', 'png'];
 
+
+
+        if ($("#profilePicture").get(0).files.length != 0) {
+            const extension = $("#profilePicture").val().split('.').pop().toLowerCase();
+            const fileSize = $("#profilePicture").get(0).files[0].size
+            const mbSize = Math.round((fileSize / 1024));
+
+            if ($.inArray(extension, validFileExtensions) == -1) {
+                //$("#profilePicture").val('');
+                $("#profileImgForm").after("<div class='alert alert-danger' ><strong> Invalid File Extenstion! </strong> Only jpeg, jpg, png filetypes are allowed.</div>");
+            } else if (mbSize > 2048) {
+                // $("#profilePicture").val('');
+                $("#profileImgForm").after("<div class='alert alert-danger' ><strong> File too big! </strong> Maximum 2 MB image size is allowed.</div>");
+            } else {
+                //$("#profilePicture").val('');
+                $("#submitPic").removeAttr("hidden")
+                $("#profileImgForm").after("<div class='alert alert-success' ><strong> Success! </strong> Click on save to upload image.</div>")
+            }
+        }
 
     }
 
     function setDefault(context) {
         const addrsId = $(context).val();
-        console.log(addrsId);
+        //console.log(addrsId);
         $.ajax({
 
             dataType: "json",
             url: "ajax/set-default/" + addrsId,
             success: function(data) {
                 if (data.changed) {
-                    $(this).setAttr("checked");
+                    $(this).attr("checked");
                 } else {
                     Swal.fire(
                         "warning",
@@ -299,61 +318,60 @@
     }
 </script>
 
-{% endblock %}
+{% endblock %} {% comment %}
+<div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-            {% comment %} <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Add new address</h5>
-                            <a href="{% url 'Authentication:dashboard_profile' %}"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add new address</h5>
+                <a href="{% url 'Authentication:dashboard_profile' %}"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button></a>
+            </div>
+
+            <div class="model-body py-2 px-4">
+                <form action="{% url 'Authentication:addAddress' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col text-left">
+                            <label for="addFirstName">Name : </label>
+                            <input type="text" class="form-control form-control-sm" id="addFirstName" placeholder="Person Name" name="person_name"> {{form.person_name.errors}}
+
                         </div>
-
-                        <div class="model-body py-2 px-4">
-                            <form action="{% url 'Authentication:addAddress' %}" method="POST">
-                                {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="form-group col text-left">
-                                        <label for="addFirstName">Name : </label>
-                                        <input type="text" class="form-control form-control-sm" id="addFirstName" placeholder="Person Name" name="person_name"> {{form.person_name.errors}}
-
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col text-left">
-                                        <label for="addMobileNo">Mobile no</label>
-                                        <input type="tel" class="form-control form-control-sm" id="addMobileNo" placeholder="mobile number" name="contact_no">
-                                    </div>
-                                    <div class="form-group col text-left">
-                                        <label for="addType" class="text-left">Address Type</label>
-                                        <select id="addType" class="form-control form-control-sm" name="type">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col text-left">
+                            <label for="addMobileNo">Mobile no</label>
+                            <input type="tel" class="form-control form-control-sm" id="addMobileNo" placeholder="mobile number" name="contact_no">
+                        </div>
+                        <div class="form-group col text-left">
+                            <label for="addType" class="text-left">Address Type</label>
+                            <select id="addType" class="form-control form-control-sm" name="type">
                                             <option selected>Choose...</option>
                                             <option value="1">Home</option>
                                             <option value="2">Office</option>
                                             <option value="3">Other</option>
                                         </select> {{form.type.errors}}
 
-                                    </div>
-                                </div>
-                                <div class="form-row p-1">
-                                    <label for="addressLine1">Address line 1</label>
-                                    <input type="text" name="line1" class="form-control form-control-sm" id="addressLine1" placeholder="Flat, House no., Building, Company, Apartment" />
-                                </div>
-                                <div class="form-row p-1">
-                                    <label for="addressLine2">Address line 2</label>
-                                    <input typpe="text" name="lin2" class="form-control form-control-sm" id="addressLine2" placeholder="Area, Colony, Street, Sector, Village" />
-                                </div>
-                                <div class="form-row pt-1 px-1">
-                                    <div class="form-group col text-left">
-                                        <label for="addLandmark">Landmark</label>
-                                        <input type="text" name="landmark" class="form-control form-control-sm" id="addLandmark" placeholder="landmark">
-                                    </div>
-                                    <div class="form-group col text-left">
-                                        <label for="addState">State</label>
-                                        <select id="addState" class="form-control form-control-sm" name="state_id">
+                        </div>
+                    </div>
+                    <div class="form-row p-1">
+                        <label for="addressLine1">Address line 1</label>
+                        <input type="text" name="line1" class="form-control form-control-sm" id="addressLine1" placeholder="Flat, House no., Building, Company, Apartment" />
+                    </div>
+                    <div class="form-row p-1">
+                        <label for="addressLine2">Address line 2</label>
+                        <input typpe="text" name="lin2" class="form-control form-control-sm" id="addressLine2" placeholder="Area, Colony, Street, Sector, Village" />
+                    </div>
+                    <div class="form-row pt-1 px-1">
+                        <div class="form-group col text-left">
+                            <label for="addLandmark">Landmark</label>
+                            <input type="text" name="landmark" class="form-control form-control-sm" id="addLandmark" placeholder="landmark">
+                        </div>
+                        <div class="form-group col text-left">
+                            <label for="addState">State</label>
+                            <select id="addState" class="form-control form-control-sm" name="state_id">
                                             <option value="" selected disabled>--Select Your State--</option>
                                             <option value="1">Gujarat</option>
                                             <option value="2">Rajasthan</option>
@@ -364,30 +382,30 @@
                                             <option>Madhya Pradesh</option>
                                             <option>Maharashtra</option>
                                         </select>
-                                    </div>
+                        </div>
 
-                                </div>
-                                <div class="form-row p-1">
-                                    <div class="form-group col text-left">
-                                        <label for="addCity">City</label>
-                                        <select id="addCity" name="city_id" class="form-control form-control-sm">
+                    </div>
+                    <div class="form-row p-1">
+                        <div class="form-group col text-left">
+                            <label for="addCity">City</label>
+                            <select id="addCity" name="city_id" class="form-control form-control-sm">
                                             <option value="" selected disabled>--Select Your City--</option>
                                             <option value="1">Ahmedabad</option>
                                             <option value="2">Surat</option>
                                             <option value="3">Rajkot</option>
                                         </select>
-                                    </div>
-                                    <div class="form-group col text-left">
-                                        <label for="addPincode">Pincode</label>
-                                        <input type="text" class="form-control form-control-sm" id="addPincode">
-                                    </div>
-                                </div>
-                                <div class="form-row text-left pb-1 px-1">
-                                    <button type="submit" class="btn btn-sm pri-bg-color text-left">Save address
-                                    </button>
-                                </div>
-                            </form>
+                        </div>
+                        <div class="form-group col text-left">
+                            <label for="addPincode">Pincode</label>
+                            <input type="text" class="form-control form-control-sm" id="addPincode">
                         </div>
                     </div>
-                </div>
-            </div> {% endcomment %}
+                    <div class="form-row text-left pb-1 px-1">
+                        <button type="submit" class="btn btn-sm pri-bg-color text-left">Save address
+                                    </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}

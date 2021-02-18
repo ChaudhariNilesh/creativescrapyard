@@ -1,28 +1,23 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}"/> {% endblock %} {% block base %}
+<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Add Scrap Item
 </div>
 <hr/>
 <div class="main-page">
-    <form method="post" enctype="multipart/form-data" >{% csrf_token %}
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-group">
             <label for="productName">Product Name</label>
-            <input type="text" name="scp_item_name"
-                   class="form-control {% if form.errors.scp_item_name == None and form.is_bound %} is-valid {% elif form.errors.scp_item_name != None %} is-invalid {% endif %}"
-                   id="productName" placeholder="Product Name" aria-describedby="inputGroupPrepend3 validateItemName"
-                   value="{{form.scp_item_name.value | default:''}}">
+            <input type="text" name="scp_item_name" class="form-control {% if form.errors.scp_item_name == None and form.is_bound %} is-valid {% elif form.errors.scp_item_name != None %} is-invalid {% endif %}" id="productName" placeholder="Product Name" aria-describedby="inputGroupPrepend3 validateItemName"
+                value="{{form.scp_item_name.value | default:''}}">
             <div id="validateItemName" class="invalid-feedback">
                 {{ form.errors.scp_item_name.as_text}}
             </div>
         </div>
         <div class="form-group">
             <label for="productDescription">Product Description</label>
-            <textarea
-                    class="form-control {% if form.errors.scp_item_desc == None and form.is_bound %} is-valid {% elif form.errors.scp_item_desc != None %} is-invalid {% endif %}"
-                    name="scp_item_desc" id="productDescription" rows="3"
-                    aria-describedby="inputGroupPrepend3 validateItemDesc">{{form.scp_item_desc.value | default:''}}</textarea>
+            <textarea class="form-control {% if form.errors.scp_item_desc == None and form.is_bound %} is-valid {% elif form.errors.scp_item_desc != None %} is-invalid {% endif %}" name="scp_item_desc" id="productDescription" rows="3" aria-describedby="inputGroupPrepend3 validateItemDesc">{{form.scp_item_desc.value | default:''}}</textarea>
             <div id="validateItemDesc" class="invalid-feedback">
                 {{ form.scp_item_desc.errors.as_text}}
             </div>
@@ -31,10 +26,8 @@
             <div class="form-group col ">
                 <label for="itemQuantity" class=" col-form-label">Quantity</label>
                 <div>
-                    <input id="itemQuantity" name="scp_item_qty" type="number" min="1" step="1"
-                           class="form-control {% if form.errors.scp_item_qty == None and form.is_bound %} is-valid {% elif form.errors.scp_item_qty != None %} is-invalid {% endif %}"
-                           value="{{ form.scp_item_qty.value | default:1 }}"
-                           aria-describedby="inputGroupPrepend3 validateQuantity">
+                    <input id="itemQuantity" name="scp_item_qty" type="number" min="1" step="1" class="form-control {% if form.errors.scp_item_qty == None and form.is_bound %} is-valid {% elif form.errors.scp_item_qty != None %} is-invalid {% endif %}" value="{{ form.scp_item_qty.value | default:1 }}"
+                        aria-describedby="inputGroupPrepend3 validateQuantity">
                     <div id="validateQuantity" class="invalid-feedback">
                         {{ form.scp_item_qty.errors.as_text}}
                     </div>
@@ -43,10 +36,8 @@
             <div class="form-group col ">
                 <label for="itemUnitPrice" class=" col-form-label">Unit Price</label>
                 <div>
-                    <input type="number" id="itemUnitPrice" name="scp_item_price" step="0.25" min="1"
-                           class="form-control {% if form.errors.scp_item_price == None and form.is_bound %} is-valid {% elif form.errors.scp_item_price != None %} is-invalid {% endif %}"
-                           value="{{ form.scp_item_price.value | default:1.00 }}"
-                           aria-describedby="inputGroupPrepend3 validateUnitPrice">
+                    <input type="number" id="itemUnitPrice" name="scp_item_price" step="0.25" min="1" class="form-control {% if form.errors.scp_item_price == None and form.is_bound %} is-valid {% elif form.errors.scp_item_price != None %} is-invalid {% endif %}" value="{{ form.scp_item_price.value | default:1.00 }}"
+                        aria-describedby="inputGroupPrepend3 validateUnitPrice">
                     <div id="validateUnitPrice" class="invalid-feedback">
                         {{ form.scp_item_price.errors.as_text}}
                     </div>
@@ -58,7 +49,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="itemCategory">Category</label>
-                    <select id="itemCategory" name="itemCategory" class="form-control" onchange="getCat();" required>
+                    <select id="itemCategory" name="itemCategory" class="form-control" onchange="getCat();">
                         <option value="">Choose...</option>
                         {% for cat in scpCategory %}
                         <option data-url="{% url 'Authentication:get_scp_sub_category' cat.scp_category_id  %}"
@@ -83,9 +74,7 @@
         <div class="py-2">
             <h3 class="text-center">Upload Item images</h3>
             <div class="custom-file my-1">
-                <input type="file" id="customFile" name="scp_img_url" required multiple
-                     class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages">
+                <input type="file" id="customFile" name="scp_img_url" required multiple class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}" aria-describedby="inputGroupPrepend3 validateImages">
                 <label class="custom-file-label" for="customFile">Choose file</label>
                 <div id="validateImages" class="invalid-feedback">
                     {{ image_error }}
@@ -93,51 +82,44 @@
             </div>
         </div>
 
-        <input type="submit" class="btn btn-block btn-sm pri-bg-color"/>
+        <input type="submit" class="btn btn-block btn-sm pri-bg-color" />
         <div>
-        {{ form.errors.as_json }}
+            {{ form.errors.as_json }}
         </div>
     </form>
 </div>
- {% endblock %}
-
-{% block customscript %}
+{% endblock %} {% block customscript %}
 <script>
-    function getCat(){
-    var cat=$("#itemCategory").val();
-    var catId = parseInt(cat);
-    console.log(catId)
-    $.ajax({
-       url: '/accounts/dashboard/product/scrap/add/' + catId,
-       success:function(response){
-       console.log(response.subCrtCat);
-        	$("#itemSubCategory").empty();
-	        $.each(response.subScpCat,function(k,v){
-	            // console.log(response.subScpCat[k].crt_sub_category_name);
-	            var subCatId = response.subScpCat[k].scp_sub_category_id;
-	            var subCatName = response.subScpCat[k].scp_sub_category_name;
-	            var opts = "<option value="+subCatId+">"+subCatName+"</option>";
+    function getCat() {
+        var cat = $("#itemCategory").val();
+        var catId = parseInt(cat);
+        console.log(catId)
+        $.ajax({
+            url: '/accounts/dashboard/product/scrap/add/' + catId,
+            success: function(response) {
+                console.log(response.subCrtCat);
+                $("#itemSubCategory").empty();
+                $.each(response.subScpCat, function(k, v) {
+                    // console.log(response.subScpCat[k].crt_sub_category_name);
+                    var subCatId = response.subScpCat[k].scp_sub_category_id;
+                    var subCatName = response.subScpCat[k].scp_sub_category_name;
+                    var opts = "<option value=" + subCatId + ">" + subCatName + "</option>";
 
-	            $("#itemSubCategory").append(opts);
+                    $("#itemSubCategory").append(opts);
 
-	        })
-        },
-       error: function(jqXHR, textStatus, errorThrown) {
-          Swal.fire(
-              jqXHR.status + "",
-              textStatus + " : " + errorThrown,
-              'error'
-          )
-       }
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
 
-    });
-
-
-};
+        });
 
 
-
-
-
+    };
 </script>
 {% endblock %}

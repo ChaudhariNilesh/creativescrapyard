@@ -3,6 +3,8 @@ from django.forms import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
 import re
+from Authentication.models import User,Profile
+
 #  def checkEmail(mail):
 #     if len(mail) > 20:
 #         is_valid = True
@@ -36,9 +38,9 @@ def validate(**kwargs):
                 data["email"] = email            
             else:
                 if kwargs["chkTakenEmail"]:
-                    #istaken_email = User.objects.filter(email__iexact=email).exists()
-                    istaken=False
-                    if istaken:
+                    istaken_email = User.objects.filter(email__iexact=mail).exists()
+                    #istaken=False
+                    if istaken_email:
                         email = {
                             'is_valid':False,
                             'msg':"Email already exist."
@@ -82,9 +84,9 @@ def validate(**kwargs):
                 data["username"] = username            
             else:
                 if kwargs["chkTakenUsrname"]:
-                    #istaken_email = User.objects.filter(email__iexact=email).exists()
-                    istaken=False
-                    if istaken:
+                    istaken_username= User.objects.filter(username__iexact=username).exists()
+                    #istaken=False
+                    if istaken_username:
                         username = {
                             'is_valid':False,
                             'msg':"Username already exist."
@@ -205,26 +207,36 @@ def validate(**kwargs):
             pswd1 = kwargs["pswd1"]
             pswd2 = kwargs["pswd2"]
             if pswd1 == pswd2:
-                try:
-                   
-                   #  validate_password(pswd1)
-                    print(pswd1,pswd2)
+                # print(bool(re.match('[A-Za-z0-9@#$%^&+=]{9,}',pswd1)))
+                if bool(re.match('[A-Za-z0-9@#$%^&+=]{9,}',pswd1)):
+                    try:
                     
-                except ValidationError as e:
-                    print(e)
-                    password = {
-                        'is_valid':False,
-                        'msg':str(e)
-                    }
-                    data["errors"]=True
-                    data["password"] = password
+                        validate_password(pswd1)
+                        #print(pswd1,pswd2)
+                        
+                    except ValidationError as e:
+                        print(e)
+                        password = {
+                            'is_valid':False,
+                            'msg':[*e]
+                        }
+                        data["errors"]=True
+                        data["password"] = password
+                    else:
+                        password = {
+                            'is_valid': True,
+                            'msg': ""
+                        }                    
+                        #data["errors"]=False
+                        data["password"] = password
                 else:
                     password = {
-                        'is_valid': True,
-                        'msg': ""
-                    }                    
-                    #data["errors"]=False
-                    data["password"] = password
+                        'is_valid': False,
+                        'msg': "Passwords does not match the given criteria."
+                    }
+                    data["errors"]=True
+                    data["password"] = password                    
+
             else:
                 password = {
                     'is_valid': False,

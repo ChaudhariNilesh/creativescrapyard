@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,HttpResponse
+from django.shortcuts import render, redirect,HttpResponse,get_object_or_404
 from .models import*
 from .forms import *
 from CustomAdmin.models import *
@@ -20,7 +20,7 @@ from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import PermissionDenied
-
+import requests
 
 # Create your views here.
 def UserLogin(request):
@@ -357,7 +357,7 @@ def dashboard_profile(request,action=None):
                     if old_img:
                         os.remove(old_img.path)
                 except Exception as e:
-                    messages.error(request,"Some error occured during image upload. Refreash page and try again please."+str(e))
+                    messages.error(request,"Some error occured during image upload. Refreash page and try again please.")
                 else:
                     request.user.profile.user_image = request.FILES['user_image']
                     request.user.profile.save()
@@ -683,12 +683,20 @@ def addAddress(request):
         addressFormData=AddressForm()
         if request.method=='POST':
             # print(request.POST)
+            # response = requests.get('https://api.postalpincode.in/pincode/382213')
+            # geodata = response.json()
+            # print(geodata)
             city_id = request.POST.get("city")
             state_id = request.POST.get("state")
+            print(city_id,state_id)
             addressFormData=AddressForm(request.POST or None)
             if addressFormData.is_valid():
                 #print("valid")
                 address = addressFormData.save(commit=False)
+
+                if not Address.objects.filter(user_id=request.user.user_id,is_default=True).exists():
+                    address.is_default=True
+                    
                 address.user = request.user
                 address.city = Cities.objects.get(city_id=city_id)
                 address.state = States.objects.get(state_id=state_id)
@@ -697,12 +705,14 @@ def addAddress(request):
                 address.save()
                 messages.success(request,"Your address saved Successfully.")
                 addressFormData=AddressForm()
-                redirect("Authentication:dashboard_profile")
+                return redirect("Authentication:dashboard_profile")
 
             else:
-                city = Cities.objects.get(city_id=city_id)
+                if city_id:
+                    city = Cities.objects.get(city_id=city_id)
+                # err=profileForm.errors['user_image']            
                 #print(city)
-                messages.warning(request,"Please correct above errors.")
+                messages.warning(request,"Please correct below errors.")
 
         context={
             "form":addressFormData,
@@ -714,6 +724,80 @@ def addAddress(request):
 
     else:
         return redirect('Authentication:login')
+
+@login_required()
+def editAddress(request,id):
+    template = 'account/dashboard/edit-address.html'
+    addressFormData=""
+    city=""
+    state = States.objects.all().order_by("state_name")
+    if id:
+        addressExist = Address.objects.filter(address_id=id).exists()
+        
+        if addressExist:
+            AddressData = Address.objects.get(address_id=id)
+            addressFormData=AddressForm(instance=AddressData)
+            city = Cities.objects.get(city_id=AddressData.city_id)
+        
+            if request.method == "POST" :
+                # print(request.POST)
+                    city_id = request.POST.get("city")
+                    state_id = request.POST.get("state")
+                    # print(city_id,state_id)
+                    addressFormData=AddressForm(request.POST or None,instance=AddressData)
+                    if addressFormData.is_valid():
+                        
+                        print("valid")
+                        address = addressFormData.save(commit=False)
+                        address.user = request.user
+                        address.city = Cities.objects.get(city_id=city_id)
+                        address.state = States.objects.get(state_id=state_id)
+                        #print(ref_city.city_id)
+
+                        address.save()
+                        messages.success(request,"Your address updated Successfully.")
+                        # addressFormData=AddressForm()
+                        return redirect("Authentication:dashboard_profile")
+
+                    else:
+                        if city_id:
+                            city = Cities.objects.get(city_id=city_id)
+                                
+                        messages.warning(request,"Please correct below errors.")        
+            context={
+                "form":addressFormData,
+                "states":state,
+                "selectedCity":city,
+            }
+            
+            return render(request,template,context)
+
+    return redirect("Authentication:dashboard_profile")
+
+
+@login_required
+def delAddress(request,id):
+    try:
+        if id:
+            addressExist = Address.objects.filter(address_id=id).exists()
+            
+
+            if addressExist:
+                if Address.objects.filter(address_id=id,is_default=True).exists():
+                    
+                    newDefault = Address.objects.filter(is_default=False).first() # change default address if del addrs is default one
+                    newDefault.is_default=True
+                    newDefault.save()
+
+                AddressData = Address.objects.get(address_id=id)
+                AddressData.delete()
+
+                messages.success(request,"Your address deleted Successfully.")
+    except:
+        messages.error(request,"Some error occured, Please try after sometime.")
+
+    return redirect("Authentication:dashboard_profile")
+
 
 
 def getCities(request,id):

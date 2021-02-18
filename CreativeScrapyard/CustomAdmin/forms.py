@@ -2,6 +2,7 @@ from .models import tbl_crt_categories,tbl_crt_subcategories,MainScrapCategory,S
 from Authentication.models import User
 from django import forms
 import re
+
 class AdminForm(forms.ModelForm):
 
     class Meta:
@@ -44,8 +45,12 @@ class MainCreativeCategoryForm(forms.ModelForm):
        
         crt_category_name = cleaned_data.get('crt_category_name', None)
         cat = bool(re.match('[a-zA-Z\s]+$', crt_category_name))
+        isCatExists = tbl_crt_categories.objects.filter(crt_category_name__iexact=crt_category_name).exists()
+        # print(isCatExists)
         if not cat:
             raise forms.ValidationError("Creative Category Name is invalid.")
+        if isCatExists:
+            raise forms.ValidationError("Creative Category Name already exists.")
 
         return cleaned_data
       
@@ -61,8 +66,12 @@ class SubCreativeCategoryForm(forms.ModelForm):
        
         crt_sub_category_name = cleaned_data.get('crt_sub_category_name', None)
         cat = bool(re.match('[a-zA-Z\s]+$', crt_sub_category_name))
+        isCatExists = tbl_crt_subcategories.objects.filter(crt_sub_category_name__iexact=crt_sub_category_name).exists()        
         if not cat:
             raise forms.ValidationError("Creative Sub-Category Name is invalid.")
+        
+        if isCatExists:
+            raise forms.ValidationError("Creative Sub-Category Name already exists.")        
 
         return cleaned_data      
 
@@ -76,9 +85,13 @@ class MainScrapCategoryForm(forms.ModelForm):
        
         scp_category_name = cleaned_data.get('scp_category_name', None)
         cat = bool(re.match('[a-zA-Z\s]+$', scp_category_name))
+        isCatExists = MainScrapCategory.objects.filter(scp_category_name__iexact=scp_category_name).exists()        
+    
+
         if not cat:
             raise forms.ValidationError("Scrap Category Name is invalid.")
-
+        if isCatExists:
+            raise forms.ValidationError("Scrap Category Name already exists.")    
         return cleaned_data 
 
 
@@ -92,9 +105,12 @@ class SubScrapCategoryForm(forms.ModelForm):
        
         scp_sub_category_name = cleaned_data.get('scp_sub_category_name', None)
         cat = bool(re.match('[a-zA-Z\s]+$', scp_sub_category_name))
+        isCatExists = SubScrapCategory.objects.filter(scp_sub_category_name__iexact=scp_sub_category_name).exists()                
+
         if not cat:
             raise forms.ValidationError("Scrap Sub-Category Name is invalid.")
-
+        if isCatExists:
+            raise forms.ValidationError("Scrap Sub-Category Name already exists.")    
         return cleaned_data  
 
 

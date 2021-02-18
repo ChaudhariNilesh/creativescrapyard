@@ -25,6 +25,8 @@ urlpatterns = [
     path('profile/', profile, name="profile"),
     
     path('dashboard/', dashboard, name="dashboard"),
+    path('dashboard/ajax/get-cities/<int:id>',getCities,name="getCities"),
+
     path('dashboard/product/creative/', creative_items, name="creative_items"),
     path('dashboard/product/scrap/', scrap_items, name="scrap_items"),
 
@@ -34,6 +36,7 @@ urlpatterns = [
 
     path('dashboard/product/creative/add/item/<int:id>/', add_creative_product_detail, name="add_product_detail"),
     path('dashboard/upload-image/<int:id>/', upload_image, name="upload_image"),
+   
     # path('dashboard/add-photo/<int:id>/', add_photo, name="add_photo"),
 
     path('dashboard/product/creative/edit/<int:id>/', edit_creative_product,name="edit_creative_product"),
@@ -45,8 +48,13 @@ urlpatterns = [
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
     path('dashboard/profile/addAddress', addAddress, name="addAddress"),
+    path('dashboard/profile/editAddress/<int:id>/', editAddress, name="editAddress"),
+    path('dashboard/profile/delAddress/<int:id>/', delAddress, name="delAddress"),
 
-    path('dashboard/profile/ajax/get-cities/<int:id>',getCities,name="getCities"),
+
+    # path('dashboard/profile/ajax/get-cities/<int:id>',getCities,name="getCities"),
+    
+
     path('dashboard/profile/ajax/set-default/<int:id>',setDefault,name="setDefault"),
 
 

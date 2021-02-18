@@ -24,8 +24,8 @@ report modal
 add report flag item link
 ------------------------
 
-
 ********* >>CHECK DIAGRAMS ADMIN TABLE<< ******************
+
 
 
 
@@ -53,12 +53,19 @@ add new address from checkout
 (chnage validation in signup and contact form TO forms.isvalid())
 edit and remove address
 
+-------------------
+>--password description
+>--validate file during upload
+
+>think for height of product.
+>upload item images validation error.
+
 -----------------
 >>password strentgth validate and signup user...
 >> queries,->SKIP
 >>shop cart javascript validate << POST WORK
->> send contact derts for scrap 
 
+--send contact derts for scrap 
 --login=>admin-user,forget password, reset password, email verify input.
 
 --singup

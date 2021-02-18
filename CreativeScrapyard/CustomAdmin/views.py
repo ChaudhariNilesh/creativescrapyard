@@ -425,9 +425,9 @@ def scrapCat(request,id=None,action=None):
     if request.session.get('user'):   
         scpMainCats=MainScrapCategory.objects.all() 
         template = 'custom-admin/products/scrapcategory.html'
-        print("OUT")
+        # print("OUT")
         if id != None and action==None :
-            print("DD1")
+            # print("DD1")
             subScpCats=SubScrapCategory.objects.filter(scp_category_id=id)
             parentCat=get_object_or_404(MainScrapCategory,pk=id)
                 
@@ -449,7 +449,9 @@ def scrapCat(request,id=None,action=None):
                     
                     return JsonResponse({"saved":True,"message":""})
                 else:
-                    return JsonResponse({"saved":False,"message":"Invalid Data!!"})
+                    err=mainScpCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err}) 
             else:
                 raise PermissionDenied
             
@@ -469,7 +471,9 @@ def scrapCat(request,id=None,action=None):
                         return JsonResponse({"saved":False,"message":"Database Error!!"})
                     return JsonResponse({"saved":True,"message":""})
                 else:
-                    return JsonResponse({"saved":False,"message":"Invalid Data!!"})
+                    err=newSubScpCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err}) 
             else:
                 raise PermissionDenied
                # return HttpResponseNotFound("404 Page not found.")
@@ -487,7 +491,9 @@ def scrapCat(request,id=None,action=None):
                         return JsonResponse({"updated":False,"message":"Database Error!!"})
                     return JsonResponse({"updated":True,"message":""})
                 else:
-                    return JsonResponse({"updated":False,"message":"Invalid Data!!"})
+                    err=editMainScpCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err}) 
             elif request.method=="GET" and request.is_ajax():
             #    print("ajax")
                 mainScpCat = get_object_or_404(MainScrapCategory,pk=id)
@@ -507,7 +513,9 @@ def scrapCat(request,id=None,action=None):
                         return JsonResponse({"updated":False,"message":"Database Error!!"})
                     return JsonResponse({"updated":True,"message":""})
                 else:
-                    return JsonResponse({"updated":False,"message":"Invalid Data!!"})
+                    err=editSubScpCat.errors.get_json_data(escape_html=True)
+                    err=err['__all__'][0]['message']
+                    return JsonResponse({"saved":False,"message":err}) 
             elif request.method=="GET" and request.is_ajax():
              #   print("ajax")
                 subScpCat = get_object_or_404(SubScrapCategory,pk=id)

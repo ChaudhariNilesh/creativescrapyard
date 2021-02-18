@@ -260,10 +260,10 @@ $(function() {
         if (loc == "/accounts/dashboard/") {
             $('a[href="' + loc + '"]').parent().css({ "opacity": "1" });
         } else if (sideBarLoc != loc) {
-            console.log("dd" + sideBarLoc);
+            // console.log("dd" + sideBarLoc);
             $('a[href="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         } else {
-            console.log(sideBarLoc);
+            // console.log(sideBarLoc);
             $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         }
 

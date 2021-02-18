@@ -22,7 +22,8 @@ $(function() {
                                     $("#" + k).removeClass("is-valid is-invalid");
                                     $("#" + k).addClass("is-valid");
                                     if (k == 'password') {
-                                        $("#" + k).removeClass("is-valid is-invalid");
+
+                                        $("input[type='password']").removeClass("is-valid is-invalid");
                                         $("input[type='password']").addClass("is-valid");
                                     }
 
@@ -30,7 +31,7 @@ $(function() {
                                     $("#" + k).removeClass("is-valid is-invalid");
                                     $("#" + k).addClass("is-invalid").after("<div class='invalid-feedback'>" + data[k].msg + "</div>");
                                     if (k == 'password') {
-                                        $("#" + k).removeClass("is-valid is-invalid");
+                                        $("input[type='password']").removeClass("is-valid is-invalid");
                                         $("input[type='password']").addClass("is-invalid").after("<div class='invalid-feedback'>" + data[k].msg + "</div>");
                                     }
                                 }

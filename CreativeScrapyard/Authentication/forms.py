@@ -2,7 +2,7 @@ from django import forms
 from .models import *
 from django.core.validators import validate_image_file_extension
 import re
-
+import requests
 #
 # class CustomUserForm(forms.ModelForm):
 #     class Meta:
@@ -45,10 +45,12 @@ class EditProfileImage(forms.ModelForm):
         cleaned_data=self.cleaned_data
         #print(cleaned_data)
         user_image = cleaned_data.get("user_image",False)
-    
+        # print()
+        allowedSize = round((user_image.size/1024))
         if user_image:
             validate_image_file_extension(user_image)
-                #self.add_error("last_name",forms.ValidationError('Invalid last name only. Alphabets are accepted.' ,code='invalid'))
+            if allowedSize > 2048:
+                self.add_error("user_image",forms.ValidationError('Maximum 2 MB image size is allowed.' ,code='invalid'))
 
         return cleaned_data   
 
@@ -177,9 +179,12 @@ class UserDocument(forms.ModelForm):
         cleaned_data=self.cleaned_data
         #print(cleaned_data) {"name":value}
         pan_img_url = cleaned_data.get("pan_img_url",False)
-    
+        allowedSize = round((pan_img_url.size/1024))
         if pan_img_url:
-            validate_image_file_extension(pan_img_url)
+            validate_image_file_extension(pan_img_url)                
+            if allowedSize > 2048:
+                self.add_error("pan_img_url",forms.ValidationError('Maximum 2 MB image size is allowed.' ,code='invalid'))
+        
         return pan_img_url
 
 
@@ -187,7 +192,7 @@ class AddressForm(forms.ModelForm):
     
     class Meta:
         model = Address
-        fields = ("person_name","contact_no","type","line1","line2","pincode","landmark")
+        fields = ("person_name","contact_no","type","line1","line2","pincode","landmark","city","state")
 
     def clean_person_name(self):
         cleaned_data=self.cleaned_data
@@ -249,8 +254,12 @@ class AddressForm(forms.ModelForm):
 
     def clean_pincode(self):
         pincode=self.cleaned_data.get("pincode",None)
-
+        # response = requests.get('https://api.postalpincode.in/pincode/'+pincode)
+        # isvalidpincode = response.json()
+        # print(isvalidpincode[0]['Status'])
+        # if not len(pincode)==6 or not pincode.isdigit() or isvalidpincode[0]['Status']=="Error":
         if not len(pincode)==6 or not pincode.isdigit():
+
             self.add_error("pincode",forms.ValidationError("Please Enter Valid Pincode"))
         
         return pincode
