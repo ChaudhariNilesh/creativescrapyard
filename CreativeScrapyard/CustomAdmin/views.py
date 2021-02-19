@@ -610,14 +610,123 @@ def badges(request):
     if request.session.get('user'):    
         template = 'custom-admin/manage-badges.html'
         badges=Badges.objects.all()
+        badgeEntries=BadgeEntries.objects.all()
         context={
-            'badges':badges
+            'badges':badges,
+            'badgeEntries':badgeEntries,
+
         }
         return render(request,template,context)
 
     else:
         return redirect('CustomAdmin:login')
 
+@login_required
+def assignBadges(request):
+    if request.user.is_superuser:  
+
+        msg=""
+        if request.method=='POST' and request.is_ajax():
+
+            email=request.POST.get('email')
+            badge_id=request.POST.get('badge_id',None)
+            print(badge_id)
+            isEmailExist = User.objects.filter(email=email,is_superuser=False).exists()
+            if not isEmailExist and (badge_id=="" or badge_id is None):
+                msg={
+                    "email":"Given email does not exists.",
+                    "badge":"Please select the badge."
+                }
+                return JsonResponse({"errors":msg})
+            elif not isEmailExist:
+                msg={
+                    "email":"Given email does not exists.",
+                }
+
+                return JsonResponse({"errors":msg})
+            elif badge_id=="" or badge_id is None:
+                msg={
+                    "badge":"Please select the badge."
+                }
+                return JsonResponse({"errors":msg})
+           
+            else:
+                usr=User.objects.get(email=email)
+                badge = Badges.objects.get(badge_id=badge_id)
+                isAlreadyAsssigned = BadgeEntries.objects.filter(badge=badge,user=usr).exists()
+                if isAlreadyAsssigned:
+                    # messages.success(request,"Badge already assigned to the user.")
+                    return JsonResponse({"errors":"assigned"})
+                    
+
+                assignBadge=BadgeEntries.objects.create(badge=badge,user=usr)
+    
+                assignBadge.save()
+                messages.success(request,"Badge assigned successfully.")
+                
+                return JsonResponse({"errors":False})
+            
+    else:
+        raise PermissionDenied
+    
+def addBadges(request):
+    if request.is_ajax and request.method=="POST":
+        # print("How's The Code",request.POST)
+        name=request.POST.get("badge_name",None)
+        if name is not None or name!=" ":
+            if bool(re.match("^[a-zA-Z\s]+$",name)):
+                isBadge = Badges.objects.filter(badge_name__iexact=name).exists()
+                if isBadge:
+                    return JsonResponse({"success":False,"msg":"Badge already exist!!"})
+
+                badge=Badges.objects.create(badge_name=name)
+                badge.save()
+                return JsonResponse({"success":True})
+            else:
+                return JsonResponse({"success":False,"msg":"Only alphabets are allowed."})
+
+        else:
+            return JsonResponse({"success":False,"msg":"You need to write something"})
+    else:
+        raise PermissionDenied
+
+def delBadge(request):
+    if request.is_ajax and request.method=="POST":
+        # print("How's The Code",request.POST)
+        badge_id=request.POST.get("badge_id",None)
+        
+        if badge_id:
+            isBadge = Badges.objects.filter(badge_id=badge_id).exists()
+            if not isBadge:
+                return JsonResponse({"success":False,"msg":"Some Error occured!!"})
+
+            badge=Badges.objects.get(badge_id=badge_id)
+            badge.delete()
+
+            return JsonResponse({"success":True})
+        else:
+            return JsonResponse({"success":False,"msg":"Some Error occured!"})
+    else:
+        raise PermissionDenied
+
+def removeAssignedBadge(request):
+    if request.is_ajax and request.method=="POST":
+        # print("How's The Code",request.POST)
+        entry_id=request.POST.get("entry_id",None)
+        
+        if entry_id:
+            isBadge = BadgeEntries.objects.filter(entry_id=entry_id).exists()
+            if not isBadge:
+                return JsonResponse({"success":False,"msg":"Some Error occured!!"})
+
+            badge=BadgeEntries.objects.get(entry_id=entry_id)
+            badge.delete()
+
+            return JsonResponse({"success":True})
+        else:
+            return JsonResponse({"success":False,"msg":"Some Error occured!"})
+    else:
+        raise PermissionDenied
 ####### QUERIES RELATED #######
 def queries(request):
     if request.user.is_superuser:    
@@ -812,42 +921,7 @@ def replyQry(request,id):
         return redirect('CustomAdmin:login') 
 
 
-
-def assignBadges(request):
-    if request.user.is_superuser:  
-        template="custom-admin/manage-badges.html"
-       
-        if request.method=='POST':
-
-            email=request.POST.get('email')
-            badge_id=request.POST.get('badge_id')
-            print(email,badge_id)
-            usr=User.objects.get(email=email)
-            badge = Badges.objects.get(badge_id=badge_id)
-            print(usr,badge)
-            assignBadge=BadgeEntries.objects.create(badge=badge,user=usr)
- 
-            assignBadge.save()
-            messages.success(request,"Your badge saved Successfully.")
-            return redirect('CustomAdmin:badges')
-     
-
-        return render(request,template)
     
-    else:
-        return redirect('CustomAdmin:login')
-    
-
-
-
-def addBadges(request):
-    if request.is_ajax and request.method=="POST":
-        print("How's The Code",request.POST)
-        name=request.POST.get("badge_name")
-        badge=Badges.objects.create(badge_name=name)
-        badge.save()
-        return JsonResponse({"success":True})
-
 
 ######################################################
 # def loadSubCrtCats(request,id=None):

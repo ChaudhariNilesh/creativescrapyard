@@ -392,20 +392,30 @@ $(function() {
                 if (text) {
                     // Swal.fire(`Entered Badge:${text}`)
                     $.ajax({
-                        type:"POST",
-                        url:"/admin/add-badges/",
-                        data:{
-                            csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val(),
-                            action:"POST",
-                            badge_name:text
+                        type: "POST",
+                        url: "/admin/add-badges/",
+                        data: {
+                            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                            badge_name: text
                         },
-                        datatype:"json",
-                        success:function(data){
-                           // console.log(data)
-                           if(data.success){
-                            Swal.fire(`Badge Added!:${text}`,'','success')
-                            setTimeout(function() { location.reload() }, 2000);
-                           }
+                        datatype: "json",
+                        success: function(data) {
+                            // console.log(data)
+                            if (data.success) {
+                                Swal.fire(`'${text}' Badge Added!`, '', 'success')
+                                setTimeout(function() { location.reload() }, 2000);
+                            } else {
+
+                                Swal.fire(data.msg, '', 'error')
+
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire(
+                                jqXHR.status + "",
+                                textStatus + " : " + errorThrown,
+                                'error'
+                            )
                         }
                     })
                 }
@@ -416,7 +426,9 @@ $(function() {
 
     }
     var badgeDelete = function() {
-        $('#badge').on("click", function() {
+        $('.badges').on("click", function() {
+            // console.log($(this).attr("id"))
+            const badge_id = $(this).attr("id");
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -425,7 +437,79 @@ $(function() {
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire("Badge Deleted", "", "success");
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/del-badge/",
+                        dataType: "JSON",
+                        data: {
+                            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                            badge_id: badge_id,
+                        },
+                        success: function(data) {
+                            // console.log(data)
+                            if (data.success) {
+                                Swal.fire(`Badge deleted!`, '', 'success')
+                                setTimeout(function() { location.reload() }, 2000);
+                            } else {
+                                Swal.fire(data.msg, '', 'error')
+
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire(
+                                jqXHR.status + "",
+                                textStatus + " : " + errorThrown,
+                                'error'
+                            )
+                        }
+
+                    })
+
+                }
+            })
+        });
+    }
+
+    var removeAssignedBadge = function() {
+        $('.remove-assigned').on("click", function() {
+            // console.log($(this).attr("id"))
+            const entry_id = $(this).attr("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/remove-assigned/",
+                        dataType: "JSON",
+                        data: {
+                            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                            entry_id: entry_id,
+                        },
+                        success: function(data) {
+                            // console.log(data)
+                            if (data.success) {
+                                Swal.fire(`Badge unassigned!`, '', 'success')
+                                setTimeout(function() { location.reload() }, 2000);
+                            } else {
+                                Swal.fire(data.msg, '', 'error')
+
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire(
+                                jqXHR.status + "",
+                                textStatus + " : " + errorThrown,
+                                'error'
+                            )
+                        }
+
+                    })
+
                 }
             })
         });
@@ -875,6 +959,7 @@ $(function() {
         verifyChk();
         addBadgesInput();
         badgeDelete();
+        removeAssignedBadge();
         // deleteAssignedBadge();
         addMainCrtCat();
         addSubCrtCat();

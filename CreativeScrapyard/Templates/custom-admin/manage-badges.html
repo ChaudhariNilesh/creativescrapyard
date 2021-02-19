@@ -11,15 +11,15 @@
                 </button>
             </div>
             <div class="modal-body mx-auto d-block">
-                <form method="POST" action="{% url 'CustomAdmin:assignBadges' %}">
-                {% csrf_token %}
+                <form id="assignForm" method="POST" data-validation="{% url 'CustomAdmin:assignBadges' %}">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="exampleFormControlFile1">User Email:</label>
-                        <input type="email" name="email" class="form-control" id="exampleFormControlFile1" required>
+                        <input type="email" name="email" class="form-control" id="email" required>
                         <label for="exampleFormControlFile1">Badge Name:</label>
-                        <select class="custom-select" name="badge_id" required>
+                        <select class="custom-select" name="badge_id" id="badgeName">
                                 
-                                <option >Choose a Badge</option>
+                                <option value="" >Choose a Badge</option>
                                 {% for badge in badges %}
                                 <option value="{{badge.badge_id}}">{{badge.badge_name}}</option>
                                 {% endfor %}
@@ -47,10 +47,9 @@
                     <hr>
                 </h4>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
-                    
-                    {% for badge in badges%}
-                    {% cycle 'tags-common' 'tags-special' 'tags-rare' 'tags-event' as badgecolor silent %}
-                    <li id="badge" class="btn tags {{badgecolor}} mx-1 my-1">{{badge.badge_name}}</li>
+
+                    {% for badge in badges%} {% cycle 'tags-common' 'tags-special' 'tags-rare' 'tags-event' as badgecolor silent %}
+                    <li id="{{badge.badge_id}}" class="btn tags {{badgecolor}} mx-1 my-1 badges">{{badge.badge_name}}</li>
                     {%endfor%}
 
                     <!-- <li id="badge" class="btn tags tags-common mx-1 my-1">Artist</li>
@@ -61,16 +60,16 @@
                     <li class="btn tags tags-event mx-1 my-1">Seller of</li>
                      -->
                     <li id="addBadge" class="btn tags tags-add mx-1 my-1">
-                    
-                    +Add Badge</li>
+
+                        +Add Badge</li>
                     {% csrf_token %}
                 </ul>
 
                 <h4>
                     <hr>
-                                                <div>
-                                {% include 'includes/messages.html' %}
-                            </div>
+                    <div>
+                        {% include 'includes/messages.html' %}
+                    </div>
                     <div>
                         <span class="">Badges Achievers</span>
                         <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal" data-target="#assignBadgeModal">Assign Badge</span>
@@ -92,63 +91,36 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                {% for badgeEntry in badgeEntries %}
                                 <tr>
-                                    <td><a href="#"><span class="list-enq-name">Nilesh Chaudhary</span></a>
+                                    <!--  -->
+                                    <td><a href="#"><span class="list-enq-name">{{badgeEntry.user.first_name|capfirst}} {{badgeEntry.user.last_name|capfirst}}</span></a>
                                     </td>
-                                    <td>nileshchaudhary1905@gmail.com</td>
+                                    <td>{{badgeEntry.user.email}}</td>
                                     <td>
-                                        <span class="p-2 listing">Artist</span>
+                                        <span class="p-2 listing">{{badgeEntry.badge.badge_name}}</span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
-                                        </span>
+
+                                        {% if badgeEntry.user.profile.is_verified %}
+                                        <span class="listing"><i class="fa fa-check" aria-hidden="true"></i></span> {% else %}
+                                        <span class="listing"><i class="fa fa-close" aria-hidden="true"></i></span> {% endif %}
+
                                     </td>
                                     <td class="text-center">
                                         <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
                                                 class="btn btn-sm pri-bg-color"><img
                                                     src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
                                                     width="20" height="20"></button></a>
-                                        <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+                                        <button class="btn btn-sm btn-danger remove-assigned" id={{badgeEntry.entry_id}}><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
                                     </td class="text-center">
-                                    {% comment %}
-                                    <td class="text-center">
-                                        <a href="user-edit.html"><i
-                                                class="fa fa-pencil-square-o text-white p-2 rounded cus"
-                                                aria-hidden="true"></i></a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
-                                                aria-hidden="true"></i></a>
-                                    </td> {% endcomment %}
+
+
+                                    <!--  -->
+                                    {% endfor %}
                                 </tr>
-                                <tr>
-                                    <td><a href="#"><span class="list-enq-name">Raghav Agarwal</span></a>
-                                    </td>
-                                    <td>raghu123@gmail.com</td>
-                                    <td>
-                                        <span class="p-2 listing">Artist</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
-                                        </span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
-                                                class="btn btn-sm pri-bg-color"><img
-                                                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
-                                                    width="20" height="20"></button></a>
-                                        <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
-                                    </td>
-                                    {% comment %}
-                                    <td class="text-center">
-                                        <a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus"
-                                                aria-hidden="true"></i></a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
-                                                aria-hidden="true"></i></a>
-                                    </td> {% endcomment %}
-                                </tr>
+
 
 
                             </tbody>
@@ -160,4 +132,123 @@
         </div>
     </div>
 </div>
+{% endblock %} {% block customscript%}
+<script>
+    $("#assignForm").submit(function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const submitcontext = $(this);
+        $.ajax({
+            url: form.attr("data-validation"),
+            data: form.serialize(),
+            type: 'post',
+            context: form,
+            dataType: 'json',
+            success: function(data) {
+                if (data.errors) {
+                    $(".invalid-feedback").remove();
+                    $("#assignBadgeModal").modal("show");
+
+                    if (data.errors == "assigned") {
+                        $("#badgeName").removeClass("is-valid is-invalid");
+                        $("#badgeName").addClass("is-invalid").after("<div class='invalid-feedback'>" + "Badge already assigned to the user." + "</div>");
+                    } else {
+                        if (data.errors.email) {
+                            $("#email").removeClass("is-valid is-invalid");
+                            $("#email").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.email + "</div>");
+                        } else {
+                            $("#email").removeClass("is-valid is-invalid");
+                            $("#email").addClass("is-valid");
+                        }
+                        if (data.errors.badge) {
+                            $("#badgeName").removeClass("is-valid is-invalid");
+                            $("#badgeName").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.badge + "</div>");
+                        } else {
+                            $("#badgeName").removeClass("is-valid is-invalid");
+                            $("#badgeName").addClass("is-valid");
+                        }
+                    }
+
+
+                } else {
+
+
+                    form.off('submit');
+                    form.submit();
+
+
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+        });
+
+
+    });
+</script>
+
 {% endblock %}
+
+<tr>
+    <td><a href="#"><span class="list-enq-name">Nilesh Chaudhary</span></a>
+    </td>
+    <td>nileshchaudhary1905@gmail.com</td>
+    <td>
+        <span class="p-2 listing">Artist</span>
+    </td>
+    <td class="text-center">
+        <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
+        </span>
+    </td>
+    <td class="text-center">
+        <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
+                class="btn btn-sm pri-bg-color"><img
+                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                    width="20" height="20"></button></a>
+        <a href="# " class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+    </td class="text-center">
+    {% comment %}
+    <td class="text-center">
+        <a href="user-edit.html"><i
+                class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                aria-hidden="true"></i></a>
+    </td>
+    <td class="text-center">
+        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
+                aria-hidden="true"></i></a>
+    </td> {% endcomment %}
+</tr>
+<tr>
+    <td><a href="#"><span class="list-enq-name">Raghav Agarwal</span></a>
+    </td>
+    <td>raghu123@gmail.com</td>
+    <td>
+        <span class="p-2 listing">Artist</span>
+    </td>
+    <td>
+        <span class="listing"><i class="fa fa-close" aria-hidden="true"></i>
+        </span>
+    </td>
+    <td class="text-center">
+        <a href="{% url 'Authentication:profile' %}" class="user-view mx-auto"><button
+                class="btn btn-sm pri-bg-color"><img
+                    src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff"
+                    width="20" height="20"></button></a>
+        <a href="# " id="deleteAssignedBadge" class="user "><button class="btn btn-sm btn-danger " ><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></button></a>
+    </td>
+    {% comment %}
+    <td class="text-center">
+        <a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus"
+                aria-hidden="true"></i></a>
+    </td>
+    <td class="text-center">
+        <a href="#"><i class="fa fa-trash-o text-white p-2 rounded"
+                aria-hidden="true"></i></a>
+    </td> {% endcomment %}
+</tr>
