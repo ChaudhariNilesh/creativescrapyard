@@ -105,3 +105,18 @@ class tbl_scrapimages_form(forms.ModelForm):
     class Meta:
         model = tbl_scrapimages
         fields = ('scp_img_url',)
+
+class ReportIssueForm(forms.ModelForm):
+    class Meta:
+        model = Issues
+        fields=("issue_type","issue_sub","issue_msg",)
+
+    def clean_issue_msg(self):
+        cleaned_date = self.cleaned_data
+        issue_msg = cleaned_date.get("issue_msg",False)
+        
+        if issue_msg:
+            if not bool(re.match('[a-zA-Z0-9\s]+$',issue_msg)):
+                self.add_error("issue_msg",forms.ValidationError("No special symbols are allowed in the message field.",code="invalid"))
+        
+        return issue_msg            

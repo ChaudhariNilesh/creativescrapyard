@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator,MinValueValidator
 from CustomAdmin.models import tbl_crt_subcategories,SubScrapCategory
 from django.core.validators import validate_image_file_extension
-
+from Authentication.models import User
 
 # Create your models here.
 
@@ -13,6 +13,31 @@ WEIGHT_CHOICES = (
     ("4", "Below 1kg"),
     ("5", "Below 5kg"),
 )
+
+ISSUE_TYPE_CHOICES = (
+    (1, "Reported Creative Items"),
+    (2, "Reported Scrap Items"),
+    (3, "Reported Users Items"),
+
+)
+
+ISSUE_SUB_CHOICES = (
+    (1, "Doesn't match product"),
+    (2, "Missing/Incorrect information"),
+    (3, "Offensive or adult content"),
+    (4, "Is not clear"),
+    (5, "Other"),
+
+)
+ISSUE_STATUS_CHOICES = (
+    (1, "Pending"),
+    (2, "Resolved"),
+    (3, "Rejected"),
+
+
+)
+
+
 
 class tbl_creativeitems_mst(models.Model):
     crt_item_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
@@ -99,3 +124,24 @@ class tbl_scrapimages(models.Model):
     scp_img_url = models.ImageField(max_length=150, null=True, upload_to='item-photos/', validators=[validate_image_file_extension])
     is_primary = models.BooleanField(default=False, null=False)
     scp_item = models.ForeignKey(tbl_scrapitems, on_delete=models.CASCADE)
+
+
+class Issues(models.Model):
+    issue_id=models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
+    issue_type=models.PositiveIntegerField(choices=ISSUE_TYPE_CHOICES)
+    issue_sub=models.PositiveIntegerField(choices=ISSUE_SUB_CHOICES)
+    issue_msg = models.TextField(max_length=100,null=True,blank=True)
+    issue_status = models.PositiveIntegerField(choices=ISSUE_STATUS_CHOICES,default=1)
+    issue_date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+    crt_item = models.PositiveIntegerField(null=True,blank=True)
+    scp_item = models.PositiveIntegerField(null=True,blank=True)
+    # crt_item_id = models.ForeignKey(tbl_creativeitems,on_delete=models.DO_NOTHING,null=True,blank=False)
+    # scp_item = models.ForeignKey(tbl_scrapitems,on_delete=models.DO_NOTHING,null=True,blank=False)
+    reported_user = models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True,blank=True,related_name='reportee')
+    user=models.ForeignKey(User,on_delete=models.DO_NOTHING,related_name='reporter')
+    
+    class Meta:
+        db_table = 'tbl_issues'
+
+    def __str__(self):
+        return self.issue_msg

@@ -61,8 +61,8 @@ edit and remove address
 >upload item images validation error.
 
 -----------------
->>password strentgth validate and signup user...
->> queries,->SKIP
+>>--password strentgth validate and signup user...
+>>--queries
 >>shop cart javascript validate << POST WORK
 
 --send contact derts for scrap 
@@ -82,7 +82,7 @@ edit and remove address
 assign/add badges input validate
 add product
 edit product
-reported modal
+--reported modal
 verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
 
 ****************************************

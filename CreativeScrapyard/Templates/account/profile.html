@@ -19,15 +19,15 @@
         <div class="col-md-4  px-3 py-3">
             <div class="px-3 bg-white justify-content-center border py-3">
                 <div class="w-100 pt-5 pb-2">
-                    <img src="{% static 'img/testimonial/1.jpg' %}"
-                        class="img-thumbnail rounded-circle card-profile-image shadow">
+                    <img src="{% static 'img/testimonial/1.jpg' %}" class="img-thumbnail rounded-circle card-profile-image shadow">
                 </div>
                 <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">Nilesh Chaudhari</p>
                 <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">@cyberartist</p>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
                     <li class="tags tags-common mx-1 my-1">Artist</li>
                     <li class="tags tags-special mx-1 my-1">User</li>
-                    {% comment %} <li class="tags tags-special mx-1 my-1">Seller of the month</li>
+                    {% comment %}
+                    <li class="tags tags-special mx-1 my-1">Seller of the month</li>
                     <li class="tags tags-rare mx-1 my-1">Seller of the year</li>
                     <li class="tags tags-common mx-1 my-1">Artist</li>
                     <li class="tags tags-special mx-1 my-1">Seller of the month</li>
@@ -49,33 +49,35 @@
 
                 <!-- Report model code    -->
 
-                <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
                             <div class="model-header p-2 border-2 border-bottom">
                                 <span class="text-dark">Report Item</span>
                             </div>
                             <div class="model-body p-2">
-                                <form action="" method="post">
+                                <form id="issueForm" data-validation="{% url 'Home:Items:reportIssue' %}" method="POST">{% csrf_token %}
                                     <div class="form-group">
                                         <label class="text-dark" for="reportMsg">Please tell us about the issue</label>
-                                        <select class="form-control form-control-sm rounded">
-                                            <option selected>What's the issue?</option>
-                                            <option>Doesn't match product</option>
-                                            <option>Offensive or adult content</option>
-                                            <option>Is not clear</option>
-                                            <option>Other</option>
+
+                                        <input type='hidden' value="6" name="user_id">
+                                        <input type='hidden' value="3" name="issue_type">
+
+                                        <select class="form-control form-control-sm rounded" id="issue_sub" name="issue_sub">
+                                            <option selected>--Select your issue--</option>
+                                            <option value="1">Irrelavent or fake identity</option>
+                                            <option value="2">Selling fake products</option>
+                                            <option value="3">Selling offensive or adult products </option>
+                                            <option value="4">Other</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="text-dark" for="reportMsg">Comments (optional)</label>
-                                        <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
+                                        <textarea class="form-control rounded" rows="3" id="issue_msg" name="issue_msg"></textarea>
                                     </div>
                                     <div class="d-flex flex-row-reverse">
-                                        <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
-                                        <button type="button" class="btn btn-secondary btn-sm mx-2"
-                                            data-dismiss="modal">Close
+                                        <button type="submit" class="btn pri-bg-color btn-sm mx-2" id="submitIssue">Submit</button>
+                                        <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close
                                         </button>
                                     </div>
                                 </form>
@@ -115,13 +117,11 @@
                 <span class="px-3 align-middle h5">Scrap Items</span> -->
                 <nav>
                     <div class="nav nav-pills nav-pills-options" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-cretive-tab" data-toggle="pill"
-                            href="#nav-creative">Creative
+                        <a class="nav-item nav-link active" id="nav-cretive-tab" data-toggle="pill" href="#nav-creative">Creative
                             Items</a>
                         <a class="nav-item nav-link" id="nav-scrap-tab" data-toggle="pill" href="#nav-scrap">Scrap
                             Items</a>
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="pill"
-                            href="#nav-review">Reviews</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="pill" href="#nav-review">Reviews</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tab Content">
@@ -132,26 +132,19 @@
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
                                 <div class="product_card border-0 rounded px-0 mt-3">
                                     <div class="imgbx py-0">
-                                        <a
-                                            href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                            <img class="img-fluid prod-thumb-img grid"
-                                                src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" alt="" style="width: 220px;height: 280px;"
-                                                >
-                                            <div class="contentbx m-0 px-3 py-3"
-                                                style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                        <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                            <img class="img-fluid prod-thumb-img grid" src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" alt="" style="width: 220px;height: 280px;">
+                                            <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                                 <div class="caption">
 
-                                                    <p class="product-name pb-1"
-                                                        style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                                    <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                                         Ceramic Freshner</p>
-                                                    <p class="price mb-2 "
-                                                        style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
                                                         &#8377; 699</p>
 
                                                 </div>
                                                 <a href="#">
-                                                    <button id="contactBtn"
-                                                        class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {%endif%}</button>
+                                                    <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {%endif%}</button>
                                                 </a>
                                                 {% if is_creative and tab == 'creative' %}
                                                 <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
@@ -167,26 +160,19 @@
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
                                 <div class="product_card border-0 rounded px-0 mt-3">
                                     <div class="imgbx py-0">
-                                        <a
-                                            href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                            <img class="img-fluid prod-thumb-img grid"
-                                                src="{% static 'img/products/creative/customizedglasses.jpg' %}" alt="" style="width:220px;height:280px"
-                                                change-src="{% static 'img/products/2.jpg' %}">
-                                            <div class="contentbx m-0 px-3 py-3"
-                                                style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                        <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                            <img class="img-fluid prod-thumb-img grid" src="{% static 'img/products/creative/customizedglasses.jpg' %}" alt="" style="width:220px;height:280px" change-src="{% static 'img/products/2.jpg' %}">
+                                            <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                                 <div class="caption">
 
-                                                    <p class="product-name pb-1"
-                                                        style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                                    <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                                         Product Name</p>
-                                                    <p class="price mb-2 "
-                                                        style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
                                                         &#8377; 99</p>
 
                                                 </div>
                                                 <a href="#">
-                                                    <button id="contactBtn"
-                                                        class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {%endif%}</button>
+                                                    <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {%endif%}</button>
                                                 </a>
                                                 {% if is_creative and tab == 'creative' %}
                                                 <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
@@ -199,7 +185,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="row mx-auto mt-3">
                             <div class="col-md-12">
@@ -235,10 +221,10 @@
                                             <img class="img-fluid prod-thumb-img grid" src="{% static 'img/products/scrap/brokenmug.jpg' %}" alt="" change-src="{% static 'img/products/2.jpg' %}" style="height: 280px; width: 220px;">
                                             <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                                 <div class="caption">
-                                
+
                                                     <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">Broken Mug</p>
                                                     <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 70</p>
-                                
+
                                                 </div>
                                                 <a href="#">
                                                     <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
@@ -247,7 +233,7 @@
                                                 <a href="{% url 'Home:Items:Cart:addToCart' %}"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
                                             </div>
                                         </a>
-                                
+
                                     </div>
                                 </div>
                             </div>
@@ -325,5 +311,61 @@
         </div>
     </div>
 </div>
+
+{% endblock %} {% block customscript%}
+<script>
+    $("#issueForm").submit(function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const submitcontext = $(this);
+        $.ajax({
+            url: form.attr("data-validation"),
+            data: form.serialize(),
+            type: 'post',
+            context: form,
+            dataType: 'json',
+            success: function(data) {
+
+                if (data.errors) {
+                    console.log(data.errors);
+                    $(".invalid-feedback").remove();
+                    $("#reportIssueModal").modal("show");
+                    if (data.errors.issue_sub) {
+                        $("#issue_sub").removeClass("is-valid is-invalid");
+                        $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_sub + "</div>");
+                    } else {
+                        $("#issue_sub").removeClass("is-valid is-invalid");
+                        $("#issue_sub").addClass("is-valid");
+                    }
+                    if (data.errors.issue_msg) {
+                        $("#issue_msg").removeClass("is-valid is-invalid");
+                        $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_msg + "</div>");
+                    } else {
+                        $("#issue_msg").removeClass("is-valid is-invalid");
+                        $("#issue_msg").addClass("is-valid");
+                    }
+
+                } else {
+
+                    Swal.fire("Your issue submitted successfully.", "", "success");
+
+                    setTimeout(function() {
+                        form.off('submit');
+                        form.submit();
+                    }, 2000);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+        });
+
+
+    });
+</script>
 
 {% endblock %}

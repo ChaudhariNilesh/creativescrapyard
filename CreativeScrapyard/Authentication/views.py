@@ -1002,3 +1002,4 @@ def edit_scrap_product(request, id=None):
 def validate_file_ext(value):
     if not value.name.endswith(('.jpg','.jpeg','.png')):
        return True
+

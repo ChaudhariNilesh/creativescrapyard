@@ -42,8 +42,8 @@
             {% if is_scrap %} {% include 'common/scrap-footer.html' %} {% elif is_creative %} {% include 'common/creative-footer.html' %} {% else %} {% endif %}
         </div>
     </footer>
-    {% block customscript %} {% endblock %}
     <script src="{% static 'js/jquery.min.js' %} "></script>
+    {% block customscript %} {% endblock %}
     <script src="{% static 'js/popper.min.js' %} "></script>
     <script src="{% static 'js/bootstrap.min.js' %} "></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>

@@ -3,14 +3,20 @@ from CreativeScrapyard import settings
 from Authentication.models import Address
 
 # Create your views here.
-def checkout(request):
+def checkout(request,pid=None):
     template="Order/checkout.html"
-    
     defaultAddress = Address.objects.get(user_id=request.user.user_id,is_default=True)
     addressList = Address.objects.filter(user_id=request.user.user_id)
-    if request.method == "POST":
+
+    if request.method == "POST" and pid:
+       pass
+
+   
+    if request.method == "POST" and not pid :
         addrsId = request.POST.get("addressRadio","")
         defaultAddress = Address.objects.get(address_id=addrsId)
+
+
         
     context={
         'is_creative':True,

@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator, validate_image_file_extension
 import random
 import os
-from Items.models import tbl_creativeitems_details
+# from Items.models import tbl_creativeitems_details,tbl_scrapitems
 
 GENDER_TYPE = (
     ('F', 'Female'),
@@ -117,6 +117,7 @@ class Address(models.Model):
 
     def __str__(self):
         return self.person_name
+
 
 
 class Photo(models.Model):

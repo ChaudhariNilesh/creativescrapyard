@@ -97,30 +97,44 @@
                                 </span>
                                 <!-- Report model code    -->
 
-                                <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="reportIssueModal" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
                                             <div class="model-header p-2 border-2 border-bottom">
                                                 <span class="text-dark">Report Item</span>
                                             </div>
                                             <div class="model-body p-2">
-                                                <form action="" method="post">
+                                                <form method="POST" id="issueForm" data-validation="{% url 'Home:Items:reportIssue' %}">{% csrf_token %}
                                                     <div class="form-group">
+
+                                                        {% if is_creative %}
+                                                        <!--  -->
+                                                        <input type='hidden' value="101" name="crt_item_id">
+                                                        <input type='hidden' value="1" name="issue_type">
+                                                        <!--  -->
+                                                        {% elif is_scrap %}
+                                                        <input type='hidden' value="201" name="scp_item_id">
+                                                        <input type='hidden' value="2" name="issue_type">
+                                                        <!--  -->
+                                                        {% endif %}
+
+
                                                         <label class="text-dark" for="reportMsg">Please tell us about the issue</label>
-                                                        <select class="form-control form-control-sm rounded">
-                                                            <option selected>What's the issue?</option>
-                                                            <option>Doesn't match product</option>
-                                                            <option>Offensive or adult content</option>
-                                                            <option>Is not clear</option>
-                                                            <option>Other</option>
+                                                        <select class="form-control form-control-sm rounded" id="issue_sub" name="issue_sub">
+                                                            <option selected>--Select your issue--</option>
+                                                            <option value="1">Doesn't match product</option>
+                                                            <option value="2">Missing/Incorrect information</option>
+                                                            <option value="3">Offensive or adult content</option>
+                                                            <option value="4">Is not clear</option>
+                                                            <option value="5">Other</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="text-dark" for="reportMsg">Comments (optional)</label>
-                                                        <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
+                                                        <textarea class="form-control rounded" id="issue_msg" name="issue_msg" id="reportMsg" rows="3"></textarea>
                                                     </div>
                                                     <div class="d-flex flex-row-reverse">
-                                                        <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
+                                                        <button type="submit" class="btn pri-bg-color btn-sm mx-2" id="submitIssue">Submit</button>
                                                         <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </form>
@@ -145,7 +159,7 @@
                             <div class="availStock">Availability : <span class="stock">IN stock</span></div>
                             {% endif %}
 
-                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' %}{% else %} # {%endif%}">{% csrf_token %} {% if is_creative %}
+                            <form id="form_buy" method="post" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' 1 %}{% else %} # {%endif%}">{% csrf_token %} {% if is_creative %}
                                 <div class="form-group ">
                                     <label>Quantity : </label>
                                     <input class="form-control-inline" type="number" value="1" min="1" max="10">
@@ -323,5 +337,66 @@
     </section>
 </div>
 
+
+{% endblock %} {% block customscript%}
+<script>
+    $("#issueForm").submit(function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const submitcontext = $(this);
+        $.ajax({
+            url: form.attr("data-validation"),
+            data: form.serialize(),
+            type: 'post',
+            context: form,
+            dataType: 'json',
+            success: function(data) {
+
+                if (data.errors) {
+                    $(".invalid-feedback").remove();
+                    $("#reportIssueModal").modal("show");
+                    if (data.errors.issue_sub) {
+                        $("#issue_sub").removeClass("is-valid is-invalid");
+                        $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_sub + "</div>");
+                    } else {
+                        $("#issue_sub").removeClass("is-valid is-invalid");
+                        $("#issue_sub").addClass("is-valid");
+                    }
+                    if (data.errors.issue_msg) {
+                        $("#issue_msg").removeClass("is-valid is-invalid");
+                        $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_msg + "</div>");
+                    } else {
+                        $("#issue_msg").removeClass("is-valid is-invalid");
+                        $("#issue_msg").addClass("is-valid");
+                    }
+
+                } else {
+
+                    Swal.fire(
+                        "Your issue submitted successfully.", "", "success");
+
+                    setTimeout(function() {
+                        form.off('submit');
+                        form.submit();
+                    }, 2000);
+
+
+
+
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+        });
+
+
+    });
+</script>
 
 {% endblock %}
