@@ -52,7 +52,8 @@ urlpatterns = [
 
     ######BADGES######
     path('badges/',badges,name="badges"),
-
+    path('add-badges/',addBadges,name="addBadges"),
+    path('assign-badges/',assignBadges,name="assignBadges"),   
     ######QUERIES######
     path('query/',queries,name="query"),
     path('issues/',issues,name="issues"),

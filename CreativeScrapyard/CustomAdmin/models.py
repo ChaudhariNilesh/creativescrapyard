@@ -52,12 +52,12 @@ class Badges(models.Model):
         db_table = "tbl_badges"
 
     def __str__(self):
-        return self.badges_name
+        return self.badge_name
 
 class BadgeEntries(models.Model):
     entry_id=models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
-    badge_id=models.ForeignKey(Badges, on_delete=models.CASCADE)
-    user_id=models.ForeignKey(User, on_delete=models.CASCADE)
+    badge=models.ForeignKey(Badges, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
 
     
 
@@ -65,4 +65,4 @@ class BadgeEntries(models.Model):
         db_table = "tbl_badges_entries"
 
     def __str__(self):
-        return self.badge_entries
+        return self.badge.badge_name
