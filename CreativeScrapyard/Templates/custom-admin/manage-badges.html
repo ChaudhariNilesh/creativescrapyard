@@ -11,16 +11,18 @@
                 </button>
             </div>
             <div class="modal-body mx-auto d-block">
-                <form method="" action="#">
+                <form method="POST" action="{% url 'CustomAdmin:assignBadges' %}">
+                {% csrf_token %}
                     <div class="form-group">
                         <label for="exampleFormControlFile1">User Email:</label>
                         <input type="email" name="email" class="form-control" id="exampleFormControlFile1" required>
                         <label for="exampleFormControlFile1">Badge Name:</label>
-                        <select class="custom-select" name="badge">
-                                <option selected>Choose a Badge</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                        <select class="custom-select" name="badge_id" required>
+                                
+                                <option >Choose a Badge</option>
+                                {% for badge in badges %}
+                                <option value="{{badge.badge_id}}">{{badge.badge_name}}</option>
+                                {% endfor %}
                             </select>
                     </div>
                     <button type="submit" class="btn-cxt float-right">Save changes</button>
@@ -45,17 +47,30 @@
                     <hr>
                 </h4>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
-                    <li id="badge" class="btn tags tags-common mx-1 my-1">Artist</li>
+                    
+                    {% for badge in badges%}
+                    {% cycle 'tags-common' 'tags-special' 'tags-rare' 'tags-event' as badgecolor silent %}
+                    <li id="badge" class="btn tags {{badgecolor}} mx-1 my-1">{{badge.badge_name}}</li>
+                    {%endfor%}
+
+                    <!-- <li id="badge" class="btn tags tags-common mx-1 my-1">Artist</li>
                     <li class="btn tags tags-special mx-1 my-1">Seller of the month</li>
                     <li class="btn tags tags-rare mx-1 my-1">Seller of the year</li>
                     <li class="btn tags tags-common mx-1 my-1">Artist</li>
                     <li class="btn tags tags-special mx-1 my-1">Seller of the month</li>
                     <li class="btn tags tags-event mx-1 my-1">Seller of</li>
-                    <li id="addBadge" class="btn tags tags-add mx-1 my-1">+Add Badge</li>
+                     -->
+                    <li id="addBadge" class="btn tags tags-add mx-1 my-1">
+                    
+                    +Add Badge</li>
+                    {% csrf_token %}
                 </ul>
 
                 <h4>
                     <hr>
+                                                <div>
+                                {% include 'includes/messages.html' %}
+                            </div>
                     <div>
                         <span class="">Badges Achievers</span>
                         <span id="assignBadge" class="btn-cxt float-right" data-toggle="modal" data-target="#assignBadgeModal">Assign Badge</span>

@@ -390,7 +390,24 @@ $(function() {
                 })
 
                 if (text) {
-                    Swal.fire(`Entered Badge:${text}`)
+                    // Swal.fire(`Entered Badge:${text}`)
+                    $.ajax({
+                        type:"POST",
+                        url:"/admin/add-badges/",
+                        data:{
+                            csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val(),
+                            action:"POST",
+                            badge_name:text
+                        },
+                        datatype:"json",
+                        success:function(data){
+                           // console.log(data)
+                           if(data.success){
+                            Swal.fire(`Badge Added!:${text}`,'','success')
+                            setTimeout(function() { location.reload() }, 2000);
+                           }
+                        }
+                    })
                 }
 
             })()
