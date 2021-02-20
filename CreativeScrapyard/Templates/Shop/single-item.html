@@ -11,10 +11,19 @@
         <div class="container">
             <div class="infomain">
                 <ol class="breadcrumb">
+                    {% if is_creative %}
                     <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
-                    <li class="breadcrumb-item"><a href="#">Parent Category</a></li>
-                    <li class="breadcrumb-item"><a href="#">Sub Category</a></li>
+                    <li class="breadcrumb-item"><a href="#">Home Decor</a></li>
+                    <li class="breadcrumb-item"><a href="#">Wall Decor</a></li>
+                    <li class="breadcrumb-item active">WALL LED LIGHTS</li>
+                    {% elif is_scrap %}
+                    <li class="breadcrumb-item"><a href="#">Scrap Store</a></li>
+                    <li class="breadcrumb-item"><a href="#">Glass & Ceramics</a></li>
+                    <li class="breadcrumb-item"><a href="#">Crockery</a></li>
                     <li class="breadcrumb-item active">T-shirt</li>
+                    {% endif %}
+
+
                 </ol>
             </div>
 
@@ -219,7 +228,7 @@
                         <ul class="resp-tabs-list">
                             <li>Product Description</li>
                             <li>Product Details</li>
-                            <li>Artist's Details</li>
+                            <li>Seller's Details</li>
                         </ul>
                         <div class="resp-tabs-container">
                             <div>

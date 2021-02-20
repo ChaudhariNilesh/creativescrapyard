@@ -34,7 +34,7 @@
 
                     <diV style="float: right;" class="d-flex">
 
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and not user.is_superuser %}
                         <span class="dropdown custom-dropdown px-3">
                             <a href="{% url 'Home:Items:Cart:addToCart' %}">
                                 <i class="fa fa-shopping-cart fa-2x m-1"></i>
@@ -190,7 +190,7 @@
                 <!-- {% with type="creative" %} {%include 'Shop/product-owl.html' %} {% endwith %} -->
                 {% with type="creative" %}
                 <div class="product_card border-0 rounded px-0 m-3">
-                    <div class="imgbx  py-0">
+                    <div class="imgbx py-0">
                         <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
                             <img class="img-fluid prod-thumb-img" src="{% static 'img/products/creative/wallstickers.jpg' %}" alt="" change-src="{% static 'img/products/creative/wallstickers.jpg' %}" style="height: 280px; width: 220px;">
                             <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
