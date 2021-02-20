@@ -1,4 +1,4 @@
-from .models import tbl_crt_categories,tbl_crt_subcategories,MainScrapCategory,SubScrapCategory
+from .models import tbl_crt_categories,tbl_crt_subcategories,MainScrapCategory,SubScrapCategory,BadgeEntries,Badges
 from Authentication.models import User
 from django import forms
 import re
@@ -32,7 +32,6 @@ class AdminForm(forms.ModelForm):
               self.add_error("last_name",forms.ValidationError('Invalid last name. Only Alphabets are accepted.' ,code='invalid'))
 
         return last_name    
-    
 
 class MainCreativeCategoryForm(forms.ModelForm):
     class Meta:
@@ -97,5 +96,8 @@ class SubScrapCategoryForm(forms.ModelForm):
 
         return cleaned_data  
 
-
+# class BadgeAssigningForm(forms.ModelForm):
+#     class Meta:
+#         model= BadgeEntries
+#         fields= ('email','badge',)
 

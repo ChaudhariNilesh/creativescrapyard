@@ -601,7 +601,11 @@ def payment(request):
 def badges(request):
     if request.session.get('user'):    
         template = 'custom-admin/manage-badges.html'
-        return render(request,template)
+        badges=Badges.objects.all()
+        context={
+            'badges':badges
+        }
+        return render(request,template,context)
 
     else:
         return redirect('CustomAdmin:login')
@@ -799,6 +803,42 @@ def replyQry(request,id):
     else:
         return redirect('CustomAdmin:login') 
 
+
+
+def assignBadges(request):
+    if request.user.is_superuser:  
+        template="custom-admin/manage-badges.html"
+       
+        if request.method=='POST':
+
+            email=request.POST.get('email')
+            badge_id=request.POST.get('badge_id')
+            print(email,badge_id)
+            usr=User.objects.get(email=email)
+            badge = Badges.objects.get(badge_id=badge_id)
+            print(usr,badge)
+            assignBadge=BadgeEntries.objects.create(badge=badge,user=usr)
+ 
+            assignBadge.save()
+            messages.success(request,"Your badge saved Successfully.")
+            return redirect('CustomAdmin:badges')
+     
+
+        return render(request,template)
+    
+    else:
+        return redirect('CustomAdmin:login')
+    
+
+
+
+def addBadges(request):
+    if request.is_ajax and request.method=="POST":
+        print("How's The Code",request.POST)
+        name=request.POST.get("badge_name")
+        badge=Badges.objects.create(badge_name=name)
+        badge.save()
+        return JsonResponse({"success":True})
 
 
 ######################################################
