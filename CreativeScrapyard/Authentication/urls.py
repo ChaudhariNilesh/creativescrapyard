@@ -32,9 +32,9 @@ urlpatterns = [
 
     path('dashboard/product/creative/add/', add_creative_product, name="add_creative_product"),
     path('dashboard/product/creative/add/<int:id>/', get_sub_category, name="get_sub_category"),
-    path('dashboard/product/creative/add/<str:action>/', add_creative_product, name="add_base_detail"),
+    # path('dashboard/product/creative/add/<str:action>/', add_creative_product, name="add_base_detail"),
 
-    path('dashboard/product/creative/add/item/<int:id>/', add_creative_product_detail, name="add_product_detail"),
+    # path('dashboard/product/creative/add/item/<int:id>/', add_creative_product_detail, name="add_product_detail"),
     path('dashboard/upload-image/<int:id>/', upload_image, name="upload_image"),
    
     # path('dashboard/add-photo/<int:id>/', add_photo, name="add_photo"),
@@ -77,6 +77,8 @@ urlpatterns = [
 
     #path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
+
+    path('dashboard/profile/address/remove/<int:id>/', removeAddress, name="removeAddress"),
 
     
 ]

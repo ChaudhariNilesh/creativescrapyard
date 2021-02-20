@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
 from .models import *
-from Authentication.models import User,Profile
+from Authentication.models import *
 from Home.models  import Query
 from .forms import *
 from django.http import HttpResponseNotFound
