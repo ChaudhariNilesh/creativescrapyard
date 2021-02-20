@@ -131,6 +131,7 @@
                         <th scope="col">Type</th>
                         <th scope="col">Address</th>
                         <th scope="col">Pincode</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,6 +143,10 @@
                         <td>6/F, Shanti society, Nigam Nagar, Chandkheda, Ahemdabad
                         </td>
                         <td>382424 </td>
+                        <td>
+                            <a href="{}" class="btn btn-sm pri-bg-color">Edit</a>
+                            <a href="" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
                     </tr>
                     {% endfor %} {% endwith %} {% for adrs in UserAddress %}
                     <tr>
@@ -151,6 +156,10 @@
                         <td>{{adrs.line1}} {{adrs.line2}} {{adrs.city}} {{adrs.state}}
                         </td>
                         <td>{{adrs.pincode}}</td>
+                        <td>
+                            <a href="{}" class="btn btn-sm pri-bg-color">Edit</a>
+                            <a href="{% url 'Authentication:removeAddress' adrs.user.user_id %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

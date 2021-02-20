@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator,MinValueValidator
-from Items.models import tbl_creativeitems_details
+from Items.models import tbl_creativeitems_mst
 from django.contrib.auth.models import AbstractUser
 from Authentication.models import User
 # Create your models here.
@@ -49,11 +49,11 @@ class tbl_orders_details(models.Model):
     pickup_address = models.CharField(max_length=350, null=False, blank=False)            # *** it should be Charfield or reference from address table?
     item_status = models.CharField(max_length=15, null=False, blank=False, choices=ITEM_STATUS)          # *** Review choice field
     order = models.ForeignKey(tbl_orders_mst, on_delete=models.RESTRICT)
-    crt_item_details = models.ForeignKey(tbl_creativeitems_details, on_delete=models.RESTRICT, null=True)  # *** review on_delete
+    crt_item_details = models.ForeignKey(tbl_creativeitems_mst, on_delete=models.RESTRICT, null=True)  # *** review on_delete
 
     def __str__(self):
         return self.order_details_id
-    
+
 # class Payments(models.Model):
 #     payment_id=models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
 #     transaction_id = models.CharField(max_length=50, null=False, blank=False)            

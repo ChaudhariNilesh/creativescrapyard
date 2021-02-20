@@ -47,7 +47,6 @@
         'common/creative-footer.html' %} {% else %} {% endif %}
     </div>
 </footer>
-{% block customscript %} {% endblock %}
 <script src="{% static 'js/jquery.min.js' %} "></script>
 <script src="{% static 'js/popper.min.js' %} "></script>
 <script src="{% static 'js/bootstrap.min.js' %} "></script>
@@ -56,6 +55,7 @@
 <script src="{% static 'js/easy-responsive-tabs.js' %} "></script>
 <script src="{% static 'js/jquery-ui.js' %} "></script>
 <script src="{% static 'js/custom.js' %} "></script>
+{% block customscript %} {% endblock %}
 
     <!-- <script src="{% static 'js/sweetalert.min.js' %} "></script> -->
 

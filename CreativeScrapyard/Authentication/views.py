@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,HttpResponse
+from django.shortcuts import render, redirect,HttpResponse, get_object_or_404
 from .models import*
 from .forms import *
 from CustomAdmin.models import *
@@ -156,57 +156,112 @@ def scrap_items(request):
     return render(request, template)
 
 
-def add_creative_product(request, action=None):
-    # print("action: ", action)
-    itemMainData = tbl_creativeitems_mst_form()
+def add_creative_product(request):
+    template = "account/dashboard/add-product/add-product.html"
     crtCategory = tbl_crt_categories.objects.all()
-    template = "account/dashboard/add-product/add-product-1.html"
-    if request.method == 'GET':
-        crtCategory = tbl_crt_categories.objects.all()
-        context = {'crtCategory': crtCategory}
-        # return render(request, template)
 
-    elif request.method == "POST" and action == 'mainDetail':
-        itemMainData = tbl_creativeitems_mst_form(request.POST)  # instance=request.user
+    context = {'crtCategory': crtCategory}
 
-        if itemMainData.is_valid():
-            crt_id = request.POST.get('itemSubCategory')
+    if request.method == "POST":
+        productDetail = tbl_creativeitems_mst_form(request.POST or None, request.FILES or None)
+        imageForm  =  tbl_crtimages_form(request.POST or None, request.FILES or None)
 
-            obj = itemMainData.save(commit=False)
-            crtSubCategoryObject = get_object_or_404(tbl_crt_subcategories, pk=crt_id)
-            obj.crt_sub_category = crtSubCategoryObject
-            obj.save()
 
-            obj_id = obj.crt_item_id
-            request.session['itemMstId'] = obj_id
-            url = '/accounts/dashboard/product/creative/add/item/' + str(obj_id)
-            return redirect(url)
+        context = {}
+        imageValidExt = True
+        for i in range(1,7):
+            index = 'crt_img_url_' + str(i)
+            image = request.FILES.get(index)
+            print(image)
+            if image != None and validate_file_ext(image):
+                context['image_error_' + str(i)] = "Only '.jpg, .jpeg, .png'  are allowed."
+                context['error_' + str(i)] = True
+                imageValidExt = False
+            elif image == None:
+                if i == 1:
+                    context['image_error_1'] = "*Required"
+                    context['error_1'] = True
+                    imageValidExt = False
+                else:
+                    context['image_error_' + str(i)] = ""
+
+            # imageslist.append(request.FILES.get(index))
+        # print(imageslist)
+        # imageValidExt = True
+        # tot=0
+        # for image in request.FILES.getlist('crt_img_url'):
+        #     tot += 1
+        #     print(validate_file_ext(image))
+        #     if validate_file_ext(image):
+        #         context['image_error_' + str(tot)] = "Only '.jpg, .jpeg, .png'  are allowed."
+        #         context['error_' + str(tot)] = True
+        #         imageValidExt = False
+        # else:
+        #     context['image_error_1'] = "*Required"
+        #     context['error_1'] = True
+        #     imageValidExt = False
+
+
+        if productDetail.is_valid() and imageValidExt:
+            subCatId = request.POST.get('itemSubCategory')
+            print("sub category", subCatId)
+            subCat = get_object_or_404(tbl_crt_subcategories, pk=subCatId)
+
+            mstObj = productDetail.save(commit=False)
+            mstObj.crt_item_SKU = "CRT-SKU-" + str(random.randint(100, 999))
+            mstObj.crt_item_status = "Active"
+            mstObj.crt_sub_category = subCat
+            mstObj.user = request.user
+
+            mstObj.save()
+
+
+
+            # first = True
+            # for image in imageslist:
+            #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=first, crt_item_details=mstObj)
+            #     first = False
+
+            return HttpResponse("Done")
 
         else:
             messages.warning(request, "Please correct above errors.")
-            context = {"form": itemMainData, 'crtCategory': crtCategory, }
+            context['form'] = productDetail
+            context['crtCategory'] = crtCategory
+            context['imageForm']=imageForm
+
 
     return render(request, template, context)
 
+def edit_creative_product(request, id=1):
+    template = "account/dashboard/add-product/edit-product.html"
+    crtCategory = tbl_crt_categories.objects.all()
+    data = get_object_or_404(tbl_creativeitems_mst, pk=id)
+    crt_sub_id = data.crt_sub_category.crt_sub_category_id
+    crt_id = data.crt_sub_category.crt_category.crt_category_id
+    crtSubCategory = tbl_crt_subcategories.objects.filter(crt_category=crt_id)
+    productDetail = tbl_creativeitems_mst_form(instance = data)
+    print(data, crt_id, crt_id)
+    productImages = tbl_crtimages.objects.filter(crt_item_details = data)
+    context = {
+        'crtCategory': crtCategory,
+        'crtSubCategory': crtSubCategory,
+        'form': productDetail,
+        'id': id,
+        'crt_id': crt_id,
+        'crt_sub_id': crt_sub_id,
+        'images': productImages
+    }
 
-def add_creative_product_detail(request, id=None):
-    template = "account/dashboard/add-product/add-product-2.html"
-    context = {'item_id': id, 'error' : False}
-    # item = get_object_or_404(tbl_creativeitems_mst, pk=id)
-
-    # check requesting user is related to the requested item.
-    # if item.user != request.user:
-    #     generate error
-
-    if request.method == 'POST':
-        ItemDetaildata = tbl_creativeitems_details_form(request.POST, request.FILES or None)  # instance=request.user
-
+    if request.method == "POST":
+        productDetail = tbl_creativeitems_mst_form(request.POST or None, request.FILES or None, instance=request.user)
         imageslist = request.FILES.getlist('crt_img_url')
-        totImage=0
+        print(imageslist)
+        totImage = 0
+        imageValidExt = imageValidLen = True
         for image in imageslist:
             totImage += 1
-            print(image)
-            imageValidExt = imageValidLen = True
+            print(totImage)
             print(validate_file_ext(image))
             if validate_file_ext(image):
                 imageValidExt = False
@@ -215,44 +270,132 @@ def add_creative_product_detail(request, id=None):
                 imageValidLen = False
                 break
 
+        if productDetail.is_valid() and imageValidExt and imageValidLen:
 
-        if ItemDetaildata.is_valid() and imageValidExt and imageValidLen :
-
-            obj = ItemDetaildata.save(commit=False)
-            crt_mst_id = get_object_or_404(tbl_creativeitems_mst,crt_item_id=id)
-            obj.crt_item = crt_mst_id
-            obj.crt_item_SKU = 'ABC-EFG' + str(random.randint(3, 9000))
-            obj.save()
-            sub_cat_id = obj.crt_item_details_id
-            first = True
-            for image in imageslist:
-                tbl_crtimages.objects.create(crt_img_url=image, is_primary=first ,crt_item_details=obj)
-                first = False
-                # else:
-                #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=False, crt_item_details=obj)
-            context = {
-                'item_id': id,
-                'sub_cat_id': sub_cat_id,
-            }
-
+            return HttpResponse("Done")
         else:
             messages.warning(request, "Please correct above errors.")
-            # print(ItemDetaildata.errors.as_json)
-            if imageValidExt or imageValidLen:
-                context = {
-                    "form": ItemDetaildata,
-                    'item_id': id,
-                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
-                    'error':True,
-                }
-            else:
-                context = {
-                    "form": ItemDetaildata,
-                    'item_id': id,
-                }
-
+            context = {
+                "form": productDetail,
+                'crtCategory': crtCategory,
+                'id': id,
+            }
+            print("imageValidExt : ", imageValidExt, "\nimageValidLen", imageValidLen)
+            if not imageValidExt and not imageValidLen:
+                context['image_error'] = "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed"
+                context['error'] = True
+            elif not imageValidExt:
+                context['image_error'] = "Only '.jpg, .jpeg, .png'  are allowed"
+                context['error'] = True
+            elif not imageValidLen:
+                context['image_error'] = "Maximum 6 images are allowed."
+                context['error'] = True
 
     return render(request, template, context)
+
+# def add_creative_product(request, action=None):
+#     # print("action: ", action)
+#     itemMainData = tbl_creativeitems_mst_form()
+#     crtCategory = tbl_crt_categories.objects.all()
+#     template = "account/dashboard/add-product/add-product-1.html"
+#     context = {'item_id': id, 'error': False, 'crtCategory': crtCategory}
+#
+#     if request.method == "POST" and action == 'mainDetail':
+#         itemMainData = tbl_creativeitems_mst_form(request.POST)  # instance=request.user
+#
+#         if itemMainData.is_valid():
+#             crt_id = request.POST.get('itemSubCategory')
+#
+#             obj = itemMainData.save(commit=False)
+#             crtSubCategoryObject = get_object_or_404(tbl_crt_subcategories, pk=crt_id)
+#             obj.crt_sub_category = crtSubCategoryObject
+#             # obj.save()
+#
+#             return HttpResponse("Done")
+#
+#     else:
+#         messages.warning(request, "Please correct above errors.")
+#         context = {"form": itemMainData, 'crtCategory': crtCategory, }
+#         if imageValidExt or imageValidLen:
+#             context = {
+#                 "form": ItemDetaildata,
+#                 'item_id': id,
+#                 'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
+#                 'error':True,
+#             }
+#         else:
+#             context = {
+#                 "form": ItemDetaildata,
+#                 'item_id': id,
+#             }
+#
+#     return render(request, template, context)
+
+
+# def add_creative_product_detail(request, id=None):
+#     template = "account/dashboard/add-product/add-product-2.html"
+#     context = {'item_id': id, 'error' : False}
+#     # item = get_object_or_404(tbl_creativeitems_mst, pk=id)
+#
+#     # check requesting user is related to the requested item.
+#     # if item.user != request.user:
+#     #     generate error
+#
+#     if request.method == 'POST':
+#         ItemDetaildata = tbl_creativeitems_details_form(request.POST, request.FILES or None)  # instance=request.user
+#
+#         imageslist = request.FILES.getlist('crt_img_url')
+#         totImage=0
+#         for image in imageslist:
+#             totImage += 1
+#             print(image)
+#             imageValidExt = imageValidLen = True
+#             print(validate_file_ext(image))
+#             if validate_file_ext(image):
+#                 imageValidExt = False
+#                 break
+#             elif totImage > 6:
+#                 imageValidLen = False
+#                 break
+#
+#
+#         if ItemDetaildata.is_valid() and imageValidExt and imageValidLen :
+#
+#             obj = ItemDetaildata.save(commit=False)
+#             crt_mst_id = get_object_or_404(tbl_creativeitems_mst,crt_item_id=id)
+#             obj.crt_item = crt_mst_id
+#             obj.crt_item_SKU = 'ABC-EFG' + str(random.randint(3, 9000))
+#             obj.save()
+#             sub_cat_id = obj.crt_item_details_id
+#             first = True
+#             for image in imageslist:
+#                 tbl_crtimages.objects.create(crt_img_url=image, is_primary=first ,crt_item_details=obj)
+#                 first = False
+#                 # else:
+#                 #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=False, crt_item_details=obj)
+#             context = {
+#                 'item_id': id,
+#                 'sub_cat_id': sub_cat_id,
+#             }
+#
+#         else:
+#             messages.warning(request, "Please correct above errors.")
+#             # print(ItemDetaildata.errors.as_json)
+#             if imageValidExt or imageValidLen:
+#                 context = {
+#                     "form": ItemDetaildata,
+#                     'item_id': id,
+#                     'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
+#                     'error':True,
+#                 }
+#             else:
+#                 context = {
+#                     "form": ItemDetaildata,
+#                     'item_id': id,
+#                 }
+#
+#
+#     return render(request, template, context)
 
 
 # def add_photo(request, id=None):
@@ -312,7 +455,6 @@ def get_sub_category(request, id):
 #     # return render(request, template, context)
 
 @login_required
-
 def dashboard(request):
     if not request.user.is_superuser:
         template = "account/dashboard/dashboard.html"
@@ -798,59 +940,6 @@ def get_scp_sub_category(request, id):
     return JsonResponse({"subScpCat": list(scpSubCategory)})
 
 
-def edit_creative_product(request, id=None):
-    template = "account/dashboard/add-product/edit-product.html"
-    crtCategory = tbl_crt_categories.objects.all()
-
-    if request.method == "GET":
-        context = {'crtCategory': crtCategory, 'id': id}
-
-    elif request.method == "POST":
-        mst_data = tbl_creativeitems_mst_form(request.POST or None)
-        detail_data = tbl_creativeitems_details_form(request.POST or None, request.FILES or None)
-
-        imageslist = request.FILES.getlist('crt_img_url')
-        totImage = 0
-
-        for image in imageslist:
-            totImage += 1
-            print(image)
-            imageValidExt = imageValidLen = True
-            print(validate_file_ext(image))
-            if validate_file_ext(image):
-                imageValidExt = False
-                break
-            elif totImage > 6:
-                imageValidLen = False
-                break
-
-
-        if mst_data.is_valid() and detail_data.is_valid() and imageValidExt and imageValidLen:
-
-            # first = True
-            # for image in imageslist:
-            #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=first, crt_item_details=obj)
-            #     first = False
-
-            url = '/accounts/dashboard/product/creative/add/item/' + str(obj_id)
-            return redirect(url)
-        else:
-            messages.warning(request, "Please correct above errors.")
-
-            if imageValidExt or imageValidLen:
-                context = {
-                    "mst": mst_data,
-                    'detail': detail_data,
-                    'crtCategory': crtCategory,
-                    'id': id,
-                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
-                    'error':True,
-                }
-            else:
-                context = {"mst": mst_data, 'detail': detail_data, 'crtCategory': crtCategory, 'id': id}
-
-    return render(request, template, context)
-
 
 def edit_scrap_product(request, id=None):
     template = "account/dashboard/scp-edit-product.html"
@@ -912,3 +1001,18 @@ def edit_scrap_product(request, id=None):
 def validate_file_ext(value):
     if not value.name.endswith(('.jpg','.jpeg','.png')):
        return True
+
+
+
+
+
+
+
+
+
+def removeAddress(request, id):
+    instance = Address.objects.get(address_id=id)
+    print("instance",instance)
+    instance.delete()
+
+    return redirect('Authentication:dashboard_profile')
