@@ -35,7 +35,7 @@
                                 <div class="item">
                                     <div class="">
                                         <a href="{% static 'img/products/creative/lamp1.jpg' %}">
-                                            <img id="img0" class="" src="{% static 'img/products/creative/lamp1.jpg' %}" data-zoom-image="{% static 'img/products/creative/lamp1.jpg' %}" width="540" height="680" alt="">
+                                            <img id="img0" class="" src="{% static 'img/products/scrap/brokenlamp.jpg' %}" data-zoom-image="{% static 'img/products/creative/lamp1.jpg' %}" width="540" height="680" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -98,8 +98,7 @@
                     <div class="col-md-6 col-12 ">
                         <div class="product-disarea">
                             <div class="d-flex justify-content-between">
-                                <span class="product-name" style="font-weight:600;font-size:2.2rem;">WALL LED
-                                    LIGHTS</span>
+                                <span class="product-name" style="font-weight:600;font-size:2.2rem;">Broken Lamp</span>
                                 <span class="d-inline-block" data-toggle="tooltip" title="Report">
                                     <a href="#" data-toggle="modal" data-target=".report_model_sm">
                                         <i class="fas fa-flag"></i>
@@ -158,11 +157,11 @@
                             <div class="byartist"><span><a href="{% url 'Authentication:profile' %}">By Nilesh Chaudhari</a></span>
                             </div>
                             <p class="price">
-                                <span>&#8377; 300</span>
+                                <span>&#8377; 300.00</span>
                             </p>
                             <div class="short-des">
                                 <p>
-                                    I used old LED lights and designed this fabulous wall art which will look awesome on the wall of your home. There is also a remote to change the lighting behavior.
+                                    This is three old lamp but the hat of lamp is broken and light is working.
                                 </p>
                             </div>
 
@@ -256,11 +255,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Item Name</th>
-                                                <td>Name</td>
+                                                <td>WALL LED LIGHTS</td>
                                             </tr>
                                             <tr>
                                                 <th>Item SKU</th>
-                                                <td>CRE-HOD-WAD-ALS</td>
+                                                <td>CRT-WALL-WAL-1ALS</td>
                                             </tr>
                                             <tr>
                                                 <th>Artist Name</th>
@@ -285,7 +284,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Width</th>
-                                                <td>63 cm</td>
+                                                <td>25 inch.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -309,30 +308,26 @@
                 <div class="same-artist">
                     <h2 class="pb-1">Items from same Artist</h2>
 
-
                     <div id="owl-artist-products" class="owl-carousel owl-theme owl-prod">
+
                         <div class="product_card border-0 rounded px-0 m-3">
                             <div class="imgbx  py-0">
                                 <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" style="height:280px;width:220px;" alt="" change-src="{% static 'img/products/2.jpg' %}">
+                                    <img class="img-fluid prod-thumb-img" src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" alt="" change-src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" style="height: 280px; width: 220px;">
                                     <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                         <div class="caption">
 
-                                            <p class="product-name  pb-1" style="{% if type == 'scrap' %} color: #fff; {% elif type == 'creative' %} #000 {% else %}   {% endif %}">
-                                                Ceramic Air Freshner</p>
-                                            <p class="price mb-2 " style="{% if type == 'scrap' %} color: var(--pri-color-scp); {% elif type == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                &#8377; 699</p>
+                                            <p class="product-name  pb-1" style="{% if type == 'scrap' %} color: #fff; {% elif type == 'creative' %} #000 {% else %}   {% endif %}">Ceramic Air Freshner</p>
+                                            <p class="price mb-2 " style="{% if type == 'scrap' %} color: var(--pri-color-scp); {% elif type == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 300.00</p>
 
                                         </div>
                                         <a href="#">
-                                            <button class="{% if is_scrap or type == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or type == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
+                                            <button class="{% if is_scrap or type == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or type == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                                         </a>
                                         {% if is_creative %}
-                                        <a href="#"><button class="btn-cxt shadow-none px-3 mx-2"><i
-                                                    class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {%else %} {% endif %}
+                                        <a href="#"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
                                     </div>
                                 </a>
-
                             </div>
                         </div>
 
@@ -346,7 +341,7 @@
                                             <p class="product-name  pb-1" style="{% if type == 'scrap' %} color: #fff; {% elif type == 'creative' %} #000 {% else %}   {% endif %}">
                                                 Customized Glasses</p>
                                             <p class="price mb-2 " style="{% if type == 'scrap' %} color: var(--pri-color-scp); {% elif type == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                &#8377; 120</p>
+                                                &#8377; 120.00</p>
 
                                         </div>
                                         <a href="#">
@@ -382,7 +377,7 @@
                                                 <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                                     Customized Diary</p>
                                                 <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                    &#8377; 300</p>
+                                                    &#8377; 300.00</p>
 
                                             </div>
                                             <a href="#">
@@ -409,7 +404,7 @@
                                                 <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                                     Product Name</p>
                                                 <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                    &#8377; 500</p>
+                                                    &#8377; 500.00</p>
 
                                             </div>
                                             <a href="#">
@@ -436,7 +431,7 @@
                                                 <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                                     Green Lantern</p>
                                                 <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                    &#8377; 700</p>
+                                                    &#8377; 700.00</p>
 
                                             </div>
                                             <a href="#">
@@ -463,7 +458,7 @@
                                                 <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                                     Bottle Baskets (4 Units)</p>
                                                 <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                    &#8377; 200</p>
+                                                    &#8377; 200.00</p>
 
                                             </div>
                                             <a href="#">

@@ -1,28 +1,25 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}"/> {% endblock %} {% block base %}
-
+<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}" /> {% endblock %} {% block base %}
+<div class="mt-4">
+    {% include 'includes/messages.html' %}
+</div>
 <div class="page-title">
     Edit Scrap Item details
 </div>
 <hr/>
 <div class="main-page">
-    <form method="post" enctype="multipart/form-data" >{% csrf_token %}
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-group">
             <label for="productName">Product Name</label>
-            <input type="text" name="scp_item_name"
-                   class="form-control {% if form.errors.scp_item_name == None and form.is_bound %} is-valid {% elif form.errors.scp_item_name != None %} is-invalid {% endif %}"
-                   id="productName" placeholder="Product Name" aria-describedby="inputGroupPrepend3 validateItemName"
-                   value="{{form.scp_item_name.value | default:''}}">
+            <input type="text" name="scp_item_name" class="form-control {% if form.errors.scp_item_name == None and form.is_bound %} is-valid {% elif form.errors.scp_item_name != None %} is-invalid {% endif %}" id="productName" placeholder="Product Name" aria-describedby="inputGroupPrepend3 validateItemName"
+                value="{{form.scp_item_name.value | default:''}}">
             <div id="validateItemName" class="invalid-feedback">
                 {{ form.errors.scp_item_name.as_text}}
             </div>
         </div>
         <div class="form-group">
             <label for="productDescription">Product Description</label>
-            <textarea
-                    class="form-control {% if form.errors.scp_item_desc == None and form.is_bound %} is-valid {% elif form.errors.scp_item_desc != None %} is-invalid {% endif %}"
-                    name="scp_item_desc" id="productDescription" rows="3"
-                    aria-describedby="inputGroupPrepend3 validateItemDesc">{{form.scp_item_desc.value | default:''}}</textarea>
+            <textarea class="form-control {% if form.errors.scp_item_desc == None and form.is_bound %} is-valid {% elif form.errors.scp_item_desc != None %} is-invalid {% endif %}" name="scp_item_desc" id="productDescription" rows="3" aria-describedby="inputGroupPrepend3 validateItemDesc">{{form.scp_item_desc.value | default:''}}</textarea>
             <div id="validateItemDesc" class="invalid-feedback">
                 {{ form.scp_item_desc.errors.as_text}}
             </div>
@@ -31,10 +28,8 @@
             <div class="form-group col ">
                 <label for="itemQuantity" class=" col-form-label">Quantity</label>
                 <div>
-                    <input id="itemQuantity" name="scp_item_qty" type="number" min="1" step="1"
-                           class="form-control {% if form.errors.scp_item_qty == None and form.is_bound %} is-valid {% elif form.errors.scp_item_qty != None %} is-invalid {% endif %}"
-                           value="{{ form.scp_item_qty.value | default:1 }}"
-                           aria-describedby="inputGroupPrepend3 validateQuantity">
+                    <input id="itemQuantity" name="scp_item_qty" type="number" min="1" step="1" class="form-control {% if form.errors.scp_item_qty == None and form.is_bound %} is-valid {% elif form.errors.scp_item_qty != None %} is-invalid {% endif %}" value="{{ form.scp_item_qty.value | default:1 }}"
+                        aria-describedby="inputGroupPrepend3 validateQuantity">
                     <div id="validateQuantity" class="invalid-feedback">
                         {{ form.scp_item_qty.errors.as_text}}
                     </div>
@@ -43,10 +38,8 @@
             <div class="form-group col ">
                 <label for="itemUnitPrice" class=" col-form-label">Unit Price</label>
                 <div>
-                    <input type="number" id="itemUnitPrice" name="scp_item_price" step="0.25" min="1"
-                           class="form-control {% if form.errors.scp_item_price == None and form.is_bound %} is-valid {% elif form.errors.scp_item_price != None %} is-invalid {% endif %}"
-                           value="{{ form.scp_item_price.value | default:1.00 }}"
-                           aria-describedby="inputGroupPrepend3 validateUnitPrice">
+                    <input type="number" id="itemUnitPrice" name="scp_item_price" step="0.25" min="1" class="form-control {% if form.errors.scp_item_price == None and form.is_bound %} is-valid {% elif form.errors.scp_item_price != None %} is-invalid {% endif %}" value="{{ form.scp_item_price.value | default:1.00 }}"
+                        aria-describedby="inputGroupPrepend3 validateUnitPrice">
                     <div id="validateUnitPrice" class="invalid-feedback">
                         {{ form.scp_item_price.errors.as_text}}
                     </div>
@@ -62,7 +55,7 @@
                         <option value="">Choose...</option>
                         {% for cat in scpCategory %}
                         <option data-url="{% url 'Authentication:get_scp_sub_category' cat.scp_category_id  %}"
-                                value="{{ cat.scp_category_id }}" {%if cat.scp_category_id == crt_id %}selected{%endif%}>
+                                value="{{ cat.scp_category_id }}" {%if cat.scp_category_id == scp_id %}selected{%endif%}>
                             {{cat.scp_category_name}}
                         </option>
                         {% endfor %}
@@ -74,87 +67,186 @@
                     <label for="itemSubCategory">Sub-Category</label>
                     <select id="itemSubCategory" name="itemSubCategory" class="form-control">
                         <option selected>Choose...</option>
-
+                        {% for cat in scpSubCategory %}
+                        <option value="{{ cat.scp_sub_category_id }}" {%if cat.scp_sub_category_id == scp_sub_id %}selected{%endif%}>
+                            {{cat.scp_sub_category_name}}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
         </div>
-
-        <div class="py-2">
-            <h3 class="text-left">Product images</h3>
-            <div id="uploadedImages" class="py-1 text-center">
-                <div>
-                    <img src="{% static 'img/products/scrap/cycle.jpeg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
-                    <img src="{% static 'img/products/scrap/brokenmug.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
-                    <img src="{% static 'img/products/scrap/tires.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
-                    <img src="{% static 'img/products/scrap/oldmonitor.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
-                    <img src="{% static 'img/products/scrap/brokenlamp.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
-                    <img src="{% static 'img/products/scrap/oldscooter.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
-                </div>
-                <button id="img-remove" type="button" class="btn btn-sm pri-bg-color my-3" onclick="removeImage();">remove and upload new</button>
-            </div>
-            <div id="uploadNewImages" class="custom-file my-1" style="display:none;">
-                <input type="file" id="customFile" name="scp_img_url" required multiple
-                     class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages">
-                <label class="custom-file-label" for="customFile">Choose file</label>
-                <div id="validateImages" class="invalid-feedback">
-                    {{ image_error }}
-                </div>
-            </div>
-        </div>
-
-        <input type="submit" class="btn btn-sm pri-bg-color" value=" Update "/>
-        <div>
-        {{ img_err.scp_img_url.errors.as_text }}
-        </div>
+        <input type="submit" class="btn btn-sm pri-bg-color" value=" Update " />
     </form>
+
+    <div class="py-2">
+
+        <h3 class="text-left">Product images</h3>
+        <div class="text-muted my-2" style="font-size:12px;">
+            <p><strong>NOTE: Only .jpg, .png, .jpeg are allowed.</strong></p>
+        </div>
+        <div id="uploadedImages" class="py-1 text-center">
+
+            <div>
+                <table class="table table-sm my-2" style="font-size: 15px;">
+                    <thead>
+                        <tr class="thead-light">
+                            <th scope="col" class="text-center">Primary</th>
+                            <th scope="col" class="text-center">Image</th>
+                            <th scope="col" class="text-center disableSort disableFilterBy">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for image in images %}
+                        <tr>
+                            <td class="text-center"><input type="radio" name="is_primary" onclick="setPrimary(this);" value="{{image.scp_img_id}}" {% if image.is_primary %} checked {%endif%} /></td>
+                            <td><img src="{{ image.scp_img_url.url }}" class="img-fluid rounded px-2" alt="Responsive image" width="190" />
+                            </td>
+                            <td class="text-center">
+                                <form action="{% url 'Authentication:edit_scp_images' image.scp_img_id %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+
+                                    <input type="file" class="item-img" name="scp_img_url" id="scpItemImage{{image.scp_img_id}}" accept="image/*" onchange="chooseImage(event);" hidden>
+                                    <label class="btn btn-sm pri-bg-color mt-2" id="chooseLbl" for="scpItemImage{{image.scp_img_id}}">Edit</label>
+                                    <input class="btn btn-sm pri-bg-color submit-image" type="submit" value="Save" hidden>
+                                </form>
+
+                                <a href="{% url 'Authentication:remove_scp_images' image.scp_img_id %}?next={{ request.path|urlencode }}" class="btn btn-sm bg-danger"><img src=" https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20" height="20"></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- <button id="" type="button" class="btn btn-sm pri-bg-color my-3">remove and upload new</button> -->
+            <form action="{% url 'Authentication:add_scp_images' 'addItemImage' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="hidden" name="scp_item" value="{{id}}">
+                <input type="file" class="item-img" name="scp_img_url" id="scpItemImage{{image.scp_img_id}}" accept="image/*" onchange="chooseImage(event);" hidden>
+                <label class="btn btn-sm pri-bg-color mt-2" id="chooseLbl" for="scpItemImage{{image.scp_img_id}}">Add new image</label>
+                <input class="btn btn-sm pri-bg-color submit-image" type="submit" value="Save" hidden>
+            </form>
+
+        </div>
+
+
+    </div>
+
+
 </div>
- {% endblock %}
-
-{% block customscript %}
+{% endblock %} {% block customscript %}
 <script>
-
     var removeImage = function() {
         $('#uploadedImages').hide();
         $('#uploadNewImages').show();
     }
 
-    function getCat(){
-    var cat=$("#itemCategory").val();
-    var catId = parseInt(cat);
-    console.log(catId)
-    $.ajax({
-       url: '/accounts/dashboard/product/scrap/add/' + catId,
-       success:function(response){
-       console.log(response.subCrtCat);
-        	$("#itemSubCategory").empty();
-	        $.each(response.subScpCat,function(k,v){
-	            // console.log(response.subScpCat[k].crt_sub_category_name);
-	            var subCatId = response.subScpCat[k].scp_sub_category_id;
-	            var subCatName = response.subScpCat[k].scp_sub_category_name;
-	            var opts = "<option value="+subCatId+">"+subCatName+"</option>";
+    function getCat() {
+        var cat = $("#itemCategory").val();
+        var catId = parseInt(cat);
+        console.log(catId)
+        $.ajax({
+            url: '/accounts/dashboard/product/scrap/add/' + catId,
+            success: function(response) {
+                console.log(response.subCrtCat);
+                $("#itemSubCategory").empty();
+                $.each(response.subScpCat, function(k, v) {
+                    // console.log(response.subScpCat[k].crt_sub_category_name);
+                    var subCatId = response.subScpCat[k].scp_sub_category_id;
+                    var subCatName = response.subScpCat[k].scp_sub_category_name;
+                    var opts = "<option value=" + subCatId + ">" + subCatName + "</option>";
 
-	            $("#itemSubCategory").append(opts);
+                    $("#itemSubCategory").append(opts);
 
-	        })
-        },
-       error: function(jqXHR, textStatus, errorThrown) {
-          Swal.fire(
-              jqXHR.status + "",
-              textStatus + " : " + errorThrown,
-              'error'
-          )
-       }
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
 
-    });
-
-
-};
+        });
 
 
+    };
 
+    function chooseImage(e) {
+        $(".alert").remove();
+        const validFileExtensions = ['jpeg', 'jpg', 'png'];
+        const img = $(e.target);
 
+        // console.log(img);
+        if (img.get(0).files.length != 0) {
+            const extension = img.val().split('.').pop().toLowerCase();
+            const fileSize = img.get(0).files[0].size
+            const mbSize = Math.round((fileSize / 1024));
 
+            if ($.inArray(extension, validFileExtensions) == -1) {
+
+                $("#uploadedImages").prepend("<div class='alert alert-danger'><strong> Invalid File Extenstion! </strong> Only jpeg, jpg, png filetypes are allowed.</div>");
+            } else if (mbSize > 5048) {
+
+                $("#uploadedImages").prepend("<div class='alert alert-danger' ><strong> File too big! </strong> Maximum 5 MB image size is allowed.</div>");
+            } else {
+
+                img.siblings(".submit-image").removeAttr("hidden")
+                $("#uploadedImages").prepend("<div class='alert alert-success' ><strong> Success! </strong> Click on save to upload image.</div>")
+            }
+        }
+    }
+
+    function setPrimary(context) {
+        const imgId = $(context).val();
+        //console.log(addrsId);
+        $.ajax({
+
+            dataType: "json",
+            url: "ajax/set-primary/" + imgId,
+            success: function(data) {
+                if (data.changed) {
+                    $(this).attr("checked");
+                } else {
+                    Swal.fire(
+                        "warning",
+                        "Some Error Occured. Try Again"
+                    )
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // console.log(jqXHR.status);
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
+        })
+    }
 </script>
 {% endblock %}
+
+
+<h3 class="text-left">Product images</h3>
+<div id="uploadedImages" class="py-1 text-center">
+    <div>
+        <img src="{% static 'img/products/scrap/cycle.jpeg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
+        <img src="{% static 'img/products/scrap/brokenmug.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
+        <img src="{% static 'img/products/scrap/tires.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
+        <img src="{% static 'img/products/scrap/oldmonitor.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
+        <img src="{% static 'img/products/scrap/brokenlamp.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
+        <img src="{% static 'img/products/scrap/oldscooter.jpg' %}" class="img-fluid rounded px-2" alt="Responsive image" width="190">
+    </div>
+    <button id="img-remove" type="button" class="btn btn-sm pri-bg-color my-3" onclick="removeImage();">remove and upload new</button>
+</div>
+<div id="uploadNewImages" class="custom-file my-1" style="display:none;">
+    <input type="file" id="customFile" name="scp_img_url" required multiple class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}" aria-describedby="inputGroupPrepend3 validateImages">
+    <label class="custom-file-label" for="customFile">Choose file</label>
+    <div id="validateImages" class="invalid-feedback">
+        {{ image_error }}
+    </div>
+</div>

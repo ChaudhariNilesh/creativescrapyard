@@ -47,21 +47,26 @@ change images
 
 ****************************************
 Remain After -> 
-add new address from checkout
-(chnage validation in signup and contact form TO forms.isvalid())
+>>add new address from checkout
+>>(chnage validation in signup and contact form TO forms.isvalid())
+>>remove image from storage after deleted
+>>shop cart javascript validate << POST WORK
+>>verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
+
+
+--image form errors remove view code
 --edit and remove address
 
 -------------------
 >--password description
 >--validate file during upload
 
->think for height of product.
->upload item images validation error.
+>--think for height of product.
+>--upload item images validation error.
 
 -----------------
 >>--password strentgth validate and signup user...
 >>--queries
->>shop cart javascript validate << POST WORK
 
 --send contact derts for scrap 
 --login=>admin-user,forget password, reset password, email verify input.
@@ -78,10 +83,10 @@ add new address from checkout
 --add new address 
 
 --assign/add badges input validate
-add product
-edit product
+--add product
+--edit product
 --reported modal
-verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
+
 
 ****************************************
 

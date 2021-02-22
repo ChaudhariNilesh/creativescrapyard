@@ -29,6 +29,29 @@
                 </tr>
             </thead>
             <tbody>
+                {% for prd in myProducts %}
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:scrapSingleItem' %}" class="link-effect">{{prd.scp_item_name}}</a></td>
+                    <td class="text-center">{{prd.scp_item_qty}}</td>
+
+                    <td class="text-center">&#8377; {{prd.scp_item_price}}</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" {% if prd.scp_item_status == 'Active' %} selected {% endif %}>Active</option>
+                            <option value="Shipping" {% if prd.scp_item_status == 'Inactive' %} selected {% endif %}>Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">{{prd.scp_created_on|date:"SHORT_DATE_FORMAT"}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' prd.scp_item_id %}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+
                 <tr>
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Broken Lamp</a></td>

@@ -191,7 +191,7 @@ def validate(**kwargs):
             if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',inp_msg)): 
                 CtMessage = {
                     'is_valid': False,
-                    'msg': "Invalid ."
+                    'msg': "Invalid subject no special character are allowed."
                 }
                 data["errors"]=True
             else:

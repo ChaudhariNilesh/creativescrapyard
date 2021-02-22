@@ -1,3 +1,5 @@
+
+from django.db.models.query import InstanceCheckMeta
 from django.shortcuts import render, redirect,HttpResponse,get_object_or_404
 from .models import*
 from .forms import *
@@ -6,7 +8,7 @@ from Items.forms import *
 from Items.models import *
 from django.contrib import messages
 from django.http import JsonResponse
-import random
+
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -20,7 +22,8 @@ from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import PermissionDenied
-import requests
+import requests,random,string
+
 
 # Create your views here.
 def UserLogin(request):
@@ -147,13 +150,21 @@ def profile(request):
 
 
 def creative_items(request):
+    products=tbl_creativeitems_mst.objects.filter(user=request.user)
     template = "account/dashboard/creative-items.html"
-    return render(request, template)
+    context={
+        "myProducts":products
+    }
+    return render(request, template,context)
 
 
 def scrap_items(request):
     template = "account/dashboard/scrap-items.html"
-    return render(request, template)
+    products=tbl_scrapitems.objects.filter(user=request.user)
+    context={
+        "myProducts":products
+    }
+    return render(request, template,context)
 
 
 def add_creative_product(request):
@@ -168,22 +179,24 @@ def add_creative_product(request):
 
 
         context = {}
-        imageValidExt = True
-        for i in range(1,7):
-            index = 'crt_img_url_' + str(i)
-            image = request.FILES.get(index)
-            print(image)
-            if image != None and validate_file_ext(image):
-                context['image_error_' + str(i)] = "Only '.jpg, .jpeg, .png'  are allowed."
-                context['error_' + str(i)] = True
-                imageValidExt = False
-            elif image == None:
-                if i == 1:
-                    context['image_error_1'] = "*Required"
-                    context['error_1'] = True
-                    imageValidExt = False
-                else:
-                    context['image_error_' + str(i)] = ""
+        
+        # imageValidExt = True
+        # for i in range(1,7):
+        #     index = 'crt_img_url_' + str(i)
+        #     image = request.FILES.get(index)
+        #     # print(image)
+        #     if image != None and validate_file_ext(image):
+        #         context['image_error_' + str(i)] = "Only '.jpg, .jpeg, .png'  are allowed."
+        #         context['error_' + str(i)] = True
+        #         imageValidExt = False
+        #     elif image == None:
+        #         if i == 1:
+        #             context['image_error_1'] = "*Required"
+        #             context['error_1'] = True
+        #             imageValidExt = False
+        #         else:
+        #             context['image_error_' + str(i)] = ""
+
 
             # imageslist.append(request.FILES.get(index))
         # print(imageslist)
@@ -200,32 +213,44 @@ def add_creative_product(request):
         #     context['image_error_1'] = "*Required"
         #     context['error_1'] = True
         #     imageValidExt = False
+        
+        
+        # if productDetail.is_valid() and imageValidExt and imageForm.is_valid():
 
-
-        if productDetail.is_valid() and imageValidExt:
+        if productDetail.is_valid() and imageForm.is_valid():
             subCatId = request.POST.get('itemSubCategory')
-            print("sub category", subCatId)
+            # print("sub category", subCatId)
             subCat = get_object_or_404(tbl_crt_subcategories, pk=subCatId)
 
             mstObj = productDetail.save(commit=False)
-            mstObj.crt_item_SKU = "CRT-SKU-" + str(random.randint(100, 999))
-            mstObj.crt_item_status = "Active"
+            
+            itemName=productDetail.cleaned_data.get("crt_item_name",None)
+            
+
+            # mstObj.crt_item_SKU = "CRT-SKU-" + str(random.randint(100, 999))
+            mstObj.crt_item_SKU = createCrtSKU(subCat.crt_sub_category_name,itemName)
+            mstObj.crt_item_status = "Inactive"
             mstObj.crt_sub_category = subCat
             mstObj.user = request.user
 
             mstObj.save()
 
 
+            # for key, value in imageForm.cleaned_data:
+            # print(imageForm.cleaned_data)
 
-            # first = True
-            # for image in imageslist:
-            #     tbl_crtimages.objects.create(crt_img_url=image, is_primary=first, crt_item_details=mstObj)
-            #     first = False
+            first = True
+            for key,value in imageForm.cleaned_data.items():
+                # print(image,val)
+                if value:
+                    # print(value,first,mstObj)
+                    tbl_crtimages.objects.create(crt_img_url=value, is_primary=first, crt_item_details=mstObj)
+                    first = False
 
-            return HttpResponse("Done")
+            return redirect("Authentication:creative_items")
 
         else:
-            messages.warning(request, "Please correct above errors.")
+            messages.error(request, "Please correct below errors.")
             context['form'] = productDetail
             context['crtCategory'] = crtCategory
             context['imageForm']=imageForm
@@ -233,65 +258,190 @@ def add_creative_product(request):
 
     return render(request, template, context)
 
-def edit_creative_product(request, id=1):
-    template = "account/dashboard/add-product/edit-product.html"
-    crtCategory = tbl_crt_categories.objects.all()
-    data = get_object_or_404(tbl_creativeitems_mst, pk=id)
-    crt_sub_id = data.crt_sub_category.crt_sub_category_id
-    crt_id = data.crt_sub_category.crt_category.crt_category_id
-    crtSubCategory = tbl_crt_subcategories.objects.filter(crt_category=crt_id)
-    productDetail = tbl_creativeitems_mst_form(instance = data)
-    print(data, crt_id, crt_id)
-    productImages = tbl_crtimages.objects.filter(crt_item_details = data)
-    context = {
-        'crtCategory': crtCategory,
-        'crtSubCategory': crtSubCategory,
-        'form': productDetail,
-        'id': id,
-        'crt_id': crt_id,
-        'crt_sub_id': crt_sub_id,
-        'images': productImages
-    }
+def edit_creative_product(request, id=None):
+    if id :
+        template = "account/dashboard/add-product/edit-product.html"
+        
+        crtCategory = tbl_crt_categories.objects.all()
+    
+        data = get_object_or_404(tbl_creativeitems_mst, pk=id)
+        crt_sub_id = data.crt_sub_category.crt_sub_category_id
+        crt_id = data.crt_sub_category.crt_category.crt_category_id
+        crtSubCategory = tbl_crt_subcategories.objects.filter(crt_category=crt_id)
 
-    if request.method == "POST":
-        productDetail = tbl_creativeitems_mst_form(request.POST or None, request.FILES or None, instance=request.user)
-        imageslist = request.FILES.getlist('crt_img_url')
-        print(imageslist)
-        totImage = 0
-        imageValidExt = imageValidLen = True
-        for image in imageslist:
-            totImage += 1
-            print(totImage)
-            print(validate_file_ext(image))
-            if validate_file_ext(image):
-                imageValidExt = False
-                break
-            elif totImage > 6:
-                imageValidLen = False
-                break
 
-        if productDetail.is_valid() and imageValidExt and imageValidLen:
+        productDetail = tbl_creativeitems_mst_form(instance = data)
+        # print(data, crt_id, crt_id)
+        productImages = tbl_crtimages.objects.filter(crt_item_details = data)
+        context = {
+            'crtCategory': crtCategory,
+            'crtSubCategory': crtSubCategory,
+            'form': productDetail,
+            'id': id,
+            'crt_id': crt_id,
+            'crt_sub_id': crt_sub_id,
+            'images': productImages
+        }
 
-            return HttpResponse("Done")
+        if request.method == "POST":
+            productDetail = tbl_creativeitems_mst_form(request.POST or None, instance=data)
+            
+            # imageslist = request.FILES.getlist('crt_img_url')
+            # # print(imageslist)
+            # totImage = 0
+            # imageValidExt = imageValidLen = True
+            # for image in imageslist:
+            #     totImage += 1
+            #     # print(totImage)
+            #     # print(validate_file_ext(image))
+            #     if validate_file_ext(image):
+            #         imageValidExt = False
+            #         break
+            #     elif totImage > 6:
+            #         imageValidLen = False
+            #         break
+
+            if productDetail.is_valid():
+                subCatId = request.POST.get('itemSubCategory')
+                subCat = get_object_or_404(tbl_crt_subcategories, pk=subCatId)
+
+                itemName=productDetail.cleaned_data.get("crt_item_name",None)
+
+                mstObj = productDetail.save(commit=False)
+                SKU=data.crt_item_SKU.split("-")
+                # print(SKU)
+                newSKU=createCrtSKU(subCat.crt_sub_category_name,itemName)
+                newSKU=newSKU.split("-")
+                SKU[1]=newSKU[1]
+                SKU[2]=newSKU[2]
+                SKU='-'.join(i for i in SKU )
+                mstObj.crt_item_SKU = SKU
+                mstObj.crt_sub_category = subCat
+                mstObj.user = request.user
+                mstObj.save()
+
+                # print(request.POST)
+                return redirect("Authentication:creative_items")
+            else:
+                messages.error(request, "Please correct above errors.")
+                context = {
+                    "form": productDetail,
+                    'crtCategory': crtCategory,
+                    'id': id,
+                }
+            # print("imageValidExt : ", imageValidExt, "\nimageValidLen", imageValidLen)
+            # if not imageValidExt and not imageValidLen:
+            #     context['image_error'] = "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed"
+            #     context['error'] = True
+            # elif not imageValidExt:
+            #     context['image_error'] = "Only '.jpg, .jpeg, .png'  are allowed"
+            #     context['error'] = True
+            # elif not imageValidLen:
+            #     context['image_error'] = "Maximum 6 images are allowed."
+            #     context['error'] = True
+
+        return render(request, template, context)
+    else:
+        return redirect("Authentication:creative_items")
+
+
+def edit_crt_images(request,id=None,action=None):
+    if action== "addItemImage":
+        # print(request.POST)
+        crt_id = request.POST.get("crt_item_details",None)
+        crtItem = tbl_creativeitems_mst.objects.get(crt_item_id=crt_id,user=request.user)
+        
+        crtImg= tbl_crtimages.objects.filter(crt_item_details=crt_id).count()
+        
+        if crtImg >= 6:
+            messages.error(request,"Sorry, you can upload upto six images only.")
+        
         else:
-            messages.warning(request, "Please correct above errors.")
-            context = {
-                "form": productDetail,
-                'crtCategory': crtCategory,
-                'id': id,
-            }
-            print("imageValidExt : ", imageValidExt, "\nimageValidLen", imageValidLen)
-            if not imageValidExt and not imageValidLen:
-                context['image_error'] = "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed"
-                context['error'] = True
-            elif not imageValidExt:
-                context['image_error'] = "Only '.jpg, .jpeg, .png'  are allowed"
-                context['error'] = True
-            elif not imageValidLen:
-                context['image_error'] = "Maximum 6 images are allowed."
-                context['error'] = True
+            editImageForm = EditCrtImage(request.POST or None, request.FILES or None)
+            if editImageForm.is_valid():
+                newImage = editImageForm.save(commit=False)
+                newImage.crt_item_details = crtItem
+                newImage.save()
+                messages.success(request,"Image added successfully.")
 
-    return render(request, template, context)
+            # print("valid")
+                    
+            else:
+                
+                messages.error(request,editImageForm.errors['crt_img_url'].as_text())
+        
+        next = request.POST.get('next', '/')
+        return redirect(next)
+
+
+    if id and request.method=="POST" :
+        try:
+            images = tbl_crtimages.objects.get(crt_img_id=id)
+            
+            editImageForm = EditCrtImage(request.POST or None, request.FILES or None)
+            next = request.POST.get('next', '/')
+            # print(request.FILES)
+            if editImageForm.is_valid():
+                newImage = editImageForm.save(commit=False)
+                images.crt_img_url = newImage.crt_img_url
+                images.save()
+                messages.success(request,"Image updated successfully.")
+
+                # print("valid")
+                
+            else:
+                # print(editImageForm.errors.as_json())
+                messages.error(request,editImageForm.errors['crt_img_url'].as_text())
+            
+            return redirect(next)
+
+        except tbl_crtimages.DoesNotExist:
+            return redirect(next)
+    else:
+        return redirect("Authentication:creative_items")
+
+def remove_crt_images(request,id=None):
+    if id :
+        try:
+            if tbl_crtimages.objects.filter(crt_img_id=id,is_primary=True).exists():
+                
+                newPrimary = tbl_crtimages.objects.filter(is_primary=False).first() 
+                if newPrimary is not None:
+                    newPrimary.is_primary=True
+                    newPrimary.save()  
+                else:
+                    messages.error(request,"There must be atleast one image for item.")
+                    next=request.GET.get('next', '/')
+                    return redirect(next)
+
+            images = tbl_crtimages.objects.get(crt_img_id=id)
+            images.delete()
+            next=request.GET.get('next', '/')
+            messages.success(request,"Image removed successfully.")
+            return redirect(next)
+
+        except tbl_crtimages.DoesNotExist:
+            return redirect(next)
+    else:
+        return redirect("Authentication:creative_items")    
+
+def setPrimary(request,id=None,imgid=None):
+    if request.is_ajax():
+        if imgid:
+            # print("rec")
+            imagePrimary = tbl_crtimages.objects.get(is_primary=True)
+            imagePrimary.is_primary=False
+            imagePrimary.save()
+            newimagePrimary = tbl_crtimages.objects.get(crt_img_id=imgid)
+            newimagePrimary.is_primary = True
+            newimagePrimary.save()
+            return JsonResponse({"changed":True})
+        else:
+            return JsonResponse({"changed":False})
+
+    else:
+        raise PermissionDenied
+
 
 # def add_creative_product(request, action=None):
 #     # print("action: ", action)
@@ -791,7 +941,7 @@ def editDocument(request):
                 #print("edit valid")
                 editedDocu = editedData.save(commit=False)
 
-                UserDocumentData.acc_no=   editedDocu.acc_no
+                UserDocumentData.acc_no=editedDocu.acc_no
                 UserDocumentData.acc_name= editedDocu.acc_name
                 UserDocumentData.bank_name=editedDocu.bank_name
                 UserDocumentData.IFSC_code=editedDocu.IFSC_code
@@ -975,55 +1125,48 @@ def add_scrap_product(request):
     template = "account/dashboard/scp-add-product.html"
     scpCategory = MainScrapCategory.objects.all()
 
-    if request.method == 'GET':
-        context = {'scpCategory': scpCategory}
+    context = {'scpCategory': scpCategory}
 
-    elif request.method == 'POST':
+    if request.method == 'POST':
         scpData = tbl_scrapitems_form(request.POST, request.FILES or None)
+        imageForm  =  tbl_scpimages_form(request.POST or None, request.FILES or None)
 
-        imageslist = request.FILES.getlist('scp_img_url')
-        totImage = 0
+        context={}
+        if scpData.is_valid() and imageForm.is_valid():
 
-        for image in imageslist:
-            totImage += 1
-            print(image)
-            imageValidExt = imageValidLen = True
-            print(validate_file_ext(image))
-            if validate_file_ext(image):
-                imageValidExt = False
-                break
-            elif totImage > 6:
-                imageValidLen = False
-                break
+            subCatId = request.POST.get('itemSubCategory')
+            subCat = get_object_or_404(SubScrapCategory, pk=subCatId)
+            itemName=scpData.cleaned_data.get("scp_item_name",None)
+           
+            scpObj = scpData.save(commit=False)
+            scpObj.scp_item_SKU = createScpSKU(subCat.scp_sub_category_name,itemName)
+            scpObj.scp_item_status = "Inactive"
+            scpObj.scp_sub_category = subCat
+            scpObj.user = request.user
+            scpObj.save()
+            # print("VALID SAVE IT.")
 
-        if scpData.is_valid() and imageValidExt and imageValidLen:
-            # scpData.save(commit=False)
-
-            obj = scpData.save(commit=False)
-            obj.scp_item_SKU = 'SCP-EFG-' + str(random.randint(3, 9000))
-            obj.save()
 
             first = True
-            for image in imageslist:
-                tbl_scrapimages.objects.create(scp_img_url=image, is_primary=first, scp_item=obj)
-                first = False
+            for key,value in imageForm.cleaned_data.items():
+                if value:
+                    # print("valid")
+                    tbl_scrapimages.objects.create(scp_img_url=value, is_primary=first, scp_item=scpObj)
+                    first = False
+            
             return redirect('Authentication:scrap_items')
-            # context = {"form": scpData, 'scpCategory': scpCategory, }
+            
         else:
-            messages.warning(request, "Please correct above errors.")
-            if imageValidExt or imageValidLen:
-                context = {
-                    "form": scpData,
-                    'scpCategory': scpCategory,
-                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
-                    'error':True,
-                }
-            else:
-                context = {"form": scpData, 'scpCategory': scpCategory, }
+            messages.error(request, "Please correct above errors.")
+            context['form'] = scpData
+            context['scpCategory'] = scpCategory
+            context['imageForm']=imageForm
+
 
     return render(request, template, context)
 
-def get_scp_sub_category(request, id):
+
+def get_scp_sub_category(request, id):  #AJAX CATEGORIES
     subScpCat = {}
     scpSubCategory = SubScrapCategory.objects.filter(scp_category=id).values()
     print(scpSubCategory)
@@ -1032,63 +1175,174 @@ def get_scp_sub_category(request, id):
 
 
 def edit_scrap_product(request, id=None):
-    template = "account/dashboard/scp-edit-product.html"
-    scpCategory = MainScrapCategory.objects.all()
+    if id:
 
-    if request.method == 'GET':
-        context = {'scpCategory': scpCategory}
+        template = "account/dashboard/scp-edit-product.html"
+        scpCategory = MainScrapCategory.objects.all()
+        
+        data = get_object_or_404(tbl_scrapitems, pk=id)
+        scp_sub_id = data.scp_sub_category.scp_sub_category_id
+        scp_id = data.scp_sub_category.scp_category.scp_category_id
+        scpSubCategory = SubScrapCategory.objects.filter(scp_category=scp_id)
 
-    elif request.method == 'POST':
-        scpData = tbl_scrapitems_form(request.POST, request.FILES or None)
-        # scpImgData = tbl_scrapimages_form(request.POST, request.FILES or None)
+        productDetail = tbl_scrapitems_form(instance = data)
 
-        imageslist = request.FILES.getlist('scp_img_url')
-        print(request.FILES)
-        totImage=0
+        productImages = tbl_scrapimages.objects.filter(scp_item = data)
 
-        for image in imageslist:
-            totImage+=1
-            print(image)
-            imageValidExt=imageValidLen=True
-            print(validate_file_ext(image))
-            if  validate_file_ext(image):
-                imageValidExt = False
-                break
-            elif totImage>6:
-                imageValidLen = False
-                break
+        context = {
+            'scpCategory': scpCategory,
+            'scpSubCategory': scpSubCategory,
+            'form': productDetail,
+            'id': id,
+            'scp_id': scp_id,
+            'scp_sub_id': scp_sub_id,
+            'images': productImages
+        }
 
+        if request.method == 'POST':
+            scpData = tbl_scrapitems_form(request.POST or None, instance=data)
 
-        if scpData.is_valid() and imageValidExt and imageValidLen:
-            # scpData.save(commit=False)
+            if scpData.is_valid():
+                subCatId = request.POST.get('itemSubCategory')
+                subCat = get_object_or_404(SubScrapCategory, pk=subCatId)
 
-            # obj = scpData.save(commit=False)
-            # obj.scp_item_SKU = 'SCP-EFG-' + str(random.randint(3, 9000))
-            # obj.save()
-            #
-            # first = True
-            # for image in imageslist:
-            #     tbl_scrapimages.objects.create(scp_img_url=image, is_primary=first, scp_item=obj)
-            #     first = False
+                itemName=scpData.cleaned_data.get("scp_item_name",None)
 
-            return redirect('Authentication:scrap_items')
-        else:
-            messages.warning(request, "Please correct above errors.")
-            if imageValidExt or imageValidLen:
+                scpObj = scpData.save(commit=False)
+                SKU=data.scp_item_SKU.split("-")
+                # print(SKU)
+                newSKU=createScpSKU(subCat.scp_sub_category_name,itemName)
+                newSKU=newSKU.split("-")
+                SKU[1]=newSKU[1]
+                SKU[2]=newSKU[2]
+                SKU='-'.join(i for i in SKU )
+                scpObj.scp_item_SKU = SKU
+                scpObj.scp_sub_category = subCat
+                scpObj.user = request.user
+                scpObj.save()
 
+                return redirect('Authentication:scrap_items')
+            else:
+                messages.error(request, "Please correct above errors.")
                 context = {
                     "form": scpData,
                     'scpCategory': scpCategory,
-                    'image_error': "Maximum 6 images are allowed. Only '.jpg, .jpeg, .png'  are allowed",
-                    'error':True,
+                    'id': id,
                 }
+        return render(request, template, context)
+    else:
+        return redirect("Authentication:scrap_items")
+
+
+def edit_scp_images(request,id=None,action=None):
+    if action== "addItemImage":
+        # print(request.POST)
+        scp_id = request.POST.get("scp_item",None)
+        scpItem = tbl_scrapitems.objects.get(scp_item_id=scp_id,user=request.user)
+        
+        scpImg= tbl_scrapimages.objects.filter(scp_item=scp_id).count()
+        
+        if scpImg >= 6:
+            messages.error(request,"Sorry, you can upload upto six images only.")
+        
+        else:
+            editImageForm = EditScpImage(request.POST or None, request.FILES or None)
+            if editImageForm.is_valid():
+                newImage = editImageForm.save(commit=False)
+                newImage.scp_item = scpItem
+                newImage.save()
+                messages.success(request,"Image added successfully.")
+
+            # print("valid")
+                    
             else:
-                context = {"form": scpData, 'scpCategory': scpCategory}
+                messages.error(request,editImageForm.errors['scp_img_url'].as_text())
+        
+        next = request.POST.get('next', '/')
+        return redirect(next)
 
-    return render(request, template, context)
 
+    if id and request.method=="POST" :
+        try:
+            images = tbl_scrapimages.objects.get(scp_img_id=id)
+            # print(images)
+            editImageForm = EditScpImage(request.POST or None, request.FILES or None)
+            next = request.POST.get('next', '/')
+            # print(request.FILES)
+            if editImageForm.is_valid():
+                newImage = editImageForm.save(commit=False)
+                images.scp_img_url = newImage.scp_img_url
+                images.save()  
+                messages.success(request,"Image updated successfully.")
+
+                # print("valid")
+                
+            else:
+                # print(editImageForm.errors.as_json())
+                messages.error(request,editImageForm.errors['scp_img_url'].as_text())
+            
+            return redirect(next)
+
+        except tbl_scrapimages.DoesNotExist:
+            # print("except")
+            return redirect(next)
+    else:
+        return redirect("Authentication:scrap_items")
+
+def remove_scp_images(request,id=None):
+    if id :
+        try:
+            if tbl_scrapimages.objects.filter(scp_img_id=id,is_primary=True).exists():
+                
+                newPrimary = tbl_scrapimages.objects.filter(is_primary=False).first()
+               
+                if newPrimary is not None:
+                    newPrimary.is_primary=True
+                    newPrimary.save()  
+                else:
+                    messages.error(request,"There must be atleast one image for item.")
+                    next=request.GET.get('next', '/')
+                    return redirect(next)
+                
+            images = tbl_scrapimages.objects.get(scp_img_id=id)
+            images.delete()
+            
+            messages.success(request,"Image removed successfully.")
+            next=request.GET.get('next', '/')
+            
+            return redirect(next)
+        except tbl_scrapimages.DoesNotExist:
+            return redirect(next)
+    else:
+        return redirect("Authentication:scrap_items")    
+
+def setPrimary(request,id=None,imgid=None):
+    if request.is_ajax():
+        if imgid:
+            # print("rec")
+            imagePrimary = tbl_scrapimages.objects.get(is_primary=True)
+            imagePrimary.is_primary=False
+            imagePrimary.save()
+            newimagePrimary = tbl_scrapimages.objects.get(scp_img_id=imgid)
+            newimagePrimary.is_primary = True
+            newimagePrimary.save()
+            return JsonResponse({"changed":True})
+        else:
+            return JsonResponse({"changed":False})
+
+    else:
+        raise PermissionDenied
 
 def validate_file_ext(value):
     if not value.name.endswith(('.jpg','.jpeg','.png')):
        return True
 
+def createCrtSKU(subCat,itemName):
+    str=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(4))
+    SKU="CRT-"+subCat[0:3].upper()+"-"+itemName[0:3].upper()+"-"+str
+    return SKU
+
+def createScpSKU(subCat,itemName):
+    str=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(4))
+    SKU="SCP-"+subCat[0:3].upper()+"-"+itemName[0:3].upper()+"-"+str
+    return SKU

@@ -5,6 +5,7 @@ import random
 import os
 from .models import *
 
+
 GENDER_TYPE = (
     ('F', 'Female'),
     ('M', 'Male'),
@@ -48,7 +49,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bio = models.TextField(max_length=200, null=True, blank=True)
+    bio = models.TextField(max_length=200, null=True, blank=True,default="")
     user_image = models.ImageField(upload_to=user_photo,null=True,default=None)
     #user_mobile = models.CharField(max_length=10, unique=True, null=False, blank=False)
     user_gender = models.CharField(max_length=1, choices=GENDER_TYPE, null=False)

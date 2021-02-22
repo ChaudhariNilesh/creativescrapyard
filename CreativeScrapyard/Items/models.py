@@ -4,39 +4,7 @@ from CustomAdmin.models import tbl_crt_subcategories,SubScrapCategory
 from Authentication.models import User
 from django.core.validators import validate_image_file_extension
 from Authentication.models import User
-
-
-ITEM_STATUS = (
-    ("INAPPROPRIATE","Inappropriate"),
-    ("ACTIVE","Active"),
-    ("INACTIVE","Inactive"),
-    ("SOLD","Sold",)
-)
-
-class tbl_scrapitems(models.Model):
-    scp_item_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
-    scp_item_name = models.CharField(max_length=100, null=False, blank=False)
-    scp_item_desc = models.TextField(blank=False, null=False)
-    scp_item_price = models.DecimalField(blank=False, null=False, decimal_places=2, max_digits=10, validators=[MinValueValidator(1.00)])
-    scp_item_qty = models.PositiveIntegerField(validators=[MaxValueValidator(999)], blank=False, null=False)
-    scp_item_SKU = models.CharField(max_length=16, null=False, blank=False, unique=True)
-    scp_item_status = models.CharField(max_length=20, null=False, blank=False, choices=ITEM_STATUS, default="ACTIVE")
-    scp_created_on = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    scp_last_modified = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    scp_sub_category = models.ForeignKey(SubScrapCategory, on_delete=models.SET_DEFAULT, default=1)
-    # user_id = models.ForeignKey( , on_delete=models.RESTRICT)
-    # username = models.ForeignKey( , on_delete = models.RESTRICT)
-
-    def __str__(self):
-        return self.scp_item_name
-
-class tbl_scrapimages(models.Model):
-    scp_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
-    scp_img_url = models.ImageField(max_length=150, null=True, upload_to='item-photos/', validators=[validate_image_file_extension])
-    is_primary = models.BooleanField(default=False, null=False)
-    scp_item = models.ForeignKey(tbl_scrapitems, on_delete=models.CASCADE)
-
-
+import random,os
 # Create your models here.
 WEIGHT_CHOICES = (
     ("1", "Below 100g"),
@@ -66,8 +34,52 @@ ISSUE_STATUS_CHOICES = (
     (2, "Resolved"),
     (3, "Rejected"),
 
-
 )
+
+ITEM_STATUS = (
+    ("INAPPROPRIATE","Inappropriate"),
+    ("ACTIVE","Active"),
+    ("INACTIVE","Inactive"),
+    ("SOLD","Sold",)
+)
+
+def get_filename_ext(filepath):
+    base_name = os.path.basename(filepath)
+    name, ext = os.path.splitext(base_name)
+    return name, ext
+
+def product_photo(instance, filename):
+    new_filename = random.randint(1,1000)
+    name, ext = get_filename_ext(filename)
+    final_filename = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
+    return "crt-item-image/{final_filename}".format(final_filename=final_filename)
+
+
+
+class tbl_scrapitems(models.Model):
+    scp_item_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
+    scp_item_name = models.CharField(max_length=100, null=False, blank=False)
+    scp_item_desc = models.TextField(blank=False, null=False)
+    scp_item_price = models.DecimalField(blank=False, null=False, decimal_places=2, max_digits=10, validators=[MinValueValidator(1.00)])
+    scp_item_qty = models.PositiveIntegerField(validators=[MaxValueValidator(999)], blank=False, null=False)
+    scp_item_SKU = models.CharField(max_length=16, null=False, blank=False, unique=True)
+    scp_item_status = models.CharField(max_length=20, null=False, blank=False, choices=ITEM_STATUS, default="ACTIVE")
+    scp_created_on = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+    scp_last_modified = models.DateTimeField(auto_now_add=True, null=False, blank=False)
+    scp_sub_category = models.ForeignKey(SubScrapCategory, on_delete=models.SET_DEFAULT, default=1)
+    user = models.ForeignKey(User, on_delete=models.RESTRICT,related_name="seller_id")
+    username = models.ForeignKey(User, on_delete = models.DO_NOTHING,related_name="buyer_username",null=True,blank=True)
+
+    def __str__(self):
+        return self.scp_item_name
+
+class tbl_scrapimages(models.Model):
+    scp_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
+    scp_img_url = models.ImageField(max_length=150, null=True, upload_to='item-photos/', validators=[validate_image_file_extension])
+    is_primary = models.BooleanField(default=False, null=False)
+    scp_item = models.ForeignKey(tbl_scrapitems, on_delete=models.CASCADE)
+
+
 
 
 
@@ -119,7 +131,7 @@ class tbl_creativeitems_mst(models.Model):
 
 class tbl_crtimages(models.Model):
     crt_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
-    crt_img_url = models.ImageField(max_length=150, null=True, upload_to='item-photos/', validators=[validate_image_file_extension])
+    crt_img_url = models.ImageField(max_length=150, null=True, upload_to=product_photo, validators=[validate_image_file_extension])
     is_primary = models.BooleanField(default=False, null=False)
     crt_item_details = models.ForeignKey(tbl_creativeitems_mst, on_delete=models.CASCADE)
 
@@ -129,33 +141,7 @@ class tbl_crtimages(models.Model):
 
 
 
-# scrap items Model
 
-class tbl_scrapitems(models.Model):
-    scp_item_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
-    scp_item_name = models.CharField(max_length=100, null=False, blank=False)
-    scp_item_desc = models.TextField(blank=False, null=False)
-    scp_item_price = models.DecimalField(blank=False, null=False, decimal_places=2, max_digits=10,
-                                         validators=[MinValueValidator(1.00)])  # *** set default price add minvalue
-    scp_item_qty = models.PositiveIntegerField(validators=[MaxValueValidator(999)], blank=False, null=False)
-    scp_item_SKU = models.CharField(max_length=16, null=False, blank=False, unique=True)
-    scp_item_status = models.CharField(max_length=20, null=False, blank=False, choices=ITEM_STATUS,
-                                       default="ACTIVE")  # *** set default as inactive but in ppt default is active
-    scp_created_on = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    scp_last_modified = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    scp_sub_category = models.ForeignKey(SubScrapCategory, on_delete=models.SET_DEFAULT,
-                                         default=1)  # *** set default sub-category as other
-    # user_id = models.ForeignKey( , on_delete=models.RESTRICT)
-    # username = models.ForeignKey( , on_delete = models.RESTRICT)
-
-    def __str__(self):
-        return self.scp_item_name
-
-class tbl_scrapimages(models.Model):
-    scp_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
-    scp_img_url = models.ImageField(max_length=150, null=True, upload_to='item-photos/', validators=[validate_image_file_extension])
-    is_primary = models.BooleanField(default=False, null=False)
-    scp_item = models.ForeignKey(tbl_scrapitems, on_delete=models.CASCADE)
 
 
 class Issues(models.Model):

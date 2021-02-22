@@ -65,10 +65,10 @@
 
                                         </div>
                                         <div class="form-row px-1 py-2">
-                                            <textarea class="form-control {% if errorData.message.is_valid != None and errorData.message.is_valid %}is-valid{% elif errorData.message.is_valid != None and not errorData.message.is_valid %}is-invalid{% endif %}" rows="4" name="query_message" placeholder="Enter you message here..."
-                                                aria-describedby="inputGroupPrepend3 validateMsg" value="{{ form.query_message.value|default:'' }}"></textarea>
+                                            <textarea class="form-control {% if errorData.CtMessage.is_valid != None and errorData.CtMessage.is_valid %}is-valid{% elif errorData.CtMessage.is_valid != None and not errorData.CtMessage.is_valid %}is-invalid{% endif %}" rows="4" name="query_message"
+                                                placeholder="Enter you message here..." aria-describedby="inputGroupPrepend3 validateMsg" value="{{ form.query_message.value|default:'' }}"></textarea>
                                             <div id="validateMsg" class="invalid-feedback">
-                                                {{ errorData.message.msg }}
+                                                {{ errorData.CtMessage.msg }}
 
                                             </div>
                                         </div>

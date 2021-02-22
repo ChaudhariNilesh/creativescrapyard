@@ -22,7 +22,6 @@
                 <tr>
                     <th scope="col" class="text-center">Item name</th>
                     <th scope="col" class="text-center">Quantity</th>
-                    <th scope="col" class="text-center disableFilterBy disableSort">Color</th>
                     <th scope="col" class="text-center">Price</th>
                     <th scope="col" class="text-center">Status</th>
                     <th scope="col" class="text-center">Created On</th>
@@ -31,14 +30,35 @@
             </thead>
             <tbody>
 
+                {% for prd in myProducts %}
+                <tr>
+                    <td scope="row" class="text-center">
+                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">{{prd.crt_item_name}}</a></td>
+                    <td class="text-center">{{prd.crt_item_qty}}</td>
+
+                    <td class="text-center">&#8377; {{prd.crt_item_price}}</td>
+                    <td class="text-center">
+                        <select class="p-1 ord-status">
+                            <option value="Processing" {% if prd.crt_item_status == 'Active' %} selected {% endif %}>Active</option>
+                            <option value="Shipping" {% if prd.crt_item_status == 'Inactive' %} selected {% endif %}>Inactive</option>
+                        </select>
+                    </td>
+                    <td class="text-center">{{prd.crt_created_on|date:"SHORT_DATE_FORMAT"}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+                        </a>
+                        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_creative_product' prd.crt_item_id %}">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+
 
                 <tr>
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Minimilistic Tree Wall Stickers</a></td>
                     <td class="text-center">4</td>
-                    <td class="text-center">
-                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=4C555C" width="32" height="32">
-                    </td>
+
                     <td class="text-center">&#8377; 300</td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -58,9 +78,7 @@
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Ceramic Air Freshner</a></td>
                     <td class="text-center">1</td>
-                    <td class="text-center">
-                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=CAD2C3" width="32" height="32">
-                    </td>
+
                     <td class="text-center">&#8377; 699</td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -80,10 +98,8 @@
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Customized Pots</a></td>
                     <td class="text-center">3</td>
-                    <td class="text-center">
-                        --
-                        <!-- <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=CAD2C3" width="32" height="32"> -->
-                    </td>
+
+
                     <td class="text-center">&#8377; 120</td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -104,10 +120,8 @@
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Customized Glasses</a></td>
                     <td class="text-center">6</td>
-                    <td class="text-center">
-                        --
-                        <!-- <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=CAD2C3" width="32" height="32"> -->
-                    </td>
+
+
                     <td class="text-center">&#8377; 99</td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -128,10 +142,7 @@
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Handmade Chaai Cups</a></td>
                     <td class="text-center">6</td>
-                    <td class="text-center">
 
-                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=F7B619" width="32" height="32">
-                    </td>
                     <td class="text-center">&#8377; 179</td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -152,10 +163,8 @@
                     <td scope="row" class="text-center">
                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Designer Cup</a></td>
                     <td class="text-center">1</td>
-                    <td class="text-center">
 
-                        <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=A75144" width="32" height="32">
-                    </td>
+
                     <td class="text-center">&#8377; 79</td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
@@ -178,9 +187,7 @@
                 <td scope="row" class="text-center">
                     <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Designer Cup</a></td>
                 <td class="text-center">50</td>
-                <td class="text-center">
-                    <img src="https://s2.svgbox.net/octicons.svg?ic=dot-fill&color=ff5a44" width="32" height="32">
-                </td>
+  
                 <td class="text-center">&#8377; 500</td>
                 <td class="text-center">
                     <select class="p-1 ord-status">

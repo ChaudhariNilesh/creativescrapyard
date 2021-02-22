@@ -49,7 +49,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="itemCategory">Category</label>
-                    <select id="itemCategory" name="itemCategory" class="form-control" onchange="getCat();">
+                    <select id="itemCategory" name="itemCategory" class="form-control" onchange="getCat();" required>
                         <option value="">Choose...</option>
                         {% for cat in scpCategory %}
                         <option data-url="{% url 'Authentication:get_scp_sub_category' cat.scp_category_id  %}"
@@ -70,34 +70,110 @@
                 </div>
             </div>
         </div>
-
         <div class="py-2">
-            <h3 class="text-center">Upload Item images</h3>
-            <div class="custom-file my-1">
-                <input type="file" id="customFile" name="scp_img_url" required multiple class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}" aria-describedby="inputGroupPrepend3 validateImages">
-                <label class="custom-file-label" for="customFile">Choose file</label>
-                <div id="validateImages" class="invalid-feedback">
-                    {{ image_error }}
+            <h3 class="text-center">Upload product images</h3>
+            <div class="text-muted my-2" style="font-size:12px;">
+                <p><strong>NOTE: Only .jpg, .png, .jpeg are allowed.</strong></p>
+            </div>
+            <div id="uploadedImages" class="py-1 text-center">
+
+
+                <div class="py-2">
+                    <div class="custom-file my-1">
+                        <input required onchange="chooseImage(event);" type="file" id="inputImage-1" name="scp_img_url_1" class="custom-file-input {% if imageForm.errors.scp_img_url_1 == None and form.is_bound %}is-valid{% elif imageForm.errors.scp_img_url_1 != None %}is-invalid{% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateImages-1">
+                        <label class="custom-file-label" for="inputImage-1">Choose image</label>
+                        <div id="validateImages-1" class="invalid-feedback">
+                            {{imageForm.errors.scp_img_url_1.as_text}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-1">
+                    <div class="custom-file my-1">
+                        <input onchange="chooseImage(event);" type="file" id="inputImage-2" name="scp_img_url_2" class="custom-file-input {% if imageForm.errors.scp_img_url_2 == None and form.is_bound and not imageForm.scp_img_url_2.value == None %}is-valid{% elif imageForm.errors.scp_img_url_2 != None %}is-invalid{% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateImages-2">
+                        <label class="custom-file-label" for="inputImage-2">Choose image</label>
+                        <div id="validateImages-2" class="invalid-feedback">
+                            {{imageForm.errors.scp_img_url_2.as_text}}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-1">
+                    <div class="custom-file my-1">
+                        <input onchange="chooseImage(event);" type="file" id="inputImage-3" name="scp_img_url_3" class="custom-file-input {% if imageForm.errors.scp_img_url_3 == None and form.is_bound and not imageForm.scp_img_url_3.value == None %}is-valid{% elif imageForm.errors.scp_img_url_3 != None %}is-invalid{% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateImages-3">
+                        <label class="custom-file-label" for="inputImage-3">Choose image</label>
+                        <div id="validateImages-3" class="invalid-feedback">
+                            {{imageForm.errors.scp_img_url_3.as_text}}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-1">
+                    <div class="custom-file my-1">
+                        <input onchange="chooseImage(event);" type="file" id="inputImage-4" name="scp_img_url_4" class="custom-file-input {% if imageForm.errors.scp_img_url_4 == None and form.is_bound and not imageForm.scp_img_url_4.value == None %}is-valid{% elif imageForm.errors.scp_img_url_4 != None %}is-invalid{% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateImages-4">
+                        <label class="custom-file-label" for="inputImage-4">Choose image</label>
+                        <div id="validateImages-4" class="invalid-feedback">
+                            {{imageForm.errors.scp_img_url_4.as_text}}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-1">
+                    <div class="custom-file my-1">
+                        <input onchange="chooseImage(event);" type="file" id="inputImage-5" name="scp_img_url_5" class="custom-file-input {% if imageForm.errors.scp_img_url_5 == None and form.is_bound and not imageForm.scp_img_url_5.value == None %}is-valid{% elif imageForm.errors.scp_img_url_5 != None %}is-invalid{% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateImages-5">
+                        <label class="custom-file-label" for="inputImage-5">Choose image</label>
+                        <div id="validateImages-5" class="invalid-feedback">
+                            {{imageForm.errors.scp_img_url_5.as_text}}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-1">
+                    <div class="custom-file my-1">
+                        <input onchange="chooseImage(event);" type="file" id="inputImage-6" name="scp_img_url_6" class="custom-file-input {% if imageForm.errors.scp_img_url_6 == None and form.is_bound and not imageForm.scp_img_url_6.value == None %}is-valid{% elif imageForm.errors.scp_img_url_6 != None %}is-invalid{% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateImages-6">
+                        <label class="custom-file-label" for="inputImage-6">Choose image</label>
+                        <div id="validateImages-6" class="invalid-feedback">
+                            {{imageForm.errors.scp_img_url_6.as_text}}
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <input type="submit" class="btn btn-block btn-sm pri-bg-color" />
-        <div>
-            {{ form.errors.as_json }}
-        </div>
+        <input type="submit" id="submitProduct" class="btn btn-block btn-sm pri-bg-color" />
+
     </form>
 </div>
+
 {% endblock %} {% block customscript %}
 <script>
+    function chooseImage(e) {
+        //console.log($(e.target).val());
+        var context = $(e.target);
+        var imageName = e.target.files[0].name;;
+        context.next('.custom-file-label').html(imageName);
+
+    }
+
     function getCat() {
         var cat = $("#itemCategory").val();
         var catId = parseInt(cat);
-        console.log(catId)
+        // console.log(catId)
         $.ajax({
             url: '/accounts/dashboard/product/scrap/add/' + catId,
             success: function(response) {
-                console.log(response.subCrtCat);
+                // console.log(response.subCrtCat);
                 $("#itemSubCategory").empty();
                 $.each(response.subScpCat, function(k, v) {
                     // console.log(response.subScpCat[k].crt_sub_category_name);

@@ -1,6 +1,8 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}"/> {% endblock %} {% block base %}
-
+<link rel="stylesheet" href="{% static 'css/nikul/add-product.css' %}" /> {% endblock %} {% block base %}
+<div class="mt-4">
+    {% include 'includes/messages.html' %}
+</div>
 <div class="page-title">
     Add Creative Item
 </div>
@@ -9,20 +11,15 @@
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="form-group">
             <label for="productName">Product Name</label>
-            <input type="text" name="crt_item_name"
-                   class="form-control {% if form.errors.crt_item_name == None and form.is_bound %} is-valid {% elif form.errors.crt_item_name != None %} is-invalid {% endif %}"
-                   id="productName" placeholder="Product Name" aria-describedby="inputGroupPrepend3 validateItemName"
-                   value="{{form.crt_item_name.value | default:''}}">
+            <input type="text" name="crt_item_name" class="form-control {% if form.errors.crt_item_name == None and form.is_bound %} is-valid {% elif form.errors.crt_item_name != None %} is-invalid {% endif %}" id="productName" placeholder="Product Name" aria-describedby="inputGroupPrepend3 validateItemName"
+                value="{{form.crt_item_name.value | default:''}}">
             <div id="validateItemName" class="invalid-feedback">
                 {{ form.crt_item_name.errors.as_text}}
             </div>
         </div>
         <div class="form-group">
             <label for="productDescription">Product Description</label>
-            <textarea
-                    class="form-control {% if form.errors.crt_item_desc == None and form.is_bound %} is-valid {% elif form.errors.crt_item_desc != None %} is-invalid {% endif %}"
-                    name="crt_item_desc" id="productDescription" rows="3"
-                    aria-describedby="inputGroupPrepend3 validateItemDesc">{{form.crt_item_desc.value | default:''}}</textarea>
+            <textarea class="form-control {% if form.errors.crt_item_desc == None and form.is_bound %} is-valid {% elif form.errors.crt_item_desc != None %} is-invalid {% endif %}" name="crt_item_desc" id="productDescription" rows="3" aria-describedby="inputGroupPrepend3 validateItemDesc">{{form.crt_item_desc.value | default:''}}</textarea>
             <div id="validateItemDesc" class="invalid-feedback">
                 {{ form.crt_item_desc.errors.as_text}}
             </div>
@@ -33,9 +30,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="weight">Weight</label>
-                    <select id="weight" name="crt_item_weight"
-                            class="form-control {% if form.errors.crt_item_weight == None and form.is_bound %} is-valid {% elif form.errors.crt_item_weight != None %} is-invalid {% endif %}"
-                            aria-describedby="inputGroupPrepend3 validateWeight">
+                    <select id="weight" name="crt_item_weight" class="form-control {% if form.errors.crt_item_weight == None and form.is_bound %} is-valid {% elif form.errors.crt_item_weight != None %} is-invalid {% endif %}" aria-describedby="inputGroupPrepend3 validateWeight">
                         <option value="0">Choose...</option>
                         <option value="1" {%if form.crt_item_weight.value == '1' %}selected{%endif%}>Below 100g</option>
                         <option value="2" {%if form.crt_item_weight.value == '2' %}selected{%endif%}>Below 250g</option>
@@ -50,13 +45,12 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="height">Height(Optional)</label>
+                    <label for="height">Height(Optional) </label>
                     <div class="input-group mb-2">
-                        <input id="height" name="crt_item_height" value="{{form.crt_item_height.value | default:''}}"
-                               class="form-control {% if form.errors.crt_item_height == None and form.is_bound %} is-valid {% elif form.errors.crt_item_height != None or form.errors.crt_item_height == 'empty' %} is-invalid {% endif %}"
-                               aria-describedby="inputGroupPrepend3 validateHeight"/>
+                        <input id="height" name="crt_item_height" value="{{form.crt_item_height.value | default:''}}" class="form-control {% if form.errors.crt_item_height == None and form.is_bound and not form.crt_item_height.value == '' %} is-valid {% elif form.errors.crt_item_height != None  %} is-invalid {% else %} {% endif %} "
+                            aria-describedby="inputGroupPrepend3 validateHeight" />
                         <div class="input-group-append">
-                            <div class="input-group-text">cm</div>
+                            <div class="input-group-text">inch.</div>
                         </div>
                         <div id="validateHeight" class="invalid-feedback">
                             {{ form.crt_item_height.errors.as_text }}
@@ -69,11 +63,10 @@
                 <div class="form-group">
                     <label for="width">Width(Optional)</label>
                     <div class="input-group mb-2">
-                        <input id="width" name="crt_item_width" value="{{form.crt_item_width.value | default:''}}"
-                           class="form-control {% if form.errors.crt_item_width == None and  form.is_bound %} is-valid {% elif form.errors.crt_item_width != None or form.errors.crt_item_width == 'empty' %} is-invalid {% endif %}"
-                           aria-describedby="inputGroupPrepend3 validateWidth"/>
+                        <input id="width" name="crt_item_width" value="{{form.crt_item_width.value | default:''}}" class="form-control {% if form.errors.crt_item_width == None and form.is_bound and not form.crt_item_width.value == '' %} is-valid {% elif form.errors.crt_item_width != None %} is-invalid {% endif %}"
+                            aria-describedby="inputGroupPrepend3 validateWidth" />
                         <div class="input-group-append">
-                            <div class="input-group-text">cm</div>
+                            <div class="input-group-text">inch.</div>
                         </div>
                         <div id="validateWidth" class="invalid-feedback">
                             {{ form.crt_item_width.errors.as_text }}
@@ -110,154 +103,154 @@
         </div>
 
         <div class="row">
-        <div class="form-group col ">
-            <label for="itemQuantity" class="col-form-label">Quantity</label>
-            <div >
-                <input id="itemQuantity" name="crt_item_qty" type="number" min="1" step="1"
-                       class="form-control {% if form.errors.crt_item_qty == None and form.is_bound %} is-valid {% elif form.errors.crt_item_qty != None %} is-invalid {% endif %}"
-                       value="{{ form.crt_item_qty.value | default:1 }}"
-                       aria-describedby="inputGroupPrepend3 validateQuantity">
-                <div id="validateQuantity" class="invalid-feedback">
-                    {{ form.crt_item_qty.errors.as_text}}
+            <div class="form-group col ">
+                <label for="itemQuantity" class="col-form-label">Quantity</label>
+                <div>
+                    <input id="itemQuantity" name="crt_item_qty" type="number" min="1" step="1" class="form-control {% if form.errors.crt_item_qty == None and form.is_bound %} is-valid {% elif form.errors.crt_item_qty != None %} is-invalid {% endif %}" value="{{ form.crt_item_qty.value | default:1 }}"
+                        aria-describedby="inputGroupPrepend3 validateQuantity">
+                    <div id="validateQuantity" class="invalid-feedback">
+                        {{ form.crt_item_qty.errors.as_text}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group col ">
-            <label for="itemUnitPrice" class="col-form-label">Unit Price</label>
-            <div >
-                <input type="number" id="itemUnitPrice" name="crt_item_price" step="0.25" min="1"
-                       class="form-control {% if form.errors.crt_item_price == None and form.is_bound %} is-valid {% elif form.errors.crt_item_price != None %} is-invalid {% endif %}"
-                       value="{{ form.crt_item_price.value | default:1.00 }}"
-                       aria-describedby="inputGroupPrepend3 validateUnitPrice">
-                <div id="validateUnitPrice" class="invalid-feedback">
-                    {{ form.crt_item_price.errors.as_text}}
+            <div class="form-group col ">
+                <label for="itemUnitPrice" class="col-form-label">Unit Price</label>
+                <div>
+                    <input type="number" id="itemUnitPrice" name="crt_item_price" step="0.25" min="1" class="form-control {% if form.errors.crt_item_price == None and form.is_bound %} is-valid {% elif form.errors.crt_item_price != None %} is-invalid {% endif %}" value="{{ form.crt_item_price.value | default:1.00 }}"
+                        aria-describedby="inputGroupPrepend3 validateUnitPrice">
+                    <div id="validateUnitPrice" class="invalid-feedback">
+                        {{ form.crt_item_price.errors.as_text}}
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
         <h3 class="text-center">Upload product images</h3>
+        <div class="text-muted my-2" style="font-size:12px;">
+            <p><strong>NOTE: Only .jpg, .png, .jpeg are allowed.</strong></p>
+        </div>
+
+
         <div class="py-2">
             <div class="custom-file my-1">
-                <input type="file" id="inputImage-1" name="crt_img_url_1" required
-                     class="{% if image_error_1 == None and form.is_bound %}is-valid{% elif image_error_1 != None and error_1 %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages-1">
-<!--                <label class="" for="inputImage-1">Choose file</label>-->
+                <input onchange="chooseImage(event);" type="file" id="inputImage-1" name="crt_img_url_1" class="custom-file-input {% if imageForm.errors.crt_img_url_1 == None and form.is_bound %}is-valid{% elif imageForm.errors.crt_img_url_1 != None %}is-invalid{% endif %}"
+                    aria-describedby="inputGroupPrepend3 validateImages-1">
+                <label class="custom-file-label" for="inputImage-1">Choose image</label>
                 <div id="validateImages-1" class="invalid-feedback">
-                    {{ image_error_1 }}
+                    {{imageForm.errors.crt_img_url_1.as_text}}
                 </div>
             </div>
         </div>
 
         <div class="py-1">
             <div class="custom-file my-1">
-                <input type="file" id="inputImage-2" name="crt_img_url_2"
-                     class="{% if image_error_2 == None and form.is_bound %}is-valid{% elif image_error_2 != None and error_2 %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages-2" >
-<!--                <label class="" for="inputImage-2">{{imageForm.crt_img_url_2.value| default:'Choose file'}}</label>-->
+                <input onchange="chooseImage(event);" type="file" id="inputImage-2" name="crt_img_url_2" class="custom-file-input {% if imageForm.errors.crt_img_url_2 == None and form.is_bound and not imageForm.crt_img_url_2.value == None %}is-valid{% elif imageForm.errors.crt_img_url_2 != None %}is-invalid{% endif %}"
+                    aria-describedby="inputGroupPrepend3 validateImages-2">
+                <label class="custom-file-label" for="inputImage-2">Choose image</label>
                 <div id="validateImages-2" class="invalid-feedback">
-                    {{ image_error_2 }}
+                    {{imageForm.errors.crt_img_url_2.as_text}}
+
                 </div>
             </div>
         </div>
 
         <div class="py-1">
             <div class="custom-file my-1">
-                <input type="file" id="inputImage-3" name="crt_img_url_3"
-                     class="{% if image_error_3 == None and form.is_bound %}is-valid{% elif image_error_3 != None and error_3 %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages-3">
-<!--                <label class="" for="inputImage-3">Choose file</label>-->
+                <input onchange="chooseImage(event);" type="file" id="inputImage-3" name="crt_img_url_3" class="custom-file-input {% if imageForm.errors.crt_img_url_3 == None and form.is_bound and not imageForm.crt_img_url_3.value == None %}is-valid{% elif imageForm.errors.crt_img_url_3 != None %}is-invalid{% endif %}"
+                    aria-describedby="inputGroupPrepend3 validateImages-3">
+                <label class="custom-file-label" for="inputImage-3">Choose image</label>
                 <div id="validateImages-3" class="invalid-feedback">
-                    {{ image_error_3 }}
+                    {{imageForm.errors.crt_img_url_3.as_text}}
+
                 </div>
             </div>
         </div>
 
         <div class="py-1">
             <div class="custom-file my-1">
-                <input type="file" id="inputImage-4" name="crt_img_url_4"
-                     class="{% if image_error_4 == None and form.is_bound %}is-valid{% elif image_error_4 != None and error_4 %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages-4">
-<!--                <label class="" for="inputImage-4">Choose file</label>-->
+                <input onchange="chooseImage(event);" type="file" id="inputImage-4" name="crt_img_url_4" class="custom-file-input {% if imageForm.errors.crt_img_url_4 == None and form.is_bound and not imageForm.crt_img_url_4.value == None %}is-valid{% elif imageForm.errors.crt_img_url_4 != None %}is-invalid{% endif %}"
+                    aria-describedby="inputGroupPrepend3 validateImages-4">
+                <label class="custom-file-label" for="inputImage-4">Choose image</label>
                 <div id="validateImages-4" class="invalid-feedback">
-                    {{ image_error_4 }}
+                    {{imageForm.errors.crt_img_url_4.as_text}}
+
                 </div>
             </div>
         </div>
 
         <div class="py-1">
             <div class="custom-file my-1">
-                <input type="file" id="inputImage-5" name="crt_img_url_5"
-                     class="{% if image_error_5 == None and form.is_bound %}is-valid{% elif image_error_5 != None and error_5 %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages-5" >
-<!--                <label class="" for="inputImage-5">Choose file</label>-->
+                <input onchange="chooseImage(event);" type="file" id="inputImage-5" name="crt_img_url_5" class="custom-file-input {% if imageForm.errors.crt_img_url_5 == None and form.is_bound and not imageForm.crt_img_url_5.value == None %}is-valid{% elif imageForm.errors.crt_img_url_5 != None %}is-invalid{% endif %}"
+                    aria-describedby="inputGroupPrepend3 validateImages-5">
+                <label class="custom-file-label" for="inputImage-5">Choose image</label>
                 <div id="validateImages-5" class="invalid-feedback">
-                    {{ image_error_5 }}
+                    {{imageForm.errors.crt_img_url_5.as_text}}
+
                 </div>
             </div>
         </div>
 
         <div class="py-1">
             <div class="custom-file my-1">
-                <input type="file" id="inputImage-6" name="crt_img_url_6"
-                     class="{% if image_error_6 == None and form.is_bound %}is-valid{% elif image_error_6 != None and error_6 %}is-invalid{% endif %}"
-                     aria-describedby="inputGroupPrepend3 validateImages-6">
-<!--                <label class="" for="inputImage-6">Choose file</label>-->
+                <input onchange="chooseImage(event);" type="file" id="inputImage-6" name="crt_img_url_6" class="custom-file-input {% if imageForm.errors.crt_img_url_6 == None and form.is_bound and not imageForm.crt_img_url_6.value == None %}is-valid{% elif imageForm.errors.crt_img_url_6 != None %}is-invalid{% endif %}"
+                    aria-describedby="inputGroupPrepend3 validateImages-6">
+                <label class="custom-file-label" for="inputImage-6">Choose image</label>
                 <div id="validateImages-6" class="invalid-feedback">
-                    {{ image_error_6 }}
+                    {{imageForm.errors.crt_img_url_6.as_text}}
+
                 </div>
             </div>
         </div>
 
 
-        <input type="submit" class="btn btn-sm btn-block pri-bg-color"/>
+        <input type="submit" class="btn btn-sm btn-block pri-bg-color" />
     </form>
 
 </div>
 
-{% endblock %}
-
-
-{% block customscript %}
+{% endblock %} {% block customscript %}
 
 
 
 <script>
-    function getCat(){
-    var cat=$("#itemCategory").val();
-    var catId = parseInt(cat);
-
-    $.ajax({
-       url: '/accounts/dashboard/product/creative/add/' + catId,
-        success:function(response){
-       //console.log(response.subCrtCat);
-        	$("#itemSubCategory").empty();
-	        $.each(response.subCrtCat,function(k,v){
-	            // console.log(response.subCrtCat[k].crt_sub_category_name);
-	            var subCatId = response.subCrtCat[k].crt_sub_category_id;
-	            var subCatName = response.subCrtCat[k].crt_sub_category_name;
-	            var opts = "<option value="+subCatId+">"+subCatName+"</option>";
-
-	            $("#itemSubCategory").append(opts);
-
-	        })
-        },
-       error: function(jqXHR, textStatus, errorThrown) {
-          Swal.fire(
-              jqXHR.status + "",
-              textStatus + " : " + errorThrown,
-              'error'
-          )
-       }
-
-    });
+    function chooseImage(e) {
+        console.log($(e.target).val());
+        var context = $(e.target);
+        var imageName = e.target.files[0].name;;
+        context.next('.custom-file-label').html(imageName);
 
 
-};
+    }
 
+    function getCat() {
+        var cat = $("#itemCategory").val();
+        var catId = parseInt(cat);
 
+        $.ajax({
+            url: '/accounts/dashboard/product/creative/add/' + catId,
+            success: function(response) {
+                //console.log(response.subCrtCat);
+                $("#itemSubCategory").empty();
+                $.each(response.subCrtCat, function(k, v) {
+                    // console.log(response.subCrtCat[k].crt_sub_category_name);
+                    var subCatId = response.subCrtCat[k].crt_sub_category_id;
+                    var subCatName = response.subCrtCat[k].crt_sub_category_name;
+                    var opts = "<option value=" + subCatId + ">" + subCatName + "</option>";
 
+                    $("#itemSubCategory").append(opts);
 
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                Swal.fire(
+                    jqXHR.status + "",
+                    textStatus + " : " + errorThrown,
+                    'error'
+                )
+            }
 
+        });
+
+    };
 </script>
 
 {% endblock %}
@@ -265,9 +258,7 @@
 <div class="py-2">
     <h3 class="text-center">Upload product images</h3>
     <div class="custom-file my-1">
-        <input type="file" id="imputImage" name="crt_img_url" required multiple
-             class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}"
-             aria-describedby="inputGroupPrepend3 validateImages">
+        <input type="file" id="imputImage" name="crt_img_url" required multiple class="custom-file-input {% if image_error == None and form.is_bound %}is-valid{% elif image_error != None and error %}is-invalid{% endif %}" aria-describedby="inputGroupPrepend3 validateImages">
         <label class="custom-file-label" for="imputImage">Choose file</label>
         <div id="validateImages" class="invalid-feedback">
             {{ image_error }}
@@ -275,7 +266,4 @@
     </div>
 </div>
 
-{{ formset.management_form }}
-        {% for f in formset.forms %}
-            {{ f.as_p }}
-        {% endfor %}
+{{ formset.management_form }} {% for f in formset.forms %} {{ f.as_p }} {% endfor %}

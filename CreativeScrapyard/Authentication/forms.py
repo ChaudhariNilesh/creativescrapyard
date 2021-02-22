@@ -46,8 +46,8 @@ class EditProfileImage(forms.ModelForm):
         #print(cleaned_data)
         user_image = cleaned_data.get("user_image",False)
         # print()
-        allowedSize = round((user_image.size/1024))
         if user_image:
+            allowedSize = round((user_image.size/1024))
             validate_image_file_extension(user_image)
             if allowedSize > 2048:
                 self.add_error("user_image",forms.ValidationError('Maximum 2 MB image size is allowed.' ,code='invalid'))
@@ -106,11 +106,16 @@ class EditProfileForm(forms.ModelForm):
     def clean_bio(self):
         cleaned_data=self.cleaned_data
         #print(cleaned_data)
-        bio = cleaned_data.get("bio",False)
+        bio = cleaned_data.get("bio",None)
         #print(bio)
-        res = bool(re.match('[a-zA-Z0-9\s]+$', bio))
-        if not res:
-            self.add_error("bio",forms.ValidationError('Invalid bio. Only Alphabet letter (a-z) and numbers (0-9) are accepted' ,code='invalid'))
+        try:
+            if bio:
+                res = bool(re.match('[a-zA-Z0-9\s]+$', bio))
+                if not res:
+                    self.add_error("bio",forms.ValidationError('Invalid bio. Only Alphabet letter (a-z) and numbers (0-9) are accepted' ,code='invalid'))
+        except: 
+            pass
+        
         return cleaned_data           
 
 class UserDocument(forms.ModelForm):

@@ -67,8 +67,8 @@
             <div class="form-row pt-1 px-1">
                 <div class="form-group col text-left">
                     <label for="addLandmark">Landmark(Optional)</label>
-                    <input type="text" name="landmark" class="form-control form-control-sm   {% if form.errors.landmark == None and form.is_bound %} is-valid {% elif form.errors.landmark != None %} is-invalid {% endif %}" id="addLandmark" placeholder="Landmark" value="{{form.landmark.value | default:'' }}"
-                        aria-describedby="inputGroupPrepend3 validatelandmark">
+                    <input type="text" name="landmark" class="form-control form-control-sm  {% if form.errors.landmark == None and form.is_bound and not form.landmark.value == '' %} is-valid {% elif form.errors.landmark != None %} is-invalid {% endif %}" id="addLandmark"
+                        placeholder="Landmark" value="{{form.landmark.value | default:'' }}" aria-describedby="inputGroupPrepend3 validatelandmark">
                     <div id="validatelandmark" class="invalid-feedback">
                         {{form.landmark.errors.as_text}}
                     </div>

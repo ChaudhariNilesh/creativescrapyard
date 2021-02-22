@@ -1,6 +1,6 @@
 from django.urls import path, include,re_path
 from django.conf.urls import url
-from .views import *
+from  .views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -40,10 +40,23 @@ urlpatterns = [
     # path('dashboard/add-photo/<int:id>/', add_photo, name="add_photo"),
 
     path('dashboard/product/creative/edit/<int:id>/', edit_creative_product,name="edit_creative_product"),
-    path('dashboard/product/scrap/edit/<int:id>/', edit_scrap_product,name="edit_scrap_product"),
+    path('dashboard/product/creative/edit/<int:id>/ajax/set-primary/<int:imgid>',setPrimary,name="setPrimary"),
+    path('dashboard/product/creative/edit-creative-images/<int:id>/', edit_crt_images,name="edit_crt_images"),
+    path('dashboard/product/creative/edit-creative-images/<str:action>/', edit_crt_images,name="add_crt_images"),
+    path('dashboard/product/creative/remove-creative-images/<int:id>/', remove_crt_images,name="remove_crt_images"),
+
+
+
+
 
     path('dashboard/product/scrap/add/', add_scrap_product, name="add_scrap_product"),
     path('dashboard/product/scrap/add/<int:id>/', get_scp_sub_category, name="get_scp_sub_category"),
+
+    path('dashboard/product/scrap/edit/<int:id>/', edit_scrap_product,name="edit_scrap_product"),
+    path('dashboard/product/scrap/edit/<int:id>/ajax/set-primary/<int:imgid>',setPrimary,name="setPrimary"),
+    path('dashboard/product/scrap/edit-scrap-images/<int:id>/',edit_scp_images,name="edit_scp_images"),
+    path('dashboard/product/scrap/edit-scrap-images/<str:action>/',edit_scp_images,name="add_scp_images"),
+    path('dashboard/product/scrap/remove-scrap-images/<int:id>/',remove_scp_images,name="remove_scp_images"),
 
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
@@ -78,7 +91,6 @@ urlpatterns = [
     #path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
 
-    path('dashboard/profile/address/remove/<int:id>/', removeAddress, name="removeAddress"),
 
     
 ]
