@@ -1,10 +1,5 @@
-{% extends 'account/base-dashboard.html' %}
-{% load static %}
-{% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/dashboard.css' %}"/>
-{% endblock %}
-
-{% block base %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/dashboard.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Dashboard
@@ -15,14 +10,12 @@
 <div class="row">
     <div class="col row">
         <div class="col bx-shd my-2 mx-3 py-2 text-center">
-            <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=currency-rupee&fill=13775a"
-                 width="40" height="40">
+            <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=currency-rupee&fill=13775a" width="40" height="40">
             <p class="short-card-title">Total Revenue</p>
-            <p class="card-value">&#8377; 5869</p>
+            <p class="card-value">&#8377; 5869.00</p>
         </div>
         <div class="col bx-shd my-2 mx-3 py-2 text-center">
-            <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=truck&fill=13775a" width="40"
-                 height="40">
+            <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=truck&fill=13775a" width="40" height="40">
             <p class="short-card-title">Current Orders</p>
             <p class="card-value">5</p>
         </div>
@@ -30,14 +23,12 @@
 
     <div class="col row">
         <div class="col bx-shd my-2 mx-3 py-2 text-center">
-            <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=shopping-cart&fill=13775a"
-                 width="40" height="40">
+            <img class="card-icon rounded" src="https://s.svgbox.net/hero-outline.svg?ic=shopping-cart&fill=13775a" width="40" height="40">
             <p class="short-card-title">Total Orders</p>
             <p class="card-value">57</p>
         </div>
         <div class="col bx-shd my-2 mx-3 py-2 text-center">
-            <img class="card-icon rounded" src="https://s.svgbox.net/materialui.svg?ic=color_lens&fill=13775a"
-                 width="40" height="40">
+            <img class="card-icon rounded" src="https://s.svgbox.net/materialui.svg?ic=color_lens&fill=13775a" width="40" height="40">
             <p class="short-card-title">Total Creative Products</p>
             <p class="card-value">234</p>
         </div>
@@ -46,7 +37,8 @@
 
 
 <!--Order list-->
-{% comment %} <div class="bx-shd my-3 py-2 px-3">
+{% comment %}
+<div class="bx-shd my-3 py-2 px-3">
     <span class="card-title">Recent Orders</span>
     <div class="py-3">
         <table class="table border-bottom">
@@ -60,69 +52,68 @@
             </tr>
 
             <tbody>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-run">Running</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-pend">Pending</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-com">Completed</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Scrap</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-hold">On Hold</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-run">Running</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-pend">Pending</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-com">Completed</span> </td>
-            </tr>
-            <tr>
-                <th scope="row" class="text-center">101</th>
-                <td class="text-center">27/12/20</td>
-                <td class="text-center">Creative Art</td>
-                <td class="text-center">&#8377; 200</td>
-                <td class="text-center"> <span class="ord-status ord-status-hold">On Hold</span> </td>
-            </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-run">Running</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-pend">Pending</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-com">Completed</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Scrap</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-hold">On Hold</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-run">Running</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-pend">Pending</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-com">Completed</span> </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-center">101</th>
+                    <td class="text-center">27/12/20</td>
+                    <td class="text-center">Creative Art</td>
+                    <td class="text-center">&#8377; 200</td>
+                    <td class="text-center"> <span class="ord-status ord-status-hold">On Hold</span> </td>
+                </tr>
             </tbody>
-<!--            maximum order should be 10.-->
+            <!--            maximum order should be 10.-->
         </table>
     </div>
     <a href="{% url 'Authentication:order_creative' %}" class="btn btn-sm pri-bg-color">View more</a>
-</div> {% endcomment %}
-{% endblock %}
+</div> {% endcomment %} {% endblock %}
 
 
 <!--

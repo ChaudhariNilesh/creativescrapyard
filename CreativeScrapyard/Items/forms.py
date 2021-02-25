@@ -26,7 +26,7 @@ class tbl_creativeitems_mst_form(forms.ModelForm):
         cleaned_data = self.cleaned_data
 
         crt_item_desc = cleaned_data.get('crt_item_desc', None)
-        if not bool(re.match('[a-zA-Z0-9\s]+$', crt_item_desc)):
+        if not bool(re.match('[a-zA-Z0-9\.\,\s]+$', crt_item_desc)):
             self.add_error("crt_item_desc",
                            forms.ValidationError('Invalid item description. Only alphabets and numeric are accepted.',
                                                  code='invalid'))
@@ -189,7 +189,7 @@ class tbl_scrapitems_form(forms.ModelForm):
         cleaned_data = self.cleaned_data
 
         scp_item_desc = cleaned_data.get('scp_item_desc', None)
-        if not bool(re.match('[a-zA-Z0-9\s]+$', scp_item_desc)):
+        if not bool(re.match('[a-zA-Z0-9\.\,\s]+$', scp_item_desc)):
             self.add_error("scp_item_desc", forms.ValidationError(
                 'Invalid item description. Only alphabets and numeric are accepted.', code='invalid'))
 
@@ -301,7 +301,7 @@ class ReportIssueForm(forms.ModelForm):
         issue_msg = cleaned_date.get("issue_msg",False)
         
         if issue_msg:
-            if not bool(re.match('[a-zA-Z0-9\s]+$',issue_msg)):
+            if not bool(re.match('[a-zA-Z0-9\&\\\.\,\s]+$',issue_msg)):
                 self.add_error("issue_msg",forms.ValidationError("No special symbols are allowed in the message field.",code="invalid"))
         
         return issue_msg            

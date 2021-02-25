@@ -52,6 +52,10 @@ Remain After ->
 >>remove image from storage after deleted
 >>shop cart javascript validate << POST WORK
 >>verify all status selected option=> order(Admin),queries,issues,creative,scrapitems
+>> contact seller show swal to login
+>> total product in category layout using annotate
+>> set issues on layout
+>> restrict self item report
 
 
 --image form errors remove view code

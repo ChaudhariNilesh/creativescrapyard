@@ -29,7 +29,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">Category </th>
-                                    <th scope="col" class="text-center">Total Products</th>
+                                    <!-- <th scope="col" class="text-center">Total Products</th> -->
                                     <th class="disableFilterBy text-center">Action</th>
                                 </tr>
                             </thead>
@@ -39,7 +39,7 @@
                                 <tr>
                                     <td class="text-center mainScpCatName"><a href="{% url 'CustomAdmin:loadSubScpCat' scpCat.scp_category_id %}"><span class="listing">{{scpCat.scp_category_name}}</span></a></td>
 
-                                    <td class="text-center"><a href="#"><span class="">20</span></a></td>
+                                    <!-- <td class="text-center"><a href="#"><span class="">20</span></a></td> -->
 
                                     <td class="text-center">
                                         <button class="edit-main-scp-cat btn btn-sm pri-bg-color" data-edit-mainScpCat="{% url 'CustomAdmin:ScpCatAction' scpCat.scp_category_id 'editMain' %}"><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
@@ -85,7 +85,7 @@
 
                             <tr>
                                 <th scope="col " class="text-center ">Sub Category </th>
-                                <th scope="col " class="text-center ">Total Products</th>
+                                <!-- <th scope="col " class="text-center ">Total Products</th> -->
                                 <th class="disableFilterBy text-center ">Action</th>
                             </tr>
 
@@ -95,7 +95,7 @@
                             <tr>
                                 <td class="text-center "><span class="listing ">{{ subs.scp_sub_category_name }}</span></td>
 
-                                <td class="text-center "><a href="# "><span class=" ">{{ subs.scp_category_id }}</span></a></td>
+                                <!-- <td class="text-center "><a href="# "><span class=" ">{{ subs.scp_category_id }}</span></a></td> -->
 
                                 <td class="text-center ">
                                     <button class="edit-sub-scp-cat btn btn-sm pri-bg-color " data-edit-subScpCat="{% url 'CustomAdmin:ScpCatAction' subs.scp_sub_category_id 'editSubs' %} "><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20 " height="20 "></button></a>

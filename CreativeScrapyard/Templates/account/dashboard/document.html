@@ -6,7 +6,9 @@
     Become an Artist
 </div>
 <hr/>
-
+<div class="mt-4">
+    {% include 'includes/messages.html' %}
+</div>
 <form action="{% url 'Authentication:add_document' %}" enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <div class="form-row">
@@ -94,9 +96,7 @@
         </div>
     </div>
 
-    <div class="mt-4">
-        {% include 'includes/messages.html' %}
-    </div>
+
     <button type="submit" class="btn btn-block pri-bg-color px-4">Submit</button>
 </form>
 

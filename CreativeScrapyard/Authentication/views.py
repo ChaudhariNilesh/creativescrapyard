@@ -425,11 +425,11 @@ def remove_crt_images(request,id=None):
     else:
         return redirect("Authentication:creative_items")    
 
-def setPrimary(request,id=None,imgid=None):
+def crtSetPrimary(request,id=None,imgid=None):
     if request.is_ajax():
         if imgid:
             # print("rec")
-            imagePrimary = tbl_crtimages.objects.get(is_primary=True)
+            imagePrimary = tbl_crtimages.objects.get(is_primary=True,crt_item_details=id)
             imagePrimary.is_primary=False
             imagePrimary.save()
             newimagePrimary = tbl_crtimages.objects.get(crt_img_id=imgid)
@@ -625,8 +625,10 @@ def dashboard_profile(request,action=None):
     try:
         UserAddressData = Address.objects.filter(user_id=request.user.user_id)
         UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
-    except (Address.DoesNotExist, Documents.DoesNotExist):
+ 
+    except Address.DoesNotExist:
         UserAddressData = None
+    except  Documents.DoesNotExist:
         UserDocumentData = None
 
 
@@ -758,25 +760,28 @@ def changePassword(request):
                 #print('got session')
                 email = request.session.get('user_email')
                 #print(email)
-                try:
-                    print(pass1)
-                    #validate_password(pass1) # for length and strength check
-                except Exception as e:
-                    messages.error(request,*e)
-                    return redirect('Authentication:changePassword')
-                else:
-                    usr = User.objects.get(email__iexact=email)
-
-                    if check_password(old,usr.password):
-                        # print('old and new same')
-                        usr.set_password(pass1)
-                        usr.save()
-                        request.session.delete()
-                        return redirect('Authentication:login')
-                    else:
-                        messages.error(request,"Old Password is incorrect.")
+                if bool(re.match('[A-Za-z0-9@#$%^&+=]{9,}',pass1)):
+                    try:
+                        #print(pass1)
+                        validate_password(pass1) # for length and strength check
+                    except Exception as e:
+                        messages.error(request,*e)
                         return redirect('Authentication:changePassword')
+                    else:
+                        usr = User.objects.get(email__iexact=email)
 
+                        if check_password(old,usr.password):
+                            # print('old and new same')
+                            usr.set_password(pass1)
+                            usr.save()
+                            request.session.delete()
+                            return redirect('Authentication:login')
+                        else:
+                            messages.error(request,"Old Password is incorrect.")
+                            return redirect('Authentication:changePassword')
+                else:
+                    messages.error(request,"Password does not match given criteria.")
+                    return redirect('Authentication:changePassword')
         else:
             messages.error(request,"Passwords do not match.")
             return redirect('Authentication:changePassword')
@@ -844,20 +849,27 @@ def newPassword(request):
         if password == c_password:
             email = request.session.get('reset_password_EMAIL')
             if email:
-                try:
-                    print(password)
-                    #validate_password(pass1) # for length and strength check
-                except Exception as e:
-                    messages.error(request,*e)
-                else:
+                if bool(re.match('[A-Za-z0-9@#$%^&+=]{9,}',password)):
+                    try:
+                        # print(password)
+                        validate_password(password) # for length and strength check
+                    except Exception as e:
+                        messages.error(request,*e)
+                    else:
 
-                    usr = User.objects.get(email=email)
-                    usr.set_password(password)
-                    usr.save()
-                    request.session.delete()
-                    return redirect('Authentication:newPasswordDone')
+                        usr = User.objects.get(email=email)
+                        usr.set_password(password)
+                        usr.save()
+                        request.session.delete()
+                        return redirect('Authentication:newPasswordDone')
+                else:
+                    messages.error(request,"Password does not match given criteria.")
+                    return redirect('Authentication:newPassword')
             else:
                 return render(request,"account/account_active_email_done.html",{"activated":False})
+        else:
+            messages.error(request,"Passwords do not match.")
+            return redirect('Authentication:newPassword')
 
     return render(request,template)
 
@@ -906,7 +918,7 @@ def add_document(request):
             documentData=UserDocument(request.POST or None,request.FILES or None)
             #print("Docu Valid",request.user)
             if documentData.is_valid():
-                print("Docu Valid",request.user)
+                # print("Docu Valid",request.user)
                 document = documentData.save(commit=False)
                 # usr= User.objects.get(username=request.user)
                 document.user = request.user
@@ -918,7 +930,7 @@ def add_document(request):
                 document.save()
             else:
                 #print(documentData.errors.as_json)
-                messages.error(request,"Please correct above errors.")
+                messages.error(request,"Please correct below errors.")
             
         context={
             "form":documentData,
@@ -1316,11 +1328,11 @@ def remove_scp_images(request,id=None):
     else:
         return redirect("Authentication:scrap_items")    
 
-def setPrimary(request,id=None,imgid=None):
+def scpSetPrimary(request,id=None,imgid=None):
     if request.is_ajax():
         if imgid:
             # print("rec")
-            imagePrimary = tbl_scrapimages.objects.get(is_primary=True)
+            imagePrimary = tbl_scrapimages.objects.get(is_primary=True,scp_item=id)
             imagePrimary.is_primary=False
             imagePrimary.save()
             newimagePrimary = tbl_scrapimages.objects.get(scp_img_id=imgid)

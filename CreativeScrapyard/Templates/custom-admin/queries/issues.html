@@ -10,7 +10,7 @@
                         <option {%if issueType == 1 %}selected{%endif%} value="1">Reported Creative Items</option>
                         <option {%if issueType == 2 %}selected{%endif%} value="2">Reported Scrap Items</option>
                         <option {%if issueType == 3 %}selected{%endif%} value="3">Reported Users Items</option>
-                        <option {%if issueType == 4 %}selected{%endif%} value="4">Order Issues</option>
+                        <!-- <option {%if issueType == 4 %}selected{%endif%} value="4">Order Issues</option> -->
                     </select>
             </form>
 
@@ -35,20 +35,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
                         <tr>
-                            <td class="text-center"><span class="list-enq-name">dummy</span>
+                            <td class="text-center"><span class="list-enq-name">yash kukreja</span>
                             </td>
-                            <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
+                            <td class="text-center"><span class="list-enq-name">yashskukreja@gmail.com</span>
 
                             </td>
-                            <td class="text-center"><span class="list-enq-name">ABC-DEF-GHI-JKL</span>
+                            <td class="text-center"><span class="list-enq-name">CRT-WAL-WAL-J1KL</span>
 
                             </td>
-                            <td class="text-center"><span class="list-enq-name">...</span></td>
-                            <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('hello');">Read</a></span></td>
+                            <td class="text-center"><span class="list-enq-name">Missing/Incorrect Information</span></td>
+                            <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('contains misleading information');">Read</a></span></td>
 
-                            <td class="text-center">28/12/2020</td>
+                            <td class="text-center">20/02/2021</td>
                             <td class="text-center">
                                 <select class="p-1 ord-status">
                                                         <option value="Pending" selected>Resolved</option>
@@ -56,7 +55,6 @@
                                                         <option value="Cancelled">Rejected</option>
                                                     </select>
                             </td>
-
                             <td class="text-center">
                                 {% if issueType == 1 %}
                                 <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
@@ -71,13 +69,13 @@
                                 <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn " aria-hidden="true">DISABLE</button>
 
                                 <!--  -->
-                                {% elif issueType == 4 %}
-                                <a href="{% url 'CustomAdmin:orderdetails' 20%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>{% endif %}
-                                <button class="btn btn-sm pri-bg-color">Save</button>
+
+                                {% comment %} {% elif issueType == 4 %}
+                                <a href="{% url 'CustomAdmin:orderdetails' 20%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <button class="btn btn-sm pri-bg-color">Save</button> {% endcomment %} {% endif %}
 
                             </td>
                         </tr>
-                        {% endfor %} {% endwith %}
 
                     </tbody>
                 </table>
@@ -89,7 +87,7 @@
 
 
 
-{% endblock %} {% block custom-script %}
+{% endblock %} {% block customscript %}
 <script>
     function readMsg(data) {
         $(".read-msg").on("click", function() {
@@ -97,4 +95,47 @@
         });
     }
 </script>
-{%endblock%}
+{%endblock%} {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+<tr>
+    <td class="text-center"><span class="list-enq-name">dummy</span>
+    </td>
+    <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
+
+    </td>
+    <td class="text-center"><span class="list-enq-name">ABC-DEF-GHI-JKL</span>
+
+    </td>
+    <td class="text-center"><span class="list-enq-name">...</span></td>
+    <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('ss');">Read</a></span></td>
+
+    <td class="text-center">28/12/2020</td>
+    <td class="text-center">
+        <select class="p-1 ord-status">
+                                <option value="Pending" selected>Resolved</option>
+                                <option value="Completed">Pending</option>
+                                <option value="Cancelled">Rejected</option>
+                            </select>
+    </td>
+
+    <td class="text-center">
+        {% if issueType == 1 %}
+        <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+        <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+        <!--  -->
+        {% elif issueType == 2 %}
+        <a href="{% url 'Home:Items:scrapSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+        <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+        <!--  -->
+        {%elif issueType == 3 %}
+        <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn " aria-hidden="true">DISABLE</button>
+
+        <!--  -->
+
+        {% comment %} {% elif issueType == 4 %}
+        <a href="{% url 'CustomAdmin:orderdetails' 20%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+        <button class="btn btn-sm pri-bg-color">Save</button> {% endcomment %} {% endif %}
+
+    </td>
+</tr>
+{% endfor %} {% endwith %}

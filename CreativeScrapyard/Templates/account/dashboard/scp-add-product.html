@@ -80,7 +80,7 @@
 
                 <div class="py-2">
                     <div class="custom-file my-1">
-                        <input required onchange="chooseImage(event);" type="file" id="inputImage-1" name="scp_img_url_1" class="custom-file-input {% if imageForm.errors.scp_img_url_1 == None and form.is_bound %}is-valid{% elif imageForm.errors.scp_img_url_1 != None %}is-invalid{% endif %}"
+                        <input onchange="chooseImage(event);" type="file" id="inputImage-1" name="scp_img_url_1" class="custom-file-input {% if imageForm.errors.scp_img_url_1 == None and form.is_bound %}is-valid{% elif imageForm.errors.scp_img_url_1 != None %}is-invalid{% endif %}"
                             aria-describedby="inputGroupPrepend3 validateImages-1">
                         <label class="custom-file-label" for="inputImage-1">Choose image</label>
                         <div id="validateImages-1" class="invalid-feedback">

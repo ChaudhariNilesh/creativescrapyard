@@ -40,7 +40,7 @@ urlpatterns = [
     # path('dashboard/add-photo/<int:id>/', add_photo, name="add_photo"),
 
     path('dashboard/product/creative/edit/<int:id>/', edit_creative_product,name="edit_creative_product"),
-    path('dashboard/product/creative/edit/<int:id>/ajax/set-primary/<int:imgid>',setPrimary,name="setPrimary"),
+    path('dashboard/product/creative/edit/<int:id>/ajax/set-primary/<int:imgid>',crtSetPrimary,name="setPrimary"),
     path('dashboard/product/creative/edit-creative-images/<int:id>/', edit_crt_images,name="edit_crt_images"),
     path('dashboard/product/creative/edit-creative-images/<str:action>/', edit_crt_images,name="add_crt_images"),
     path('dashboard/product/creative/remove-creative-images/<int:id>/', remove_crt_images,name="remove_crt_images"),
@@ -53,7 +53,7 @@ urlpatterns = [
     path('dashboard/product/scrap/add/<int:id>/', get_scp_sub_category, name="get_scp_sub_category"),
 
     path('dashboard/product/scrap/edit/<int:id>/', edit_scrap_product,name="edit_scrap_product"),
-    path('dashboard/product/scrap/edit/<int:id>/ajax/set-primary/<int:imgid>',setPrimary,name="setPrimary"),
+    path('dashboard/product/scrap/edit/<int:id>/ajax/set-primary/<int:imgid>',scpSetPrimary,name="setPrimary"),
     path('dashboard/product/scrap/edit-scrap-images/<int:id>/',edit_scp_images,name="edit_scp_images"),
     path('dashboard/product/scrap/edit-scrap-images/<str:action>/',edit_scp_images,name="add_scp_images"),
     path('dashboard/product/scrap/remove-scrap-images/<int:id>/',remove_scp_images,name="remove_scp_images"),

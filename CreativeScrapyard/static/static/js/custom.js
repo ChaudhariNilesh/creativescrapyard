@@ -264,6 +264,8 @@ $(function() {
             $('a[href="' + sideBarLoc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         } else {
             // console.log(sideBarLoc);
+            //$('a[href="' + loc + '"]').css({ "opacity": "1" }).addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
+
             $('a[href="' + loc + '"]').css({ "opacity": "1" }).parent().addClass("show").prev().css({ "opacity": "1" }).parent().css({ "opacity": "1" });
         }
 

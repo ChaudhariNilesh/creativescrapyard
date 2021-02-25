@@ -136,7 +136,7 @@ class UserDocument(forms.ModelForm):
         acc_name=self.cleaned_data.get("acc_name",None)
 
         if not bool(re.match('[a-zA-Z\s]+$',acc_name)):
-            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit"))
+            self.add_error("acc_name",forms.ValidationError("Account Name Shouldn't Contain Digit or Any Special Characters."))
 
         return acc_name
 
@@ -176,7 +176,7 @@ class UserDocument(forms.ModelForm):
         pan_name=self.cleaned_data.get("pan_name",None)
 
         if not bool(re.match('[a-zA-Z\s]+$',pan_name)):
-            self.add_error("pan_name",forms.ValidationError("Pan Name Shouldn't Contain Digit"))
+            self.add_error("pan_name",forms.ValidationError("Pan Name Shouldn't Contain Digit or Any Special Characters."))
         
         return pan_name
     
@@ -231,7 +231,7 @@ class AddressForm(forms.ModelForm):
         line1=self.cleaned_data.get("line1",None)
 
         if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',line1)):
-            self.add_error("line1",forms.ValidationError('Please Enter Address Line 1'))
+            self.add_error("line1",forms.ValidationError('Please enter correct address Line 1'))
 
         return line1
     
@@ -239,7 +239,7 @@ class AddressForm(forms.ModelForm):
         line2=self.cleaned_data.get("line2",None)
 
         if not bool(re.match('^[\.a-zA-Z0-9,\s ]+$',line2)):
-            self.add_error("line2",forms.ValidationError('Please Enter Address Line 2'))
+            self.add_error("line2",forms.ValidationError('Please enter correct address Line 2'))
 
         return line2
 
@@ -259,11 +259,11 @@ class AddressForm(forms.ModelForm):
 
     def clean_pincode(self):
         pincode=self.cleaned_data.get("pincode",None)
-        # response = requests.get('https://api.postalpincode.in/pincode/'+pincode)
-        # isvalidpincode = response.json()
+        response = requests.get('https://api.postalpincode.in/pincode/'+pincode)
+        isvalidpincode = response.json()
         # print(isvalidpincode[0]['Status'])
-        # if not len(pincode)==6 or not pincode.isdigit() or isvalidpincode[0]['Status']=="Error":
-        if not len(pincode)==6 or not pincode.isdigit():
+        if not len(pincode)==6 or not pincode.isdigit() or isvalidpincode[0]['Status']=="Error":
+        # if not len(pincode)==6 or not pincode.isdigit():
 
             self.add_error("pincode",forms.ValidationError("Please Enter Valid Pincode"))
         

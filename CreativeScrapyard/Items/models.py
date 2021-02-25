@@ -55,6 +55,11 @@ def product_photo(instance, filename):
     return "crt-item-image/{final_filename}".format(final_filename=final_filename)
 
 
+def scp_product_photo(instance, filename):
+    new_filename = random.randint(1,1000)
+    name, ext = get_filename_ext(filename)
+    final_filename = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
+    return "scp-item-image/{final_filename}".format(final_filename=final_filename)
 
 class tbl_scrapitems(models.Model):
     scp_item_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(9999999999)])
@@ -75,7 +80,7 @@ class tbl_scrapitems(models.Model):
 
 class tbl_scrapimages(models.Model):
     scp_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
-    scp_img_url = models.ImageField(max_length=150, null=True, upload_to='item-photos/', validators=[validate_image_file_extension])
+    scp_img_url = models.ImageField(max_length=150, null=True, upload_to=scp_product_photo, validators=[validate_image_file_extension])
     is_primary = models.BooleanField(default=False, null=False)
     scp_item = models.ForeignKey(tbl_scrapitems, on_delete=models.CASCADE)
 

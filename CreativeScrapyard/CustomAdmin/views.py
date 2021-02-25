@@ -9,9 +9,10 @@ from django.core.files.storage import FileSystemStorage
 from wsgiref.util import FileWrapper
 from django.utils.encoding import smart_str
 from .models import *
-from Authentication.models import *
-from Home.models  import Query
 from .forms import *
+from Authentication.models import *
+from Items.models import *
+from Home.models  import Query
 from django.http import HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
@@ -26,7 +27,8 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
-
+from django.db.models import Count
+from django.db.models import Q
 ####### AUTH RELATED #######
 def AdminLogin(request):
     template = 'custom-admin/login.html'
@@ -110,7 +112,7 @@ def changePassword(request):
         template = 'custom-admin/account-settings/change-password.html'
 
         if request.method == 'POST':
-            print(request.POST)
+            # print(request.POST)
             old = request.POST['password']
             pass1 = request.POST['password1']
             pass2 = request.POST['password2']
@@ -119,25 +121,28 @@ def changePassword(request):
                     #print('got session')
                     email = request.session.get('user_email')
                     #print(email)
-                    try:
-                        print(pass1)
-                        #validate_password(pass1) # for length and strength check
-                    except Exception as e:
-                        messages.error(request,*e)
-                        return redirect('CustomAdmin:changePassword')
-                    else:
-                        usr = User.objects.get(email__iexact=email)
-                        
-                        if check_password(old,usr.password):
-                            # print('old and new same')
-                            usr.set_password(pass1)
-                            usr.save()
-                            request.session.delete()
-                            return redirect('CustomAdmin:login')
-                        else:
-                            messages.error(request,"Old Password is incorrect.")
+                    if bool(re.match('[A-Za-z0-9@#$%^&+=]{9,}',pass1)):
+                        try:
+                            print(pass1)
+                            validate_password(pass1) # for length and strength check
+                        except Exception as e:
+                            messages.error(request,*e)
                             return redirect('CustomAdmin:changePassword')
-
+                        else:
+                            usr = User.objects.get(email__iexact=email)
+                            
+                            if check_password(old,usr.password):
+                                # print('old and new same')
+                                usr.set_password(pass1)
+                                usr.save()
+                                request.session.delete()
+                                return redirect('CustomAdmin:login')
+                            else:
+                                messages.error(request,"Old Password is incorrect.")
+                                return redirect('CustomAdmin:changePassword')
+                    else:
+                        messages.error(request,"Password does not match given criteria.")
+                        return redirect('CustomAdmin:changePassword')
             else:
                 messages.error(request,"Passwords do not match.")
                 return redirect('CustomAdmin:changePassword')
@@ -263,9 +268,25 @@ def creativeCat(request,id=None,action=None):
         crtMainCats=tbl_crt_categories.objects.all()
         template = 'custom-admin/products/creativecategory.html' 
         mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
+        
+        # categories = tbl_crt_subcategories.objects.annotate(Count('tbl_creativeitems_mst'))
+        # # print(categories.values_list('crt_sub_category_name', 'tbl_creativeitems_mst__count'))
+        # lst= categories.values_list('crt_category_id').distinct(True)#maincat id
+
+        categories = tbl_crt_subcategories.objects.annotate(itemCount=Count('tbl_creativeitems_mst',distinct=True))
+        # print(categories.values_list('crt_sub_category_name', 'tbl_creativeitems_mst__count'))
+        print(categories.values_list('crt_category_id'),categories[0].itemCount)
+
+
         if id != None and action==None :
-            #print("DD1")
             subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id)
+            # print("DD1")
+            # tmp = Count('tbl_creativeitems_mst', filter=Q(tbl_creativeitems_mst__crt_sub_category=subCrtCats.values('crt_sub_category_id')))
+            # print(tmp)
+            # categories= tbl_crt_subcategories.objects.annotate(tmp=tmp)
+            # categories = tbl_crt_subcategories.objects.annotate(Count('tbl_creativeitems_mst'),filter=Q(tbl_creativeitems_mst__crt_sub_category=3))
+            # print(categories[0].tmp)  
+
             parentCat=get_object_or_404(tbl_crt_categories,pk=id)
                 
             if subCrtCats!= None:
@@ -748,6 +769,7 @@ def issues(request,opts="reportedCrtItem"):
         title = "Reported Creative Items"
         issueType=1
         columnName="Item SKU"
+        issues=Issues.objects.all()
         if request.method=="POST":
             issueType=request.POST.get("issueType")
 
@@ -772,6 +794,7 @@ def issues(request,opts="reportedCrtItem"):
             "title":title,
             "issueType":issueType,
             "columnName":columnName,
+            "issues":issues,
             
         }
         return render(request,template,context)
@@ -783,7 +806,7 @@ def issues(request,opts="reportedCrtItem"):
 def sendmail(request):
     if request.session.get('user'):    
         template = 'custom-admin/sendmail/sendmail.html'
-       
+        registerEmails = User.objects.filter(is_active=True,is_superuser=False)
         if request.method == "POST" and not request.is_ajax():
             email = request.POST.get('email', '')
             subject = request.POST.get('subject', '')
@@ -870,8 +893,10 @@ def sendmail(request):
             #return JsonResponse({"send":True,"msg":"Mail Sent"})
 
 
-
-        return render(request,template)
+        context={
+            "emailList":registerEmails
+        }
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')    
 
