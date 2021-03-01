@@ -383,8 +383,8 @@ $(function() {
                         if (!value) {
                             return 'You need to write something!'
                         }
-                        if (!(/^[a-zA-Z\s]+$/.test(value))) {
-                            return 'Only alphabets are accepted.'
+                        if (!(/^[a-zA-Z0-9\s]+$/.test(value))) {
+                            return 'Only alphabets and numbers are accepted.'
                         }
                     }
                 })
@@ -431,6 +431,7 @@ $(function() {
             const badge_id = $(this).attr("id");
             Swal.fire({
                 title: 'Are you sure?',
+                text: 'Want to delete the bagde?',
                 icon: 'warning',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',

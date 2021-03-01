@@ -622,6 +622,7 @@ def dashboard_profile(request,action=None):
     template = "account/dashboard/dashboard-profile.html"
     UserFormData=EditUserFormData()
     profileFormData=EditProfileForm()
+    
     try:
         UserAddressData = Address.objects.filter(user_id=request.user.user_id)
         UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
