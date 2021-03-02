@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'Authentication',
     'Order',
     'CustomAdmin',
+    'Cart',
+    'mathfilters',
+    'Payments',
+    
 ]
 
 MIDDLEWARE = [
@@ -155,3 +159,12 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 's0ul.cyb3r@gmail.com'
 EMAIL_HOST_PASSWORD = 'X5UwgfxvXMPa7pn'
+
+
+# PAYTM CONFIGS
+
+PAYTM_MERCHANT_ID = 'DyMtMf83576919209415'
+PAYTM_SECRET_KEY = 'i_EPvh8ctu@5PII%'
+PAYTM_WEBSITE = 'WEBSTAGING'
+PAYTM_CHANNEL_ID = 'WEB'
+PAYTM_INDUSTRY_TYPE_ID = 'Retail'

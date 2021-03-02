@@ -49,6 +49,7 @@ change images
 Remain After -> 
 >>add new address from checkout
 >>(chnage validation in signup and contact form TO forms.isvalid())
+
 >>remove image from storage after deleted
 >>shop cart javascript validate << POST WORK
 >>verify all status selected option=> order(Admin),queries,issues,creative,scrapitems

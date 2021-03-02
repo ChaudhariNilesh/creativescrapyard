@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 from CustomAdmin.models import tbl_crt_subcategories,SubScrapCategory
 from Authentication.models import User
 from django.core.validators import validate_image_file_extension
-from Authentication.models import User
+
 import random,os
 # Create your models here.
 WEIGHT_CHOICES = (
@@ -108,6 +108,13 @@ class tbl_creativeitems_mst(models.Model):
 
     def __str__(self):
         return self.crt_item_name
+
+    def get_image_url(self):
+        
+        img = self.tbl_crtimages_set.get(is_primary=True)
+        if img:
+            return img
+        return img #None
 
 # ITEM_SIZES = (
 #     ("XS", "XS"),

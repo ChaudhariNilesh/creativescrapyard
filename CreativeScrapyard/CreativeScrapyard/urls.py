@@ -23,6 +23,7 @@ urlpatterns = [
     path('',include('Home.urls')),
     path('accounts/', include('Authentication.urls')),
     path('admin/',include('CustomAdmin.urls')),
+    path('', include('Payments.urls')),
 ]
 
 if settings.DEBUG:
