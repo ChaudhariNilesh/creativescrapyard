@@ -270,12 +270,13 @@ def creativeCat(request,id=None,action=None):
         mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
         
         # categories = tbl_crt_subcategories.objects.annotate(Count('tbl_creativeitems_mst'))
-        # # print(categories.values_list('crt_sub_category_name', 'tbl_creativeitems_mst__count'))
+        # print(categories.values_list('crt_sub_category_name', 'tbl_creativeitems_mst__count'))
+       
         # lst= categories.values_list('crt_category_id').distinct(True)#maincat id
 
-        categories = tbl_crt_subcategories.objects.annotate(itemCount=Count('tbl_creativeitems_mst',distinct=True))
+        # categories = tbl_crt_subcategories.objects.annotate(itemCount=Count('tbl_creativeitems_mst',distinct=True))
         # print(categories.values_list('crt_sub_category_name', 'tbl_creativeitems_mst__count'))
-        print(categories.values_list('crt_category_id'),categories[0].itemCount)
+        # print(categories.values_list('crt_category_id'),categories[0].itemCount)
 
 
         if id != None and action==None :

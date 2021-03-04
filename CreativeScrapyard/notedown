@@ -58,7 +58,9 @@ Remain After ->
 >> set issues on layout
 >> restrict self item report
 >> badge delete message?
-
+>> reportIssue see comment to set IDs and also model
+>> change active status to choice list
+>> send mail to badge assigned person
 
 --image form errors remove view code
 --edit and remove address

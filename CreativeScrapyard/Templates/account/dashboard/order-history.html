@@ -1,6 +1,9 @@
 {% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
 <link rel="stylesheet" href="{% static 'css/nikul/creative-orders.css' %}" /> {% endblock %} {% block base %}
+<div>
+    {% include 'includes/messages.html' %}
 
+</div>
 <div class="page-title">
     My Order History
 </div>

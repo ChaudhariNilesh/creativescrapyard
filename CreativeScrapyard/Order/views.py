@@ -17,7 +17,7 @@ def checkout(request,action=None):
     context={}
     cartitems=""
     crtItem=""
-    shipping=60.00
+    shipping=0.00
     total = 0.0
 
     
@@ -33,11 +33,13 @@ def checkout(request,action=None):
             # print(request.POST)
             pid = request.POST.get("crt_item_id",None)
             qty = request.POST.get("crt_item_qty",None)
+            
             itemObj=get_object_or_404(tbl_creativeitems_mst,crt_item_id=pid)
             crtItem=tbl_creativeitems_mst.objects.filter(crt_item_id=itemObj.crt_item_id)
             
             request.session['product']=pid
             request.session['qty']=qty
+            request.session['is_cartItem']=False
             
         total = itemObj.crt_item_price * int(qty)
         
@@ -67,27 +69,34 @@ def checkout(request,action=None):
 
     elif action == "cart" :
         cartitems = Cart.objects.filter(user_id=request.user.user_id)
+        if cartitems:
+            
+            request.session['product']=list(cartitems.values())
+            request.session['is_cartItem']=True
+
+            total = 0
+            for item in cartitems:
+                total += item.crt_item.crt_item_price * item.crt_item_qty
+            orderTotalAmt=shipping+float(total)
+            context={
+                'is_creative':True,
+                'defaultAddress':defaultAddress,
+                'addressList':addressList,
+                'cartitems':cartitems,
+                'total':total,
+                'shippingRate':shipping,
+                'orderTotalAmt':orderTotalAmt,
+                'crtItem':crtItem,
+                'is_cartItem':True,
+        }
         
-        total = 0
-        for item in cartitems:
-            total += item.crt_item.crt_item_price * item.crt_item_qty
-        orderTotalAmt=shipping+float(total)
-        context={
-            'is_creative':True,
-            'defaultAddress':defaultAddress,
-            'addressList':addressList,
-            'cartitems':cartitems,
-            'total':total,
-            'shippingRate':shipping,
-            'orderTotalAmt':orderTotalAmt,
-            'crtItem':crtItem,
-    }
+        else:
+            return redirect("Home:Items:creativeSingleItem")
     else:
         return HttpResponseNotFound("404 Page not found.")
-        
-
 
     return render(request,template,context)
+
 
 @login_required
 def orderHistory(request):

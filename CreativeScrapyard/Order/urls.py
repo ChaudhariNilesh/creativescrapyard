@@ -10,7 +10,7 @@ urlpatterns = [
     path('checkout/<str:action>',checkout,name="checkout"), 
     path('checkout/<str:action>',checkout,name="changeCheckoutAddrs"), 
     # path('checkout/<int:pid>/',checkout,name="checkout"), 
-
+    
     path('my-orders/',orderHistory,name="orderHistory"), 
     path('track-order/',orderTrack,name="orderTrack"), 
 ]

@@ -1,4 +1,4 @@
-{%extends 'common/common.html'%} {% load static %} {% load mathfilters %} {% block title %} CS - CheckOut {% endblock %} {% block link %}
+{%extends 'common/common.html'%} {% load static %} {% load mathfilters %} {% block title %} CS - Checkout {% endblock %} {% block link %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/creativestyle.css' %}"> {% endblock %} {%block content%}
 
@@ -13,6 +13,10 @@
                     <li class="breadcrumb-item"><a href="#">My Order</a></li>
                     <li class="breadcrumb-item active">Place Order</li>
                 </ol>
+            </div>
+            <div>
+                {% include 'includes/messages.html' %}
+
             </div>
             <div class="my-4 border-bottom">
                 <h2>Select Deliver Address</h2>
@@ -176,12 +180,12 @@
                         </div>
 
                         <div class="pt-3">
-                            <form id="#" method="post">
+                            <form action="{% url 'Payments:pay' %}" method="post">{% csrf_token %}
                                 <div class="form-group">
                                     <div class="row mb-3">
                                         <div class="col-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pay_mtd" id="cod" value="COD" checked>
+                                                <input class="form-check-input" type="radio" name="pay_mtd" value="1" checked>
                                                 <label class="form-check-label" for="pay_mtd">
                                                     Pay On Delivery
                                                 </label>
@@ -189,16 +193,20 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pay_mtd" id="paytm" value="paytm" checked>
+                                                <input class="form-check-input" type="radio" name="pay_mtd" value="2">
                                                 <label class="form-check-label" for="pay_mtd">
                                                     Pay using Paytm
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="next" value="{{ request.path }}">
 
                                     <button class="btn-cxt btn-block" id="place-ord-btn">Place Order</button>
                                 </div>
+
+
+
                             </form>
                         </div>
                     </div>
