@@ -32,7 +32,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">Category </th>
-                                    <!-- <th scope="col" class="text-center">Total Products</th> -->
+                                     <th scope="col" class="text-center">Total Products</th>
                                     <th class="disableFilterBy text-center">Action</th>
                                 </tr>
                             </thead>
@@ -42,7 +42,12 @@
                                 <tr>
                                     <td class="text-center mainCrtCatName"><a href="{% url 'CustomAdmin:loadSubCrtCat' crtCat.crt_category_id %}"><span class="listing">{{crtCat.crt_category_name}}</span></a></td>
 
-                                    <!-- <td class="text-center"><a href="#"><span class="">0</span></a></td> -->
+                                    <td class="text-center"><a href="#"><span class="">
+                                        {% for sub in crtCat.tbl_crt_subcategories_set.all %}
+                                        {{ n }}<br/>
+                                        {{ n|add:sub.tbl_creativeitems_mst_set.all.count|floatformat:"0" }}<br/>
+                                        {% endfor %}
+                                    </span></a></td>
 
                                     <td class="text-center">
                                         <button class="edit-main-crt-cat btn btn-sm pri-bg-color" data-edit-mainCrtCat="{% url 'CustomAdmin:CrtCatAction' crtCat.crt_category_id 'editMain' %}"><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
@@ -89,7 +94,7 @@
 
                             <tr>
                                 <th scope="col " class="text-center ">Sub Category </th>
-                                <!-- <th scope="col " class="text-center ">Total Products</th> -->
+                                 <th scope="col " class="text-center ">Total Products</th>
                                 <th class="disableFilterBy text-center ">Action</th>
                             </tr>
 
@@ -99,7 +104,7 @@
                             <tr>
                                 <td class="text-center "><span class="listing ">{{ subs.crt_sub_category_name }}</span></td>
 
-                                <!-- <td class="text-center "><a href="# "><span class=" ">0</span></a></td> -->
+                                 <td class="text-center "><a href="# "><span class=" ">{{ subs.itemCount }}</span></a></td>
 
                                 <td class="text-center ">
                                     <button class="edit-sub-crt-cat btn btn-sm pri-bg-color " data-edit-subCrtCat="{% url 'CustomAdmin:CrtCatAction' subs.crt_sub_category_id 'editSubs' %} "><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20 " height="20 "></button></a>
