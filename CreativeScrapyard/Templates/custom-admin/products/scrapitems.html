@@ -24,168 +24,35 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for item in items %}
                                 <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">101</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Broken Lamp</span></a>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.scp_item_id }}</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.scp_item_name }}</span></a>
                                     </td>
                                     <td>
-                                        <span class="listing ">nileshchaudhary89.nc@gmail.com</span>
+                                        <span class="listing ">{{ item.user.email }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing">1</span>
+                                        <span class="listing">{{ item.scp_item_qty }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">&#8377; 100.00</span>
+                                        <span class="listing ">&#8377; {{ item.scp_item_price }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">SCP-EWA-BRO-56GE</span>
+                                        <span class="listing ">{{ item.scp_item_SKU }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing text-center text-danger">Active</span>
+                                        <span class="listing text-center text-danger">{{ item.scp_item_status }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="listing">24/02/2021</span>
+                                        <span class="listing">{{ item.scp_created_on|date:"M d, y" }}</span>
                                     </td>
                                     <td class="text-center">
                                         <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
                                         <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">106</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Broken Lamp</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">kenneth.dsliva@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">1</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 190.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">SCP-EWA-BRO-56GE</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">102</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Old Monitor</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing">kenneth.dsliva@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">2</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 800.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">SCP-EWA-OLD-6DW0</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">103</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Second Hand Tires Size-28</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-break">raghu123@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">20</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 520.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">SCP-TIR-SEC-YU1P</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">104</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Handle Broken Mug</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-break">nileshchaudhary1905@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">80</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 70</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">SCP-CRO-HAN-PP3P</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">105</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Old Cycle</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-break">nikulprajapati1901@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">1</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 800.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">SCP-VEP-HAN-TK6P</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, validat
 import random
 import os
 from .models import *
+from Items.models import *
 
 
 GENDER_TYPE = (

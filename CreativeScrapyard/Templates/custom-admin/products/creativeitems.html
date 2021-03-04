@@ -24,168 +24,38 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for item in items %}
+                                {{ item }}
                                 <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">101</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Pillow</span></a>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.crt_item_id }}</span></a></td>
+                                    <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.crt_item_name }}</span></a>
                                     </td>
                                     <td>
-                                        <span class="listing ">nileshchaudhary89.nc@gmail.com</span>
+                                        <span class="listing ">{{ item.user.email }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing">1</span>
+                                        <span class="listing">{{ item.crt_item_qty }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">&#8377; 300.00</span>
+                                        <span class="listing ">&#8377; {{ item.crt_item_price }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">CRT-WAL-PIL-4AIK</span>
+                                        <span class="listing ">{{ item.crt_item_SKU }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing text-center text-danger">Active</span>
+                                        <span class="listing text-center text-danger">{{ item.crt_item_status }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <span class="listing">24/02/2021</span>
+                                        <span class="listing">{{ item.crt_created_on|date:"M d, Y" }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
+                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></a>
                                         <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">106</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Minimilistic Tree Wall Stickers</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">raghu123@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">12</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 300.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">CRT-WAL-MIN-4AIK</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">102</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Ceramic Air Freshner</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing">nileshchaudhary1905@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">4</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 699.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">CRT-OTH-CER-BA25</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">103</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Customized Pot</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-break">raghu123@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">100</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 120.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">CRT-DIN-CUS-23SD</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">104</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Customized Glasses</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-break">nileshchaudhary1905@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">50</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 99.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">CRT-DIN-CUS-AE1A</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">105</span></a></td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Handmade Chaai Cups(3 Units)</span></a>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-break">raghu123@gmail.com</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing">100</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">&#8377; 120.00</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing ">CRE-DIN-HAN-NJ0A</span>
-                                    </td>
-                                    <td>
-                                        <span class="listing text-center text-danger">Active</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="listing">01/01/2021</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
-                                    </td>
-                                </tr>
+                                {% endfor %}
+
+
                             </tbody>
                         </table>
                     </div>

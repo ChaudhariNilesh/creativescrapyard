@@ -27,8 +27,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
-from django.db.models import Count
-from django.db.models import Q
+from django.db.models import Count,Q
 ####### AUTH RELATED #######
 def AdminLogin(request):
     template = 'custom-admin/login.html'
@@ -165,7 +164,13 @@ def logout(request):
 def users(request):
     if request.user.is_superuser:
         template = 'custom-admin/users/users.html'
-        user=User.objects.filter(is_superuser=False)
+        users = User.objects.filter(is_superuser=False)
+        user=users.annotate(num_crt = Count('tbl_creativeitems_mst'))
+        ########NIKUL############
+        # accounts = User.objects.filter(is_superuser=False)
+        # for account in accounts:
+        #     acc = account.seller_id.all().count()
+        #     print(acc)
         context={
             "Users":user,
         }
@@ -266,6 +271,19 @@ def verifyChk(request):
 def creativeCat(request,id=None,action=None):
     if request.session.get('user'):
         crtMainCats=tbl_crt_categories.objects.all()
+        for main in crtMainCats:
+            print(main)
+            tot=0
+            for m in tbl_crt_subcategories.objects.filter(crt_category=main):
+                tot += tbl_creativeitems_mst.objects.filter(crt_sub_category=m).count()
+            print(tot)
+        # for main in crtMainCats:
+        #     print(main)
+        #     # totCrt = main.tbl_crt_subcategories_set.all()
+        #     nn=0
+        #     for t in main.tbl_crt_subcategories_set.all():
+        #         nn += t.tbl_creativeitems_mst_set.all().count()
+        #     print(nn)
         template = 'custom-admin/products/creativecategory.html' 
         mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
         
@@ -280,18 +298,18 @@ def creativeCat(request,id=None,action=None):
 
 
         if id != None and action==None :
-            subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id)
+            subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id).annotate(itemCount=Count('tbl_creativeitems_mst'))
             # print("DD1")
             # tmp = Count('tbl_creativeitems_mst', filter=Q(tbl_creativeitems_mst__crt_sub_category=subCrtCats.values('crt_sub_category_id')))
             # print(tmp)
             # categories= tbl_crt_subcategories.objects.annotate(tmp=tmp)
             # categories = tbl_crt_subcategories.objects.annotate(Count('tbl_creativeitems_mst'),filter=Q(tbl_creativeitems_mst__crt_sub_category=3))
             # print(categories[0].tmp)  
-
+            print(subCrtCats)
             parentCat=get_object_or_404(tbl_crt_categories,pk=id)
-                
+
             if subCrtCats!= None:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True })
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True,"n":0 })
             else:
                 return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True })
 
@@ -434,9 +452,10 @@ def creativeCat(request,id=None,action=None):
 
 
 def creativeitems(request):
-    if request.session.get('user'):    
+    if request.session.get('user'):
         template = 'custom-admin/products/creativeitems.html'
-        return render(request,template,{"dispSubCat":False})
+        items = tbl_creativeitems_mst.objects.all()
+        return render(request,template,{"dispSubCat":False, "items": items})
     else:
         return redirect('CustomAdmin:login')
 
@@ -581,7 +600,8 @@ def scrapCat(request,id=None,action=None):
 def scrapitems(request):
     if request.session.get('user'):    
         template = 'custom-admin/products/scrapitems.html'
-        return render(request,template)
+        items = tbl_scrapitems.objects.order_by('scp_created_on')[::-1]
+        return render(request, template, {"items": items})
     else:
         return redirect('CustomAdmin:login')
 
@@ -636,7 +656,6 @@ def badges(request):
         context={
             'badges':badges,
             'badgeEntries':badgeEntries,
-
         }
         return render(request,template,context)
 
