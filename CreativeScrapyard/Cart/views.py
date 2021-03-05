@@ -23,6 +23,7 @@ def addToCart(request):
     # image = tbl_crtimages.objects.filter(crt_item_details_id__in=prd,is_primary=True)
 
     # context['image']=prd
+
     if request.user.is_authenticated:    
         if request.method == 'POST':
             
@@ -73,11 +74,14 @@ def removeCartItem(request):
 def getTotal(request):
     items = Cart.objects.filter(user_id=request.user.user_id)
     total,quantity = 0,0
-    for item in items:
-        total += item.crt_item.crt_item_price * item.crt_item_qty
-        quantity += item.crt_item_qty
-    
-    response = {'total':total,'quan':quantity}
+    if items:
+        for item in items:
+            total += item.crt_item.crt_item_price * item.crt_item_qty
+            quantity += item.crt_item_qty
+        
+        response = {'total':total,'quan':quantity}
+    else:
+        response = {}
     return JsonResponse(response) 
 
         

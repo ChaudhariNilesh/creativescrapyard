@@ -204,7 +204,8 @@
     margin-right: auto;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
     color: #fff !important;
     background-color: var(--pri-color) !important;
 }
@@ -218,7 +219,6 @@
     color: white !important;
     background-color: var(--pri-color) !important;
 }
-
 
 
 /* Common Header */

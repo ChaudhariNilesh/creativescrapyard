@@ -164,7 +164,7 @@
                             </form>
                             {% if is_creative %}
                             <form action="{% url 'Home:Items:Cart:addToCart' %}" method="post"> {% csrf_token %}
-                                <input class="form-control-inline" type="text" name="crt_item_id" value="17" hidden>
+                                <input class="form-control-inline" type="text" name="crt_item_id" value="16" hidden>
                                 <input class="form-control-inline" type="text" name="crt_item_qty" value="1" hidden>
                                 <div class="form-group">
                                     <button type="submit" class="btn-cxt btn-block" id="addcart"> Add to cart</button>

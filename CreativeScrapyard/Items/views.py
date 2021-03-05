@@ -89,7 +89,7 @@ def reportIssue(request):
                     issue.save()
 
             elif request.POST.get("issue_type")=='3':
-                print("USER")
+                # print("USER")
                 issue = issueForm.save(commit=False)
                 user_id=request.POST.get("user_id")
                 if User.objects.filter(user_id=user_id).exists():
