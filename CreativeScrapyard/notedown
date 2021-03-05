@@ -98,6 +98,9 @@ Remain After ->
 
 ****************************************
 
+---------------------------
+
+pubs = tbl_crt_categories.objects.aggregate(num_books=Count('tbl_crt_subcategories')) -> finds total subcategories
 
 
 ---------------------------------

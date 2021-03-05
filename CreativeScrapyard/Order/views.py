@@ -1,3 +1,4 @@
+from django.core.mail import message
 from django.shortcuts import render,redirect,get_object_or_404
 from CreativeScrapyard import settings
 from Authentication.models import Address
@@ -6,7 +7,7 @@ from Items.models import tbl_creativeitems_mst
 from django.http import HttpResponseNotFound
 
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 # Create your views here.
 @login_required
 def checkout(request,action=None):
@@ -27,6 +28,7 @@ def checkout(request,action=None):
             pid=request.session.get("product")
             qty=request.session.get("qty")
             itemObj=get_object_or_404(tbl_creativeitems_mst,crt_item_id=pid)
+
             crtItem=tbl_creativeitems_mst.objects.filter(crt_item_id=itemObj.crt_item_id)
             
         else:
@@ -35,24 +37,29 @@ def checkout(request,action=None):
             qty = request.POST.get("crt_item_qty",None)
             
             itemObj=get_object_or_404(tbl_creativeitems_mst,crt_item_id=pid)
-            crtItem=tbl_creativeitems_mst.objects.filter(crt_item_id=itemObj.crt_item_id)
-            
-            request.session['product']=pid
-            request.session['qty']=qty
-            request.session['is_cartItem']=False
-            
-        total = itemObj.crt_item_price * int(qty)
-        
-        orderTotalAmt=shipping+float(total)
-        context={
-            'is_creative':True,
-            'defaultAddress':defaultAddress,
-            'addressList':addressList,
-            'total':total,
-            'shippingRate':shipping,
-            'orderTotalAmt':orderTotalAmt,
-            'crtItem':crtItem,
-        }
+            if not (itemObj.user==request.user):
+                print("SAME USER")
+                crtItem=tbl_creativeitems_mst.objects.filter(crt_item_id=itemObj.crt_item_id)
+                
+                request.session['product']=pid
+                request.session['qty']=qty
+                request.session['is_cartItem']=False
+                
+                total = itemObj.crt_item_price * int(qty)
+                
+                orderTotalAmt=shipping+float(total)
+                context={
+                    'is_creative':True,
+                    'defaultAddress':defaultAddress,
+                    'addressList':addressList,
+                    'total':total,
+                    'shippingRate':shipping,
+                    'orderTotalAmt':orderTotalAmt,
+                    'crtItem':crtItem,
+                }
+            else:
+                messages.warning(request, 'Ohh! Are you trying to buy own item. We dont do that here.')
+                return redirect("Home:Items:creativeSingleItem")
             
 
     elif request.method == "POST" and action=="change-address" :
@@ -73,6 +80,7 @@ def checkout(request,action=None):
             
             request.session['product']=list(cartitems.values())
             request.session['is_cartItem']=True
+            # print(request.session.get("is_cartItem"))
 
             total = 0
             for item in cartitems:

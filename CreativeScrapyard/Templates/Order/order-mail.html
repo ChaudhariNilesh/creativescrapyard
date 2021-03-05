@@ -1,0 +1,8 @@
+{% autoescape off %} 
+    {% if type == 'placeOrder' %}
+    Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
+        
+        {{message}} 
+
+    {% endif %}
+ {% endautoescape %}

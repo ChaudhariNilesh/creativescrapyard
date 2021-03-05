@@ -271,19 +271,14 @@ def verifyChk(request):
 def creativeCat(request,id=None,action=None):
     if request.session.get('user'):
         crtMainCats=tbl_crt_categories.objects.all()
-        for main in crtMainCats:
-            print(main)
-            tot=0
-            for m in tbl_crt_subcategories.objects.filter(crt_category=main):
-                tot += tbl_creativeitems_mst.objects.filter(crt_sub_category=m).count()
-            print(tot)
-        # for main in crtMainCats:
-        #     print(main)
-        #     # totCrt = main.tbl_crt_subcategories_set.all()
-        #     nn=0
-        #     for t in main.tbl_crt_subcategories_set.all():
-        #         nn += t.tbl_creativeitems_mst_set.all().count()
-        #     print(nn)
+
+     
+        mainCrtCnt = tbl_crt_subcategories.objects.values("crt_category__crt_category_name").annotate(CrtCnt=Count('tbl_creativeitems_mst'))
+        
+        # zipped=zip(crtMainCats, mainCrtCnt)
+        # print(tuple(zipped))
+
+
         template = 'custom-admin/products/creativecategory.html' 
         mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
         
@@ -305,13 +300,13 @@ def creativeCat(request,id=None,action=None):
             # categories= tbl_crt_subcategories.objects.annotate(tmp=tmp)
             # categories = tbl_crt_subcategories.objects.annotate(Count('tbl_creativeitems_mst'),filter=Q(tbl_creativeitems_mst__crt_sub_category=3))
             # print(categories[0].tmp)  
-            print(subCrtCats)
+            # print(subCrtCats)
             parentCat=get_object_or_404(tbl_crt_categories,pk=id)
 
             if subCrtCats!= None:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True,"n":0 })
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True,"mainCrtCnt":zip(crtMainCats, mainCrtCnt)})
             else:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True })
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True,"mainCrtCnt":zip(crtMainCats, mainCrtCnt) })
 
         elif action=="addMain":
             if request.method=="POST" and request.is_ajax():
@@ -445,7 +440,7 @@ def creativeCat(request,id=None,action=None):
                 raise PermissionDenied
                             
         
-        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
+        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat,"mainCrtCnt":zip(crtMainCats, mainCrtCnt)})
     else:
         return redirect('CustomAdmin:login')
 
