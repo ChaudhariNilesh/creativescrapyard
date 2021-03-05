@@ -3,7 +3,6 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 from CustomAdmin.models import tbl_crt_subcategories,SubScrapCategory
 from Authentication.models import User
 from django.core.validators import validate_image_file_extension
-
 import random,os
 # Create your models here.
 WEIGHT_CHOICES = (
@@ -77,6 +76,12 @@ class tbl_scrapitems(models.Model):
 
     def __str__(self):
         return self.scp_item_name
+    
+    def get_image_url(self):
+        img = self.tbl_scrapimages_set.get(is_primary=True)
+        if img:
+            return img
+        return img
 
 class tbl_scrapimages(models.Model):
     scp_img_id = models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
@@ -115,6 +120,10 @@ class tbl_creativeitems_mst(models.Model):
         if img:
             return img
         return img #None
+
+    # def get_category(self):
+    #     sub_category = self.tbl_crt_subcategories_set.get(crt_sub_category_id=self.crt_sub_category)
+    #     category = sub_category.crt_category
 
 # ITEM_SIZES = (
 #     ("XS", "XS"),

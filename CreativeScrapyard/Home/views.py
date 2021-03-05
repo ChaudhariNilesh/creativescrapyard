@@ -9,6 +9,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from Authentication.models import *
+from Items.models import *
 from django.template.loader import render_to_string
 from django.http import JsonResponse,HttpResponse
 # Create your views here.
@@ -19,11 +20,15 @@ def home(request):
 
 def creativestore(request):
     template="Home/creativestore.html"
-    return render(request,template,{'is_creative':True})    
+    products = tbl_creativeitems_mst.objects.all()
+    context={'products':products,'is_creative':True}
+    return render(request,template,context)    
 
 def scrapyard(request):
     template="Home/scrapyard.html"
-    return render(request,template,{'is_scrap':True})    
+    products = tbl_scrapitems.objects.all()
+    context={'products':products,'is_scrap':True}
+    return render(request,template,context)    
 
 def achievers(request):
     template="achievers.html"
