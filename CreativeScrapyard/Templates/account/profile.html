@@ -19,10 +19,10 @@
         <div class="col-md-4  px-3 py-3">
             <div class="px-3 bg-white justify-content-center border py-3">
                 <div class="w-100 pt-5 pb-2">
-                    <img src="{% static 'img/testimonial/1.jpg' %}" class="img-thumbnail rounded-circle card-profile-image shadow">
+                    <img src="{{artist.profile.user_image.url}}" class="img-thumbnail rounded-circle card-profile-image shadow">
                 </div>
-                <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">Nilesh Chaudhari</p>
-                <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">@cyberartist</p>
+                <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">{{artist.first_name}} {{artist.last_name}}</p>
+                <p class="text-4 line-height-4 text-center py-0 my-0 fw-600">{{artist.username}}</p>
                 <ul class="p-2 list-inline list-group list-group-horizontal  nav d-flex justify-content-center">
                     <li class="tags tags-common mx-1 my-1">Artist</li>
                     <li class="tags tags-special mx-1 my-1">User</li>
@@ -95,7 +95,7 @@
                     <i class="fas fa-map-marker-alt col-1"></i>
                     <div class="d-flex row col-11 pr-1">
                         <span class="line-height-4 text-left py-0 my-0 fw-400 col-6">From</span>
-                        <span class="line-height-4 text-right px-0 my-0 fw-400 col-6">Gujarat,India</span>
+                        <span class="line-height-4 text-right px-0 my-0 fw-400 col-6">{{artist_address.city.city_name}}</span>
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@
             <div class="px-3 bg-white justify-content-center border mt-3 py-3">
                 <p class="text-4 line-height-4 text-left py-3 my-0 fw-600">Bio</p>
                 <p class="text-4 line-height-4 text-justify my-0 fw-300">
-                    I can make any coal look gold.
+                    {{artist.profile.bio}}
                 </p>
             </div>
         </div>
@@ -126,55 +126,32 @@
                 </nav>
                 <div class="tab-content" id="nav-tab Content">
                     <!-- Creative Items -->
-                    <div class="tab-pane fade show active" id="nav-creative">
+                    <div class="tab-pane fade show active m-2" id="nav-creative">
 
                         <div class="d-md-flex row">
+                            {%for product in crt_products%}
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
-                                <div class="product_card border-0 rounded px-0 m-3">
+                                <div class="product_card border-0 rounded px-0 " >
                                     <div class="imgbx  py-0">
                                         <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                            <img class="img-fluid prod-thumb-img" src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" alt="" change-src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" style="height: 280px; width: 220px;">
+                                            <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.crt_img_url.url}}" alt="" change-src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" style="height: 280px; width: 220px;">
                                             <div class="contentbx  m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                                 <div class="caption">
 
-                                                    <p class="product-name  pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">Ceramic Air Freshner</p>
-                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 699.00</p>
+                                                    <p class="product-name  pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">{{product.crt_item_name}}</p>
+                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; {{product.crt_item_price}}</p>
 
                                                 </div>
                                                 <a href="#">
                                                     <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                                                 </a>
-                                                {% if is_creative %}
-                                                <a href="#"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
-                                            </div>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
-                                <div class="product_card border-0 rounded px-0 m-3">
-                                    <div class="imgbx  py-0">
-                                        <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                            <img class="img-fluid prod-thumb-img" src="{% static 'img/products/creative/customizedglasses.jpg' %}" alt="" change-src="{% static 'img/products/creative/customizedglasses.jpg' %}" style="height: 280px; width: 220px;">
-                                            <div class="contentbx  m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
-                                                <div class="caption">
-
-                                                    <p class="product-name  pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">Customized Glasses</p>
-                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 99.00</p>
-
                                                 </div>
-                                                <a href="#">
-                                                    <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
-                                                </a>
-                                                {% if is_creative %}
-                                                <a href="#"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
-                                            </div>
                                         </a>
 
                                     </div>
                                 </div>
                             </div>
+                            {% endfor %}
 
                         </div>
                         <div class="row mx-auto mt-3">
@@ -201,33 +178,34 @@
                     </div>
 
                     <!-- Scrap items -->
-                    <div class="tab-pane fade" id="nav-scrap">
+                    <div class="tab-pane fade m-2" id="nav-scrap">
                         {% with tab='scrap' %}
                         <div class="d-md-flex row">
+                        {%for product in scp_products%}
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
 
-                                <div class="product_card border-0 rounded px-0 m-3">
+                                <div class="product_card border-0 rounded px-0 ">
                                     <div class="imgbx  py-0">
                                         <a href="{% if is_creative and tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                            <img class="img-fluid prod-thumb-img" src="{% static 'img/products/scrap/brokenmug.jpg' %}" alt="" change-src="{% static 'img/products/scrap/brokenmug.jpg' %}" style="height: 280px; width: 220px;">
+                                            <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.scp_img_url.url}}" alt="" change-src="{% static 'img/products/scrap/brokenmug.jpg' %}" style="height: 280px; width: 220px;">
                                             <div class="contentbx  m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                                 <div class="caption">
 
-                                                    <p class="product-name  pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">Handle Broken Mug</p>
-                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; 70.00</p>
+                                                    <p class="product-name  pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">{{product.scp_item_name}}</p>
+                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; {{product.scp_item_price}}</p>
 
                                                 </div>
                                                 <a href="#">
                                                     <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                                                 </a>
-                                                {% if is_creative and tab == 'creative' %}
-                                                <a href="#"><button class="btn-cxt shadow-none px-3 mx-2" ><i class="fa fa-shopping-cart" aria-hidden="true"></i></button></a> {% else %} {% endif %}
+                                                
                                             </div>
                                         </a>
 
                                     </div>
                                 </div>
                             </div>
+                            {%endfor%}
                         </div>
                         {%endwith%}
                         <div class="row mx-auto mt-3">
