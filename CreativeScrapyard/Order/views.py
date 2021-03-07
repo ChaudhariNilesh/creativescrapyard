@@ -38,7 +38,7 @@ def checkout(request,action=None):
             
             itemObj=get_object_or_404(tbl_creativeitems_mst,crt_item_id=pid)
             if not (itemObj.user==request.user):
-                print("SAME USER")
+                # print("SAME USER")
                 crtItem=tbl_creativeitems_mst.objects.filter(crt_item_id=itemObj.crt_item_id)
                 
                 request.session['product']=pid
@@ -58,8 +58,9 @@ def checkout(request,action=None):
                     'crtItem':crtItem,
                 }
             else:
+                next = request.POST.get('next', '/')
                 messages.warning(request, 'Ohh! Are you trying to buy own item. We dont do that here.')
-                return redirect("Home:Items:creativeSingleItem")
+                return redirect(next)
             
 
     elif request.method == "POST" and action=="change-address" :
@@ -99,7 +100,9 @@ def checkout(request,action=None):
         }
         
         else:
-            return redirect("Home:Items:creativeSingleItem")
+            next = request.POST.get('next', '/')
+            return redirect(next)
+            
     else:
         return HttpResponseNotFound("404 Page not found.")
 

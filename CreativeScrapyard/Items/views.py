@@ -15,9 +15,9 @@ def creativeSingleItem(request,id):
     images=None
     product=get_object_or_404(tbl_creativeitems_mst,crt_item_id=id)
     all_products=tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE")
-    print(all_products)
+    # print(all_products)
     ids=all_products.values_list('crt_item_id',flat=True)
-    print(ids)
+    # print(ids)
     
     r_ids = random.sample(list(ids), 3)
  

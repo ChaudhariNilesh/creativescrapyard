@@ -40,7 +40,10 @@ def addToCart(request):
                 
                 if (product.user==request.user):
                     messages.warning(request, 'Ohh! Are you trying to buy own item. We dont do that here.')
-                    return redirect("Home:Items:creativeSingleItem")
+                    next = request.POST.get('next', '/')
+                    return redirect(next)
+
+                    
 
                 user = get_object_or_404(User,user_id=request.user.user_id)
                 cart = Cart(crt_item_qty=qty,crt_item=product,user=user)

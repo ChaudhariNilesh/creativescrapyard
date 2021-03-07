@@ -20,7 +20,7 @@
                                     <th scope="col" class="text-center">Status</th>
                                     <th scope="col" class="text-center">Creative Items</th>
                                     <th scope="col" class="text-center">Scrap Items</th>
-                                     <th scope="col" class="text-center">Active From</th>
+                                    <th scope="col" class="text-center">Active From</th>
                                     <th class="disableFilterBy text-center">Artist</th>
                                     <th class="disableFilterBy disableSort text-center">Action</th>
                                 </tr>
@@ -43,8 +43,8 @@
                                     </td>
                                     <td class="text-center">
                                         <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
-                                        <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button>
+                                        <a href="{% url 'Authentication:profile' user.user_id  %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
+                                        <button id="" data="{{user.email}}" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button>
                                     </td>
                                     {% comment %}
                                     <td><a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a></td>

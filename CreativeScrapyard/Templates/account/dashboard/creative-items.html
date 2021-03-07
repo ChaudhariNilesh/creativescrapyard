@@ -33,7 +33,7 @@
                 {% for prd in myProducts %}
                 <tr>
                     <td scope="row" class="text-center">
-                        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">{{prd.crt_item_name}}</a></td>
+                        <a href="{% url 'Home:Items:creativeSingleItem' prd.crt_item_id %}" class="link-effect">{{prd.crt_item_name}}</a></td>
                     <td class="text-center">{{prd.crt_item_qty}}</td>
 
                     <td class="text-center">&#8377; {{prd.crt_item_price}}</td>

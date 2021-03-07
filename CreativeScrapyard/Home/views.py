@@ -92,12 +92,16 @@ def sendContactDetails(request):
     
     if request.is_ajax() and request.method == "POST":
         if request.user.is_authenticated:
+            
             try:                
-                current_site = get_current_site(request)
+                # current_site = get_current_site(request)
                 mail_subject = "Buyer showed interest in your scrap item"
                 #get user related to scrap
-                seller = User.objects.get(email__iexact="nileshchaudhary89.nc@gmail.com")
-                print(seller.email)
+                sellerEmail = request.POST.get("seller","")
+                seller = User.objects.get(email__iexact=sellerEmail)
+                if seller==request.user:
+                    return JsonResponse({"send":False,"msg":"You can't contact yourself!!","auth":True})
+                # print(seller.email)
                 message = render_to_string('common/email.html', {
                     'message':"shared mail id with you. Please contact him/her from this email.",
                     'user':request.user,

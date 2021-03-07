@@ -130,8 +130,9 @@ def activateAccount(request,uidb64,token):
 
 
 def logout(request):
+    
     if (request.session.get('user') != None):
-        #print("exist")
+        # print("exist")
         request.session.delete()
         return redirect('Home:home')
     else:

@@ -168,6 +168,8 @@ $(function() {
 
     var contact = function() {
         $("#contactBtn.btn-scp").click(function(e) {
+            const user = $(this).attr("data");
+            console.log(user);
             e.preventDefault();
             Swal.fire({
                     title: 'Are you sure?',
@@ -179,6 +181,7 @@ $(function() {
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result.isConfirmed) {
+
                         $.ajax({
                             url: "/contact-scrapseller/",
                             type: "POST",
@@ -186,6 +189,7 @@ $(function() {
                                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                                 action: 'post',
                                 type: "contactuser",
+                                seller: user
                             },
                             dataype: "json",
                             beforeSend: function() {
@@ -209,9 +213,13 @@ $(function() {
                                     if (data.send) {
                                         //Swal.fire(data.msg, "", "success");
                                         Swal.fire("Your mail id is shared with our seller.", "", "success");
+                                    } else {
+                                        Swal.fire(data.msg, "", "warning");
+
                                     }
                                 } else {
-                                    window.location.href = "/accounts/login/";
+                                    Swal.fire("Login or create account first !!", "", "warning");
+                                    // window.location.href = "/accounts/login/";
                                 }
 
                             },

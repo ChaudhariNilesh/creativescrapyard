@@ -27,7 +27,8 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
-from django.db.models import Count,Q
+from django.db.models import Count,Q, fields
+from django.core.serializers import serialize
 ####### AUTH RELATED #######
 def AdminLogin(request):
     template = 'custom-admin/login.html'
@@ -165,6 +166,11 @@ def users(request):
     if request.user.is_superuser:
         template = 'custom-admin/users/users.html'
         users = User.objects.filter(is_superuser=False)
+        data = serialize("json",users,fields=("user_id,username,email,date_created,is_active,is_verified"))   ## FOR MODAL OBJECTS
+        # data = list(users.values())
+         
+        # print(data)
+        
         user=users.annotate(num_crt = Count('tbl_creativeitems_mst'))
         ########NIKUL############
         # accounts = User.objects.filter(is_superuser=False)
@@ -178,6 +184,8 @@ def users(request):
         return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
+
+
 
 def buyers(request):
     if  request.user.is_superuser: 

@@ -199,7 +199,7 @@ def initiate_payment(request):
                         return render(request, 'payments/redirect.html', context=paytm_params) 
                                
                 else:
-                    return redirect("Home:Items:creativeSingleItem")
+                    return redirect("Home:Items:creativestore")
 
         except Exception as e:
             print(e)
