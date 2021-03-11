@@ -234,7 +234,6 @@ $(function() {
                             }
                         });
 
-
                     }
                 })
                 // Swal.fire("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {

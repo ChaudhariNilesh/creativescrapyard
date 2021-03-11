@@ -44,11 +44,9 @@
                                     <td class="text-center">
                                         <a href="#" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=plus-bold&color=fff" width="20" height="20"></button></a>
                                         <a href="{% url 'Authentication:profile' user.user_id  %}" class="user-view"><button class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data="{{user.email}}" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button>
+                                        <button id="" data="{{user.email}}" class="btn-sm btn-danger text-white rounded cus disable-btn mt-1" aria-hidden="true">DISABLE</button>
                                     </td>
-                                    {% comment %}
-                                    <td><a href="#"><i class="fa fa-pencil-square-o text-white p-2 rounded cus" aria-hidden="true"></i></a></td>
-                                    <td><a href="#"><i class="fa fa-trash-o text-white p-2 rounded" aria-hidden="true"></i></a></td> {% endcomment %}
+
                                 </tr>
                                 {% endfor %}
 

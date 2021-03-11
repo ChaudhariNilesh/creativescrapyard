@@ -49,8 +49,14 @@ INSTALLED_APPS = [
     'Payments',
     # 'report_builder',
     'Reports',
+    # 'slick_reporting',
+    # 'crispy_forms',
+    # 'weasyprint',
+    'django_filters',
+    'widget_tweaks',
+    
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

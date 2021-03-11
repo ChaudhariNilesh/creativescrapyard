@@ -77,11 +77,11 @@
 
                                                         {% if is_creative %}
                                                         <!--  -->
-                                                        <input type='hidden' value="101" name="crt_item_id">
+                                                        <input type='hidden' value="{{product.crt_item_id}}" name="crt_item_id">
                                                         <input type='hidden' value="1" name="issue_type">
                                                         <!--  -->
                                                         {% elif is_scrap %}
-                                                        <input type='hidden' value="201" name="scp_item_id">
+                                                        <input type='hidden' value="{{product.scp_item_id}}" name="scp_item_id">
                                                         <input type='hidden' value="2" name="issue_type">
                                                         <!--  -->
                                                         {% endif %}
@@ -139,14 +139,12 @@
                                     <input type="hidden" name="next" value="{{ request.path }}">
 
                                     <button type="submit" class="btn-cxt btn-block mt-3" id="buyItem">Buy
-                                        Now</span></button> 
+                                        Now</span></button>
 
                                     <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=someone@gmail.com" style="color:white" class="btn-scp btn-block  mt-3" target="_blank">
                                     Contact</a>  -->
-                                    {% endif %}
-                                    {% else %}
-                                     <button id="contactBtn" data="{{product.user.email}}" class="btn-scp btn-block  mt-3">Contact</span></button>
-                                    {% endif %}
+                                    {% endif %} {% else %}
+                                    <button id="contactBtn" data="{{product.user.email}}" class="btn-scp btn-block  mt-3">Contact</span></button> {% endif %}
 
                                 </div>
                             </form>
@@ -155,7 +153,7 @@
                                 <input class="form-control-inline" type="text" name="crt_item_id" value="{{product.crt_item_id}}" hidden>
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <input class="form-control-inline" type="text" name="crt_item_qty" value="1" hidden>
-                                
+
                                 <div class="form-group">
                                     <button type="submit" class="btn-cxt btn-block" id="addcart"> Add to cart</button>
                                     </a>
@@ -212,7 +210,7 @@
                                             <tr>
                                                 <th>Weight</th>
                                                 <td>{% if is_creative %}{{product.crt_item_weight}} gm{% elif is_scrap %}{{product.scp_item_weight}} gm{% endif %}</td>
-                                            </tr> 
+                                            </tr>
                                             <tr>
                                                 <th>Height</th>
                                                 <td>{% if is_creative %}{{product.crt_item_height}}{% elif is_scrap %}{{product.scp_item_height}}{% endif %}</td>
@@ -273,14 +271,14 @@
 
 
                 </div>
-        
-        
 
-            <div class="explore-items mb-4">
-                <h2 class="pb-1">Explore More Items</h2>
-                <div class="mx-3">
-                    <div class="d-md-flex row">
-                        {%for product in explore_products%}
+
+
+                <div class="explore-items mb-4">
+                    <h2 class="pb-1">Explore More Items</h2>
+                    <div class="mx-3">
+                        <div class="d-md-flex row">
+                            {%for product in explore_products%}
                             <div class="col-12 col-sm-6 col-lg-3">
                                 <div class="product_card border-0 rounded px-0 mt-3">
                                     <div class="imgbx py-0">
@@ -308,16 +306,15 @@
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
     </section>
     </div>
 
-    
-    {% endblock %}
-    {% block customscript %}
+
+    {% endblock %} {% block customscript %}
     <script>
         $("#issueForm").submit(function(e) {
             e.preventDefault();
@@ -330,20 +327,27 @@
                 context: form,
                 dataType: 'json',
                 success: function(data) {
+                    // console.log(data);
+                    if (data.dbError) {
+                        // console.log("db");
+                        $("#reportIssueModal").modal("hide");
+                        Swal.fire(
+                            data.msg, "", "warning");
 
-                    if (data.errors) {
+                    } else if (data.errors) {
+                        // console.log("formError");
                         $(".invalid-feedback").remove();
                         $("#reportIssueModal").modal("show");
-                        if (data.errors.issue_sub) {
+                        if (data.msg.issue_sub) {
                             $("#issue_sub").removeClass("is-valid is-invalid");
-                            $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_sub + "</div>");
+                            $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.msg.issue_sub + "</div>");
                         } else {
                             $("#issue_sub").removeClass("is-valid is-invalid");
                             $("#issue_sub").addClass("is-valid");
                         }
-                        if (data.errors.issue_msg) {
+                        if (data.msg.issue_msg) {
                             $("#issue_msg").removeClass("is-valid is-invalid");
-                            $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_msg + "</div>");
+                            $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.msg.issue_msg + "</div>");
                         } else {
                             $("#issue_msg").removeClass("is-valid is-invalid");
                             $("#issue_msg").addClass("is-valid");

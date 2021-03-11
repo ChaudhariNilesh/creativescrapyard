@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/',include('CustomAdmin.urls')),
     path('', include('Payments.urls')),
     # path('report_builder/', include('report_builder.urls')),
-    path('', include('Reports.urls')),
+    
 
 ]
 

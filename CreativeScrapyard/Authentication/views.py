@@ -23,7 +23,7 @@ from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import PermissionDenied
 import requests,random,string
-
+from django.db.models import Q
 
 # Create your views here.
 def UserLogin(request):

@@ -564,11 +564,13 @@ td {
 
 /*Initial style sort*/
 
-.tablemanager th.sorterHeader {
+.tablemanager th.sorterHeader,
+.tablemanager-report th.sorterHeader {
     cursor: pointer;
 }
 
-.tablemanager th.sorterHeader:after {
+.tablemanager th.sorterHeader:after,
+.tablemanager-report th.sorterHeader:after {
     content: " \f0dc";
     font-family: "FontAwesome";
 }
@@ -576,7 +578,8 @@ td {
 
 /*Style sort desc*/
 
-.tablemanager th.sortingDesc:after {
+.tablemanager th.sortingDesc:after,
+.tablemanager-report th.sortingDesc:after {
     content: " \f0dd";
     font-family: "FontAwesome";
 }
@@ -584,7 +587,8 @@ td {
 
 /*Style sort asc*/
 
-.tablemanager th.sortingAsc:after {
+.tablemanager th.sortingAsc:after,
+.tablemanager-report th.sortingAsc:after {
     content: " \f0de";
     font-family: "FontAwesome";
 }
@@ -592,7 +596,8 @@ td {
 
 /*Style disabled*/
 
-.tablemanager th.disableSort {}
+.tablemanager th.disableSort,
+.tablemanager-report th.disableSort {}
 
 #for_numrows {
     padding: 10px;
@@ -808,7 +813,7 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
 #pagesControllers button {
     padding: 8px 8px;
     color: var(--pri-color-darker);
-    background-color: var(--pri-color-light);
+    background-color: whitesmoke;
     background-clip: padding-box;
     border: 1px solid var(--pri-color-lighter);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -844,4 +849,36 @@ button.btn-sm.btn-danger.text-white.rounded.cus {
 
 .errorlist {
     color: red;
+}
+
+.apply-filter {
+    background: transparent;
+    color: var(--pri-color-dark);
+    outline: none;
+    text-decoration: none;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+
+.apply-filter:hover {
+    text-decoration: none;
+    color: var(--pri-color);
+}
+
+.apply-filter:focus {
+    outline: none;
+}
+
+.card-header {
+    background-color: var(--pri-color-lighter);
+}
+
+.card-header.btn-link:hover {
+    text-decoration: none;
 }

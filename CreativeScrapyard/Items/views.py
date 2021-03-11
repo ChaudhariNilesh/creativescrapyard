@@ -1,3 +1,4 @@
+from django.core.checks import messages
 from django.http.response import JsonResponse
 from CreativeScrapyard import settings
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
@@ -74,19 +75,35 @@ def reportIssue(request):
         issueForm = ReportIssueForm(request.POST)
         if issueForm.is_valid():
             if request.POST.get("issue_type")=='1':
-                    issue = issueForm.save(commit=False)
-                    print(issue)
-                    issue.crt_item = int(request.POST.get("crt_item_id",None))  #find crt the product.     
+                issue = issueForm.save(commit=False)
+                
+                # print(issue)
+                try:
+                    crtItem = tbl_creativeitems_mst.objects.get(crt_item_id=int(request.POST.get("crt_item_id",None)))
+                    if crtItem.user == request.user:
+                        return JsonResponse({"dbError":True,"errors":False,"msg":"You cannot report your own item..."})
+                except tbl_creativeitems_mst.DoesNotExist:
+                        return JsonResponse({"dbError":True,"errors":False,"msg":"Some error occured."})
+                else:
+                    issue.crt_item = crtItem  #find crt the product.     
                     issue.reported_user_id=None           
                     issue.user = request.user
                     issue.save()
                     
             elif request.POST.get("issue_type")=='2':
                     issue = issueForm.save(commit=False)
-                    issue.reported_user_id=None
-                    issue.scp_item = int(request.POST.get("scp_item_id",None))
-                    issue.user = request.user
-                    issue.save()
+                    try:
+                        scpItem = tbl_scrapitems.objects.get(scp_item_id=int(request.POST.get("scp_item_id",None)))
+                        if scpItem.user == request.user:
+                            return JsonResponse({"dbError":True,"errors":False,"msg":"You cannot report your own item..."})
+                    except tbl_scrapitems.DoesNotExist:
+                            return JsonResponse({"dbError":True,"errors":False,"msg":"Some error occured."})                    
+                    else:
+
+                        issue.reported_user_id=None
+                        issue.scp_item = scpItem
+                        issue.user = request.user
+                        issue.save()
 
             elif request.POST.get("issue_type")=='3':
                 # print("USER")
@@ -94,11 +111,17 @@ def reportIssue(request):
                 user_id=request.POST.get("user_id")
                 if User.objects.filter(user_id=user_id).exists():
                     reportee = User.objects.get(user_id=user_id)
+                  
+                    if reportee == request.user:
+                        return JsonResponse({"dbError":True,"errors":False,"msg":"You cannot report yourself..."})
+                    
                     issue.reported_user_id = reportee.user_id # find the product related user.
                     issue.user = request.user
                     issue.save()
+                else:
+                    return JsonResponse({"dbError":True,"errors":False,"msg":"Some error occured."})                     
 
-            return JsonResponse({"errors":False})
+            return JsonResponse({"errors":False,"dbError":False})
 
         else:
         
@@ -110,8 +133,8 @@ def reportIssue(request):
                 "issue_sub":issue_sub,
                 "issue_msg":issue_msg,
             }
-            return JsonResponse({"errors":msg})
+            return JsonResponse({"errors":True,"dbError":False,"msg":msg})
         
         
-        # return redirect("Home:Items:creativeSingleItem")
+        
     

@@ -7,6 +7,7 @@
                 <div class="page-title">
                     Creative Items
                 </div>
+
                 <div class="tab-inn">
                     <div class="table-responsive table-user">
                         <table class="table table-hover tablemanager">{% csrf_token %}
@@ -24,7 +25,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for item in items %} {{ item }}
+                                {% for item in items %}
                                 <tr>
                                     <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.crt_item_id }}</span></a></td>
                                     <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.crt_item_name }}</span></a>
@@ -48,7 +49,7 @@
                                         <span class="listing">{{ item.crt_created_on|date:"M d, Y" }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></a>
+                                        <a href="{% url 'Home:Items:creativeSingleItem' item.crt_item_id %}" class="user-view btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></a>
                                         <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
                                     </td>
                                 </tr>
