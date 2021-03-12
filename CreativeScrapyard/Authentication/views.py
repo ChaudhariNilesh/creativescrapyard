@@ -144,10 +144,22 @@ def logout(request):
 
 #################################
 
-def profile(request):
+def profile(request,id):
     template = "account/profile.html"
+    artist_details=get_object_or_404(User,user_id=id)
+    try:
+        defaultAddress = Address.objects.get(user_id=id,is_default=True)
+    except:
+        defaultAddress=None
+    
+    crt_products = tbl_creativeitems_mst.objects.filter(user=id)
+    scp_products = tbl_scrapitems.objects.filter(user=id)
     context={
         "is_creative":True,
+        "artist":artist_details,
+        "artist_address":defaultAddress,
+        "crt_products":crt_products,
+        "scp_products":scp_products
     }
     return render(request, template, context)
 

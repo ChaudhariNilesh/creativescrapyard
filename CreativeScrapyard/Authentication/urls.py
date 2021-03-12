@@ -22,7 +22,7 @@ urlpatterns = [
 
 
 
-    path('profile/', profile, name="profile"),
+    path('profile/<int:id>', profile, name="profile"),
     
     path('dashboard/', dashboard, name="dashboard"),
     path('dashboard/ajax/get-cities/<int:id>',getCities,name="getCities"),
