@@ -9,20 +9,33 @@
 <div class="bx-shd my-3 py-2 px-3">
     <div class="row py-3">
         <div class="col">
-            <p class="ord-details-id">Order id: #101</p>
+            <p class="ord-details-id">Order id: {{order.order_id}}</p>
             <p class="ord-details-time my-2">
                 <img src="https://s2.svgbox.net/hero-outline.svg?ic=calendar&color=20c997" class="pb-1" width="25" height="25">
-                <span class="ml-2 mt-2 mb-2"> Feb 15, 2021 At 12:43 PM</span>
+                <span class="ml-2 mt-2 mb-2"> {{ order.order_date|date:"M d, Y" }}</span>
             </p>
             <p class="ord-details-status">
                 <span>Status: </span>
-                <span class="ord-status ord-status-run">Running</span>
+                <span class="ord-status ord-status-run">
+                    {% if order.delivery_status == 1 %}
+                    Pending
+                    {% elif order.delivery_status == 2 %}
+                    Dispatched
+                    {% elif order.delivery_status == 3 %}
+                    Delivered
+                    {% elif order.delivery_status == 4 %}
+                    Cancelled
+                    {% endif %}
+                </span>
             </p>
         </div>
         <div class="col">
             <p class="ord-details-id">Payment Method</p>
-            <p class="mt-2"><span class="ord-status ord-status-com">Paytm Pay</span></p>
+            {% if payment == None %}
             <p class="mt-2"><span class="ord-status ord-status-run">Cash On Delivery</span></p>
+            {% elif payment %}
+            <p class="mt-2"><span class="ord-status ord-status-com">{{ payment.payment_mode }}</span></p>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -31,8 +44,9 @@
     <div class="row py-2">
         <div class="col">
             <p class="card-title">Billing Address</p>
-            <p class="ord-owner border-top py-1">Nilesh Chaudhari</p>
+            <p class="ord-owner border-top py-1">{{ order.person_name }}</p>
             <div class="bill-address">
+                {{ order.delivery_address }}
                 <p>4, Near Divya Dham Temple,</p>
                 <p>Tajpur Road, Changodar</p>
                 <p>AAhmedabad GUJARAT - 382213</p>
@@ -43,11 +57,11 @@
             <div class="contact-details border-top py-2">
                 <p>
                     <img src="https://s2.svgbox.net/hero-solid.svg?ic=mail&color=20c993" width="20" height="20">
-                    <a class="link-effect px-2" href="mailto:example@example.com">nileshchaudhary89.nc@gmail.com</a>
+                    <a class="link-effect px-2" href="mailto:example@example.com">{{ order.user.email }}</a>
                 </p>
                 <p>
                     <img src="https://s2.svgbox.net/materialui.svg?ic=call&color=20c993" width="20" height="20">
-                    <a class="link-effect px-2" href="tel:9874563210">7265048245</a>
+                    <a class="link-effect px-2" href="tel:9874563210">{{order.contact_no}}</a>
                 </p>
             </div>
         </div>
@@ -60,11 +74,15 @@
         <div class="pr-3">
             <p class="py-2 row">
                 <span class="col-6 col-sm-9 text-left">Subtotal</span>
-                <span class="col fw-500 text-right">&#8377;300.00</span>
+                <span class="col fw-500 text-right">&#8377; {{ totUserItemPrice|floatformat:2 }}</span>
             </p>
             <p class="py-2 row">
                 <span class="col-6 col-sm-9 text-left">Delivery Charges</span>
-                <span class="col fw-500 text-right">&#8377;60.00</span>
+                <span class="col fw-500 text-right">
+                    {% if delivery_charges == None %}
+                    Free
+                    {% else %}&#8377; {{ delivery_charges|floatformat:2 }} {% endif %}
+                </span>
             </p>
             <!-- <p class="py-2 row">
                 <span class="col-6 col-sm-9 text-left">Tax</span>
@@ -72,38 +90,53 @@
             </p> -->
             <p class="bg-light py-3 pl-3 row">
                 <span class="col-6 col-sm-9 fw-500 text-left">Total paid by customer</span>
-                <span class="col fw-500 text-right">&#8377;360.00</span>
+                <span class="col fw-500 text-right">
+                    {% if delivery_charges == None %}
+                      &#8377; {{ totUserItemPrice|floatformat:2 }}
+                    {% else %} &#8377; {{ totUserItemPrice|add:delivery_charges|floatformat:2 }} {% endif %}
+                </span>
             </p>
         </div>
 
     </div>
 </div>
 
+{% for detail in details %}
 <div class="bx-shd my-3 pt-2 px-3">
     <h4 class="my-2 pb-2">Order Items</h4>
-
     <div class="border-bottom py-3">
         <div class="row d-flex">
             <div class="col-2 pr-0">
-                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/creative/GreenLantern.jpg' %}" alt="">
+                <img class="img-fluid text-warning rounded bx-img" src="{{ detail.crt_item_mst.get_image_url.crt_img_url.url }}" alt="">
             </div>
             <div class="col-10">
                 <div class="my-2 border-bottom">
-                    <span>SKU : </span><span>CRT-DEC-LAN-A41F</span>
-                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Feb 15, 2021</span></span>
+                    <span>SKU : </span><span>{{ detail.crt_item_mst.crt_item_SKU }}</span>
+                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">{{ detail.crt_item_mst.crt_created_on|date:"M d, Y" }}</span></span>
 
                 </div>
                 <div class="my-1">
-                    <span class="h4">German Lantern</span>
+                    <span class="h4">{{ detail.crt_item_mst.crt_item_name }}</span>
                 </div>
 
                 <div class="mt-1">
                     {% comment %}
-                    <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %}
-                    <p><span>COLOR: </span><span><img
-                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=0F0" width="32" height="32"></span>
+                    <p><span>SIZE: <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %}
+                    <p><span>QUANTITY: </span><span class="text-muted">{{detail.crt_item_qty}}</span></p>
+                    <p><span>Price: </span><span class="text-muted">{{detail.unit_price|floatformat:2}}</span></p>
+                    <p><span>STATUS: </span>
+                    {% if detail.item_status == 1 %}
+                        <span class="text-warning">Pending</span>
+                    {% elif detail.item_status == 2 %}
+                        <span class="text-success">Completed</span>
+                    {% elif detail.item_status == 3 %}
+                        <span class="text-danger">Cancelled</span>
+                    {% elif detail.item_status == 4 %}
+                        <span class="text-danger">Failed</span>
+                    {% elif detail.item_status == 5 %}
+                        <span class="text-danger">Returned</span>
+                    {% endif %}
                     </p>
-                    <p><span>STATUS: </span><span class="text-warning">Pending</span></p>
                 </div>
 
                 <div class="d-flex flex-row-reverse mt-4">
@@ -128,51 +161,52 @@
     </div>
 
 </div>
-<div class="bx-shd my-3 pt-2 px-3">
-    <h4 class="my-2 pb-2">Order Items</h4>
+{% endfor %}
+<!--<div class="bx-shd my-3 pt-2 px-3">-->
+<!--    <h4 class="my-2 pb-2">Order Items</h4>-->
 
-    <div class="border-bottom py-3">
-        <div class="row d-flex">
-            <div class="col-2 pr-0">
-                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/creative/customizedbottles.jpg' %}" alt="">
-            </div>
-            <div class="col-10">
-                <div class="my-2 border-bottom">
-                    <span>SKU : </span><span> CRT-DEC-FLO-A41F</span>
-                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Feb 2, 2021</span></span>
+<!--    <div class="border-bottom py-3">-->
+<!--        <div class="row d-flex">-->
+<!--            <div class="col-2 pr-0">-->
+<!--                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/creative/customizedbottles.jpg' %}" alt="">-->
+<!--            </div>-->
+<!--            <div class="col-10">-->
+<!--                <div class="my-2 border-bottom">-->
+<!--                    <span>SKU : </span><span> CRT-DEC-FLO-A41F</span>-->
+<!--                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Feb 2, 2021</span></span>-->
 
-                </div>
-                <div class="my-1">
-                    <span class="h4">Flower Vase</span>
-                </div>
+<!--                </div>-->
+<!--                <div class="my-1">-->
+<!--                    <span class="h4">Flower Vase</span>-->
+<!--                </div>-->
 
-                <div class="mt-1">
-                    {% comment %}
-                    <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %} {% comment %}
-                    <p><span>COLOR: </span><span><img
-                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32" height="32"></span>
-                    </p> {% endcomment %}
-                    <p><span>STATUS: </span><span class="text-success">Delivered</span></p>
-                </div>
+<!--                <div class="mt-1">-->
+<!--                    {% comment %}-->
+<!--                    <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %} {% comment %}-->
+<!--                    <p><span>COLOR: </span><span><img-->
+<!--                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32" height="32"></span>-->
+<!--                    </p> {% endcomment %}-->
+<!--                    <p><span>STATUS: </span><span class="text-success">Delivered</span></p>-->
+<!--                </div>-->
 
-                <div class="d-flex flex-row-reverse mt-4">
+<!--                <div class="d-flex flex-row-reverse mt-4">-->
 
-                    <div class="px-1">
-                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
-                            Give Rating & Review
-                          </button>
-                    </div>
-                    <div class="px-1">
-                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Return Item
-                        </button>
-                    </div>
-                </div>
+<!--                    <div class="px-1">-->
+<!--                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">-->
+<!--                            Give Rating & Review-->
+<!--                          </button>-->
+<!--                    </div>-->
+<!--                    <div class="px-1">-->
+<!--                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Return Item-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-            </div>
-        </div>
-    </div>
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-</div>
+<!--</div>-->
 
 
 {% comment %}
@@ -348,7 +382,6 @@
     </div>
 </div>
 
-</div>
 
 <!-- <span style="float: right;" class="mr-2">
                             <a href="#" data-toggle="modal" data-target=".report_model_sm">
