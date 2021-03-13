@@ -150,13 +150,19 @@ def profile(request,id):
         defaultAddress=None
     
     crt_products = tbl_creativeitems_mst.objects.filter(user=id)
+    print(crt_products)
     scp_products = tbl_scrapitems.objects.filter(user=id)
+    reviews=Reviews.objects.filter(crt_item__in = crt_products,user=id)
+    badges=BadgeEntries.objects.filter(user=id)
+    print(reviews)
     context={
         "is_creative":True,
         "artist":artist_details,
         "artist_address":defaultAddress,
         "crt_products":crt_products,
-        "scp_products":scp_products
+        "scp_products":scp_products,
+        "reviews":reviews,
+        "badges":badges,
     }
     return render(request, template, context)
 
@@ -746,6 +752,23 @@ def order_history(request, action='current'):
 
 def order_details(request):
     template = "account/dashboard/order-details.html"
+    if request.method=='POST':
+        print(request.POST)
+        rate=request.POST.get('item_rating',0.0)
+        review=request.POST.get('item_review','')
+        crt_item=get_object_or_404(tbl_creativeitems_mst,crt_item_id=request.POST.get('crt_item_id',None))
+        if not (Reviews.objects.filter(crt_item=crt_item,user=request.user).exists()):
+            reviewForm=Reviews(item_rating=rate,item_review=review,crt_item=crt_item,user=request.user)
+            reviewForm.save()
+            user=crt_item.user.profile
+            rating=user.user_rating
+            avg=(float(rating)+float(rate))/2
+            user.user_rating=avg
+            user.save()
+            messages.success(request,"Review Submitted Succesfully")
+            return redirect('Authentication:order_details')
+        else:
+            messages.warning(request,"You already reviewed this item.")
     return render(request, template)
 
 
