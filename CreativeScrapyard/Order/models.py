@@ -37,15 +37,19 @@ class tbl_orders_mst(models.Model):
     delivery_address = models.TextField(max_length=350, null=False, blank=False)
     total_amt = models.DecimalField(max_digits=15, decimal_places=2, null=False, blank=False, validators=[MinValueValidator(1.00)])
     order_date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    order_status = models.BooleanField(null=False, blank=False,default=False)   
+    order_status = models.BooleanField(null=False, blank=False,default=False)
     delivery_status = models.PositiveIntegerField(null=False, blank=False, choices=DELIVERY_STATUS)   
     delivery_date = models.DateTimeField(default=getDeliveryDate,null=False)
     user= models.ForeignKey(User, on_delete = models.RESTRICT)       
 
     def __str__(self):
-        return self.person_name
+        return str(self.order_id)
    
-
+    # def seller(self,request):
+    #
+    #     obj = self.tbl_orders_details_set.filter(crt_item_mst__user=request.user)
+    #     print(obj)
+    #     return obj
 
 
 
@@ -59,4 +63,7 @@ class tbl_orders_details(models.Model):
     crt_item_mst = models.ForeignKey(tbl_creativeitems_mst, on_delete=models.RESTRICT, null=True)  
 
     def __str__(self):
-        return self.order.person_name
+        return str(self.order_details_id)
+
+    def total_price(self):
+        return int(self.crt_item_qty * self.unit_price)

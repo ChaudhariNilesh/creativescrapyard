@@ -20,92 +20,30 @@
                 </tr>
             </thead>
             <tbody>
+                {% for order in orders %}
                 <tr>
-                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">101</span></a>
+                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' order.order_id %}"><span class="list-enq-name">{{ order.order_id }}</span></a>
                     </td>
-                    <td class="text-center"><span class="list-enq-name">11/01/2021</span>
+                    <td class="text-center"><span class="list-enq-name">{{ order.order_date|date:"M d, Y" }}</span>
                     </td>
-                    <td class="text-center"><span class="list-enq-name">Nikul Prajapati	</span>
+                    <td class="text-center"><span class="list-enq-name">{{ order.person_name }}</span>
                     </td>
-                    <td class="text-center">4</td>
-                    <td class="text-center">&#8377; 1375.0
+                    <td class="text-center">{{ order.tbl_orders_details_set.all|length }}</td>
+                    <td class="text-center">&#8377; {{ order.total_amt }}
                     </td>
                     <td class="text-center">
                         <select class="p-1 ord-status">
-                            <option value="Pending" selected>Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
+                            <option value="Pending" {% if order.delivery_status == 1 %}selected{% endif %}>Pending</option>
+                            <option value="Completed" {% if order.delivery_status == 2 %}selected{% endif %}>Dispatched</option>
+                            <option value="Cancelled" {% if order.delivery_status == 3 %}selected{% endif %}>Delivered</option>
+                            <option value="Cancelled" {% if order.delivery_status == 4 %}selected{% endif %}>Cancelled</option>
                         </select>
                     </td>
                     <td class="text-center">
                         <button class="btn btn-sm pri-bg-color">Save</button>
                     </td>
                 </tr>
-                <tr>
-                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">102</span></a>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">13/01/2021</span>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">Nikul Prajapati</span>
-                    </td>
-                    <td class="text-center">2</td>
-                    <td class="text-center">&#8377; 700.0
-                    </td>
-                    <td class="text-center">
-                        <select class="p-1 ord-status">
-                            <option value="Pending" selected>Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-sm pri-bg-color">Save</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">103</span></a>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">21/01/2021</span>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">Kenneth D'sliva</span>
-                    </td>
-                    <td class="text-center">1</td>
-                    <td class="text-center">&#8377; 500.0
-                    </td>
-                    <td class="text-center">
-                        <select class="p-1 ord-status">
-                            <option value="Pending" selected>Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-sm pri-bg-color">Save</button>
-                    </td>
-                </tr>
-                <!-- {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
-                <tr>
-                    <td class="text-center"><a href="{% url 'CustomAdmin:orderdetails' 20 %}"><span class="list-enq-name">00001</span></a>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">28/12/2020</span>
-                    </td>
-                    <td class="text-center"><span class="list-enq-name">Marsha Hogan</span>
-                    </td>
-                    <td class="text-center">3</td>
-                    <td class="text-center">&#8377;3500.0
-                    </td>
-                    <td class="text-center">
-                        <select class="p-1 ord-status">
-                            <option value="Pending" selected>Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-sm pri-bg-color">Save</button>
-                    </td>
-                </tr>
-                {% endfor %} {% endwith %} -->
+                {% endfor %}
 
             </tbody>
         </table>
