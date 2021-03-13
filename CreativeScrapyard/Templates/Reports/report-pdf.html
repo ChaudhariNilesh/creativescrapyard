@@ -1,10 +1,10 @@
-{% load static %}
+{% load static %} {% load mathfilters %}
 <!doctype html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>Creative Item Report</title>
+    <title>CS - Reports</title>
     <style type="text/css">
         @page {
             size: A4;
@@ -67,7 +67,7 @@
         .title {
             font-size: 22px;
             font-weight: 100;
-            /* text-align: right;*/
+            text-align: center;
             /* padding: 10px 20px 0px 20px; */
         }
         
@@ -81,6 +81,11 @@
             display: block;
             margin-left: 300px;
         }
+        
+        .total-summary {
+            font-weight: bold;
+            font-size: medium;
+        }
     </style>
 </head>
 
@@ -93,53 +98,259 @@
             <hr/>
         </div>
         <div class="card">
+            <div class="crt-report">
 
-            <div class='header'>
-                <p class='title'>Creative Items Report - {{ today | date:"d/m/Y" }}</p>
+                {% if reportType == 'crt-report' %}
 
+                <div class='header'>
+                    <p class='title'>Creative Items Report - {{ today | date:"d/m/Y" }}</p>
+
+                </div>
+
+                <div class="list-group">
+                    <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                </div>
+                <div class="details">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item SKU</th>
+                                <th>Category</th>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Price (Rs.)</th>
+                                <th>Sold By</th>
+                                <th>Created On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>{{ item.crt_item_SKU }}</td>
+                                <td>{{ item.crt_sub_category }}</td>
+                                <td>{{ item.crt_item_name }} </td>
+                                <td>{{ item.crt_item_qty }}</td>
+                                <td>{{ item.crt_item_price }}</td>
+                                <td>{{ item.user.first_name|capfirst }} {{ item.user.last_name|capfirst }}</td>
+                                <td>{{ item.crt_created_on | date:"d/m/Y" }}</td>
+
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="3">Total Product(s)</td>
+                                <td>{{qtyCnt.itemCount}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Total Cost of Product(s)</td>
+                                <td>{{totalCost.cost}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div class="scp-report">
+
+                {% if reportType == 'scp-report' %}
+
+                <div class='header'>
+                    <p class='title'>Scrap Items Report</p>
+
+                </div>
+
+                <div class="list-group">
+                    <p>Admin Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                    <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+                </div>
+                <div class="details">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item SKU</th>
+                                <th>Category</th>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Price (Rs.)</th>
+                                <th>Sold By</th>
+                                <th>Created On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>{{ item.scp_item_SKU }}</td>
+                                <td>{{ item.scp_sub_category }}</td>
+                                <td>{{ item.scp_item_name }} </td>
+                                <td>{{ item.scp_item_qty }}</td>
+                                <td>{{ item.scp_item_price }}</td>
+                                <td>{{ item.user.first_name|capfirst }} {{ item.user.last_name|capfirst }}</td>
+                                <td>{{ item.scp_created_on | date:"d/m/Y" }}</td>
+
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="3">Total Product(s)</td>
+                                <td>{{qtyCnt.itemCount}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Total Cost of Product(s)</td>
+                                <td>{{totalCost.cost}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div class="usr-report">
+
+                <!-- ##############################  USER REPORT  ############################### -->
+
+                {% if reportType == 'usr-report' %}
+                <div class='header'>
+                    <p class='title'>User Report</p>
+
+                </div>
+
+                <div class="list-group">
+                    <p>Admin Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                    <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+                </div>
+                <div class="details">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <!-- <th>Email</th> -->
+                                <th>Is Artist</th>
+                                <th>Is Active</th>
+                                <th>Creative Items</th>
+                                <th>Scrap Items</th>
+                                <th>Active From</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usr in users %}
+                            <tr>
+                                <td>{{ usr.username }}</td>
+                                <td>{{ usr.get_full_name|capfirst }} </td>
+                                <!-- <td>{{ usr.email }}</td> -->
+                                <td>{{ usr.profile.is_verified }}</td>
+                                <td>{{ usr.is_active }}</td>
+                                <td>{{ usr.tbl_creativeitems_mst_set.count }}</td>
+                                <td>{{ usr.tbl_scrapitems_set.count }}</td>
+                                <td>{{ usr.date_joined | date:"d/m/Y " }}</td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                    <hr/>
+
+                    <div class="total-summary">
+                        <p>Total Active(s) : {{ cnt.activeCount}} </p>
+                        <p>Total Inactive(s) : {{cnt.activeCount|sub:users.count}}</p>
+                        <p>Total Artist(s) : {{ cnt.artistCount}}</p>
+
+                        <p>Total User(s) :{{ users.count}}</p>
+                    </div>
+
+
+
+                </div>
+                {% endif %}
             </div>
 
-            <div class="list-group">
-                <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
-            </div>
-            <div class="details">
+            <div class="ord-report">
+                <!-- ##############################  ORDER REPORT  ############################### -->
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Item Name</th>
-                            <th>Quantity</th>
-                            <th>Price (Rs.)</th>
-                            <th>Sold By</th>
-                            <th>Created On</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in items %}
-                        <tr>
-                            <td>{{ item.crt_sub_category }}</td>
-                            <td>{{ item.crt_item_name }} </td>
-                            <td>{{ item.crt_item_qty }}</td>
-                            <td>{{ item.crt_item_price }}</td>
-                            <td>{{ item.user.first_name|capfirst }} {{ item.user.last_name|capfirst }}</td>
-                            <td>{{ item.crt_created_on | date:"d/m/Y" }}</td>
+                {% if reportType == 'orderDet-report' %}
+                <div class='header'>
+                    <p class='title'>Orders Report</p>
 
-                        </tr>
+                </div>
+
+                <div class="list-group">
+                    <p>Admin Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                    <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+                </div>
+                <div class="details">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Seller Name</th>
+                                <th class="text-center">Buyer Name</th>
+                                <th class="text-center">Category Name</th>
+                                <th class="text-center">Item Name</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">Order Date</th>
+                                <th class="text-center">Delivery Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ord in orderDet %}
+
+                            <tr>
+                                <td>{{ ord.crt_item_mst.user.get_full_name|capfirst }}</td>
+                                <td>{{ ord.order.person_name }} </td>
+                                <td>{{ ord.crt_item_mst.crt_sub_category.crt_sub_category_name }}</td>
+                                <td>{{ ord.crt_item_mst.crt_item_name }}</td>
+                                <td>{{ ord.get_item_status_display }}</td>
+                                <td>{{ ord.crt_item_qty }}</td>
+                                <td>{{ord.unit_price }}</td>
+                                <td>{{ ord.unit_price|mul:ord.crt_item_qty }}</td>
+                                <td>{{ ord.order.order_date | date:"d/m/Y " }}</td>
+                                <td>{{ ord.order.delivery_date | date:"d/m/Y " }}</td>
+
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                    <hr/>
+
+                    <div class="total-summary">
+
+                        {% for s in status %}
+                        <p>
+                            {% if s.item_status == 1 %} Pending Orders: {{s.statusCount}} {% endif %}
+                            <!--  -->
+                            {% if s.item_status == 2 %} Completed Orders : {{s.statusCount}} {% endif %}
+                            <!--  -->
+                            {% if s.item_status == 3 %} Cancelled Orders : {{s.statusCount}} {% endif %}
+                            <!--  -->
+                            {% if s.item_status == 4 %} Failed Orders : {{s.statusCount}} {% endif %}
+                            <!--  -->
+                            {% if s.item_status == 5 %} Returned Orders : {{s.statusCount}} {% endif %}
+                            <!--  -->
+
+
+                        </p>
+
+
                         {% endfor %}
-                        <tr>
-                            <td colspan="2">Total Product(s)</td>
-                            <td>{{qtyCnt.itemCount}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Total Cost of Product(s)</td>
-                            <td>{{totalCost.cost}}</td>
-                        </tr>
-                    </tbody>
+                        <p>Total Orders : {{cnt.orderCount}}</p>
+                    </div>
 
-                </table>
+
+
+                </div>
+                {% endif %}
             </div>
-
         </div>
     </div>
 </body>

@@ -71,7 +71,7 @@ class tbl_scrapitems(models.Model):
     scp_created_on = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     scp_last_modified = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     scp_sub_category = models.ForeignKey(SubScrapCategory, on_delete=models.SET_DEFAULT, default=1)
-    user = models.ForeignKey(User, on_delete=models.RESTRICT,related_name="seller_id")
+    user = models.ForeignKey(User, on_delete=models.RESTRICT)
     username = models.ForeignKey(User, on_delete = models.DO_NOTHING,related_name="buyer_username",null=True,blank=True)
 
     def __str__(self):
