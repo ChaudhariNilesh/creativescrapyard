@@ -1,6 +1,7 @@
 
 from django.http.request import QueryDict
 from CreativeScrapyard import settings
+from django.db import models
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
@@ -16,7 +17,7 @@ from Items.models import *
 from Home.models  import Query
 from django.core.exceptions import PermissionDenied
 from django.http import Http404,HttpResponseForbidden
-from django.core import serializers
+
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
@@ -27,8 +28,11 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
-from django.db.models import Count,Q, fields
 from django.core.serializers import serialize
+from django.db.models import Count,Q,Sum,F
+from Order.models import *
+from Payments.models import *
+
 ####### AUTH RELATED #######
 def AdminLogin(request):
     template = 'custom-admin/login.html'
@@ -165,20 +169,21 @@ def logout(request):
 def users(request):
     if request.user.is_superuser:
         template = 'custom-admin/users/users.html'
-        users = User.objects.filter(is_superuser=False)
-        data = serialize("json",users,fields=("user_id,username,email,date_created,is_active,is_verified"))   ## FOR MODAL OBJECTS
-        # data = list(users.values())
+        # users = User.objects.filter(is_superuser=False)
+        # data = serialize("json",users,fields=("user_id,username,email,date_created,is_active,is_verified"))   ## FOR MODAL OBJECTS
+        # # data = list(users.values())
          
-        # print(data)
+        # # print(data)
         
-        user=users.annotate(num_crt = Count('tbl_creativeitems_mst'))
+        # user=users.annotate(num_crt = Count('tbl_creativeitems_mst'))
         ########NIKUL############
         # accounts = User.objects.filter(is_superuser=False)
         # for account in accounts:
         #     acc = account.seller_id.all().count()
         #     print(acc)
+        users = User.objects.filter(is_superuser=False).annotate(num_crt = Count('tbl_creativeitems_mst'))
         context={
-            "Users":user,
+            "Users":users,
         }
 
         return render(request,template,context)
@@ -190,9 +195,18 @@ def users(request):
 def buyers(request):
     if  request.user.is_superuser: 
         template = 'custom-admin/users/buyers.html'
-        buyers = User.objects.filter(is_superuser=False,is_active=True)
+
+        # buyers = tbl_orders_mst.objects.filter(user__in=users)
+        buyerItemCount = tbl_orders_details.objects.values("order__user").annotate(itemCount=Count('crt_item_mst'))
+
+        itemCount = tbl_orders_mst.objects.all().values("user").annotate(itemCount=Sum('tbl_orders_details__crt_item_qty'))
+
+        users = User.objects.filter(is_superuser=False, is_active=True)
+        print(itemCount)
+        print(users)
+
         context = {
-            "buyers":buyers,
+            "buyers":zip(users,buyerItemCount),
         }
         return render(request,template,context)
     else:
@@ -660,7 +674,9 @@ def scrapitems(request):
 def allorders(request):
     if request.session.get('user'):    
         template = 'custom-admin/allorders.html'
-        return render(request,template)
+        orders = tbl_orders_mst.objects.all()
+
+        return render(request,template,{'orders':orders})
     else:
         return redirect('CustomAdmin:login')
 
@@ -668,7 +684,25 @@ def allorders(request):
 def orderdetails(request,id):
     if request.session.get('user'):    
         template = 'custom-admin/orderdetails.html'
-        return render(request,template)
+        order = tbl_orders_mst.objects.get(order_id = id)
+        orderDetails = tbl_orders_details.objects.filter(order_id = id) #.annotate(totalPrice=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
+        totalPrice = tbl_orders_details.objects.filter(order_id = id).aggregate(tot = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
+        commission = float(totalPrice['tot']) * 0.2
+        print(totalPrice)
+        try:
+            payment = Payment.objects.get(order)
+            print(payment)
+        except:
+            payment = None
+        context = {
+            "order": order,
+            "orderDetails": orderDetails,
+            "payment": payment,
+            "totalPrice": totalPrice,
+            "commission": commission
+        }
+
+        return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
@@ -678,15 +712,23 @@ def allorderdetails(request,action='delivered'):
         #print(action)
         if action == 'delivered':
             title = "Delivered Orders"
+            details = tbl_orders_details.objects.filter(item_status = 2)
         elif action == 'returned':
             title = "Returned Orders"
+            details = tbl_orders_details.objects.filter(item_status=5)
         elif action == 'processing':
             title = "Processing Orders"
+            details = tbl_orders_details.objects.filter(item_status=1)
         elif action == 'canceled':
             title = "Cancelled Orders"
-        
+            details = tbl_orders_details.objects.filter(item_status=3)
+
+        context = {
+            "title":title,
+            "details": details
+        }
         template = 'custom-admin/allorderdetails.html'
-        return render(request,template,{"title":title})
+        return render(request,template, context)
     else:
         return redirect('CustomAdmin:login')
 

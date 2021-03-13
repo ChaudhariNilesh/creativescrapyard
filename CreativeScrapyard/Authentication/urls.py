@@ -82,6 +82,7 @@ urlpatterns = [
     path('dashboard/orders/history/', order_history, name="order_history"),
     path('dashboard/orders/history/<str:action>', order_history, name="order_tab_history"),
     path('dashboard/orders/details/', order_details, name="order_details"),
+    path('dashboard/orders/details/<int:id>/', order_details, name="order_details"),
     path('dashboard/payments/', dashboard_payments, name="payments"),
     path('dashboard/settings/', dashboard_settings, name="settings"),
     # path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),

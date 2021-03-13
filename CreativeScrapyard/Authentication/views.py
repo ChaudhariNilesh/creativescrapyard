@@ -23,7 +23,10 @@ from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import PermissionDenied
 import requests,random,string
+from Order.models import *
+from Payments.models import *
 from django.db.models import Q
+
 
 # Create your views here.
 def UserLogin(request):
@@ -138,10 +141,6 @@ def logout(request):
     else:
         return redirect('Authentication:login')
 
-    # return render(request,template)
-
-#################################
-
 def profile(request,id):
     template = "account/profile.html"
     artist_details=get_object_or_404(User,user_id=id)
@@ -151,13 +150,19 @@ def profile(request,id):
         defaultAddress=None
     
     crt_products = tbl_creativeitems_mst.objects.filter(user=id)
+    print(crt_products)
     scp_products = tbl_scrapitems.objects.filter(user=id)
+    reviews=Reviews.objects.filter(crt_item__in = crt_products,user=id)
+    badges=BadgeEntries.objects.filter(user=id)
+    print(reviews)
     context={
         "is_creative":True,
         "artist":artist_details,
         "artist_address":defaultAddress,
         "crt_products":crt_products,
-        "scp_products":scp_products
+        "scp_products":scp_products,
+        "reviews":reviews,
+        "badges":badges,
     }
     return render(request, template, context)
 
@@ -621,7 +626,22 @@ def get_sub_category(request, id):
 def dashboard(request):
     if not request.user.is_superuser:
         template = "account/dashboard/dashboard.html"
-        return render(request, template)
+        detail = tbl_orders_details.objects.filter(crt_item_mst__user=request.user).values('order').distinct()
+
+        idLst = [d['order'] for d in detail]
+        # print(idLst)
+
+        currentOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 1 ).count()
+        completedOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 2 ).count()
+        totalCreativeItems = tbl_creativeitems_mst.objects.filter(user = request.user).count()
+
+        context = {
+            "currentOrders": currentOrders,
+            "completedOrders": completedOrders,
+            "totalCreativeItems": totalCreativeItems,
+        }
+
+        return render(request, template, context)
     else:
         return redirect("Authentication:login")
 
@@ -725,31 +745,84 @@ def dashboard_profile(request,action=None):
     
     return render(request, template,context)
 
-
+@login_required
 def order_creative(request):
     template = "account/dashboard/creative-orders.html"
-    return render(request, template)
+
+    detail = tbl_orders_details.objects.filter(crt_item_mst__user = request.user).values('order').distinct()
+
+    idLst = [ d['order'] for d in detail ]
+    print(idLst)
+
+    orderMst = tbl_orders_mst.objects.filter(order_id__in=idLst)
+    return render(request, template, {'details': orderMst})
 
 
+@login_required
 def order_history(request, action='current'):
+
     if action == 'current':
         title = "Current Orders"
+        details = tbl_orders_details.objects.filter(order__user=request.user, item_status=1)
     elif action == 'complete':
         title = "Completed Orders"
+        details = tbl_orders_details.objects.filter(order__user=request.user, item_status=2)
     elif action == 'cancel':
         title = "Cancelled Orders"
+        details = tbl_orders_details.objects.filter(order__user=request.user, item_status=3)
     elif action == 'return':
-        title = 'Returned Orders'
+        title = "Returned Orders"
+        details = tbl_orders_details.objects.filter(order__user=request.user, item_status=5)
 
+    print(details)
+    context = {
+        'title': title,
+        'details': details,
+    }
     template = "account/dashboard/order-history.html"
-    return render(request, template, {'title': title})
+    return render(request, template, context)
 
-
-def order_details(request):
+@login_required
+def order_details(request, id=None):
     template = "account/dashboard/order-details.html"
-    return render(request, template)
+    if request.method=='POST':
+        print(request.POST)
+        rate=request.POST.get('item_rating',0.0)
+        review=request.POST.get('item_review','')
+        crt_item=get_object_or_404(tbl_creativeitems_mst,crt_item_id=request.POST.get('crt_item_id',None))
+        if not (Reviews.objects.filter(crt_item=crt_item,user=request.user).exists()):
+            reviewForm=Reviews(item_rating=rate,item_review=review,crt_item=crt_item,user=request.user)
+            reviewForm.save()
+            user=crt_item.user.profile
+            rating=user.user_rating
+            avg=(float(rating)+float(rate))/2
+            user.user_rating=avg
+            user.save()
+            messages.success(request,"Review Submitted Succesfully")
+            return redirect('Authentication:order_details')
+        else:
+            messages.warning(request,"You already reviewed this item.")
 
+    order = tbl_orders_mst.objects.get(order_id=id)
+    orderDetails = tbl_orders_details.objects.filter(order=order, crt_item_mst__user = request.user)
+    totUserItemPrice = 0
+    for d in orderDetails:
+        totUserItemPrice += d.total_price()
+    try:
+        payment = Payments.objects.get(order=order)
+        print(payment)
+    except:
+        payment = None
+    # print(orderDetails)
+    context = {
+        "order": order,
+        "details": orderDetails,
+        "payment": payment,
+        "totUserItemPrice": totUserItemPrice,
+    }
+    return render(request, template, context)
 
+@login_required
 def dashboard_payments(request):
     template = "account/dashboard/payments.html"
     return render(request, template)

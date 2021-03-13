@@ -3,7 +3,7 @@
         <div class="d-flex col-md-12 ">
             <div class="col-md-8">
                 <h4 class="my-0 mr-md-auto font-weight-bold">
-                    <a href="{%url 'Home:creativestore'%}" class="btn btn-dark" style="font-size: 18px;"><span
+                    <a href="{%url 'Home:creativestore' %}" class="btn btn-dark" style="font-size: 18px;"><span
                             style="color:#94c5ae"><b>C</b></span><span style="color:#ffc425"><b>R</b></span><span
                             style="color:#ff6f69"><b>E</b></span><span style="color:#ffcc5c"><b>A</b></span><span
                             style="color:#88d8b0"><b>T</b></span><span style="color:#96ceb4"><b>I</b></span>
@@ -68,15 +68,24 @@
     <div class="container-fluid ">
         <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example">
             <div>
+                <a href="{% url 'Home:creativestore'%}">
                 <button type="button" id="allcategory" class="btn font-weight-bold">All Categories</button>
+                </a>
             </div>
+            
+
+            <!--li id="{{badge.badge_id}}" class="btn tags {{badgecolor}} mx-1 my-1 badges">{{badge.badge.badge_name}}</li-->
+            {% for category in categories%} 
+            {% cycle 'home-decor' 'lifestyle' 'accessories' 'jewellories' 'toys' 'electronics' 'arts' 'others' as categorycolor silent %}
             <div>
                 <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="home-decor" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Home Decor</button>
+                  <button type="button" id="{{categorycolor}}" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">{{category.crt_category_name}}</button>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Wall Decor</a>
-                        <a class="dropdown-item" href="#">Decorative Cushions</a>
+                        {%for subcategory in category.tbl_crt_subcategories_set.all%}
+                        <a class="dropdown-item" href="{% url 'Home:creativestore' 's' subcategory.crt_sub_category_id%}">{{subcategory.crt_sub_category_name}}</a>
+                        {%endfor%}
+                        {% comment %} <a class="dropdown-item" href="#">Decorative Cushions</a>
                         <a class="dropdown-item" href="#">Clocks</a>
                         <a class="dropdown-item" href="#">Bed Sheets</a>
                         <a class="dropdown-item" href="#">Curtains</a>
@@ -85,11 +94,13 @@
                         <a class="dropdown-item" href="#">Rugs</a>
                         <a class="dropdown-item" href="#">Kitchen and Dining</a>
                         <a class="dropdown-item" href="#">Outdoor and Gardening</a>
-                        <a class="dropdown-item" href="#">Others</a>
+                        <a class="dropdown-item" href="#">Others</a> {% endcomment %}
                     </div>
+                    
                 </div>
             </div>
-            <div>
+             {%endfor%}
+            {% comment %} <div>
                 <div class="btn-group custom-dropdown" role="group">
                     <button type="button" id="lifestyle" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Lifestyle</button>
                     </button>
@@ -195,7 +206,8 @@
             </div>
             <div>
                 <button type="button" id="others" class="btn font-weight-bold">Others</button>
-            </div>
+            </div> {% endcomment %}
         </div>
+       
         </center>
     </div>

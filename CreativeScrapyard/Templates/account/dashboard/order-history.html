@@ -1,4 +1,4 @@
-{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% load mathfilters %} {% block baselink %}
 <link rel="stylesheet" href="{% static 'css/nikul/creative-orders.css' %}" /> {% endblock %} {% block base %}
 <div>
     {% include 'includes/messages.html' %}
@@ -34,30 +34,34 @@
         <table class="table table-hover border-bottom tablemanager">
             <thead>
                 <tr>
+                    <th class="text-center">Detail ID</th>
                     <th scope="col" class="text-center">Order Id</th>
+                    <th class="text-center">Product ID</th>
                     <th scope="col" class="text-center">Order Date</th>
                     <th scope="col" class="text-center">Delivery date</th>
+                    <th class="text-center">Quantity</th>
+                    <th scope="col" class="text-center">Price</th>
                     <th scope="col" class="text-center">Total</th>
                     <th scope="col" class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
+                {% for detail in details %}
                 <tr>
-                    <td class="text-center"><a class="link-effect">104</a></td>
-                    <td class="text-center">15/02/2021</td>
-                    <td class="text-center">20/03/2021</td>
-                    <td class="text-center">&#8377; 300.00</td>
-                    <td class="text-center"><a href="{% url 'Authentication:order_details' %}" class="btn btn-sm pri-bg-color">View</a></td>
+                    <td class="text-center">{{ detail.order_details_id }}</td>
+                    <td class="text-center">{{ detail.order.order_id }}</td>
+                    <td class="text-center"><a href={% url 'Home:Items:creativeSingleItem' %} class="link-effect">{{ detail.crt_item_mst.crt_item_id }}</a></td>
+                    <td class="text-center">{{ detail.order.order_date|date:"M d, Y" }}</td>
+                    <td class="text-center">{{ detail.order.delivery_date|date:"M d, Y" }}</td>
+                    <td class="text-center">{{ detail.crt_item_qty }}</td>
+                    <td class="text-center">&#8377; {{ detail.unit_price|floatformat:2 }}</td>
+                    <td class="text-center">&#8377; {{ detail.crt_item_qty|mul:detail.unit_price|floatformat:2 }}</td>
+                    <td class="text-center"><a href="{% url 'Authentication:order_details' detail.order.order_id %}" class="btn btn-sm pri-bg-color">View</a></td>
                 </tr>
-                <!-- {% with n='[1,2,3,4,5,6]' %} {% for i in n %}
-                <tr>
-                    <td class="text-center"><a class="link-effect">#5647</a></td>
-                    <td class="text-center">27/1/2021</td>
-                    <td class="text-center">25/3/2021</td>
-                    <td class="text-center">&#8377; 500</td>
-                    <td class="text-center"><a href="{% url 'Authentication:order_details' %}" class="btn btn-sm pri-bg-color">View</a></td>
-                </tr>
-                {% endfor %} {% endwith %} -->
+                {% empty %}
+                <h3 class="text-center" > No data to display here </h3>
+                {% endfor %}
+
             </tbody>
         </table>
     </div>

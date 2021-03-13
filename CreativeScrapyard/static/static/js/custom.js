@@ -253,11 +253,72 @@ $(function() {
                 $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
                 $("#amount1").val(ui.values[0]);
                 $("#amount2").val(ui.values[1]);
+                
+            },
+            change: function( event, ui ) {
+                console.log(ui.values[0])
+                $.ajax({
+                    type: "POST",
+                    url: $('#priceform').attr('data-url'),
+                    data: {
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                        min_value: ui.values[0],
+                        max_value: ui.values[1],
+                        item_type: $('#priceform').attr('item-type')
+                    },
+                    datatype: "json",
+                    success: function(data) {
+                        // console.log(data)
+                        // if (data.success) {
+                        //     Swal.fire(`'${text}' Badge Added!`, '', 'success')
+                        //     setTimeout(function() { location.reload() }, 2000);
+                        // } else {
+    
+                        //     Swal.fire(data.msg, '', 'error')
+    
+                        // }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            jqXHR.status + "",
+                            textStatus + " : " + errorThrown,
+                            'error'
+                        )
+                    }
+                })
             }
         });
         $("#amount").html(sym + $("#slider-range").slider("values", 0) +
             " - " + sym + $("#slider-range").slider("values", 1));
-    };
+            $.ajax({
+                type: "POST",
+                url: "/creativestore/pricefilter/",
+                data: {
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                    min_value: $("#slider-range").slider("values", 0),
+                    max_value: $("#slider-range").slider("values", 1)
+                },
+                datatype: "json",
+                success: function(data) {
+                    // console.log(data)
+                    // if (data.success) {
+                    //     Swal.fire(`'${text}' Badge Added!`, '', 'success')
+                    //     setTimeout(function() { location.reload() }, 2000);
+                    // } else {
+
+                    //     Swal.fire(data.msg, '', 'error')
+
+                    // }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.fire(
+                        jqXHR.status + "",
+                        textStatus + " : " + errorThrown,
+                        'error'
+                    )
+                }
+            })
+        };
 
 
     var func_expand = function() {
@@ -493,9 +554,14 @@ $(function() {
 
     var rating = function() {
         $("#review").rating({
+            //"value":0,
             "click": function(e) {
+                if(e.stars>0)
+                {
                 console.log(e); // {stars: 3, event: E.Event}
-                alert(e.stars);
+                $("#rate").val(e.stars);
+                // alert(e.stars);
+                }
             },
             'half': true,
         });

@@ -3,9 +3,12 @@
 <link rel="stylesheet" href="{%  static 'css/creativestyle.css' %}"> {% endblock %} {% block content %}
 <div class="infomain mx-5">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
-        <li class="breadcrumb-item"><a href="#">All Categories</a></li>
+        <li class="breadcrumb-item"><a href={%url 'Home:home'%}>Home</a></li>
+        <li class="breadcrumb-item"><a href="{%url 'Home:creativestore'%}">Creative Store</a></li>
+        <li class="breadcrumb-item"><a href="#">{{parent_category.crt_category_name|default:"All Categories"}}</a></li>
+        {%if sub_category%}
+        <li class="breadcrumb-item"><a href="#">{{sub_category.crt_sub_category_name}}</a></li>
+        {%endif%}
     </ol>
 
 </div>
@@ -13,7 +16,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-10">
-            <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Categories</h2>
+            <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">{%if sub_category%}{{sub_category.crt_sub_category_name|default:"All Categories"}}{%else%}{{parent_category.crt_category_name|default:"All Categories"}}{%endif%}</h2>
         </div>
         <div class="col-2">
             <div class="dropdown">
@@ -37,40 +40,31 @@
 
             <div class="">
 
-                <div class="text-bold border-bottom my-2 p-2">By Category:</div>
+                <div class="text-bold border-bottom my-2 p-2">By Category: {{parent_category.crt_category_name}}</div>
                 <div>
                     <ul>
+                        {% if not type == 'all' %}
+                        {% for subcategory in parent_category.tbl_crt_subcategories_set.all %}
                         <li>
-                            <a href="#">Home Decor</a>
+                            <a href="{% url 'Home:creativestore' 's' subcategory.crt_sub_category_id%}">{{subcategory.crt_sub_category_name}}</a>
                         </li>
-                        <li>
-                            <a href="#">Lifestyle</a>
+                        {% endfor %}
+                        
+                        {%else%}
+                        {% for subcategory in categories %}
+                         <li>
+                            <a href="{% url 'Home:creativestore' 'm' subcategory.crt_category_id%}">{{subcategory.crt_category_name}}</a>
                         </li>
-                        <li>
-                            <a href="#">Accesories</a>
-                        </li>
-                        <li>
-                            <a href="#">Jewellories</a>
-                        </li>
-                        <li>
-                            <a href="#">Toys</a>
-                        </li>
-                        <li>
-                            <a href="#">Electronics</a>
-                        </li>
-                        <li>
-                            <a href="#">Arts and Crafts</a>
-                        </li>
-                        <li>
-                            <a href="#">Others</a>
-                        </li>
+                        {%endfor%}
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="inFilter" id="byprice">
                     <div class="text-bold border-bottom my-2 p-2">By Price:</div>
                     <div class="priceFilter py-2">
                         <div id="slider-range"></div>
-                        <form method="post" action="">
+                        <form method="post" id="priceform" action="" data-url="{%url 'Home:pricefilter'%}" item-type="creative">
+                        {% csrf_token %}
                             <input type="hidden" id="amount1">
                             <input type="hidden" id="amount2">
                         </form>

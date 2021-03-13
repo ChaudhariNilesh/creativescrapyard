@@ -1,4 +1,4 @@
-{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %} {% load mathfilters %}
 <link rel="stylesheet" href="{% static 'css/nikul/creative-orders.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
@@ -25,51 +25,42 @@
                 </tr>
             </thead>
             <tbody>
+                {% for detail in details %}
                 <tr>
-                    <td scope="row" class="text-center">101</td>
-                    <td class="text-center">Nikul Prajapati</td>
-                    <td class="text-center">11/01/2021</td>
-                    <td class="text-center">15/01/2021</td>
-                    <td class="text-center">B-5, Shantigram, Chandkheda, Ahmedabad - 380005</td>
-                    <td class="text-center"><span class="">Pending</span></td>
-                    <td class="text-center">&#8377; 75</td>
-                    <td class="text-center">&#8377; 300</td>
+                    <td scope="row" class="text-center">
+
+                        <a href="{% url 'Authentication:order_details' detail.order_id  %}" class="link-effect">
+                            {{ detail.order_id }}
+                        </a>
+                    </td>
+                    <td class="text-center">{{ detail.person_name }}</td>
+                    <td class="text-center">{{ detail.order_date|date:"M d, Y" }}</td>
+                    <td class="text-center">{{ detail.delivery_date|date:"M d, Y" }}</td>
+                    <td class="text-center">{{ detail.delivery_address }}</td>
+                    <td class="text-center"><span class="">
+                        {% if detail.delivery_status == 1 %}
+                            Pending
+                        {% elif detail.delivery_status == 2 %}
+                            Completed
+                        {% elif detail.delivery_status == 3 %}
+                            Cancelled
+                        {% elif detail.delivery_status == 4 %}
+                            Failed
+                        {% elif detail.delivery_status == 5 %}
+                            Returned
+                        {% endif %}
+                    </span></td>
+                    <td class="text-center">&#8377; {{ detail.total_amt|mul:"0.2"|floatformat:2 }}</td>
+                    <td class="text-center">&#8377; {{ detail.total_amt|floatformat:2 }}</td>
                     <td class="text-center">
-                        <!-- <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a> -->
+
                     </td>
                 </tr>
-                <tr>
-                    <td scope="row" class="text-center">102</td>
-                    <td class="text-center">Nikul Prajapati</td>
-                    <td class="text-center">11/01/2021</td>
-                    <td class="text-center">15/01/2021</td>
-                    <td class="text-center">54, Shree Krishna Society, Bavla, Ahmedabad - 382213</td>
-                    <td class="text-center"><span class="">Delivered</span></td>
-                    <td class="text-center">&#8377; 250</td>
-                    <td class="text-center">&#8377; 1000</td>
-                    <td class="text-center">
-                        <!-- <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a> -->
-                    </td>
-                </tr>
-                <!-- {% with n='[1,2,3,4,5,6]' %} {% for i in n %}
-                <tr>
-                    <td scope="row" class="text-center">101</td>
-                    <td class="text-center">Nikul Prajapati</td>
-                    <td class="text-center">11/1/2021</td>
-                    <td class="text-center">15/1/2021</td>
-                    <td class="text-center">B-5, Shantigram, Chandkheda, Ahmedabad - 380005</td>
-                    <td class="text-center"><span class="ord-status ord-status-run">Pending</span></td>
-                    <td class="text-center">&#8377; 75</td>
-                    <td class="text-center">&#8377; 300</td>
-                    <td class="text-center">
-                        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:order_details' %}">View</a>
-                    </td>
-                </tr>
-                {% endfor %} {% endwith %} -->
+                {% endfor %}
             </tbody>
         </table>
     </div>
-    <button class="btn btn-sm pri-bg-color btn-load">Load more</button>
+    <button id="loadmore-btn" class="btn btn-sm pri-bg-color">Load more</button>
 
 </div>
 {% endblock %}

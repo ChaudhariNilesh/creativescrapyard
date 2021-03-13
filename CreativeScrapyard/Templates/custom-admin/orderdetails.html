@@ -1,13 +1,13 @@
-{% extends 'custom-admin/common.html' %} {% load static %} {%block content%}
+{% extends 'custom-admin/common.html' %} {% load static %} {%block content%} {% load mathfilters %}
 <div class="page-title">
-    Order No. 101
+    Order No. {{ order.order_id }}
     <hr>
 </div>
 <div class="container">
     <div class="row my-1">
         <div class="col">
             <b><span class="mx-auto">Buyer User ID : </span></b>
-            <span> 6</span>
+            <span>{{ order.user.user_id }}</span>
         </div>
         <!-- <div class="col">
             <b><span class="">Seller Full Name : </span></b>
@@ -17,27 +17,27 @@
     <div class="row my-1">
         <div class="col">
             <b><span class="mx-auto">Order Date : </span></b>
-            <span> 	11/01/2021</span>
+            <span> 	{{ order.order_date|date:"M d, Y" }}</span>
         </div>
         <div class="col">
             <b><span class="">No Of Items : </span></b>
-            <span> 4</span>
+            <span> {{ order.tbl_orders_details_set.all|length }}</span>
         </div>
     </div>
     <div class="row my-1">
         <div class="col">
             <b><span class="mx-auto">Deliver To : </span></b>
-            <span> Nikul Prajapati</span>
+            <span>{{ order.person_name }}</span>
         </div>
         <div class="col">
             <b><span class="">Contact No : </span></b>
-            <span> 9327799201</span>
+            <span>{{ order.contact_no }}</span>
         </div>
     </div>
     <div class="row my-1">
         <div class="col">
             <b><span class="mx-auto">Delivery Address : </span></b>
-            <span>6/F, Shanti society, Nigam Nagar, Chandkheda, Ahemdabad,382424 </span>
+            <span>{{ order.delivery_address }}</span>
         </div>
     </div>
     <div class="row my-1">
@@ -50,7 +50,7 @@
                             <th class="text-center">Product ID</th>
                             <th class="text-center">Product Name</th>
                             <th class="text-center">Seller Name</th>
-                            <th class="text-center">Status</th>
+                        <th class="text-center">Status</th>
                             <th class="text-center">Quantity</th>
                             <th class="text-center">Price</th>
                             <th class="text-center">Total</th>
@@ -59,196 +59,40 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for detail in orderDetails %}
                         <tr>
-                            <td class="text-center"><span class="list-enq-name">1001</span>
+                            <td class="text-center"><span class="list-enq-name">{{detail.order_details_id}}</span>
                             </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">2001</span></a>
+                            <td class="text-center"><a href=""><span class="list-enq-name">{{detail.crt_item_mst.crt_item_id}}</span></a>
                             </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">German Lantern</span></a>
+                            <td class="text-center"><a href=""><span class="list-enq-name">{{ detail.crt_item_mst.crt_item_name }}</span></a>
                             </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Raghav Agrwal</span></a>
+                            <td class="text-center"><a href=""><span class="list-enq-name">{{ detail.crt_item_mst.user.first_name }} {{ detail.crt_item_mst.user.last_name }}</span></a>
                             </td>
                             <td class="text-center">
                                 <select class="p-1 ord-status">
-                                    <option value="Processing" selected>Processing</option>
-                                    <option value="Shipping">Shipping</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                    <option value="Returned">Returned</option>
+                                    <option value="Processing" {% if detail.detail == 1 %} selected {% endif %}>Pending</option>
+                                    <option value="Shipping" {% if detail.detail == 2 %} selected {% endif %}>Completed</option>
+                                    <option value="Delivered" {% if detail.detail == 3 %} selected {% endif %}>Cancelled</option>
+                                    <option value="Cancelled" {% if detail.detail == 4 %} selected {% endif %}>Failed</option>
+                                    <option value="Returned" {% if detail.detail == 5 %} selected {% endif %}>Returned</option>
                                 </select>
                             </td>
-                            <td class="text-center"><span class="list-enq-name">2</span>
+                            <td class="text-center"><span class="list-enq-name">{{ detail.crt_item_qty }}</span>
                             </td>
-                            <td class="text-center"><span class="list-enq-name">&#8377;400.0</span>
+                            <td class="text-center"><span class="list-enq-name">&#8377; {{ detail.unit_price }}</span>
                             </td>
 
                             <td class="text-center">
-                                <span class="list-enq-name">&#8377;800.0</span>
+                                <span class="list-enq-name">&#8377; {{ detail.total_price }}</span>
                             </td>
 
                             <td class="text-center">
                                 <button class="btn btn-sm pri-bg-color">Save</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="text-center"><span class="list-enq-name">1002</span>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">2003</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Painting</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Nilesh Chaudhari</span></a>
-                            </td>
-                            <td class="text-center">
-                                <select class="p-1 ord-status">
-                                    <option value="Processing" >Processing</option>
-                                    <option value="Shipping" selected>Shipping</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                    <option value="Returned">Returned</option>
-                                </select>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">1</span>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">&#8377;300.0</span>
-                            </td>
+                        {% endfor %}
 
-                            <td class="text-center">
-                                <span class="list-enq-name">&#8377;300.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <button class="btn btn-sm pri-bg-color">Save</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="text-center"><span class="list-enq-name">1003</span>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">2004</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Flower Vase</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Nilesh Chaudhari</span></a>
-                            </td>
-                            <td class="text-center">
-                                <select class="p-1 ord-status">
-                                    <option value="Processing" >Processing</option>
-                                    <option value="Shipping" >Shipping</option>
-                                    <option value="Delivered" selected>Delivered</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                    <option value="Returned">Returned</option>
-                                </select>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">1</span>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">&#8377;250.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <span class="list-enq-name">&#8377;250.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <button class="btn btn-sm pri-bg-color">Save</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="text-center"><span class="list-enq-name">1004</span>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">2005</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Personalized Cat Pillow</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Raghav Agrwal</span></a>
-                            </td>
-                            <td class="text-center">
-                                <select class="p-1 ord-status">
-                                    <option value="Processing" >Processing</option>
-                                    <option value="Shipping" >Shipping</option>
-                                    <option value="Delivered" >Delivered</option>
-                                    <option value="Cancelled" selected>Cancelled</option>
-                                    <option value="Returned">Returned</option>
-                                </select>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">2</span>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">&#8377;500.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <span class="list-enq-name">&#8377;1000.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <button class="btn btn-sm pri-bg-color">Save</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="text-center"><span class="list-enq-name">1005</span>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">2006</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Glass Bee Blown</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Nishika Shah</span></a>
-                            </td>
-                            <td class="text-center">
-                                <select class="p-1 ord-status">
-                                    <option value="Processing" >Processing</option>
-                                    <option value="Shipping" >Shipping</option>
-                                    <option value="Delivered" >Delivered</option>
-                                    <option value="Cancelled" >Cancelled</option>
-                                    <option value="Returned" selected>Returned</option>
-                                </select>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">1</span>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">&#8377;700.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <span class="list-enq-name">&#8377;700.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <button class="btn btn-sm pri-bg-color">Save</button>
-                            </td>
-                        </tr>
-                        <!-- {% for i in '012'|make_list %}
-                        <tr>
-                            <td class="text-center"><span class="list-enq-name">1002</span>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">101010</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">German Lantern</span></a>
-                            </td>
-                            <td class="text-center"><a href=""><span class="list-enq-name">Nilesh Chaudary</span></a>
-                            </td>
-                            <td class="text-center">
-                                <select class="p-1 ord-status">
-                                    <option value="Processing" selected>Processing</option>
-                                    <option value="Shipping">Shipping</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Cancelled">Cancelled</option>
-                                    <option value="Returned">Returned</option>
-                                </select>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">1</span>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">&#8377;250.0</span>
-                            </td>
-
-                            <td class="text-center">
-                                <span class="list-enq-name">&#8377;500.0</span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm pri-bg-color">Save</button>
-                            </td>
-                        </tr>
-                        {% endfor %} -->
 
                     </tbody>
                 </table>
@@ -264,7 +108,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    Cash On Delivery
+                    {% if payment == None %} Cash on Delivery {% else %} payment.payment_mode {% endif %}
                 </div>
             </div>
         </div>
@@ -278,21 +122,22 @@
                         <div class="col">
                             Cost Price :
                         </div>
-                        <div class="col">&#8377;1100.0</div>
+
+                        <div class="col">&#8377; {{ totalPrice.tot|sub:commission|floatformat:2 }}</div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col">
                             Comission :
                         </div>
-                        <div class="col">&#8377;275.0</div>
+                        <div class="col">&#8377; {{ commission|floatformat:2 }}</div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col">
                             Total :
                         </div>
-                        <div class="col">&#8377;1375.0</div>
+                        <div class="col">&#8377; {{ totalPrice.tot|floatformat:2 }}</div>
                     </div>
                     <hr>
 

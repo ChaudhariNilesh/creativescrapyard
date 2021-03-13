@@ -160,6 +160,13 @@ class tbl_crtimages(models.Model):
         return self.crt_item_details.crt_item_name
 
 
+class Reviews(models.Model):
+    review_id= models.AutoField(primary_key=True, validators=[MaxValueValidator(99999)])
+    item_rating= models.DecimalField(decimal_places=1, max_digits=2,blank=True,null=True,default=0.0)
+    item_review=models.TextField(blank=True, null=True)
+    review_date=models.DateField(auto_now=True)
+    crt_item=models.ForeignKey(tbl_creativeitems_mst, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.RESTRICT)
 
 
 
