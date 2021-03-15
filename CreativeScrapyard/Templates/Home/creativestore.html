@@ -15,20 +15,20 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-10">
+        <div class="col-9">
             <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">{%if sub_category%}{{sub_category.crt_sub_category_name|default:"All Categories"}}{%else%}{{parent_category.crt_category_name|default:"All Categories"}}{%endif%}</h2>
         </div>
-        <div class="col-2">
+        <div class="col-3">
             <div class="dropdown">
                 <button class="btn btn-outline-dark dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
-                    Relevence</button>
+                    {{sort|default:"Relevance"}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#">Revelence</a>
-                    <a class="dropdown-item" href="#">Low to High Price</a>
-                    <a class="dropdown-item" href="#">High to Low Price</a>
-                    <a class="dropdown-item" href="#">Most Recent</a>
-                    <a class="dropdown-item" href="#">Top Review Artists</a>
-                    <a class="dropdown-item" href="#">Alphabetic</a>
+                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'lh' %}">Low to High Price</a>
+                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'hl' %}">High to Low Price</a>
+                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'mr' %}">Most Recent</a>
+                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'top' %}">Top Review Artists</a>
+                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'alpha' %}">Alphabetic</a>
                 </div>
             </div>
 
