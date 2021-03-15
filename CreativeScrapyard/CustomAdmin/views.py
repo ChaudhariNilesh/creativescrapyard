@@ -31,6 +31,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.db.models import Count,Q,Sum,F
 from Order.models import *
 from Payments.models import *
+from django.db import models
 ####### AUTH RELATED #######
 def AdminLogin(request):
     template = 'custom-admin/login.html'
@@ -66,8 +67,25 @@ def AdminLogin(request):
 def adminindex(request):
     if request.user.is_superuser:
         template='custom-admin/admin-dashboard.html'
-        
-        return render(request,template)
+        totalRevenue = tbl_orders_details.objects.filter(item_status=2).aggregate(total = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.FloatField()))
+        currentOrder = tbl_orders_mst.objects.filter(delivery_status=1).count()
+        totalOrder = tbl_orders_mst.objects.all().count()
+        totalSeller = Profile.objects.filter(is_verified=True).count()
+        totalUser = User.objects.all().count()
+        totalScrapProduct = tbl_scrapitems.objects.filter(scp_item_status="Active").count()
+        totalCreativeProduct = tbl_creativeitems_mst.objects.filter(crt_item_status="Active").count()
+
+        context = {
+            "totalRevenue": totalRevenue,
+            "currentOrder": currentOrder,
+            "totalOrder": totalOrder,
+            "totalSeller": totalSeller,
+            "totalUser": totalUser,
+            "totalScrapProduct": totalScrapProduct,
+            "totalCreativeProduct": totalCreativeProduct,
+        }
+
+        return render(request,template, context)
     else:
         return redirect('CustomAdmin:login')
 
@@ -665,7 +683,7 @@ def allorderdetails(request,action='delivered'):
             details = tbl_orders_details.objects.filter(item_status=3)
 
         context = {
-            "title":title,
+            "title": title,
             "details": details
         }
         template = 'custom-admin/allorderdetails.html'
@@ -678,7 +696,9 @@ def allorderdetails(request,action='delivered'):
 def payment(request):
     if request.session.get('user'):    
         template = 'custom-admin/payment.html'
-        return render(request,template)
+        return render(request, template)
+    # elif request.session.post('post'):
+
     else:
         return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
