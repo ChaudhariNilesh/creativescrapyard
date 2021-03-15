@@ -1,3 +1,4 @@
+
 from django.http.request import QueryDict
 from CreativeScrapyard import settings
 from django.db import models
@@ -14,10 +15,9 @@ from .forms import *
 from Authentication.models import *
 from Items.models import *
 from Home.models  import Query
-from django.http import HttpResponseNotFound
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
-from django.core import serializers
+from django.http import Http404,HttpResponseForbidden
+
 from django.contrib.auth import authenticate,login
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
@@ -28,9 +28,11 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.hashers import check_password
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
+from django.core.serializers import serialize
 from django.db.models import Count,Q,Sum,F
 from Order.models import *
 from Payments.models import *
+
 ####### AUTH RELATED #######
 def AdminLogin(request):
     template = 'custom-admin/login.html'
@@ -66,13 +68,30 @@ def AdminLogin(request):
 def adminindex(request):
     if request.user.is_superuser:
         template='custom-admin/admin-dashboard.html'
-        
-        return render(request,template)
+        totalRevenue = tbl_orders_details.objects.filter(item_status=2).aggregate(total = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.FloatField()))
+        currentOrder = tbl_orders_mst.objects.filter(delivery_status=1).count()
+        totalOrder = tbl_orders_mst.objects.all().count()
+        totalSeller = Profile.objects.filter(is_verified=True).count()
+        totalUser = User.objects.all().count()
+        totalScrapProduct = tbl_scrapitems.objects.filter(scp_item_status="Active").count()
+        totalCreativeProduct = tbl_creativeitems_mst.objects.filter(crt_item_status="Active").count()
+
+        context = {
+            "totalRevenue": totalRevenue,
+            "currentOrder": currentOrder,
+            "totalOrder": totalOrder,
+            "totalSeller": totalSeller,
+            "totalUser": totalUser,
+            "totalScrapProduct": totalScrapProduct,
+            "totalCreativeProduct": totalCreativeProduct,
+        }
+
+        return render(request,template, context)
     else:
         return redirect('CustomAdmin:login')
 
 def adminAccount(request):
-    if request.session.get('user'): 
+    if request.user.is_superuser: 
         template = 'custom-admin/account-settings/admin-account.html'
         # admin = request.user.is_authenticated
         # context={
@@ -167,6 +186,18 @@ def logout(request):
 def users(request):
     if request.user.is_superuser:
         template = 'custom-admin/users/users.html'
+        # users = User.objects.filter(is_superuser=False)
+        # data = serialize("json",users,fields=("user_id,username,email,date_created,is_active,is_verified"))   ## FOR MODAL OBJECTS
+        # # data = list(users.values())
+         
+        # # print(data)
+        
+        # user=users.annotate(num_crt = Count('tbl_creativeitems_mst'))
+        ########NIKUL############
+        # accounts = User.objects.filter(is_superuser=False)
+        # for account in accounts:
+        #     acc = account.seller_id.all().count()
+        #     print(acc)
         users = User.objects.filter(is_superuser=False).annotate(num_crt = Count('tbl_creativeitems_mst'))
         context={
             "Users":users,
@@ -175,6 +206,8 @@ def users(request):
         return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
+
+
 
 def buyers(request):
     if  request.user.is_superuser: 
@@ -214,59 +247,107 @@ def sellers(request):
         return redirect('CustomAdmin:login')
 
 def verifyusers(request,tab="pending"):
-    if request.session.get('user'): 
+    if request.user.is_superuser:
         template = 'custom-admin/users/verify-users.html'
         context={}
         if tab=='pending':
             is_verified=False
-            # get data from user documents
-            pendingUser = True  # objects of user document
-            verifiedUser=""
+            verifiedUser=None
+            usersSet=Profile.objects.filter(is_verified=False)
+            pendingUser = Documents.objects.filter(user__profile__in=usersSet)
+                  
             
         elif tab == 'verified':
             is_verified=True
-            verifiedUser = Profile.objects.filter(is_verified=True)
-            pendingUser=False
-            
-            
-      
+            pendingUser = None
+            usersSet=Profile.objects.filter(is_verified=True)
+            verifiedUser = Documents.objects.filter(user__profile__in=usersSet)
+             
+
         context={
             "is_verified":is_verified,
             "verifiedUser":verifiedUser,
             "pendingUser":pendingUser,
         }
-        print(context)
+        # print(context)
         return render(request,template,context)
     else:
         return redirect('CustomAdmin:login')
 
 ####### AJAX VERIFY USERS #######
-def viewDets(request):
-    if request.session.get('user'): 
-        data={"bankName":"SBI","bankifscCode":"ABC0123","accNo":"1234567890","accName":"Dummy Dummy",\
-            "panNo":"ABCD123456","panName":"Dummy Dummy"}
-        return JsonResponse(data)
+def viewDets(request,docId=None):
+    if request.user.is_superuser:
+        if request.is_ajax() and docId is not None:
+            documentData = Documents.objects.filter(doc_id=docId)
+            
+            if not documentData:
+                raise Http404("404 Not Found")
+            
+            # data={"bankName":"SBI","bankifscCode":"ABC0123","accNo":"1234567890","accName":"Dummy Dummy",\
+            #     "panNo":"ABCD123456","panName":"Dummy Dummy"}
+            data={}
+            lst=list(documentData.values("acc_no","acc_name","bank_name","IFSC_code","pan_no","pan_name"))
+        
+            for l in lst: data=(l)
+            # print(data)
+
+            return JsonResponse({"documentData":data})
+        else:
+            raise Http404("404 Not Found")
+            
     else:
         return redirect('CustomAdmin:login')
 
-def docuDownload(request):
-    if request.session.get('user'): 
-        filename = 'pansample.jpeg'
-        file_path = settings.MEDIA_ROOT + '/documents/' + filename
+def docuDownload(request,docId=None):
+    if request.user.is_superuser: 
+        # filename = 'pansample.jpeg'
+        # file_path = settings.MEDIA_ROOT + '/documents/' + filename
 
-        file_wrapper = FileWrapper(open(file_path,'rb'))       
-        file_mimetype = mimetypes.guess_type(file_path)
-        response = HttpResponse(file_wrapper, content_type=file_mimetype )
-        response['X-Sendfile'] = file_path
-        response['Content-Length'] = os.stat(file_path).st_size
-        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename) 
+        # file_wrapper = FileWrapper(open(file_path,'rb'))       
+        # file_mimetype = mimetypes.guess_type(file_path)
+        # response = HttpResponse(file_wrapper, content_type=file_mimetype )
+        # response['X-Sendfile'] = file_path
+        # response['Content-Length'] = os.stat(file_path).st_size
+        # response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename) 
+
+        if docId is not None:
+            docuImg = Documents.objects.get(doc_id=docId)
+            filename = docuImg.pan_img_url
+            # print(filename)
+
+            file_path = filename.path
+            file_wrapper = FileWrapper(open(file_path,'rb'))       
+            file_mimetype = mimetypes.guess_type(file_path)
+            response = HttpResponse(file_wrapper, content_type=file_mimetype )
+            response['X-Sendfile'] = file_path
+            response['Content-Length'] = os.stat(file_path).st_size
+            response['Content-Disposition'] = 'attachment; filename=%s' %(str(docuImg.user.username)+str("_")+smart_str(filename))
+             
         return response
     else:
         return redirect('CustomAdmin:login')
 
-def verifyChk(request):
-    if request.session.get('user'): 
-        data={"is_verified":True}
+def verifyChk(request,action=None,usrId=None):
+    if request.user.is_superuser:
+        if request.is_ajax() and action is not None and usrId is not None:
+            profile = Profile.objects.get(user_id=usrId)
+            # print(profile.is_verified)
+            
+            if action=="accept":
+                profile.is_verified = True
+                profile.save()
+                sendVerifiedMail("verifiedUser",profile,profile.is_verified)
+                data={"is_verified":True}
+                # print(data) 
+            elif action=="reject":
+                docu = Documents.objects.get(user=profile.user)
+                docu.delete()
+                sendVerifiedMail("verifiedUser",profile,profile.is_verified)
+                data={"is_verified":False}
+                # print(data) 
+        else:
+            return HttpResponseForbidden("403 Forbidden")
+
         return JsonResponse(data)
     else:
         return redirect('CustomAdmin:login')
@@ -277,19 +358,14 @@ def verifyChk(request):
 def creativeCat(request,id=None,action=None):
     if request.session.get('user'):
         crtMainCats=tbl_crt_categories.objects.all()
-        for main in crtMainCats:
-            print(main)
-            tot=0
-            for m in tbl_crt_subcategories.objects.filter(crt_category=main):
-                tot += tbl_creativeitems_mst.objects.filter(crt_sub_category=m).count()
-            print(tot)
-        # for main in crtMainCats:
-        #     print(main)
-        #     # totCrt = main.tbl_crt_subcategories_set.all()
-        #     nn=0
-        #     for t in main.tbl_crt_subcategories_set.all():
-        #         nn += t.tbl_creativeitems_mst_set.all().count()
-        #     print(nn)
+
+     
+        mainCrtCnt = tbl_crt_subcategories.objects.values("crt_category__crt_category_name").annotate(CrtCnt=Count('tbl_creativeitems_mst'))
+        
+        # zipped=zip(crtMainCats, mainCrtCnt)
+        # print(tuple(zipped))
+
+
         template = 'custom-admin/products/creativecategory.html' 
         mainCrtCat=MainCreativeCategoryForm() #remove this just for testing...
         
@@ -311,13 +387,13 @@ def creativeCat(request,id=None,action=None):
             # categories= tbl_crt_subcategories.objects.annotate(tmp=tmp)
             # categories = tbl_crt_subcategories.objects.annotate(Count('tbl_creativeitems_mst'),filter=Q(tbl_creativeitems_mst__crt_sub_category=3))
             # print(categories[0].tmp)  
-            print(subCrtCats)
+            # print(subCrtCats)
             parentCat=get_object_or_404(tbl_crt_categories,pk=id)
 
             if subCrtCats!= None:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True,"n":0 })
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True,"mainCrtCnt":zip(crtMainCats, mainCrtCnt)})
             else:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True })
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True,"mainCrtCnt":zip(crtMainCats, mainCrtCnt) })
 
         elif action=="addMain":
             if request.method=="POST" and request.is_ajax():
@@ -451,7 +527,7 @@ def creativeCat(request,id=None,action=None):
                 raise PermissionDenied
                             
         
-        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat})
+        return render(request,template,{"dispSubCat":False,"mainCat":crtMainCats,"form":mainCrtCat,"mainCrtCnt":zip(crtMainCats, mainCrtCnt)})
     else:
         return redirect('CustomAdmin:login')
 
@@ -629,7 +705,7 @@ def orderdetails(request,id):
         orderDetails = tbl_orders_details.objects.filter(order_id = id) #.annotate(totalPrice=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
         totalPrice = tbl_orders_details.objects.filter(order_id = id).aggregate(tot = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
         commission = float(totalPrice['tot']) * 0.2
-        print(totalPrice)
+        # print(totalPrice)
         try:
             payment = Payment.objects.get(order)
             print(payment)
@@ -665,7 +741,7 @@ def allorderdetails(request,action='delivered'):
             details = tbl_orders_details.objects.filter(item_status=3)
 
         context = {
-            "title":title,
+            "title": title,
             "details": details
         }
         template = 'custom-admin/allorderdetails.html'
@@ -678,7 +754,9 @@ def allorderdetails(request,action='delivered'):
 def payment(request):
     if request.session.get('user'):    
         template = 'custom-admin/payment.html'
-        return render(request,template)
+        return render(request, template)
+    # elif request.session.post('post'):
+
     else:
         return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
@@ -803,11 +881,21 @@ def removeAssignedBadge(request):
     else:
         raise PermissionDenied
 ####### QUERIES RELATED #######
-def queries(request):
+def queries(request,qryid=None):
     if request.user.is_superuser:    
         template = 'custom-admin/queries/queries.html'
         Qry = Query.objects.all()
 
+        if request.method == "POST" and qryid is not None:
+            
+            status  = request.POST.get("query_status","")
+            try:
+                qry = Query.objects.get(query_id=qryid)
+            except Query.DoesNotExist:
+                pass
+            else:
+                qry.query_status = status
+                qry.save()
 
         context={
             "queries":Qry,
@@ -817,32 +905,46 @@ def queries(request):
     else:
         return redirect('CustomAdmin:login')    
 
-def issues(request,opts="reportedCrtItem"):
+def issues(request,issid=None):
     if request.session.get('user'):    
         template = 'custom-admin/queries/issues.html'
         title = "Reported Creative Items"
         issueType=1
         columnName="Item SKU"
-        issues=Issues.objects.all()
-        if request.method=="POST":
+        issues=Issues.objects.filter(issue_type=1)
+        if request.method=="POST" and issid is None:
             issueType=request.POST.get("issueType")
 
             if issueType == '1':
                 title = "Reported Creative Items"
                 issueType=1
                 columnName="Item SKU"
+                issues=Issues.objects.filter(issue_type=1)
             elif issueType == '2' :
                 title= "Reported Scrap Items"
                 issueType=2
                 columnName="Item SKU"
+                issues=Issues.objects.filter(issue_type=2)
             elif issueType == '3' :
                 title =  "Reported Users Items"
                 issueType=3
-                columnName="Username"
-            elif issueType == '4':
-                title = "Order Issues" 
-                issueType=4    
-                columnName="Oreder Detail ID"      
+                columnName="Reported Username"
+                issues=Issues.objects.filter(issue_type=3)
+
+            # elif issueType == '4':
+            #     title = "Order Issues" 
+            #     issueType=4    
+            #     columnName="Oreder Detail ID"  
+        
+        if request.method == "POST" and issid is not None:
+            status  = request.POST.get("issue_status","")
+            try:
+                iss = Issues.objects.get(issue_id=issid)
+            except Query.DoesNotExist:
+                pass
+            else:
+                iss.issue_status = status
+                iss.save()
         
         context = {
             "title":title,
@@ -999,9 +1101,40 @@ def replyQry(request,id):
     else:
         return redirect('CustomAdmin:login') 
 
+def sendVerifiedMail(typeFor,profile,verified):    
+    if typeFor == "verifiedUser":
+        print(verified)
+        try:
+            if verified:
+                emailmessage="You have been verified now you can sell creative item."\
+                    + "http://127.0.0.1:8000/accounts/dashboard/product/creative/"
+                emailmessage+="\n\nThank You."
+                mail_subject = "Verification Done!!"
+            
+            else:
+                emailmessage="Your verification request is rejected."+"\nFor more details contact us."
+                emailmessage+="\n\nThank You."
+                mail_subject = "Verification Done!!"
 
-    
+            message = render_to_string('common/email.html', {
+                'message':str("\n")+emailmessage,
+                'user':User.objects.get(user_id=profile.user_id),
+                'type':"verifiedUser",
+                "verified":verified
+            })
 
+
+            to_email = profile.user.email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email,]
+            )
+            email.send()
+        except Exception as e:
+            
+            print("MAIL EXCEPTION : "+str(e))
+            return False     
+        else:
+            return True
 ######################################################
 # def loadSubCrtCats(request,id=None):
 #     if request.session.get('user'):

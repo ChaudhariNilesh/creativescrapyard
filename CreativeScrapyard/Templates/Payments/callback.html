@@ -1,13 +1,70 @@
-<!DOCTYPE html>
+{% extends 'common/common.html' %} {% load static %} {% block title %} CS - Payment Done {% endblock %} {% block link %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/creativestyle.css' %}"> {% endblock %} {% block content %}
 
-<head>
-    <title>Callback</title>
-</head>
+<div class="text-center my-3">
+    <h2>Transaction Successfull</h2>
+    <img src="{% static 'img/check-mark.svg'  %}" />
+    <div class="container">
+        <hr/>
+    </div>
+    <div class="p-2 container">
+        <div class="row my-2">
+            <div class="col-md-6 text-right font-weight-bold">TRANSACTION ID : </div>
+            <div class="col-md-6 text-left text-muted">{{ TXNID }}</div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-6 text-right font-weight-bold"> ORDER ID : </div>
+            <div class="col-md-6 text-left text-muted">{{ORDERID}}</div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-6 text-right font-weight-bold"> AMOUNT : </div>
+            <div class="col-md-6 text-left text-muted"> &#8377;{{ TXNAMOUNT }}</div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-6 text-right font-weight-bold"> BANK NAME : </div>
+            <div class="col-md-6 text-left text-muted">{{ BANKNAME }}</div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-6 text-right font-weight-bold">PAYMENT MODE :</div>
+            <div class="col-md-6 text-left text-muted">{{ PAYMENTMODE }}</div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-6 text-right font-weight-bold"> TRANSACTION DATE/TIME : </div>
+            <div class="col-md-6 text-left text-muted">{{ TXNDATE }}</div>
+        </div>
 
-<body>
+        <div class="row my-2 pt-2">
+            <div class="col-md-12 text-center font-weight-bold">
+                <a href="{% url 'Authentication:order_history' %} " class="btn-cxt text-white"> Go to dashboard</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- <div>
     <h2>Callback Messsage: </h2> <br>
     <h3> Checksum Verification: {{ message }} </h3> <br> MID: {{ MID }} <br> TXNID: {{ TXNID }} <br> ORDERID: {{ ORDERID }} <br> BANKTXNID: {{ BANKTXNID }} <br> TXNAMOUNT: {{ TXNAMOUNT }} <br> CURRENCY: {{ CURRENCY }} <br>
     <h3> STATUS: {{ STATUS }} </h3> <br> RESPCODE: {{ RESPCODE }} <br> RESPMSG: {{ RESPMSG }} <br> TXNDATE: {{ TXNDATE }} <br> GATEWAYNAME: {{ GATEWAYNAME }} <br> BANKNAME: {{ BANKNAME }} <br> BIN_NAME: {{ BIN_NAME }} <br> PAYMENTMODE: {{ PAYMENTMODE }} <br>    CHECKSUMHASH: {{ CHECKSUMHASH }}
-</body>
+</div> -->
 
-</html>
+
+
+
+{% endblock %} {% block customscript %}
+<script>
+    $(document).ready(function() {
+
+        $.ajax({
+
+            url: "{% url 'Payments:clearSession' %}",
+            success: function(data) {
+                Swal.fire("Payment Done", "", "success");
+
+            }
+        });
+    });
+</script>
+{% endblock %}

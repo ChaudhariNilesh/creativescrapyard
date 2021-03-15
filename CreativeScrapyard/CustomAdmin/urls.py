@@ -45,9 +45,9 @@ urlpatterns = [
     path('payment/',payment,name='payment'),
 
     ######AJAX######
-    path('ajax/view-details/',viewDets,name="viewDets"),
-    path('ajax/documents/',docuDownload,name="docuDownload"),
-    path('ajax/verify/',verifyChk,name="verifyChk"),
+    path('ajax/view-details/<int:docId>/',viewDets,name="viewDets"),
+    path('ajax/documents/<int:docId>/',docuDownload,name="docuDownload"),
+    path('ajax/verify/<str:action>/<int:usrId>/',verifyChk,name="verifyChk"),
 
 
     ######BADGES######
@@ -60,12 +60,20 @@ urlpatterns = [
 
     ######QUERIES######
     path('query/',queries,name="query"),
+    path('query/change-status/<int:qryid>',queries,name="queryStatus"),
+
     path('issues/',issues,name="issues"),
+    path('issues/change-status/<int:issid>',issues ,name="issueStatus"),
+
 
     ######MAIL######
     path('send-mail/',sendmail,name="sendmail"),
     path('send-mail/<str:action>',sendmail,name="sendmail"),
     path('reply-query/<int:id>',replyQry,name="replyQry"),
+
+
+    ######REPORTS######
+    path('', include('Reports.urls')),
 
 
 

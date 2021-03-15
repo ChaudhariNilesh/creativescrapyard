@@ -1,0 +1,124 @@
+{% extends 'custom-admin/common.html' %} {% load widget_tweaks %}{% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Report of Users
+                </div>
+                <hr/>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h5 class="mb-0">
+                                <span class="apply-filter">Apply Filter(s)</span>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form method="POST" id="prdReportForm"> {% csrf_token %}
+                                    <div class="well">
+                                        <!-- <h3 style="margin-top: 0">Filter(s)</h3> -->
+                                        <div class="row">
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Username : {% render_field filter.form.username class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                First Name : {% render_field filter.form.first_name class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Last Name : {% render_field filter.form.last_name class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Email : {% render_field filter.form.email class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Active :{% render_field filter.form.is_active class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Verified :{% render_field filter.form.is_verified class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Created on (yyyy/mm/dd) :{% render_field filter.form.date_joined class="form-control" %}
+                                            </div>
+
+
+
+                                        </div>
+                                        <button type="submit" name="action" value="search" class="btn btn-cxt text-white">
+                                             <span class="fa fa-search"></span> Search
+                                        </button>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
+                                             <span class="fa fa-file-pdf-o"></span> Export PDF
+                </button>
+
+                <table class="table table-bordered tablemanager">
+                    <thead>
+                        <tr>
+
+                            <th class="text-center">Username</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">email</th>
+                            <th class="text-center">Is Artist</th>
+                            <th class="text-center">Is Active</th>
+                            <th class="text-center">Creative Items</th>
+                            <th class="text-center">Scrap Items</th>
+                            <th class="text-center">Active From</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for usr in filter.qs %}
+                        <tr>
+                            <td>
+                                <span class="listing ">{{  usr.username  }}</span>
+                            </td>
+
+                            <td class="text-center"><a href="#"><span class="list-enq-name">{{ usr.get_full_name|capfirst }}</span></a>
+                            </td>
+                            <td>
+                                <span class="listing">{{  usr.email  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{  usr.profile.is_verified  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{  usr.is_active  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing text-center">{{  usr.tbl_creativeitems_mst_set.count  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing text-center">{{  usr.tbl_scrapitems_set.count  }}</span>
+
+                            </td>
+                            <td class="text-center">
+                                <span class="listing">{{  usr.date_joined |date:"M d, Y" }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center text-muted">No data</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block customscript %} {% endblock customscript %}

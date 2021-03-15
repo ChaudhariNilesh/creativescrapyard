@@ -2,7 +2,9 @@
     margin: 0;
 }
 
+
 /* Dashboard Grid Css */
+
 .parent {
     display: grid;
     grid-template-columns: 1.5fr 7fr;
@@ -10,10 +12,9 @@
     height: 100vh;
 }
 
-
 .title {
     background-color: var(--pri-color-darker);
-    color:  white;
+    color: white;
     font-size: 1.3em;
     font-weight: bold;
     border-bottom: 1px solid white;
@@ -38,7 +39,9 @@ main {
     overflow-y: scroll;
 }
 
+
 /* Main Content Page Css */
+
 main::-webkit-scrollbar {
     display: none;
 }
@@ -51,6 +54,7 @@ main::-webkit-scrollbar {
 
 
 /* Header CSS */
+
 .header-main {
     padding: 1.4rem;
 }
@@ -64,7 +68,6 @@ main::-webkit-scrollbar {
 .main-img {
     height: 40px
 }
-
 
 .btn-cre {
     letter-spacing: 0px;
@@ -90,14 +93,18 @@ main::-webkit-scrollbar {
     font-weight: 600;
 }
 
+
 /* Dashboard Left Panel Css */
+
 #dashTitleSpan {
     opacity: .8;
     transition: opacity .5s;
 }
+
 #dashTitleSpan:hover {
     opacity: 1;
 }
+
 #dashTitleSpan a.title-link {
     color: #fff;
     text-decoration: none;
@@ -168,23 +175,18 @@ div#sideNav ul li:focus a {
     grid-template-columns: 0% 100% !important;
 }
 
+
 /* Responsive Media Query */
+
 @media only screen and (max-width: 600px) {
-
-  .main-container {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-
+    .main-container {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
 }
 
 @media only screen and (max-width: 400px) {
-
-  .img-profile-title {
-    display: none;
-  }
-
-
-
+    .img-profile-title {
+        display: none;
+    }
 }

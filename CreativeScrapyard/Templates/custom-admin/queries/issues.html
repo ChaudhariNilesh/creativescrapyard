@@ -35,48 +35,61 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        {% for issue in issues %}
+
                         <tr>
-                            <td class="text-center"><span class="list-enq-name">yash kukreja</span>
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">yashskukreja@gmail.com</span>
+                            <td class="text-center"><span class="list-enq-name"> {{issue.user.get_full_name|capfirst}} </span></td>
+                            <td class="text-center"><span class="list-enq-name">{{issue.user.email}}</span></td>
 
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">CRT-WAL-WAL-J1KL</span>
+                            {% if issueType == 1 %}
+                            <td class="text-center"><span class="list-enq-name">{{issue.crt_item.crt_item_SKU}}</span></td>
+                            {% elif issueType == 2 %}
+                            <td class="text-center"><span class="list-enq-name">{{issue.scp_item.scp_item_SKU}}</span></td>
+                            {% elif issueType == 3 %}
+                            <td class="text-center"><span class="list-enq-name">{{issue.reported_user.username}}</span></td>
+                            {% endif %}
 
-                            </td>
-                            <td class="text-center"><span class="list-enq-name">Missing/Incorrect Information</span></td>
-                            <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('contains misleading information');">Read</a></span></td>
 
-                            <td class="text-center">20/02/2021</td>
+                            <td class="text-center"><span class="list-enq-name">{{issue.get_issue_sub_display}}</span></td>
+                            <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('{{issue.issue_msg}}');">Read</a></span></td>
+
+                            <td class="text-center">{{issue.issue_date}}</td>
                             <td class="text-center">
-                                <select class="p-1 ord-status">
-                                                        <option value="Pending" selected>Resolved</option>
-                                                        <option value="Completed">Pending</option>
-                                                        <option value="Cancelled">Rejected</option>
-                                                    </select>
+                                <form action="{% url 'CustomAdmin:issueStatus' issue.issue_id %}" method="POST" id="frmChangeStat">{% csrf_token %}
+                                    <select class="p-1 ord-status" name="issue_status">
+                                        <option value="1" {% if issue.issue_status == 1 %}selected{% endif %}>Pending</option>
+                                        <option value="2" {% if issue.issue_status == 2 %}selected{% endif %}>Resolved</option>
+                                        <option value="3" {% if issue.issue_status == 3 %}selected{% endif %}>Rejected</option>
+                                    </select>
+                                </form>
                             </td>
+
                             <td class="text-center">
+                                <button class="btn btn-sm pri-bg-color" type="submit" form="frmChangeStat">Save</button>
+                                <!--  -->
                                 {% if issueType == 1 %}
-                                <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+                                <a href="{% url 'Home:Items:creativeSingleItem' issue.crt_item.crt_item_id  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable mt-1" aria-hidden="true">DISABLE</button>
                                 <!--  -->
                                 {% elif issueType == 2 %}
-                                <a href="{% url 'Home:Items:scrapSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn" aria-hidden="true">DISABLE</button></a>
+                                <a href="{% url 'Home:Items:scrapSingleItem' issue.scp_item.scp_item_id %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn mt-1" aria-hidden="true">DISABLE</button></a>
                                 <!--  -->
                                 {%elif issueType == 3 %}
-                                <a href="{% url 'Authentication:profile' %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn " aria-hidden="true">DISABLE</button>
+                                <a href="{% url 'Authentication:profile' issue.reported_user.user_id%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
+                                <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn mt-1" aria-hidden="true">DISABLE</button>
 
                                 <!--  -->
-
-                                {% comment %} {% elif issueType == 4 %}
-                                <a href="{% url 'CustomAdmin:orderdetails' 20%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button class="btn btn-sm pri-bg-color">Save</button> {% endcomment %} {% endif %}
+                                {% endif %}
 
                             </td>
                         </tr>
-
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No data</td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -91,32 +104,38 @@
 <script>
     function readMsg(data) {
         $(".read-msg").on("click", function() {
-            Swal.fire(data);
+            if (data) {
+
+                Swal.fire(data);
+            } else {
+                Swal.fire("N/A");
+
+            }
         });
     }
 </script>
-{%endblock%} {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+{% endblock %}
+<!-- ################################################################################## -->
 <tr>
-    <td class="text-center"><span class="list-enq-name">dummy</span>
+    <td class="text-center"><span class="list-enq-name">yash kukreja</span>
     </td>
-    <td class="text-center"><span class="list-enq-name">dummy@dummy.com</span>
+    <td class="text-center"><span class="list-enq-name">yashskukreja@gmail.com</span>
 
     </td>
-    <td class="text-center"><span class="list-enq-name">ABC-DEF-GHI-JKL</span>
+    <td class="text-center"><span class="list-enq-name">CRT-WAL-WAL-J1KL</span>
 
     </td>
-    <td class="text-center"><span class="list-enq-name">...</span></td>
-    <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('ss');">Read</a></span></td>
+    <td class="text-center"><span class="list-enq-name">Missing/Incorrect Information</span></td>
+    <td class="text-center"><span class="list-enq-name"><a href="#" class="read-msg" onclick="readMsg('contains misleading information');">Read</a></span></td>
 
-    <td class="text-center">28/12/2020</td>
+    <td class="text-center">20/02/2021</td>
     <td class="text-center">
         <select class="p-1 ord-status">
-                                <option value="Pending" selected>Resolved</option>
-                                <option value="Completed">Pending</option>
-                                <option value="Cancelled">Rejected</option>
-                            </select>
+                                                        <option value="Pending" selected>Resolved</option>
+                                                        <option value="Completed">Pending</option>
+                                                        <option value="Cancelled">Rejected</option>
+                                                    </select>
     </td>
-
     <td class="text-center">
         {% if issueType == 1 %}
         <a href="{% url 'Home:Items:creativeSingleItem'  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
@@ -138,4 +157,3 @@
 
     </td>
 </tr>
-{% endfor %} {% endwith %}

@@ -112,6 +112,8 @@ class SubScrapCategoryForm(forms.ModelForm):
             raise forms.ValidationError("Scrap Sub-Category Name already exists.")    
         return cleaned_data  
 
+
+
 # class BadgeAssigningForm(forms.ModelForm):
 #     class Meta:
 #         model= BadgeEntries

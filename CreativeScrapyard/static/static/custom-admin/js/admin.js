@@ -253,19 +253,21 @@ $(function() {
                 url: $(this).attr("data-view-url"),
                 datatype: JSON,
                 success: function(data) {
-                    var details = "Bank Name : " + data.bankName + "\n" +
-                        "Bank IFSC CODE : " + data.bankifscCode + "\n" +
-                        "Account Number : " + data.accNo + "\n" +
-                        "Account Holder Name : " + data.accName + "\n" +
-                        "Pan No : " + data.panNo + "\n" +
-                        "Pan Name : " + data.panName;
+                    // console.log(data.documentData)
+                    if (data.documentData) {
+                        var details = "Bank Name : " + data.bankName + "\n" +
+                            "Bank IFSC CODE : " + data.bankifscCode + "\n" +
+                            "Account Number : " + data.accNo + "\n" +
+                            "Account Holder Name : " + data.accName + "\n" +
+                            "Pan No : " + data.panNo + "\n" +
+                            "Pan Name : " + data.panName;
 
-                    Swal.fire(
-                        'User Verification Details',
-                        loopValues(data),
-                        // "<div class=''><div class='row'><span class='col'></span><span class='col'></span></div></div>",
-                    )
-
+                        Swal.fire(
+                            'User Verification Details',
+                            loopValues(data.documentData),
+                            // "<div class=''><div class='row'><span class='col'></span><span class='col'></span></div></div>",
+                        )
+                    }
 
                 }
             });
@@ -273,7 +275,7 @@ $(function() {
 
         function loopValues(data) {
             var userDetails = "";
-            var label = ['Bank Name : ', 'Bank IFSC CODE : ', 'Account Number : ', 'Account Holder : ', 'Pan No : ', 'Pan Name : '];
+            var label = ['Account Number : ', 'Account Holder : ', 'Bank Name : ', 'Bank IFSC CODE : ', 'Pan No : ', 'Pan Name : '];
             let i = 0;
             for (var val in data) {
                 userDetails += "<div class='row'><span class='col text-right'>" + label[i++] + "</span><span class='col text-left'>" + data[val] + "</span></div>"
@@ -304,11 +306,39 @@ $(function() {
                 if (result.isConfirmed) {
                     $.ajax({
                         url: $(this).attr("data-verify-url"),
-                        datatype: JSON,
+                        datatype: "json",
+                        beforeSend: function() {
+                            swal.fire({
+                                title: 'Sending Mail...',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                didOpen: () => {
+                                    swal.showLoading();
+                                }
+                            });
+                        },
+                        complete: function() {},
                         success: function(data) {
-                            Swal.fire("User Verified", "", "success");
+                            if (data.is_verified) {
+                                swal.close();
+                                Swal.fire("User Verified.", "", "success");
+                                setTimeout(function() { location.reload() }, 2000);
 
-                        }
+                            } else {
+                                swal.close();
+                                Swal.fire("User request rejected.", "", "success");
+                                setTimeout(function() { location.reload() }, 2000);
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            swal.close();
+                            Swal.fire(
+                                jqXHR.status + "",
+                                textStatus + " : " + errorThrown,
+                                'error'
+                            )
+                        },
                     })
                 }
 
@@ -947,6 +977,23 @@ $(function() {
             Swal.fire("Hello.....");
         });
     };
+    var tableManagerReports = function() {
+        $('.tablemanager-report').tablemanager({
+            firstSort: [
+                [1, 0],
+
+            ],
+            // disable: ["last"],
+            appendFilterby: false,
+            debug: false,
+
+            pagination: true,
+
+            // disableFilterBy: [1]
+        });
+
+
+    }
     $(function() {
         adminSideBar();
         logoutSwal();
@@ -978,6 +1025,7 @@ $(function() {
 
         selectUserEmail();
 
+        // tableManagerReports();
         // readMsg();
         //  reportTableManager();
     });

@@ -18,6 +18,7 @@ def addToCart(request):
     context={}
     context['is_creative']=True
     cartitems = Cart.objects.filter(user_id=request.user.user_id)
+
     context['cartitems'] = cartitems
     # prd = tbl_creativeitems_mst.objects.filter(cart__in=cartitems)
     # image = tbl_crtimages.objects.filter(crt_item_details_id__in=prd,is_primary=True)
@@ -36,6 +37,14 @@ def addToCart(request):
                 messages.error(request,'Item already exist in Cart')
             else:
                 product = get_object_or_404(tbl_creativeitems_mst,crt_item_id=pid)
+                
+                if (product.user==request.user):
+                    messages.warning(request, 'Ohh! Are you trying to buy own item. We dont do that here.')
+                    next = request.POST.get('next', '/')
+                    return redirect(next)
+
+                    
+
                 user = get_object_or_404(User,user_id=request.user.user_id)
                 cart = Cart(crt_item_qty=qty,crt_item=product,user=user)
                 cart.save()

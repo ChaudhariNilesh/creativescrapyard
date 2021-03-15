@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'hz6c9&=5rp!0lmu+*+@m(j7mx=q19-cs4bim@$+2jd=sacv)35'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True    
+DEBUG  = True   
 
 ALLOWED_HOSTS = []
 
@@ -47,9 +47,17 @@ INSTALLED_APPS = [
     'Cart',
     'mathfilters',
     'Payments',
+    # 'report_builder',
+    'Reports',
+    'UserReports',
+    # 'slick_reporting',
+    # 'crispy_forms',
+    # 'weasyprint',
+    'django_filters',
+    'widget_tweaks',
     
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,11 +76,13 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'Templates')],
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': DEBUG,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.template.context_processors.static'
             ],
         },
     },

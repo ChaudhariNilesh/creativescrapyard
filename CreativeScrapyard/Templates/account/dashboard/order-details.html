@@ -5,10 +5,10 @@
     Order details
 </div>
 <hr />
- <div>
-                                {% include 'includes/messages.html' %}
+<div>
+    {% include 'includes/messages.html' %}
 
-                            </div>
+</div>
 <div class="bx-shd my-3 py-2 px-3">
     <div class="row py-3">
         <div class="col">
@@ -50,9 +50,7 @@
             <p class="ord-owner border-top py-1">{{ order.person_name }}</p>
             <div class="bill-address">
                 {{ order.delivery_address }}
-                <p>4, Near Divya Dham Temple,</p>
-                <p>Tajpur Road, Changodar</p>
-                <p>AAhmedabad GUJARAT - 382213</p>
+
             </div>
         </div>
         <div class="col">
@@ -123,168 +121,20 @@
                 </div>
 
                 <div class="mt-1">
-                    {% comment %}
-                    <p><span>SIZE: <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %}
+
                     <p><span>QUANTITY: </span><span class="text-muted">{{detail.crt_item_qty}}</span></p>
                     <p><span>Price: </span><span class="text-muted">{{detail.unit_price|floatformat:2}}</span></p>
-                    <p><span>STATUS: </span>
-                    {% if detail.item_status == 1 %}
-                        <span class="text-warning">Pending</span>
-                    {% elif detail.item_status == 2 %}
-                        <span class="text-success">Completed</span>
-                    {% elif detail.item_status == 3 %}
-                        <span class="text-danger">Cancelled</span>
-                    {% elif detail.item_status == 4 %}
-                        <span class="text-danger">Failed</span>
-                    {% elif detail.item_status == 5 %}
-                        <span class="text-danger">Returned</span>
-                    {% endif %}
+                    <p><span>STATUS: </span> {% if detail.item_status == 1 %}
+                        <span class="text-warning">Pending</span> {% elif detail.item_status == 2 %}
+                        <span class="text-success">Completed</span> {% elif detail.item_status == 3 %}
+                        <span class="text-danger">Cancelled</span> {% elif detail.item_status == 4 %}
+                        <span class="text-danger">Failed</span> {% elif detail.item_status == 5 %}
+                        <span class="text-danger">Returned</span> {% endif %}
                     </p>
                 </div>
 
                 <div class="d-flex flex-row-reverse mt-4">
                     <div class="px-1">
-                        <!-- <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Order</button> -->
-
-                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Item
-                        </button>
-                    </div>
-                    <div class="px-1">
-                        <a href="{% url 'Home:Items:Order:orderTrack' %}">
-                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;">
-                                Track
-                            </button>
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</div>
-{% endfor %}
-<!--<div class="bx-shd my-3 pt-2 px-3">-->
-<!--    <h4 class="my-2 pb-2">Order Items</h4>-->
-
-<!--    <div class="border-bottom py-3">-->
-<!--        <div class="row d-flex">-->
-<!--            <div class="col-2 pr-0">-->
-<!--                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/creative/customizedbottles.jpg' %}" alt="">-->
-<!--            </div>-->
-<!--            <div class="col-10">-->
-<!--                <div class="my-2 border-bottom">-->
-<!--                    <span>SKU : </span><span> CRT-DEC-FLO-A41F</span>-->
-<!--                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Feb 2, 2021</span></span>-->
-
-<!--                </div>-->
-<!--                <div class="my-1">-->
-<!--                    <span class="h4">Flower Vase</span>-->
-<!--                </div>-->
-
-<!--                <div class="mt-1">-->
-<!--                    {% comment %}-->
-<!--                    <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p> {% endcomment %} {% comment %}-->
-<!--                    <p><span>COLOR: </span><span><img-->
-<!--                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32" height="32"></span>-->
-<!--                    </p> {% endcomment %}-->
-<!--                    <p><span>STATUS: </span><span class="text-success">Delivered</span></p>-->
-<!--                </div>-->
-
-<!--                <div class="d-flex flex-row-reverse mt-4">-->
-
-<!--                    <div class="px-1">-->
-<!--                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">-->
-<!--                            Give Rating & Review-->
-<!--                          </button>-->
-<!--                    </div>-->
-<!--                    <div class="px-1">-->
-<!--                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Return Item-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--</div>-->
-
-
-{% comment %}
-<div class="bx-shd my-3 pt-2 px-3">
-    <h4 class="my-2 pb-2">Order Items</h4>
-    {% with n='123' %} {% for i in n %}
-    <div class="border-bottom py-3">
-        <div class="row d-flex">
-            <div class="col-2 pr-0">
-                <img class="img-fluid text-warning rounded bx-img" src="{% static 'img/products/1.jpg' %}" alt="">
-            </div>
-            <div class="col-10">
-                <div class="my-2 border-bottom">
-                    <span>SKU : </span><span>ABC-SHJB-561-156</span>
-                    <span style="float: right;" class="mr-2">DATE : <span class="text-muted">Jan 1, 2021</span></span>
-                    <span style="float: right;" class="mr-2">
-                        <a href="#" data-toggle="modal" data-target=".report_model_sm">
-                            <i class="fas fa-flag report-flag"></i>
-                        </a>
-                    </span>
-
-                    <!-- Report model code    -->
-
-                    <div class="modal fade report_model_sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="model-header p-2 border-2 border-bottom">
-                                    <span class="text-dark">Report Item</span>
-                                </div>
-                                <div class="model-body p-2">
-                                    <form action="" method="post">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="reportMsg">Please tell us about the
-                                                issue</label>
-                                            <select class="form-control form-control-sm rounded">
-                                                <option selected>What's the issue?</option>
-                                                <option>Doesn't match product</option>
-                                                <option>Offensive or adult content</option>
-                                                <option>Is not clear</option>
-                                                <option>Other</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="text-dark" for="reportMsg">Comments (optional)</label>
-                                            <textarea class="form-control rounded" id="reportMsg" rows="3"></textarea>
-                                        </div>
-                                        <div class="d-flex flex-row-reverse">
-                                            <button type="submit" class="btn pri-bg-color btn-sm" mx-2>Submit</button>
-                                            <button type="button" class="btn btn-secondary btn-sm mx-2" data-dismiss="modal">Close
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Report model code end here    -->
-
-                </div>
-                <div class="my-1">
-                    <span class="h4">White Gray T shirt</span>
-                </div>
-
-                <div class="mt-1">
-                    <p><span>SIZE: </span> <span class="text-muted">XL</span> | <span>QTY: </span> <span class="text-muted">2 </span></p>
-                    <p><span>COLOR: </span><span><img
-                            src="https://s2.svgbox.net/octicons.svg?ic=dot-fill-bold&color=000" width="32" height="32"></span>
-                    </p>
-                    <p><span>STATUS: </span><span class="text-warning">Pending</span></p>
-                </div>
-
-                <div class="d-flex flex-row-reverse mt-4">
-                    <div class="px-1">
-                        <!-- <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Order</button> -->
 
                         <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Item
                         </button>
@@ -301,96 +151,14 @@
                             Give Rating & Review
                           </button>
                     </div>
-                    <div class="px-1">
-                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Return Item
-                        </button>
-                    </div>
                 </div>
-
-                <!-- <div class="mr-2">-->
-                <!--                        <button class="btn btn-sm btn-danger  mb-2 btn-item-cancel" data-item-cancel="" style="font-size: small;" > Cancel Order</button>-->
-                <!--                </div>-->
-                <!--                <div class="form-group ml-2" style="float: right;">-->
-                <!--                    <div class="form-group" style="float: right;">-->
-                <!--                        <a href="{% url 'Home:Items:Order:orderTrack' %}">-->
-                <!--                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;"> Track-->
-                <!--                            </button>-->
-                <!--                        </a>-->
-                <!--                    </div>-->
-                <!--                </div>-->
 
             </div>
         </div>
     </div>
-    {% endfor %} {% endwith %}
-</div> {% endcomment %} 
 
-
-<div class="py-3 table-responsive">
-    <table class="table table-hover border-bottom tablemanager">
-
-        <thead>
-            <tr class="">
-                <th scope="col" class="text-left">Product ID</th>
-                <th scope="col" class="text-center">Product name</th>
-                <th scope="col" class="text-right">Quantity</th>
-                <th scope="col" class="text-right">Unit Price</th>
-                <th scope="col" class="text-right">Total</th>
-            </tr>
-        </thead>
-
-
-        <tbody>
-            <tr>
-                <td scope="row" class="text-left">101</td>
-                <td class="text-center">Perfume</td>
-                <td class="text-right">5</td>
-                <td class="text-right">50</td>
-                <td class="text-right">250</td>
-            </tr>
-            <tr>
-                <td scope="row" class="text-left">101</td>
-                <td class="text-center">Perfume</td>
-                <td class="text-right">5</td>
-                <td class="text-right">50</td>
-                <td class="text-right">250</td>
-            </tr>
-            <tr>
-                <td scope="row" class="text-left">101</td>
-                <td class="text-center">Perfume</td>
-                <td class="text-right">5</td>
-                <td class="text-right">50</td>
-                <td class="text-right">250</td>
-            </tr>
-
-            <tr>
-                <td scope="row" class="text-left"></td>
-                <td class="text-center"></td>
-                <td class="text-right"></td>
-                <td class="text-right">Total</td>
-                <td class="text-right">750</td>
-            </tr>
-        </tbody>
-        maximum order should be 10.
-    </table>
 </div>
 
-
-<div class="item-card">
-    <h4 class="my-2 pb-2">Order Items</h4>
-    <div class="item-card-main row px-3">
-        <div class="col-12 col-sm-3 col-md-2 px-0">
-            <img src="{% static 'img/products/1.jpg' %}" class="img-fluid" height="250" width="150" alt="Responsive image">
-        </div>
-    </div>
-</div>
-
-
-<!-- <span style="float: right;" class="mr-2">
-                            <a href="#" data-toggle="modal" data-target=".report_model_sm">
-                                <i class="fas fa-flag report-flag"></i>
-                            </a>
-                        </span> -->                  
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -402,20 +170,20 @@
             </div>
             <div class="modal-body">
                 <form action="{%url 'Authentication:order_details'%}" method="POST">
-                {% csrf_token %}
-                <div class="container">
-                        <input type="text" name="crt_item_id" value=17>
-                    <h6>Rate:</h6>
+                    {% csrf_token %}
+                    <div class="container">
+                        <input type="text" name="crt_item_id" value={{detail.crt_item_mst.crt_item_id}}>
+                        <h6>Rate:</h6>
                         <input class="form-control-inline" name="item_rating" type="number" min="1.0" max="5.0" step="0.5" required>/5.0
                         <h6>Review(Optional):</h6>
-                        <textarea class="form-control" name="item_review" id="exampleFormControlTextarea1" rows="3"></textarea>    
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn pri-bg-color">Send Review</button>
-                </div>
+                        <textarea class="form-control" name="item_review" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn pri-bg-color">Send Review</button>
+                    </div>
                 </form>
             </div>
-          
+
         </div>
     </div>
 </div>
-{% endblock %}
+{% endfor %} {% endblock %}

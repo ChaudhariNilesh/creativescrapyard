@@ -36,7 +36,7 @@ class tbl_creativeitems_mst_form(forms.ModelForm):
     def clean_crt_item_weight(self):
         cleaned_data = self.cleaned_data
 
-        crt_item_weight = cleaned_data.get('crt_item_weight', None)
+        crt_item_weight = cleaned_data.get('crt_item_weight', "")
         # print("===>", crt_item_weight)
         options = ['1', '2', '3', '4', '5']
         if not crt_item_weight in options:
@@ -46,7 +46,7 @@ class tbl_creativeitems_mst_form(forms.ModelForm):
 
     def clean_crt_item_height(self):
         cleaned_data = self.cleaned_data
-        crt_item_height = cleaned_data.get('crt_item_height', None)
+        crt_item_height = cleaned_data.get('crt_item_height', "")
         if crt_item_height:
             try:
                 # print("form ==> ", crt_item_height)
@@ -60,7 +60,7 @@ class tbl_creativeitems_mst_form(forms.ModelForm):
 
     def clean_crt_item_width(self):
         cleaned_data = self.cleaned_data
-        crt_item_width = cleaned_data.get('crt_item_width', None)
+        crt_item_width = cleaned_data.get('crt_item_width', "")
         if crt_item_width:
             try:
                 crt_item_width = int(crt_item_width)

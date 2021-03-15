@@ -92,7 +92,8 @@ urlpatterns = [
     #path('photo-delete/<int:pk>/', product_photo_remove, name="photo_delete"),
     # path('photo-upload/', BasicUploadView, name='basic_upload'),
 
-
+    ######REPORTS######
+    path('', include('UserReports.urls')),
     
 ]
 

@@ -34,7 +34,7 @@
                         <table class="table table-hover border-bottom tablemanager">
                             <thead>
                                 <tr>
-                                    <th class="text-center">User ID</th>
+                                    <th class="text-center">User ID </th>
                                     <th scope="col" class="text-center">Name</th>
                                     <th scope="col" class="text-center">Email</th>
 
@@ -42,89 +42,53 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% comment %} {% with n='[1,2,3,4,5,6,7,8,9]' %} {% for i in n %}
+
+                                {% if not is_verified %} {% for pending in pendingUser %}
                                 <tr>
-                                    <td class="text-center">10001</td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">dummy dummy</span></a></td>
-                                    <td class="text-center">dummy@dummy.com</td>
-                                    <td class="text-center">
-                                        <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                        <!--  -->
-                                        {% if not is_verified %}
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk reject btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>                                        {%endif%}
-                                    </td>
+                                    <tr>
+                                        <td class="text-center">{{pending.user_id}}</td>
+                                        <td class="text-center"><a href="#"><span class="list-enq-name">{{pending.user.first_name|capfirst}} {{pending.user.last_name|capfirst}}</span></a></td>
+                                        <td class="text-center">{{pending.user.email}}</td>
+                                        <td class="text-center">
+                                            <a href="{% url 'CustomAdmin:docuDownload' pending.doc_id %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
+                                            <button id="" data-view-url="{% url 'CustomAdmin:viewDets' pending.user_id %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
+                                            <!--  -->
+                                            <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' 'accept' pending.user_id %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
+                                            <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' 'reject' pending.user_id %}" class="verifyChk reject btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>
+                                            <!--  -->
+
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">No data</td>
+                                    </tr>
+                                    {% endfor %} {% endif %}
+
+                                    <!--  -->
+
+                                    {% if is_verified %} {% for verified in verifiedUser %}
+                                    <tr>
+
+                                        <td class="text-center">{{verified.user_id}}</td>
+                                        <td class="text-center"><a href="#"><span class="list-enq-name">{{verified.user.first_name|capfirst}} {{verified.user.last_name|capfirst}}</span></a></td>
+                                        <td class="text-center">{{verified.user.email}}</td>
+                                        <td class="text-center">
+                                            <a href="{% url 'CustomAdmin:docuDownload' verified.doc_id  %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
+                                            <button id="" data-view-url="{% url 'CustomAdmin:viewDets' verified.user_id %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
+                                            <!--  -->
+
+                                        </td>
 
 
-                                </tr>
-                                {% endfor %} {% endwith %} {% endcomment %}
-                                <!--  -->
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">No data</td>
+                                    </tr>
+                                    {% endfor %} {% endif %}
+                                    <!--  -->
 
-                                {% if pendingUser %}
-                                <tr>
-                                    <td class="text-center">4</td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Nikul Prajapati</span></a></td>
-                                    <td class="text-center">nikulprajapati1901@gmail.com</td>
-                                    <td class="text-center">
-                                        <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                        <!--  -->
-                                        {% if not is_verified %}
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk reject btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>                                        {%endif%}
-                                    </td>
-                                </tr>
-                                {% endif %}
-
-                                <!--  -->
-                                {% for verified in verifiedUser %}
-                                <tr>
-                                    <td class="text-center">{{verified.user_id}}</td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">{{verified.user.first_name|capfirst}} {{verified.user.last_name|capfirst}}</span></a></td>
-                                    <td class="text-center">{{verified.user.email}}</td>
-                                    <td class="text-center">
-                                        <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                        <!--  -->
-                                        {% if not is_verified %}
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk reject btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>                                        {%endif%}
-                                    </td>
-
-
-                                </tr>
-                                {% endfor %}
-                                <!--  -->
-                                {% if verifiedUser %}
-                                <tr>
-                                    <td class="text-center">6</td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Raghav Agrwal</span></a></td>
-                                    <td class="text-center">raghu123@gmail.com</td>
-                                    <td class="text-center">
-                                        <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                        <!--  -->
-                                        {% if not is_verified %}
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk reject btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>                                        {%endif%}
-                                    </td>
-                                </tr>
-                                {% endif %} {% if verifiedUser %}
-                                <tr>
-                                    <td class="text-center">7</td>
-                                    <td class="text-center"><a href="#"><span class="list-enq-name">Nihsika Shah</span></a></td>
-                                    <td class="text-center">nishika.shah@gmail.com</td>
-                                    <td class="text-center">
-                                        <a href="{% url 'CustomAdmin:docuDownload' %}"><button id="userDocuDownload" class="btn btn-sm pri-bg-color" ><img src="https://s2.svgbox.net/octicons.svg?ic=download-bold&color=fff" width="20" height="20"></button></a>
-                                        <button id="" data-view-url="{% url 'CustomAdmin:viewDets' %}" class="userViewDets btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></button>
-                                        <!--  -->
-                                        {% if not is_verified %}
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=check-bold&color=fff" width="20" height="20"></button>
-                                        <button id="" data-verify-url="{% url 'CustomAdmin:verifyChk' %}" class="verifyChk reject btn btn-sm bg-danger"><img src="https://s2.svgbox.net/materialui.svg?ic=close&color=fff" width="20" height="20"></button>                                        {%endif%}
-                                    </td>
-                                </tr>
-                                {% endif %}
                             </tbody>
                         </table>
                     </div>

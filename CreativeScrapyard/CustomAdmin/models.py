@@ -15,6 +15,8 @@ class tbl_crt_categories(models.Model):
     def __str__(self):
         return self.crt_category_name
 
+    
+
 class tbl_crt_subcategories(models.Model):
     crt_sub_category_id =  models.AutoField(primary_key=True,validators=[MaxValueValidator(99999)])
     crt_sub_category_name = models.CharField(max_length=40)

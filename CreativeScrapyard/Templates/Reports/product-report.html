@@ -1,0 +1,196 @@
+{% extends 'custom-admin/common.html' %} {% load widget_tweaks %}{% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Report of Creative items
+                </div>
+                <hr/>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h5 class="mb-0">
+                                <span class="apply-filter">Apply Filter(s)</span>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form method="POST" id="prdReportForm"> {% csrf_token %}
+                                    <div class="well">
+                                        <!-- <h3 style="margin-top: 0">Filter(s)</h3> -->
+                                        <div class="row">
+                                            <div class="form-group col-sm-8 col-md-12">
+                                                Category: {% render_field filter.form.crt_sub_category class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item SKU : {% render_field filter.form.crt_item_SKU class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Creative Item Name : {% render_field filter.form.crt_item_name class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Status :{% render_field filter.form.crt_item_status class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Created on (yyyy/mm/dd) :{% render_field filter.form.crt_created_on class="form-control" %}
+                                            </div>
+
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Price :{% render_field filter.form.crt_item_price class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Quantity :{% render_field filter.form.crt_item_qty class="form-control" %}
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" name="action" value="search" class="btn btn-cxt text-white">
+                                             <span class="fa fa-search"></span> Search
+                                        </button>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
+                                             <span class="fa fa-file-pdf-o"></span> Export PDF
+                </button>
+
+                <table class="table table-bordered tablemanager">
+                    <thead>
+                        <tr>
+                            <th class="text-center">SKU</th>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Seller Email</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Created On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for item in filter.qs %}
+                        <tr>
+                            <td>
+                                <span class="listing ">{{ item.crt_item_SKU }}</span>
+                            </td>
+                            <td class="text-center"><span class="listing">{{ item.crt_item_name }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{ item.user.email }}</span>
+                            </td>
+                            <td>
+                                <span class="listing">{{ item.crt_item_qty }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">&#8377; {{ item.crt_item_price }}</span>
+                            </td>
+
+                            <td>
+                                <span class="listing text-center">{{ item.crt_item_status }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="listing">{{ item.crt_created_on|date:"M d, Y" }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No data</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block customscript %}
+<script>
+    function check(e) {
+        e.preventDefault();
+        // console.log($("#filter_input").val())
+
+        $('#export-pdf').bind('click', function(e) {
+            e.preventDefault();
+            var search = $("#filter_input").val();
+            var by = $("#filter_by").val();
+            if (search == "" || search == null) {
+                window.location.href = "/admin/crt-item-report/pdf";
+            } else {
+
+                window.location.href = "/admin/crt-item-report/" + by + "/" + search + "/pdf";
+            }
+        });
+    }
+</script>
+
+{% endblock customscript %}
+
+<!-- ############################################################################################################ -->
+<a id="export-pdf" href="#" onclick="check(event);" class="link-effect" style="float:right; cursor: pointer;">
+    <span class="cat align-middle my-2 pl-3 ">
+        <img class="" src="https://s.svgbox.net/hero-solid.svg?ic=plus-sm&fill=13775a" width="20" height="20">
+        Export report As PDF
+    </span>
+</a>
+
+<div class="tab-inn">
+    <div class="table-responsive table-user">
+        <table class="table table-hover tablemanager">{% csrf_token %}
+            <thead>
+                <tr>
+
+                    <th class="text-center">SKU</th>
+                    <th class="text-center">Item Namess</th>
+                    <th class="text-center">Seller Email</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>
+                        <span class="listing ">{{ item.crt_item_SKU }}</span>
+                    </td>
+
+                    <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.crt_item_name }}</span></a>
+                    </td>
+                    <td>
+                        <span class="listing ">{{ item.user.email }}</span>
+                    </td>
+                    <td>
+                        <span class="listing">{{ item.crt_item_qty }}</span>
+                    </td>
+                    <td>
+                        <span class="listing ">&#8377; {{ item.crt_item_price }}</span>
+                    </td>
+                    <td>
+                        <span class="listing text-center">{{ item.crt_item_status }}</span>
+                    </td>
+                    <td class="text-center">
+                        <span class="listing">{{ item.crt_created_on|date:"M d, Y" }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+    <button id="loadmore-btn" class="btn-cxt">Load more</button>
+</div>
+</div>
+</div>
+</div>
+</div>

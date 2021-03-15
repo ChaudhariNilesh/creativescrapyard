@@ -71,7 +71,7 @@ class tbl_scrapitems(models.Model):
     scp_created_on = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     scp_last_modified = models.DateTimeField(auto_now_add=True, null=False, blank=False)
     scp_sub_category = models.ForeignKey(SubScrapCategory, on_delete=models.SET_DEFAULT, default=1)
-    user = models.ForeignKey(User, on_delete=models.RESTRICT,related_name="seller_id")
+    user = models.ForeignKey(User, on_delete=models.RESTRICT)
     username = models.ForeignKey(User, on_delete = models.DO_NOTHING,related_name="buyer_username",null=True,blank=True)
 
     def __str__(self):
@@ -179,10 +179,10 @@ class Issues(models.Model):
     issue_msg = models.TextField(max_length=100,null=True,blank=True)
     issue_status = models.PositiveIntegerField(choices=ISSUE_STATUS_CHOICES,default=1)
     issue_date = models.DateTimeField(auto_now_add=True, null=False, blank=False)
-    crt_item = models.PositiveIntegerField(null=True,blank=True)
-    scp_item = models.PositiveIntegerField(null=True,blank=True)
-    # crt_item_id = models.ForeignKey(tbl_creativeitems,on_delete=models.DO_NOTHING,null=True,blank=False)
-    # scp_item = models.ForeignKey(tbl_scrapitems,on_delete=models.DO_NOTHING,null=True,blank=False)
+    # crt_item = models.PositiveIntegerField(null=True,blank=True)
+    # scp_item = models.PositiveIntegerField(null=True,blank=True)
+    crt_item = models.ForeignKey(tbl_creativeitems_mst,on_delete=models.DO_NOTHING,null=True,blank=False)
+    scp_item = models.ForeignKey(tbl_scrapitems,on_delete=models.DO_NOTHING,null=True,blank=False)
     reported_user = models.ForeignKey(User,on_delete=models.DO_NOTHING,null=True,blank=True,related_name='reportee')
     user=models.ForeignKey(User,on_delete=models.DO_NOTHING,related_name='reporter')
     

@@ -50,7 +50,7 @@
                             <th class="text-center">Product ID</th>
                             <th class="text-center">Product Name</th>
                             <th class="text-center">Seller Name</th>
-                        <th class="text-center">Status</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Quantity</th>
                             <th class="text-center">Price</th>
                             <th class="text-center">Total</th>
@@ -123,7 +123,7 @@
                             Cost Price :
                         </div>
 
-                        <div class="col">&#8377; {{ totalPrice.tot|sub:commission|floatformat:2 }}</div>
+                        <div class="col">&#8377; {{ totalPrice.tot|floatformat:2|sub:commission|floatformat:2 }}</div>
                     </div>
                     <hr>
                     <div class="row">

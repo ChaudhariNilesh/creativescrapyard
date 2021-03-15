@@ -1,0 +1,27 @@
+[{
+
+        "pk": 3,
+        "username": "aaa",
+        "email": "nileshchaudhary1905@gmail.com",
+        "is_active": true
+
+    },
+    {
+
+        "pk": 6,
+
+        "username": "nylesh",
+        "email": "nylesh963@gmail.com",
+        "is_active": true
+
+    },
+    {
+
+        "pk": 7,
+
+        "username": "nilesh-123",
+        "email": "nileshchaudhary89.nc@gmail.com",
+        "is_active": true
+
+    }
+]

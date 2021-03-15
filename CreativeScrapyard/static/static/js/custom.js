@@ -168,6 +168,8 @@ $(function() {
 
     var contact = function() {
         $("#contactBtn.btn-scp").click(function(e) {
+            const user = $(this).attr("data");
+            console.log(user);
             e.preventDefault();
             Swal.fire({
                     title: 'Are you sure?',
@@ -179,6 +181,7 @@ $(function() {
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result.isConfirmed) {
+
                         $.ajax({
                             url: "/contact-scrapseller/",
                             type: "POST",
@@ -186,6 +189,7 @@ $(function() {
                                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                                 action: 'post',
                                 type: "contactuser",
+                                seller: user
                             },
                             dataype: "json",
                             beforeSend: function() {
@@ -209,9 +213,13 @@ $(function() {
                                     if (data.send) {
                                         //Swal.fire(data.msg, "", "success");
                                         Swal.fire("Your mail id is shared with our seller.", "", "success");
+                                    } else {
+                                        Swal.fire(data.msg, "", "warning");
+
                                     }
                                 } else {
-                                    window.location.href = "/accounts/login/";
+                                    Swal.fire("Login or create account first !!", "", "warning");
+                                    // window.location.href = "/accounts/login/";
                                 }
 
                             },
@@ -226,7 +234,6 @@ $(function() {
                             }
                         });
 
-
                     }
                 })
                 // Swal.fire("Do You Want To Share Your Contact No. With The Seller So That They Can Contact You?", {
@@ -235,83 +242,47 @@ $(function() {
         });
     }
 
-    var priceSlider = function() {
-        let sym = "&#8377;"
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: 1000,
-            values: [100, 5000],
-            slide: function(event, ui) {
-                $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
-                $("#amount1").val(ui.values[0]);
-                $("#amount2").val(ui.values[1]);
-                
-            },
-            change: function( event, ui ) {
-                console.log(ui.values[0])
-                $.ajax({
-                    type: "POST",
-                    url: $('#priceform').attr('data-url'),
-                    data: {
-                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-                        min_value: ui.values[0],
-                        max_value: ui.values[1],
-                        item_type: $('#priceform').attr('item-type')
-                    },
-                    datatype: "json",
-                    success: function(data) {
-                        // console.log(data)
-                        // if (data.success) {
-                        //     Swal.fire(`'${text}' Badge Added!`, '', 'success')
-                        //     setTimeout(function() { location.reload() }, 2000);
-                        // } else {
-    
-                        //     Swal.fire(data.msg, '', 'error')
-    
-                        // }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        Swal.fire(
-                            jqXHR.status + "",
-                            textStatus + " : " + errorThrown,
-                            'error'
-                        )
-                    }
-                })
-            }
-        });
-        $("#amount").html(sym + $("#slider-range").slider("values", 0) +
-            " - " + sym + $("#slider-range").slider("values", 1));
-            $.ajax({
-                type: "POST",
-                url: "/creativestore/pricefilter/",
-                data: {
-                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-                    min_value: $("#slider-range").slider("values", 0),
-                    max_value: $("#slider-range").slider("values", 1)
-                },
-                datatype: "json",
-                success: function(data) {
-                    // console.log(data)
-                    // if (data.success) {
-                    //     Swal.fire(`'${text}' Badge Added!`, '', 'success')
-                    //     setTimeout(function() { location.reload() }, 2000);
-                    // } else {
-
-                    //     Swal.fire(data.msg, '', 'error')
-
-                    // }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    Swal.fire(
-                        jqXHR.status + "",
-                        textStatus + " : " + errorThrown,
-                        'error'
-                    )
-                }
-            })
-        };
+    // var priceSlider = function() {
+    //     let sym = "&#8377;"
+    //     $("#slider-range").slider({
+    //         range: true,
+    //         min: 100,
+    //         max: 1000,
+    //         values: [100, 1000],
+    //         slide: function(event, ui) {
+    //             $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
+    //             $("#amount1").val(ui.values[0]);
+    //             $("#amount2").val('250');
+    //         },
+    //         change: function(event, ui) {
+    //             $("#priceform").submit();
+    //             // console.log(ui.values[0])
+    //             // $.ajax({
+    //             //     type: "POST",
+    //             //     url: $('#priceform').attr('data-url'),
+    //             //     data: {
+    //             //         csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+    //             //         min_value: ui.values[0],
+    //             //         max_value: ui.values[1],
+    //             //         item_type: $('#priceform').attr('item-type')
+    //             //     },
+    //             //     // datatype: "html",
+    //             //     success: function(data) {
+    //             //         // $(".prd-loop").html(data)
+    //             //     },
+    //             //     error: function(jqXHR, textStatus, errorThrown) {
+    //             //         Swal.fire(
+    //             //             jqXHR.status + "",
+    //             //             textStatus + " : " + errorThrown,
+    //             //             'error'
+    //             //         )
+    //             //     }
+    //             // })
+    //         }
+    //     });
+    //     $("#amount").html(sym + $("#slider-range").slider("values", 0) +
+    //         " - " + sym + $("#slider-range").slider("values", 1));
+    // };
 
 
     var func_expand = function() {
@@ -549,11 +520,10 @@ $(function() {
         $("#review").rating({
             //"value":0,
             "click": function(e) {
-                if(e.stars>0)
-                {
-                console.log(e); // {stars: 3, event: E.Event}
-                $("#rate").val(e.stars);
-                // alert(e.stars);
+                if (e.stars > 0) {
+                    console.log(e); // {stars: 3, event: E.Event}
+                    $("#rate").val(e.stars);
+                    // alert(e.stars);
                 }
             },
             'half': true,
@@ -576,8 +546,26 @@ $(function() {
             //            event.preventDefault();
         });
     }
+    var tableManagerReports = function() {
+            $('.tablemanager-report').tablemanager({
+                firstSort: [
+                    [1, 0],
 
-    //   Dom Ready
+                ],
+                // disable: ["last"],
+                appendFilterby: false,
+                debug: false,
+                vocabulary: {
+                    voc_show_rows: 'Rows Per Page'
+                },
+                pagination: true,
+                showrows: [5, 10, 20, 50, 100],
+                // disableFilterBy: [1]
+            });
+
+
+        }
+        //   Dom Ready
     $(function() {
         responsiveTab();
         prodGallery();
@@ -585,7 +573,7 @@ $(function() {
         //flatZoom();
         ArtistProductGal();
         //    changeProdHover();
-        priceSlider();
+        // priceSlider();
         prodLens();
         sideNav();
         contact();
@@ -603,6 +591,8 @@ $(function() {
         btnLoading();
         rating();
         //        loadSubCategory();
+
+        // tableManagerReports();
     });
 });
 

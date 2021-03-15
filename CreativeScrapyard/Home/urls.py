@@ -8,9 +8,12 @@ urlpatterns = [
     path('',home,name="home"),
     path('',include('Validations.urls')),    
     path('creativestore/',creativestore,name="creativestore"),
+    path('creativestore/',creativestore,name="crtpricefilter"),
     path('creativestore/<str:type>/<int:id>/',creativestore,name="creativestore"),
-    path('creativestore/pricefilter/',pricefilter,name="pricefilter"),
+   
     path('scrapyard/',scrapyard,name="scrapyard"),
+    path('scrapyard/',scrapyard,name="scppricefilter"),
+
     path('achievers/',achievers,name="achievers"),
 
     path('shop/',include('Items.urls')),

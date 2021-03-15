@@ -1,0 +1,7 @@
+django-mathfilters
+pycryptodome
+django-filter
+xhtml2pdf
+
+# WeasyPrint
+# django-report-builder

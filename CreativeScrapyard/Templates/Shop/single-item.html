@@ -12,7 +12,7 @@
             <div class="infomain">
                 <ol class="breadcrumb">
                     {% if is_creative %}
-                    <li class="breadcrumb-item"><a href="#">Creative Store</a></li>
+                    <li class="breadcrumb-item"><a href="#">Creative Store </a></li>
                     <li class="breadcrumb-item"><a href="#">{{product.crt_sub_category.crt_category}}</a></li>
                     <li class="breadcrumb-item"><a href="#">{{product.crt_sub_category}}</a></li>
                     <li class="breadcrumb-item active">{{product.crt_item_name}}</li>
@@ -32,20 +32,21 @@
                     <div class="col-md-6 col-12">
                         <div class="prod-gal">
                             <div id="sync1" class="owl-carousel owl-theme ">
-                            {%for image in images%}
+                                {%for image in images%}
                                 <div class="item">
                                     <div class="">
-                                        <a href="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{%endif%}">
-                                            <img id="img0" class="" src="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{%endif%}" data-zoom-image="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{%endif%}" width="540" height="680" alt="">
+                                        <a href="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{% endif %}">
+                                            <img id="img{{image.crt_img_id}}" class="" src="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{% endif %}" data-zoom-image="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{% endif %}"
+                                                width="540" height="680" alt="">
                                         </a>
                                     </div>
                                 </div>
-                            {% endfor %}
+                                {% endfor %}
                             </div>
 
                             <div id="sync2" class="owl-carousel owl-theme">
-                               {%for image in images%}
-                                <div class="item"><img src="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{%endif%}" alt="">
+                                {%for image in images%}
+                                <div class="item"><img src="{% if is_scrap %}{{image.scp_img_url.url}}{% elif is_creative %}{{image.crt_img_url.url}}{% endif %}" alt="">
                                 </div>
                                 {% endfor %}
                             </div>
@@ -76,11 +77,11 @@
 
                                                         {% if is_creative %}
                                                         <!--  -->
-                                                        <input type='hidden' value="101" name="crt_item_id">
+                                                        <input type='hidden' value="{{product.crt_item_id}}" name="crt_item_id">
                                                         <input type='hidden' value="1" name="issue_type">
                                                         <!--  -->
                                                         {% elif is_scrap %}
-                                                        <input type='hidden' value="201" name="scp_item_id">
+                                                        <input type='hidden' value="{{product.scp_item_id}}" name="scp_item_id">
                                                         <input type='hidden' value="2" name="issue_type">
                                                         <!--  -->
                                                         {% endif %}
@@ -115,7 +116,7 @@
                             <div class="byartist"><span><a href="{% url 'Authentication:profile' product.user.user_id %}">{% if is_creative %}{{product.user}}{% elif is_scrap %}{{product.user}}{% endif %}</a></span>
                             </div>
                             <p class="price">
-                                <span>&#8377;{% if is_scrap %}{{product.scp_item_price}}{% elif is_creative %}{{product.crt_item_price}}{%endif%}</span>
+                                <span>&#8377;{% if is_scrap %}{{product.scp_item_price}}{% elif is_creative %}{{product.crt_item_price}}{% endif %}</span>
                             </p>
                             <div class="short-des">
                                 <p>{% if is_creative %}{{product.crt_item_desc}}{% elif is_scrap %}{{product.scp_item_desc}}{% endif %}</p>
@@ -125,59 +126,45 @@
                             <div class="availStock">Availability : <span class="stock">IN stock</span></div>
                             {% endif %}
 
-                            <form id="form_buy" method="POST" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' 'buy-now' %}{% else %} # {%endif%}">{% csrf_token %} {% if is_creative %}
+                            <form id="form_buy" method="POST" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' 'buy-now' %}{% else %} # {% endif %}">{% csrf_token %} {% if is_creative %}
                                 <div class="form-group ">
                                     <label>Quantity : </label>
                                     <input class="form-control-inline" name="crt_item_qty" type="number" value="1" min="1" max="10">
-
-                                    <!-- <select class="form-control selectpicker " name="input-qty " id="input-qty ">
-                                        <option value="1 ">1</option>
-                                        <option value="2 ">2</option>
-                                        <option value="3 ">3</option>
-                                        <option value="4 ">4</option>
-                                        <option value="5 ">5</option>
-                                         </select> -->
                                 </div>
 
-                                {% endif %} {% comment %}
-                                <div class="form-group">
-                                    <label>Size : </label>
-                                    <select class="form-control  selectpicker" name="input-size" id="input-size">
-                                        <option value="s">S</option>
-                                        <option value="m">M</option>
-                                        <option value="l">L</option>
-                                        <option value="xl">XL</option>
-                                    </select>
-                                </div> {% endcomment %}
                                 <!-- if creative then below buttons-->
                                 <div class="form-group">
                                     {% if is_creative %}
-                                    <input class="form-control-inline" type="text" name="crt_item_id" value="17" hidden>
+                                    <input class="form-control-inline" type="text" name="crt_item_id" value="{{product.crt_item_id}}" hidden>
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+
                                     <button type="submit" class="btn-cxt btn-block mt-3" id="buyItem">Buy
-                                        Now</span></button> {% else %}
-                                    <button id="contactBtn" class="btn-scp btn-block  mt-3">Contact</span></button>
+                                        Now</span></button>
 
                                     <!-- <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=someone@gmail.com" style="color:white" class="btn-scp btn-block  mt-3" target="_blank">
                                     Contact</a>  -->
-                                    {% endif %}
+                                    {% endif %} {% else %}
+                                    <button id="contactBtn" data="{{product.user.email}}" class="btn-scp btn-block  mt-3">Contact</span></button> {% endif %}
+
                                 </div>
                             </form>
                             {% if is_creative %}
                             <form action="{% url 'Home:Items:Cart:addToCart' %}" method="post"> {% csrf_token %}
-                                <input class="form-control-inline" type="text" name="crt_item_id" value="16" hidden>
+                                <input class="form-control-inline" type="text" name="crt_item_id" value="{{product.crt_item_id}}" hidden>
+                                <input type="hidden" name="next" value="{{ request.path }}">
                                 <input class="form-control-inline" type="text" name="crt_item_qty" value="1" hidden>
+
                                 <div class="form-group">
                                     <button type="submit" class="btn-cxt btn-block" id="addcart"> Add to cart</button>
                                     </a>
                                 </div>
                             </form>
-                            <!-- <form>
-                                <div class="form-group chkPincode mt-3">
-                                    <input class="form-control" type="text" name="input-pincode" id="input-pincode" placeholder="Enter Pincode" style="width:142px;">
-                                    <button class="{% if is_creative %} btn-cxt {% else %} btn-scp {% endif %}" id="btn-chkPincode"> Check
-                                    </button>
+                            <div class="form-group">
+                                <div>
+                                    {% include 'includes/messages.html' %}
                                 </div>
-                            </form> -->
+                            </div>
+
                             {% else %} {% endif %}
                         </div>
                     </div>
@@ -194,11 +181,6 @@
                                 <div class="discription">
                                     <p>{% if is_creative %}{{product.crt_item_desc}}{% elif is_scrap %}{{product.scp_item_desc}}{% endif %}
                                     </p>
-                                    <!-- <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                                            passages, and more recently with desktop</p>
-
-                                        <p>Eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
                                 </div>
                             </div>
                             <div>
@@ -207,11 +189,11 @@
                                         <tbody>
                                             <tr>
                                                 <th>Item Category</th>
-                                                <td>{{product.crt_sub_category.crt_category}}</td>
+                                                <td>{%if is_creative %}{{product.crt_sub_category.crt_category}}{% elif is_scrap %}{{product.scp_sub_category.scp_category}}{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Item Type</th>
-                                                <td>{%if is_creative %}Creative Item {%elif is_scrap%}Scrap Item{%endif%}</td>
+                                                <td>{% if is_creative %}Creative Item {% elif is_scrap %}Scrap Item{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Item Name</th>
@@ -225,18 +207,9 @@
                                                 <th>Artist Name</th>
                                                 <td>{% if is_creative %}{{product.user}}{% elif is_scrap %}{{product.user}}{% endif %}</td>
                                             </tr>
-                                            {% comment %}
-                                            <tr>
-                                                <th>Colors</th>
-                                                <td>Red, Blue, Green</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Size</th>
-                                                <td>S,M,L,XL,XXL</td>
-                                            </tr> {% endcomment %}
                                             <tr>
                                                 <th>Weight</th>
-                                                <td>{% if is_creative %}{{product.crt_item_weight}}{% elif is_scrap %}{{product.scp_item_weight}}{% endif %}</td>
+                                                <td>{% if is_creative %}{{product.crt_item_weight}} gm{% elif is_scrap %}{{product.scp_item_weight}} gm{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Height</th>
@@ -274,7 +247,7 @@
                         {% for product in artist_products %}
                         <div class="product_card border-0 rounded px-0 m-3">
                             <div class="imgbx  py-0">
-                                <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                                <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id %} {% else %} {% url 'Home:Items:scrapSingleItem' product.scp_item_id %} {% endif %}">
                                     <img class="img-fluid prod-thumb-img" src="{% if is_scrap %}{{product.get_image_url.scp_img_url.url}}{% elif is_creative %}{{product.get_image_url.crt_img_url.url}}{%endif%}" alt="" style="height: 280px; width: 220px;">
                                     <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                         <div class="caption">
@@ -298,50 +271,50 @@
 
 
                 </div>
-            </div>
 
 
-            <div class="explore-items mb-4">
-                <h2 class="pb-1">Explore More Items</h2>
-                <div class="mx-3">
-                    <div class="d-md-flex row">
-                        {%for product in explore_products%}
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="product_card border-0 rounded px-0 mt-3">
-                                <div class="imgbx py-0">
-                                    <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                                        <img class="img-fluid prod-thumb-img grid" src="{% if is_scrap %}{{product.get_image_url.scp_img_url.url}}{% elif is_creative %}{{product.get_image_url.crt_img_url.url}}{%endif%}" style="height:280px;width:220px" alt="" change-src="{% static 'img/products/2.jpg' %}">
-                                        <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
-                                            <div class="caption">
 
-                                                <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
-                                                    {% if is_scrap %}{{product.scp_item_name}}{% elif is_creative %}{{product.crt_item_name}}{%endif%}</p>
-                                                <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
-                                                    &#8377; {% if is_scrap %}{{product.scp_item_price}}{% elif is_creative %}{{product.crt_item_price}}{%endif%}</p>
+                <div class="explore-items mb-4">
+                    <h2 class="pb-1">Explore More Items</h2>
+                    <div class="mx-3">
+                        <div class="d-md-flex row">
+                            {%for product in explore_products%}
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="product_card border-0 rounded px-0 mt-3">
+                                    <div class="imgbx py-0">
+                                        <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id  %} {% else %} {% url 'Home:Items:scrapSingleItem' product.scp_item_id %} {% endif %}">
+                                            <img class="img-fluid prod-thumb-img grid" src="{% if is_scrap %}{{product.get_image_url.scp_img_url.url}}{% elif is_creative %}{{product.get_image_url.crt_img_url.url}} {% endif %}" style="height:280px;width:220px" alt="" change-src="{% static 'img/products/2.jpg' %}">
+                                            <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                                                <div class="caption">
 
+                                                    <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                                        {% if is_scrap %}{{product.scp_item_name}}{% elif is_creative %}{{product.crt_item_name}}{% endif %}</p>
+                                                    <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                                        &#8377; {% if is_scrap %}{{product.scp_item_price}}{% elif is_creative %}{{product.crt_item_price}}{% endif %}</p>
+
+                                                </div>
+                                                <a href="#">
+                                                    <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {%endif%}</button>
+                                                </a>
+                                                {% if is_creative and tab == 'creative' %}
+                                                <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
+                                                        class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
+                                                            aria-hidden="true"></i></button></a> {% else %} {% endif %}
                                             </div>
-                                            <a href="#">
-                                                <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{%if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {%endif%}</button>
-                                            </a>
-                                            {% if is_creative and tab == 'creative' %}
-                                            <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
-                                                    class="btn-cxt shadow-none px-3 mx-2"><i class="fa fa-shopping-cart"
-                                                        aria-hidden="true"></i></button></a> {% else %} {% endif %}
-                                        </div>
-                                    </a>
+                                        </a>
 
+                                    </div>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
-            </div>
     </section>
     </div>
 
 
-    {% endblock %} {% block customscript%}
+    {% endblock %} {% block customscript %}
     <script>
         $("#issueForm").submit(function(e) {
             e.preventDefault();
@@ -354,20 +327,27 @@
                 context: form,
                 dataType: 'json',
                 success: function(data) {
+                    // console.log(data);
+                    if (data.dbError) {
+                        // console.log("db");
+                        $("#reportIssueModal").modal("hide");
+                        Swal.fire(
+                            data.msg, "", "warning");
 
-                    if (data.errors) {
+                    } else if (data.errors) {
+                        // console.log("formError");
                         $(".invalid-feedback").remove();
                         $("#reportIssueModal").modal("show");
-                        if (data.errors.issue_sub) {
+                        if (data.msg.issue_sub) {
                             $("#issue_sub").removeClass("is-valid is-invalid");
-                            $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_sub + "</div>");
+                            $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.msg.issue_sub + "</div>");
                         } else {
                             $("#issue_sub").removeClass("is-valid is-invalid");
                             $("#issue_sub").addClass("is-valid");
                         }
-                        if (data.errors.issue_msg) {
+                        if (data.msg.issue_msg) {
                             $("#issue_msg").removeClass("is-valid is-invalid");
-                            $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_msg + "</div>");
+                            $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.msg.issue_msg + "</div>");
                         } else {
                             $("#issue_msg").removeClass("is-valid is-invalid");
                             $("#issue_msg").addClass("is-valid");
