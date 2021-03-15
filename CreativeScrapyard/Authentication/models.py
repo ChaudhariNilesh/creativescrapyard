@@ -55,7 +55,7 @@ class Profile(models.Model):
     #user_mobile = models.CharField(max_length=10, unique=True, null=False, blank=False)
     user_gender = models.CharField(max_length=1, choices=GENDER_TYPE, null=False)
     is_verified = models.BooleanField(null=False, default=False)
-    user_rating = models.DecimalField(null=True,decimal_places=1, max_digits=2,blank=True)
+    user_rating = models.DecimalField(null=True,decimal_places=1, max_digits=2,blank=True,default=0.0)
 
     def __str__(self):
         return self.user.username

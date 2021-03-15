@@ -5,7 +5,10 @@
     Order details
 </div>
 <hr />
+ <div>
+                                {% include 'includes/messages.html' %}
 
+                            </div>
 <div class="bx-shd my-3 py-2 px-3">
     <div class="row py-3">
         <div class="col">
@@ -320,7 +323,7 @@
         </div>
     </div>
     {% endfor %} {% endwith %}
-</div> {% endcomment %} {% endblock %}
+</div> {% endcomment %} 
 
 
 <div class="py-3 table-responsive">
@@ -387,7 +390,7 @@
                             <a href="#" data-toggle="modal" data-target=".report_model_sm">
                                 <i class="fas fa-flag report-flag"></i>
                             </a>
-                        </span> -->
+                        </span> -->                  
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -398,19 +401,21 @@
           </button>
             </div>
             <div class="modal-body">
+                <form action="{%url 'Authentication:order_details'%}" method="POST">
+                {% csrf_token %}
                 <div class="container">
-                    <form action="" method="GET">
-                        <h6>Rate:</h6>
-                        <div id="review"></div>
+                        <input type="text" name="crt_item_id" value=17>
+                    <h6>Rate:</h6>
+                        <input class="form-control-inline" name="item_rating" type="number" min="1.0" max="5.0" step="0.5" required>/5.0
                         <h6>Review(Optional):</h6>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </form>
+                        <textarea class="form-control" name="item_review" id="exampleFormControlTextarea1" rows="3"></textarea>    
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn pri-bg-color">Send Review</button>
                 </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn pri-bg-color">Send Review</button>
-            </div>
+          
         </div>
     </div>
 </div>
+{% endblock %}
