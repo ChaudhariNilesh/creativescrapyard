@@ -785,6 +785,7 @@ def order_history(request, action='current'):
 @login_required
 def order_details(request, id=None):
     template = "account/dashboard/order-details.html"
+    
     if request.method=='POST':
         print(request.POST)
         rate=request.POST.get('item_rating',0.0)

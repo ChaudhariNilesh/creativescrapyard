@@ -74,7 +74,7 @@ def adminindex(request):
         return redirect('CustomAdmin:login')
 
 def adminAccount(request):
-    if request.session.get('user'): 
+    if request.user.is_superuser: 
         template = 'custom-admin/account-settings/admin-account.html'
         # admin = request.user.is_authenticated
         # context={
@@ -688,7 +688,7 @@ def orderdetails(request,id):
         orderDetails = tbl_orders_details.objects.filter(order_id = id) #.annotate(totalPrice=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
         totalPrice = tbl_orders_details.objects.filter(order_id = id).aggregate(tot = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
         commission = float(totalPrice['tot']) * 0.2
-        print(totalPrice)
+        # print(totalPrice)
         try:
             payment = Payment.objects.get(order)
             print(payment)

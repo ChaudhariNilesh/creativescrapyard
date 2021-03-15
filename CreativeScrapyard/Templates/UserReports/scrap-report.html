@@ -1,5 +1,9 @@
-{% extends 'custom-admin/common.html' %} {% load widget_tweaks %}{% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+{% extends 'account/base-dashboard.html' %} {% load widget_tweaks %}
+<!--  -->
+{% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}" />{% endblock %}
+<!--  -->
+{% block base %}
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="col-md-12">
@@ -8,7 +12,7 @@
                     Report of Scrap items
                 </div>
                 <hr/>
-                <div id="accordion">
+                <div id="accordion" style="margin-bottom: 10px;">
                     <div class="card">
                         <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <h5 class="mb-0">
@@ -47,7 +51,7 @@
                                             </div>
 
                                         </div>
-                                        <button type="submit" name="action" value="search" class="btn btn-cxt text-white">
+                                        <button type="submit" name="action" value="search" class="btn btn-sm pri-bg-color">
                                              <span class="fa fa-search"></span> Search
                                         </button>
 
@@ -59,7 +63,7 @@
                     </div>
 
                 </div>
-                <button type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
+                <button type="submit" name="action" value="export" class="btn btn-sm pri-bg-color mt-2" style="float:right" form="prdReportForm">
                                              <span class="fa fa-file-pdf-o"></span> Export PDF
                 </button>
 
@@ -83,7 +87,7 @@
                             <td>
                                 <span class="listing ">{{ item.scp_item_SKU }}</span>
                             </td>
-                            <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.scp_item_name }}</span></a>
+                            <td class="text-center"><span class="listing">{{ item.scp_item_name }}</span></a>
                             </td>
                             <td>
                                 <span class="listing ">{{ item.user.email }}</span>

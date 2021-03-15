@@ -19,7 +19,10 @@ def home(request):
     #print(request.user)
     return render(request,template,{'is_home':True})
 
-def creativestore(request,type="all",id=None):
+def creativestore(request,type="all",id=None,products=None,tmp="d"):
+    # print(tmp,products)
+    min_value=100
+    max_value=1000
     template="Home/creativestore.html"
     subcategory=None
     parentcategory=None
@@ -34,36 +37,40 @@ def creativestore(request,type="all",id=None):
         products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories)
     elif type=="all":
         products = tbl_creativeitems_mst.objects.all()
-    
+
+    if request.POST:
+        products=tbl_creativeitems_mst.objects.filter(crt_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
+        min_value=request.POST.get('min_value')
+        max_value=request.POST.get('max_value')
+
     context={
         'products':products,
         'is_creative':True,
         'categories':categories,
         'sub_category':subcategory,
         'parent_category':parentcategory,
-        'type':type
+        'type':type,
+        'min_value':min_value,
+        'max_value':max_value,
         }
+    
     return render(request,template,context)    
 
-def pricefilter(request):
-    template="Home/creativestore.html"
-    if request.is_ajax():
-        print(request.POST)
-        if request.POST.get('item_type')=='creative':
-            products=tbl_creativeitems_mst.objects.filter(crt_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
-            print(products)
-        elif request.POST.get('item_type')=='scrap':
-            products=tbl_scrapitems.objects.filter(scp_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
-        
-        html = render_to_string('Home/creativestore.html', {'products': products,'is_creative':True})
-        return HttpResponse(html)
-    else:
-        raise PermissionDenied
+
 
 def scrapyard(request):
     template="Home/scrapyard.html"
     products = tbl_scrapitems.objects.all()
-    context={'products':products,'is_scrap':True}
+    min_value=100
+    max_value=1000
+    if request.POST:
+        products=tbl_scrapitems.objects.filter(scp_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
+        min_value=request.POST.get('min_value')
+        max_value=request.POST.get('max_value')
+
+    context={'products':products,'is_scrap':True,'min_value':min_value,
+        'max_value':max_value,}
+
     return render(request,template,context)    
 
 def achievers(request):

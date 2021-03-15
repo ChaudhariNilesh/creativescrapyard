@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{%  static 'css/creativestyle.css' %}"> {% endblock %} {% block content %}
 <div class="infomain mx-5">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href={%url 'Home:home'%}>Home</a></li>
+        <li class="breadcrumb-item"><a href="{%url 'Home:home' %}">Home</a></li>
         <li class="breadcrumb-item"><a href="{%url 'Home:creativestore'%}">Creative Store</a></li>
         <li class="breadcrumb-item"><a href="#">{{parent_category.crt_category_name|default:"All Categories"}}</a></li>
         {%if sub_category%}
@@ -43,30 +43,25 @@
                 <div class="text-bold border-bottom my-2 p-2">By Category: {{parent_category.crt_category_name}}</div>
                 <div>
                     <ul>
-                        {% if not type == 'all' %}
-                        {% for subcategory in parent_category.tbl_crt_subcategories_set.all %}
+                        {% if not type == 'all' %} {% for subcategory in parent_category.tbl_crt_subcategories_set.all %}
                         <li>
                             <a href="{% url 'Home:creativestore' 's' subcategory.crt_sub_category_id%}">{{subcategory.crt_sub_category_name}}</a>
                         </li>
-                        {% endfor %}
-                        
-                        {%else%}
-                        {% for subcategory in categories %}
-                         <li>
+                        {% endfor %} {%else%} {% for subcategory in categories %}
+                        <li>
                             <a href="{% url 'Home:creativestore' 'm' subcategory.crt_category_id%}">{{subcategory.crt_category_name}}</a>
                         </li>
-                        {%endfor%}
-                        {% endif %}
+                        {%endfor%} {% endif %}
                     </ul>
                 </div>
                 <div class="inFilter" id="byprice">
                     <div class="text-bold border-bottom my-2 p-2">By Price:</div>
                     <div class="priceFilter py-2">
                         <div id="slider-range"></div>
-                        <form method="post" id="priceform" action="" data-url="{%url 'Home:pricefilter'%}" item-type="creative">
-                        {% csrf_token %}
-                            <input type="hidden" id="amount1">
-                            <input type="hidden" id="amount2">
+                        <form method="post" id="priceform" action="{%url 'Home:crtpricefilter'%}">
+                            {% csrf_token %}
+                            <input type="hidden" id="amount1" name="min_value" value="{{min_value}}">
+                            <input type="hidden" id="amount2" name="max_value" value="{{max_value}}">
                         </form>
                         <p>
                             Range: <span id="amount"></span>
@@ -112,7 +107,7 @@
 
         </div>
         <div class="col-9">
-            <div class="d-md-flex row ">
+            <div class="d-md-flex row prd-loop">
                 {% for product in products %}
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="product_card border-0 rounded px-0 mt-3">
@@ -168,8 +163,33 @@
     </div>
 </div>
 
-{%endblock%}
+{%endblock%} {% block customscript %}
+<script>
+    $(function() {
+        let sym = "&#8377;"
+        let minval = '{{min_value}}'
+        let maxval = '{{max_value}}'
 
+        $("#slider-range").slider({
+            range: true,
+            min: 100,
+            max: 1000,
+            values: [minval, maxval],
+            slide: function(event, ui) {
+                $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
+                $("#amount1").val(ui.values[0]);
+                $("#amount2").val(ui.values[1]);
+            },
+            change: function(event, ui) {
+                $("#priceform").submit();
+
+            }
+        });
+        $("#amount").html(sym + $("#slider-range").slider("values", 0) +
+            " - " + sym + $("#slider-range").slider("values", 1));
+    })
+</script>
+{% endblock customscript %}
 
 
 <!-- ##################################################################### -->

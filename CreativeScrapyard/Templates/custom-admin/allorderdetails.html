@@ -51,13 +51,13 @@
                                     </td>
                                     <td class="text-center"><span class="list-enq-name">{{ detail.order.order_id }}</span>
                                     </td>
-                                    <td class="text-center"><a href="{% url 'Home:Items:creativeSingleItem' %}"><span class="list-enq-name">{{ detail.crt_item_mst.crt_item_id }}</span></a>
+                                    <td class="text-center"><a href="{% url 'Home:Items:creativeSingleItem' detail.crt_item_mst.crt_item_id %}"><span class="list-enq-name">{{ detail.crt_item_mst.crt_item_id }}</span></a>
                                     </td>
 
-                                    <td class="text-center"><a href="{% url 'Authentication:profile' %}"><span class="list-enq-name">{{ detail.crt_item_mst.user.first_name|capfirst }} {{ detail.crt_item_mst.user.last_name|capfirst }}
+                                    <td class="text-center"><a href="{% url 'Authentication:profile' detail.crt_item_mst.user.user_id %}"><span class="list-enq-name">{{ detail.crt_item_mst.user.first_name|capfirst }} {{ detail.crt_item_mst.user.last_name|capfirst }}
                                                 </span></a>
                                     </td>
-                                    <td class="text-center"><a href="{% url 'Authentication:profile' %}"><span class="list-enq-name">{{ detail.order.user.first_name|capfirst }} {{ detail.order.user.last_name|capfirst }}</span></a>
+                                    <td class="text-center"><a href="{% url 'Authentication:profile' detail.crt_item_mst.user.user_id  %}"><span class="list-enq-name">{{ detail.order.user.first_name|capfirst }} {{ detail.order.user.last_name|capfirst }}</span></a>
                                     </td>
 
                                     <td class="text-center"><span class="list-enq-name">{{ detail.crt_item_qty }}</span>
@@ -81,8 +81,7 @@
                                                     width="20" height="20"></button></a>
                                     </td>
                                 </tr>
-                                {% empty %}
-                                {% endfor %}
+                                {% empty %} {% endfor %}
 
 
                                 <!-- {% for i in '012'|make_list %}

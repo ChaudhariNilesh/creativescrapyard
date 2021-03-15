@@ -1,5 +1,9 @@
-{% extends 'custom-admin/common.html' %} {% load mathfilters %}{% load widget_tweaks %}{% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
-<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+{% extends 'account/base-dashboard.html' %} {% load widget_tweaks %} {% load mathfilters %}
+<!--  -->
+{% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}" /> {% endblock %}
+<!--  -->
+{% block base %}
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="col-md-12">
@@ -8,7 +12,7 @@
                     Report of Orders
                 </div>
                 <hr/>
-                <div id="accordion">
+                <div id="accordion" style="margin-bottom: 10px;">
                     <div class="card">
                         <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <h5 class="mb-0">
@@ -21,9 +25,7 @@
                                     <div class="well">
                                         <!-- <h3 style="margin-top: 0">Filter(s)</h3> -->
                                         <div class="row">
-                                            <div class="form-group col-sm-3 col-md-4">
-                                                Seller Name : {% render_field filter.form.seller_name class="form-control" %}
-                                            </div>
+
                                             <div class="form-group col-sm-3 col-md-4">
                                                 Buyer Name : {% render_field filter.form.buyer_name class="form-control" %}
                                             </div>
@@ -54,7 +56,7 @@
 
 
                                         </div>
-                                        <button type="submit" name="action" value="search" class="btn btn-cxt text-white">
+                                        <button type="submit" name="action" value="search" class="btn btn-sm pri-bg-color">
                                              <span class="fa fa-search"></span> Search
                                         </button>
 
@@ -66,7 +68,7 @@
                     </div>
 
                 </div>
-                <button type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
+                <button type="submit" name="action" value="export" class="btn btn-sm pri-bg-color mt-2" style="float:right" form="prdReportForm">
                                              <span class="fa fa-file-pdf-o"></span> Export PDF
                 </button>
 
@@ -74,7 +76,6 @@
                     <thead>
                         <tr>
 
-                            <th class="text-center">Seller Name</th>
                             <th class="text-center">Buyer Name</th>
                             <th class="text-center">Category Name</th>
                             <th class="text-center">Item Name</th>
@@ -82,6 +83,7 @@
                             <th class="text-center">Quantity</th>
                             <th class="text-center">Price</th>
                             <th class="text-center">Total</th>
+                            <th class="text-center">Commission</th>
                             <th class="text-center">Order Date</th>
                             <th class="text-center">Delivery Date</th>
                         </tr>
@@ -90,11 +92,8 @@
 
                         {% for order in filter.qs %}
                         <tr>
-                            <td>
-                                <span class="listing ">{{  order.crt_item_mst.user.get_full_name|capfirst  }}</span>
-                            </td>
 
-                            <td class="text-center"><a href="#"><span class="list-enq-name">{{ order.order.person_name }}</span></a>
+                            <td class="text-center"><span class="listing">{{ order.order.person_name }}</span>
                             </td>
                             <td>
                                 <span class="listing ">{{  order.crt_item_mst.crt_sub_category.crt_sub_category_name }}</span>
@@ -114,8 +113,15 @@
                             <td>
                                 <span class="listing ">&#8377;{{  order.unit_price|mul:order.crt_item_qty  }}</span>
                             </td>
+                            {% if order.item_status == 2 %}
                             <td class="text-center">
-                                <span class="listing">&#8377;{{  order.order.order_date |date:"M d, Y" }}</span>
+                                <span class="listing">&#8377;{{  order.unit_price|mul:order.crt_item_qty|floatformat:2|mul:0.2|floatformat:2  }}</span>
+                            </td>
+                            {% else %}
+                            <td class="text-center">--</td>
+                            {% endif %}
+                            <td class="text-center">
+                                <span class="listing">{{  order.order.order_date |date:"M d, Y" }}</span>
                             </td>
                             <td class="text-center">
                                 <span class="listing">{{  order.order.delivery_date |date:"M d, Y" }}</span>

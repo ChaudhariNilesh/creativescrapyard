@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'Payments',
     # 'report_builder',
     'Reports',
+    'UserReports',
     # 'slick_reporting',
     # 'crispy_forms',
     # 'weasyprint',

@@ -986,11 +986,9 @@ $(function() {
             // disable: ["last"],
             appendFilterby: false,
             debug: false,
-            vocabulary: {
-                voc_show_rows: 'Rows Per Page'
-            },
+
             pagination: true,
-            showrows: [5, 10, 20, 50, 100],
+
             // disableFilterBy: [1]
         });
 
@@ -1027,7 +1025,7 @@ $(function() {
 
         selectUserEmail();
 
-        tableManagerReports();
+        // tableManagerReports();
         // readMsg();
         //  reportTableManager();
     });
