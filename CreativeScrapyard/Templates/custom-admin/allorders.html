@@ -2,6 +2,7 @@
 <div class="page-title">
     All Orders
     <hr>
+    <div>{% include 'includes/messages.html' %}</div>
 </div>
 <div class="tab-inn">
     <div class="table-responsive table-user">
@@ -32,15 +33,18 @@
                     <td class="text-center">&#8377; {{ order.total_amt }}
                     </td>
                     <td class="text-center">
-                        <select class="p-1 ord-status">
-                            <option value="Pending" {% if order.delivery_status == 1 %}selected{% endif %}>Pending</option>
-                            <option value="Completed" {% if order.delivery_status == 2 %}selected{% endif %}>Dispatched</option>
-                            <option value="Cancelled" {% if order.delivery_status == 3 %}selected{% endif %}>Delivered</option>
-                            <option value="Cancelled" {% if order.delivery_status == 4 %}selected{% endif %}>Cancelled</option>
+                        <form method="post" id="statusUpdate">{% csrf_token %}
+                        <input type="hidden" name="ordId" value="{{ order.order_id }}">
+                        <select class="p-1 ord-status" name="currentStatus">
+                            <option value="1" {% if order.delivery_status == 1 %}selected{% endif %}>Pending</option>
+                            <option value="2" {% if order.delivery_status == 2 %}selected{% endif %}>Dispatched</option>
+                            <option value="3" {% if order.delivery_status == 3 %}selected{% endif %}>Delivered</option>
+                            <option value="4" {% if order.delivery_status == 4 %}selected{% endif %}>Cancelled</option>
                         </select>
+                        </form>
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-sm pri-bg-color">Save</button>
+                        <button type="sunmit" class="btn btn-sm pri-bg-color" form="statusUpdate">Save</input>
                     </td>
                 </tr>
                 {% endfor %}
