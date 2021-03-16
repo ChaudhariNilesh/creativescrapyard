@@ -225,7 +225,7 @@ def add_creative_product(request):
 
             # mstObj.crt_item_SKU = "CRT-SKU-" + str(random.randint(100, 999))
             mstObj.crt_item_SKU = createCrtSKU(subCat.crt_sub_category_name,itemName)
-            mstObj.crt_item_status = "Inactive"
+            mstObj.crt_item_status = "INACTIVE"
             mstObj.crt_sub_category = subCat
             mstObj.user = request.user
 
@@ -1043,7 +1043,7 @@ def add_scrap_product(request):
            
             scpObj = scpData.save(commit=False)
             scpObj.scp_item_SKU = createScpSKU(subCat.scp_sub_category_name,itemName)
-            scpObj.scp_item_status = "Inactive"
+            scpObj.scp_item_status = "INACTIVE"
             scpObj.scp_sub_category = subCat
             scpObj.user = request.user
             scpObj.save()

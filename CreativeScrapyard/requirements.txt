@@ -2,6 +2,7 @@ django-mathfilters
 pycryptodome
 django-filter
 xhtml2pdf
+django-widget-tweaks
 
 # WeasyPrint
 # django-report-builder

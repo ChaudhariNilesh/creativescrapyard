@@ -45,7 +45,6 @@ def productReports(request,by=None,search=None,export=None):
         if request.POST.get("action")=="export":
             crtItem_filter = ProductFilter(request.POST, queryset=crtItems)
             today = timezone.now()
-            
             context = {
                 'reportType':'crt-report',
                 'today': today,
@@ -167,8 +166,19 @@ def orderReports(request,export=None):
         context={"orderDet":orderDet,"filter":orderDet_filter}
         
         if request.POST.get("action")=="export":
+
+            filter_by=""
+            for k,v in request.POST.items():
+                
+                if v and k!="csrfmiddlewaretoken" and k!="action":
+                    # print(k.replace('_',' ').title())
+                    filter_by+=str(k)+","
+                    filter_by = filter_by.replace('_',' ').title()
+
+
             orderDet_filter = OrderFilter(request.POST, queryset=orderDet)
             today = timezone.now()
+            # print(orderDet_filter.form)
             
         
             context = {
@@ -178,6 +188,7 @@ def orderReports(request,export=None):
                 'request': request,
                 'status':orderDet_filter.qs.values('item_status').annotate(statusCount=Count('item_status')),
                 'cnt':orderDet_filter.qs.aggregate(orderCount=Count('order_details_id')),
+                'filter_by':filter_by
             }
             pdf = render_to_pdf('Reports/report-pdf.html', context)
             

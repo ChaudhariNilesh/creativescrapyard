@@ -19,52 +19,64 @@ def home(request):
     #print(request.user)
     return render(request,template,{'is_home':True})
 
-def creativestore(request,type="all",id=None,products=None,tmp="d",sort=None):
+def creativestore(request,type="all",id=None,products=None,sort=None):
     # print(tmp,products)
     min_value=100
     max_value=1000
     template="Home/creativestore.html"
     subcategory=None
     parentcategory=None
+    search=""
     categories=tbl_crt_categories.objects.all()
     if type=="s":
         subcategory=get_object_or_404(tbl_crt_subcategories,crt_sub_category_id=id)
         parentcategory=subcategory.crt_category
         products = tbl_creativeitems_mst.objects.filter(crt_sub_category=id)
+       
+        if request.method == "POST":
+            products,min_value,max_value,search = FilterNSrch(request.POST,products)
+   
     elif type=="m":
         subcategories=tbl_crt_subcategories.objects.filter(crt_category=id)
         parentcategory=get_object_or_404(tbl_crt_categories.objects,crt_category_id=id)
         products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories)
+
+        if request.method == "POST":
+            products,min_value,max_value,search = FilterNSrch(request.POST,products)
+   
     elif type=="all":
         products = tbl_creativeitems_mst.objects.all()
+        
+        if request.method == "POST" :
+            products,min_value,max_value,search = FilterNSrch(request.POST,products)
+            
 
-    if request.POST and request.POST.get('min_value') is not None and request.POST.get('max_value') is not None:
-        products=tbl_creativeitems_mst.objects.filter(crt_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
-        min_value=request.POST.get('min_value')
-        max_value=request.POST.get('max_value')
-
-    if request.POST and request.POST.get('search') is not None:
-        products=tbl_creativeitems_mst.objects.filter(crt_item_name__icontains=request.POST.get('search'))
-    
     if sort is not None:
         if sort=="lh":
-            products=tbl_creativeitems_mst.objects.order_by("crt_item_price")
+            products=products.order_by("crt_item_price")
             sort="Low To High Price"
+
+
         elif sort=="hl":
-            products=tbl_creativeitems_mst.objects.order_by("-crt_item_price")
+            products=products.order_by("-crt_item_price")
             sort="High To Low Price"
+
         elif sort=="mr":
-            products=tbl_creativeitems_mst.objects.order_by("crt_created_on")
+            products=products.order_by("crt_created_on")
             sort="Most Recent"
+ 
         elif sort=="mr":
-            products=tbl_creativeitems_mst.objects.order_by("crt_created_on")
+            products=products.order_by("crt_created_on")
             sort="Most Recent"
+
+
         elif sort=="alpha":
-            products=tbl_creativeitems_mst.objects.order_by("crt_item_name")
+            products=products.order_by("crt_item_name")
             sort="Alphabetic"   
+
         elif sort=="top":
-            products=tbl_creativeitems_mst.objects.order_by("-user__profile__user_rating")
-            sort="Top Review Artist"         
+            products=products.order_by("-user__profile__user_rating")
+            sort="Top Review Artist"     
 
     context={
         'products':products,
@@ -76,11 +88,43 @@ def creativestore(request,type="all",id=None,products=None,tmp="d",sort=None):
         'sort':sort,
         'min_value':min_value,
         'max_value':max_value,
+        'search':search,
         }
     
-    return render(request,template,context)    
+    return render(request,template,context)  
+
+def FilterNSrch(postDate,prdObj,sort=None):
+
+    search=postDate.get('search',"")
+    min_value = postDate.get('min_value',100)
+    max_value = postDate.get('max_value',1000)
+    
+    if search:
+        productSrch=prdObj.filter(crt_item_name__icontains=search)
+        
+
+        if min_value and max_value:
+            products=productSrch.filter(crt_item_price__range=(min_value,max_value))
+          
+    
+    elif not search :
+            products=prdObj.filter(crt_item_price__range=(min_value,max_value))
+
+    return products,min_value,max_value,search
 
 
+# def priceFilter(min_value,max_value,prdObj):
+    
+#     products=prdObj.filter(crt_item_price__range=(min_value,max_value))
+
+#     return products,min_value,max_value
+
+# def priceFilter(postData,prdObj):
+    
+#     products=prdObj.filter(crt_item_price__range=(postData.get('min_value'),postData.get('max_value')))
+#     min_value=postData.get('min_value')
+#     max_value=postData.get('max_value')
+#     return products,min_value,max_value
 
 def scrapyard(request):
     template="Home/scrapyard.html"

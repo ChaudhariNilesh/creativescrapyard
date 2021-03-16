@@ -4,8 +4,8 @@ from Items.models import *
 from Authentication.models import User
 from Order.models import *
 from CustomAdmin import *
-
 from django import forms
+
 class ProductFilter(django_filters.FilterSet):
     crt_item_SKU = django_filters.CharFilter(field_name='crt_item_SKU',lookup_expr='icontains')
     crt_item_name = django_filters.CharFilter(field_name='crt_item_name',lookup_expr='icontains')
@@ -89,7 +89,7 @@ class OrderFilter(django_filters.FilterSet):
 
     seller_name = django_filters.CharFilter(field_name='crt_item_mst__user__username',lookup_expr='icontains')
     buyer_name = django_filters.CharFilter(field_name='order__person_name',lookup_expr='icontains')
-    sub_cat  = django_filters.ModelMultipleChoiceFilter(queryset=tbl_crt_subcategories.objects.all(),to_field_name='crt_sub_category_name',field_name="crt_item_mst__crt_sub_category__crt_sub_category_name")
+    sub_cat  = django_filters.ModelMultipleChoiceFilter(queryset=tbl_crt_subcategories.objects.all(),to_field_name='crt_sub_category_name',field_name="crt_item_mst__crt_sub_category__crt_sub_category_name",widget=forms.CheckboxSelectMultiple)
     item_name = django_filters.CharFilter(field_name='crt_item_mst__crt_item_name',lookup_expr='icontains')
     item_status = django_filters.ChoiceFilter(field_name='item_status',choices=ITEM_STATUS)
     unit_price = django_filters.RangeFilter(field_name='unit_price')

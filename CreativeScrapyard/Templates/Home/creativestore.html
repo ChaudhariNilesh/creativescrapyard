@@ -58,10 +58,11 @@
                     <div class="text-bold border-bottom my-2 p-2">By Price:</div>
                     <div class="priceFilter py-2">
                         <div id="slider-range"></div>
-                        <form method="post" id="priceform" action="{%url 'Home:crtpricefilter'%}">
+                        <form method="post" id="priceform">
                             {% csrf_token %}
                             <input type="hidden" id="amount1" name="min_value" value="{{min_value}}">
                             <input type="hidden" id="amount2" name="max_value" value="{{max_value}}">
+                            <input type="hidden" name="search" value="{{search|default:''}}">
                         </form>
                         <p>
                             Range: <span id="amount"></span>
@@ -107,7 +108,13 @@
 
         </div>
         <div class="col-9">
+            <div class="row px-2 text-center">
+                {% if search %}
+                <h5><i>Search results for item "{{search}}"</i></h5>
+                {% endif %}
+            </div>
             <div class="d-md-flex row prd-loop">
+
                 {% for product in products %}
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="product_card border-0 rounded px-0 mt-3">
@@ -182,6 +189,8 @@
             },
             change: function(event, ui) {
                 $("#priceform").submit();
+
+
 
             }
         });
