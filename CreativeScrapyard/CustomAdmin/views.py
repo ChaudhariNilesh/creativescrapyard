@@ -754,7 +754,9 @@ def allorderdetails(request,action='delivered'):
 def payment(request):
     if request.session.get('user'):    
         template = 'custom-admin/payment.html'
-        return render(request, template)
+        payments = Payment.objects.all()
+
+        return render(request, template, {"payments": payments})
     # elif request.session.post('post'):
 
     else:
