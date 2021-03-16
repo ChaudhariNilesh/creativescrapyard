@@ -17,10 +17,10 @@
 
                 <div class="row">
                     <div class="col-md-8 w-75">
-                        <form id="srchFrm" action="{% url 'Home:creativestoreSearch' %}" method="post" class="form-inline mt-2 mt-md-0">
+                        <form id="srchFrm" method="post" class="form-inline mt-2 mt-md-0">
                             {% csrf_token %}
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="search" placeholder="Search">
+                                <input type="text" class="form-control" name="search" placeholder="Search" value="{{search|default:''}}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">
                                         <i class="fa fa-search"></i>
@@ -79,9 +79,9 @@
             {% for category in categories%} {% cycle 'home-decor' 'lifestyle' 'accessories' 'jewellories' 'toys' 'electronics' 'arts' 'others' as categorycolor silent %}
             <div>
                 <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="{{categorycolor}}" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">{{category.crt_category_name}}</button>
+                    <button type="button" id="{{categorycolor}}" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.crt_category_name}}</button>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <div class="dropdown-menu" aria-labelledby="{{categorycolor}}">
                         {%for subcategory in category.tbl_crt_subcategories_set.all%}
                         <a class="dropdown-item" href="{% url 'Home:creativestore' 's' subcategory.crt_sub_category_id%}">{{subcategory.crt_sub_category_name}}</a> {%endfor%} {% comment %} <a class="dropdown-item" href="#">Decorative Cushions</a>
                         <a class="dropdown-item" href="#">Clocks</a>
@@ -207,5 +207,5 @@
             </div> {% endcomment %}
         </div>
 
-        </center>
+
     </div>
