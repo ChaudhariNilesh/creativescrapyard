@@ -10,7 +10,9 @@ urlpatterns = [
     path('creativestore/',creativestore,name="creativestore"),
     path('creativestore/',creativestore,name="crtpricefilter"),
     path('creativestore/<str:type>/<int:id>/',creativestore,name="creativestore"),
-   
+    path('creativestore/search/',creativestore,name="creativestoreSearch"),
+    
+    
     path('scrapyard/',scrapyard,name="scrapyard"),
     path('scrapyard/',scrapyard,name="scppricefilter"),
 

@@ -70,16 +70,16 @@
                                     </td>
                                     <td class="text-center">
 
-                                        {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
-                                        <form>
-                                            <a href="#" class="pay-view btn btn-sm pri-bg-color mr-1">
-                                                <img src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff" width="20" height="20" />
-                                            </a> {% endif %}
-                                        </form>
+                                        <!-- {% if title == 'Delivered Orders' or title == 'Returned Orders' or title == 'Cancelled Orders' %}
+                                        <form> -->
+                                        <a href="#" class="pay-view btn btn-sm pri-bg-color mr-1">
+                                            <img src="https://s2.svgbox.net/materialui.svg?ic=payments&color=fff" width="20" height="20" />
+                                            <!-- </a> {% endif %}
+                                        </form> -->
 
-                                        <a href="{% url 'CustomAdmin:orderdetails' detail.order.order_id %}" class="order-view btn btn-sm pri-bg-color ml-1">
-                                            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20" />
-                                        </a>
+                                            <a href="{% url 'CustomAdmin:orderdetails' detail.order.order_id %}" class="order-view btn btn-sm pri-bg-color ml-1">
+                                                <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20" />
+                                            </a>
                                     </td>
                                 </tr>
                                 {% empty %} {% endfor %}

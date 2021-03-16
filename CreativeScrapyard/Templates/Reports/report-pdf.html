@@ -104,14 +104,16 @@
 
                 <div class='header'>
                     <p class='title'>Creative Items Report - {{ today | date:"d/m/Y" }}</p>
-
                 </div>
 
                 <div class="list-group">
                     <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                 </div>
-                <div class="details">
 
+
+
+
+                <div class="details">
                     <table class="table">
                         <thead>
                             <tr>
@@ -280,6 +282,9 @@
                 <div class="list-group">
                     <p>Admin Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                     <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+                </div>
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by}}</p>
                 </div>
                 <div class="details">
 

@@ -19,29 +19,44 @@ def home(request):
     #print(request.user)
     return render(request,template,{'is_home':True})
 
-def creativestore(request,type="all",id=None,products=None,tmp="d"):
+def creativestore(request,type="all",id=None,products=None):
     # print(tmp,products)
     min_value=100
     max_value=1000
     template="Home/creativestore.html"
     subcategory=None
     parentcategory=None
+    
     categories=tbl_crt_categories.objects.all()
     if type=="s":
         subcategory=get_object_or_404(tbl_crt_subcategories,crt_sub_category_id=id)
         parentcategory=subcategory.crt_category
         products = tbl_creativeitems_mst.objects.filter(crt_sub_category=id)
+       
+        if request.POST:
+            products,min_value,max_value=priceFilter(request.POST,products)
+   
     elif type=="m":
         subcategories=tbl_crt_subcategories.objects.filter(crt_category=id)
         parentcategory=get_object_or_404(tbl_crt_categories.objects,crt_category_id=id)
         products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories)
+
+        if request.POST:
+            products,min_value,max_value=priceFilter(request.POST,products)
+   
     elif type=="all":
         products = tbl_creativeitems_mst.objects.all()
+        search=request.POST.get('search')
+        if request.POST and request.POST.get('search') is None :
+            products,min_value,max_value=priceFilter(request.POST,products)
 
-    if request.POST:
-        products=tbl_creativeitems_mst.objects.filter(crt_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
-        min_value=request.POST.get('min_value')
-        max_value=request.POST.get('max_value')
+        if request.POST and request.POST.get('search') is not None:
+            
+            products=tbl_creativeitems_mst.objects.filter(crt_item_name__icontains=request.POST.get('search'))
+            
+            if request.POST and request.POST.get('search') is None:
+                products,min_value,max_value=priceFilter(request.POST,products)
+            
 
     context={
         'products':products,
@@ -56,7 +71,11 @@ def creativestore(request,type="all",id=None,products=None,tmp="d"):
     
     return render(request,template,context)    
 
-
+def priceFilter(postData,prdObj):
+    products=prdObj.filter(crt_item_price__range=(postData.get('min_value'),postData.get('max_value')))
+    min_value=postData.get('min_value')
+    max_value=postData.get('max_value')
+    return products,min_value,max_value
 
 def scrapyard(request):
     template="Home/scrapyard.html"

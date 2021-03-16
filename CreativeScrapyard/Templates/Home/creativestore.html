@@ -62,6 +62,8 @@
                             {% csrf_token %}
                             <input type="hidden" id="amount1" name="min_value" value="{{min_value}}">
                             <input type="hidden" id="amount2" name="max_value" value="{{max_value}}">
+
+
                         </form>
                         <p>
                             Range: <span id="amount"></span>
@@ -182,6 +184,8 @@
             },
             change: function(event, ui) {
                 $("#priceform").submit();
+
+
 
             }
         });

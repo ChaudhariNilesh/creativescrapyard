@@ -12,9 +12,12 @@
                     <div class="card">
                         <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <h5 class="mb-0">
-                                <span class="apply-filter">Apply Filter(s)</span>
+                                <span class="apply-filter">Apply Filter(s) </span>
                             </h5>
                         </div>
+
+
+
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
                                 <form method="POST" id="prdReportForm"> {% csrf_token %}
@@ -28,8 +31,16 @@
                                                 Buyer Name : {% render_field filter.form.buyer_name class="form-control" %}
                                             </div>
                                             <div class="form-group col-sm-3 col-md-4">
-                                                Category Name : {% render_field filter.form.sub_cat class="form-control" %}
+                                                Category Names :
+                                                <br> {% for choice in filter.form.sub_cat %}
+                                                <label class="checkbox">
+                                                    {{ choice.tag }} {{ choice.choice_label }}
+                                                  </label> {% endfor %}
                                             </div>
+
+                                            <!-- <div class="form-group col-sm-3 col-md-4">
+                                                Category Name : {% render_field filter.form.sub_cat class="form-control" %}
+                                            </div> -->
                                             <div class="form-group col-sm-3 col-md-4">
                                                 Item Name : {% render_field filter.form.item_name class="form-control" %}
                                             </div>
@@ -66,7 +77,7 @@
                     </div>
 
                 </div>
-                <button type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
+                <button formtarget="_blank" type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
                                              <span class="fa fa-file-pdf-o"></span> Export PDF
                 </button>
 
@@ -115,7 +126,7 @@
                                 <span class="listing ">&#8377;{{  order.unit_price|mul:order.crt_item_qty  }}</span>
                             </td>
                             <td class="text-center">
-                                <span class="listing">&#8377;{{  order.order.order_date |date:"M d, Y" }}</span>
+                                <span class="listing">{{  order.order.order_date |date:"M d, Y" }}</span>
                             </td>
                             <td class="text-center">
                                 <span class="listing">{{  order.order.delivery_date |date:"M d, Y" }}</span>
