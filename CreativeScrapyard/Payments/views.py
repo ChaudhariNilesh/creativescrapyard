@@ -1,3 +1,5 @@
+from django.core.exceptions import PermissionDenied
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.conf import settings
@@ -5,18 +7,23 @@ from .models import Transaction,Payment
 from Cart.models import Cart
 from Order.models import tbl_orders_mst,tbl_orders_details
 from Items.models import tbl_creativeitems_mst
-from Authentication.models import Address
+from Authentication.models import Address,User
 
 from .paytm import generate_checksum, verify_checksum
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 
 def initiate_payment(request):
     
     if request.method == "POST":
         try:
             payOn = request.POST['pay_mtd']
+            # print(request.session.get("is_cartItem"))
             if not request.session.get("is_cartItem"):
                 
                 pid=request.session.get("product")
@@ -68,7 +75,8 @@ def initiate_payment(request):
                     del request.session['product']
                     del request.session['qty']
                 
-
+                    orderMail("placeOrder",orderMst)
+                    
                     messages.success(request, 'Order placed successfully.')
                     return redirect('Authentication:order_history')                
                 
@@ -145,15 +153,19 @@ def initiate_payment(request):
                             pickup_address=pickup_address,item_status=1,order=orderMst,crt_item_mst=crtItemObj)       
                     
                     if payOn=="1": #POD
-                        print("POD")
+                        # print("POD")
                         orderMst.order_status=True
                         orderMst.save()
-                        messages.success(request, 'Order placed successfully.')
                         cartitems = Cart.objects.filter(user_id=request.user.user_id)
                         cartitems.delete()
+                        
                         del request.session['is_cartItem']
                         del request.session['product']
-                        del request.session['qty']
+                        
+
+                        status=orderMail("placeOrder",orderMst)
+                        # print(status)
+                        messages.success(request, 'Order placed successfully.')
                         return redirect('Authentication:order_history')                
                     elif payOn == "2":  #paytm
                         # print("paytm")
@@ -180,17 +192,20 @@ def initiate_payment(request):
                         paytm_params['CHECKSUMHASH'] = checksum
                         # print('SENT: ', checksum)
                         #print(paytm_params)
+                        # print(request.session.get("is_cartItem"))     
+
+
 
                         return render(request, 'payments/redirect.html', context=paytm_params) 
                                
                 else:
-                    return redirect("Home:Items:creativeSingleItem")
+                    return redirect("Home:Items:creativestore")
 
         except Exception as e:
             print(e)
-            print(request.POST.get('next', '/'))
+            # print(request.POST.get('next', '/'))
             next = request.POST.get('next', '/')
-            messages.error(request, 'Some error occured, Try again.')
+            messages.error(request, 'Some error occured, Try again11.'+str(e))
             return redirect(next)
 
 
@@ -199,7 +214,9 @@ def initiate_payment(request):
 
 @csrf_exempt
 def callback(request):
+    
     if request.method == 'POST':
+        
         received_data = dict(request.POST)
         paytm_params = {}
         paytm_checksum = received_data['CHECKSUMHASH'][0]
@@ -212,6 +229,7 @@ def callback(request):
         is_valid_checksum = verify_checksum(paytm_params, settings.PAYTM_SECRET_KEY, str(paytm_checksum))
         if is_valid_checksum:
             received_data['message'] = "Checksum Matched"
+            received_data['is_creative'] = True
             # print(received_data)
             payed_order_id=int(*received_data['ORDERID'])
             txt_id = str(*received_data['TXNID'])
@@ -225,26 +243,70 @@ def callback(request):
 
             paymentObj=Payment(transaction_id=txt_id,payment_mode=pay_mode,payment_amt=pay_amt,payment_status=2,payment_remark=payment_remark,order=order)
             paymentObj.save()
-            
-            #print(request.user.user_id)
-            if request.session.get("is_cartItem"):
-                cartitems = Cart.objects.filter(user_id=order.user_id)
-                cartitems.delete()
-                del request.session['is_cartItem']
-                del request.session['product']
-            else:
-                del request.session['is_cartItem']
-                del request.session['product']
-                del request.session['qty']
+
+            status=orderMail("placeOrder",order)
+            # print(status)
             
         else:
             received_data['message'] = "Checksum Mismatched"
             return render(request, 'payments/callback.html', context=received_data)
         return render(request, 'payments/callback.html', context=received_data)
+    else:
+        #return render(request, 'payments/callback.html', {"is_creative":True})
+        raise PermissionDenied
+
+def orderMail(typeFor,order):
+    
+    if typeFor == "placeOrder":
+        emailmessage="Your order with Order ID : "+str(order.order_id)+" has been placed successfully."+"\nYour can check your order details at "\
+            + "http://127.0.0.1:8000/accounts/dashboard/orders/history/"
+        
+        emailmessage+="\n\nThank You."
+        try:
+
+            mail_subject = "Order Placed Successfully."
+            message = render_to_string('Order/order-mail.html', {
+                'message':str("\n")+emailmessage,
+                'user':User.objects.get(user_id=order.user_id),
+                'type':"placeOrder",
+            })
 
 
+            to_email = order.user.email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email,]
+            )
+            email.send()
 
+        except Exception as e:
+            
+            print("MAIL EXCEPTION : "+str(e))
+            return False     
+        else:
+            return True
+                
+def clearSession(request):
+    if request.is_ajax():
 
+        #  print(request.session.get("is_cartItem"))
+        # print(request.session.get("product"))
+        cart=request.session.get("product")
+        
+        # print(cart[0]['user_id'])
+        if request.session.get("is_cartItem"):
+            cartitems = Cart.objects.filter(user_id=cart[0]['user_id'])
+            cartitems.delete()
+            del request.session['is_cartItem']
+            del request.session['product']
+            
+        else:
+            del request.session['is_cartItem']
+            del request.session['product']
+            del request.session['qty']  
+
+        return JsonResponse({"status":True})
+    else:
+        raise PermissionDenied
 # def initiate_payment(request):
 #     if request.method == "GET":
 #         return render(request, 'payments/pay.html')

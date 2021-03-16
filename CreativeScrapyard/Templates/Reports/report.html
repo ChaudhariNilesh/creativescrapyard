@@ -1,0 +1,74 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block content %} {% endblock %}
+</head>
+
+<body>
+
+</body>
+
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebDataRocks Example</title>
+    <link href="https://cdn.webdatarocks.com/latest/webdatarocks.min.css" rel="stylesheet" />
+    <style>
+        toolbar-wrapper #wdr-toolbar li a svg path {
+            transform: translateZ(0);
+            fill: #d22a2a;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="background-color: aquamarine;">
+
+        <h1>Creative Scrapyard Reports{}</h1>
+    </div>
+    <script src="https://cdn.webdatarocks.com/latest/webdatarocks.toolbar.min.js"></script>
+    <script src="https://cdn.webdatarocks.com/latest/webdatarocks.js"></script>
+    <div id="pivot-container"></div>
+
+    <script>
+        var pivot = new WebDataRocks({
+            container: "pivot-container",
+            toolbar: true,
+            width: "100%",
+            height: 600,
+            report: {
+                "dataSource": {
+                    "dataSourceType": "json",
+                    "filename": "http://127.0.0.1:8000/media/user.json"
+                },
+                "slice": {
+                    "rows": [{
+                        "uniqueName": "Category"
+                    }],
+                    "columns": [{
+                        "uniqueName": "Country"
+                    }, {
+                        "uniqueName": "Measures"
+                    }],
+                    "measures": [{
+                        "uniqueName": "Price",
+                        "aggregation": "sum"
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

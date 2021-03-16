@@ -1,0 +1,142 @@
+{% extends 'account/base-dashboard.html' %} {% load widget_tweaks %} {% load mathfilters %}
+<!--  -->
+{% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}" /> {% endblock %}
+<!--  -->
+{% block base %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Report of Orders
+                </div>
+                <hr/>
+                <div id="accordion" style="margin-bottom: 10px;">
+                    <div class="card">
+                        <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h5 class="mb-0">
+                                <span class="apply-filter">Apply Filter(s)</span>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form method="POST" id="prdReportForm"> {% csrf_token %}
+                                    <div class="well">
+                                        <!-- <h3 style="margin-top: 0">Filter(s)</h3> -->
+                                        <div class="row">
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Buyer Name : {% render_field filter.form.buyer_name class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Category Name : {% render_field filter.form.sub_cat class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Name : {% render_field filter.form.item_name class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Order Status : {% render_field filter.form.item_status class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Unit Price : {% render_field filter.form.unit_price class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Quantity :{% render_field filter.form.crt_item_qty class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Order on (yyyy/mm/dd) :{% render_field filter.form.order_date class="form-control" %}
+                                            </div>
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Delivery Date (yyyy/mm/dd) :{% render_field filter.form.delivery_date class="form-control" %}
+                                            </div>
+
+
+                                        </div>
+                                        <button type="submit" name="action" value="search" class="btn btn-sm pri-bg-color">
+                                             <span class="fa fa-search"></span> Search
+                                        </button>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" name="action" value="export" class="btn btn-sm pri-bg-color mt-2" style="float:right" form="prdReportForm">
+                                             <span class="fa fa-file-pdf-o"></span> Export PDF
+                </button>
+
+                <table class="table table-bordered tablemanager">
+                    <thead>
+                        <tr>
+
+                            <th class="text-center">Buyer Name</th>
+                            <th class="text-center">Category Name</th>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Commission</th>
+                            <th class="text-center">Order Date</th>
+                            <th class="text-center">Delivery Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for order in filter.qs %}
+                        <tr>
+
+                            <td class="text-center"><span class="listing">{{ order.order.person_name }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{  order.crt_item_mst.crt_sub_category.crt_sub_category_name }}</span>
+                            </td>
+                            <td>
+                                <span class="listing">{{  order.crt_item_mst.crt_item_name  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{  order.get_item_status_display  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{  order.crt_item_qty  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">&#8377;{{  order.unit_price  }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">&#8377;{{  order.unit_price|mul:order.crt_item_qty  }}</span>
+                            </td>
+                            {% if order.item_status == 2 %}
+                            <td class="text-center">
+                                <span class="listing">&#8377;{{  order.unit_price|mul:order.crt_item_qty|floatformat:2|mul:0.2|floatformat:2  }}</span>
+                            </td>
+                            {% else %}
+                            <td class="text-center">--</td>
+                            {% endif %}
+                            <td class="text-center">
+                                <span class="listing">{{  order.order.order_date |date:"M d, Y" }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="listing">{{  order.order.delivery_date |date:"M d, Y" }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center text-muted">No data</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block customscript %} {% endblock customscript %}

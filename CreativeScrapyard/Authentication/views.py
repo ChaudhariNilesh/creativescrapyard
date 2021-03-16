@@ -125,8 +125,9 @@ def activateAccount(request,uidb64,token):
 
 
 def logout(request):
+    
     if (request.session.get('user') != None):
-        #print("exist")
+        # print("exist")
         request.session.delete()
         return redirect('Home:home')
     else:
@@ -588,6 +589,7 @@ def order_history(request, action='current'):
 @login_required
 def order_details(request, id=None):
     template = "account/dashboard/order-details.html"
+    
     if request.method=='POST':
         print(request.POST)
         rate=request.POST.get('item_rating',0.0)

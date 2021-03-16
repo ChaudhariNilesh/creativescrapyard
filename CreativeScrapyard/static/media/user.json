@@ -1,0 +1,77 @@
+[{
+        "model": "Items.tbl_creativeitems_mst",
+        "pk": 14,
+        "fields": {
+            "crt_item_name": "Product2updated2",
+            "crt_item_desc": "decp1updayed2",
+            "crt_item_weight": "1",
+            "crt_item_height": null,
+            "crt_item_width": null,
+            "crt_item_price": "100.25",
+            "crt_item_qty": 3,
+            "crt_item_SKU": "CRT-SKU-919",
+            "crt_item_status": "ACTIVE",
+            "crt_created_on": "2021-02-20T18:07:13.220Z",
+            "crt_last_modified": "2021-02-20T18:07:13.220Z",
+            "crt_sub_category": 2,
+            "user": 3
+        }
+    },
+    {
+        "model": "Items.tbl_creativeitems_mst",
+        "pk": 15,
+        "fields": {
+            "crt_item_name": "Product2updated",
+            "crt_item_desc": "decp1",
+            "crt_item_weight": "1",
+            "crt_item_height": null,
+            "crt_item_width": null,
+            "crt_item_price": "1.00",
+            "crt_item_qty": 1,
+            "crt_item_SKU": "CRT-TSH-PIL-1PLA",
+            "crt_item_status": "ACTIVE",
+            "crt_created_on": "2021-02-20T23:38:52.284Z",
+            "crt_last_modified": "2021-02-20T23:38:52.284Z",
+            "crt_sub_category": 3,
+            "user": 3
+        }
+    },
+    {
+        "model": "Items.tbl_creativeitems_mst",
+        "pk": 16,
+        "fields": {
+            "crt_item_name": "Creative Pillow",
+            "crt_item_desc": "new product desp",
+            "crt_item_weight": "1",
+            "crt_item_height": null,
+            "crt_item_width": null,
+            "crt_item_price": "196.50",
+            "crt_item_qty": 1,
+            "crt_item_SKU": "CRT-WAL-CRE-KTYD",
+            "crt_item_status": "ACTIVE",
+            "crt_created_on": "2021-02-22T05:15:16.554Z",
+            "crt_last_modified": "2021-02-22T05:15:16.554Z",
+            "crt_sub_category": 1,
+            "user": 3
+        }
+    },
+    {
+        "model": "Items.tbl_creativeitems_mst",
+        "pk": 17,
+        "fields": {
+            "crt_item_name": "Pillow",
+            "crt_item_desc": "This is a creative pillow best for home decor",
+            "crt_item_weight": "3",
+            "crt_item_height": null,
+            "crt_item_width": null,
+            "crt_item_price": "400.00",
+            "crt_item_qty": 1,
+            "crt_item_SKU": "CRT-WAL-PIL-1PLU",
+            "crt_item_status": "ACTIVE",
+            "crt_created_on": "2021-02-23T19:09:40.577Z",
+            "crt_last_modified": "2021-02-23T19:09:40.577Z",
+            "crt_sub_category": 1,
+            "user": 7
+        }
+    }
+]

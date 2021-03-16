@@ -1,0 +1,116 @@
+{% extends 'custom-admin/common.html' %} {% load widget_tweaks %}{% load static %} {% comment %} {%block breadcumb %}{% block breadcrumb-link%}
+<li class="breadcrumb-item active">User</li> {%endblock%} {%endblock%} {% endcomment %} {%block content%}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Report of Scrap items
+                </div>
+                <hr/>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header btn btn-link" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h5 class="mb-0">
+                                <span class="apply-filter">Apply Filter(s)</span>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form method="POST" id="prdReportForm"> {% csrf_token %}
+                                    <div class="well">
+                                        <!-- <h3 style="margin-top: 0">Filter(s)</h3> -->
+                                        <div class="row">
+                                            <div class="form-group col-sm-8 col-md-12">
+                                                Category: {% render_field filter.form.scp_sub_category class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item SKU : {% render_field filter.form.scp_item_SKU class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Name : {% render_field filter.form.scp_item_name class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Status :{% render_field filter.form.scp_item_status class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Created on (yyyy/mm/dd) :{% render_field filter.form.scp_created_on class="form-control" %}
+                                            </div>
+
+
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Price :{% render_field filter.form.scp_item_price class="form-control" %}
+                                            </div>
+                                            <div class="form-group col-sm-3 col-md-4">
+                                                Item Quantity :{% render_field filter.form.scp_item_qty class="form-control" %}
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" name="action" value="search" class="btn btn-cxt text-white">
+                                             <span class="fa fa-search"></span> Search
+                                        </button>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" name="action" value="export" class="btn btn-cxt text-white mt-2" style="float:right" form="prdReportForm">
+                                             <span class="fa fa-file-pdf-o"></span> Export PDF
+                </button>
+
+                <table class="table table-bordered tablemanager">
+                    <thead>
+                        <tr>
+                            <th class="text-center">SKU</th>
+                            <th class="text-center">Item Name</th>
+                            <th class="text-center">Seller Email</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Created On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for item in filter.qs %}
+
+                        <tr>
+                            <td>
+                                <span class="listing ">{{ item.scp_item_SKU }}</span>
+                            </td>
+                            <td class="text-center"><a href="#"><span class="list-enq-name">{{ item.scp_item_name }}</span></a>
+                            </td>
+                            <td>
+                                <span class="listing ">{{ item.user.email }}</span>
+                            </td>
+                            <td>
+                                <span class="listing">{{ item.scp_item_qty }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">&#8377; {{ item.scp_item_price }}</span>
+                            </td>
+
+                            <td>
+                                <span class="listing text-center">{{ item.scp_item_status }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="listing">{{ item.scp_created_on|date:"M d, Y" }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No data</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block customscript %} {% endblock customscript %}

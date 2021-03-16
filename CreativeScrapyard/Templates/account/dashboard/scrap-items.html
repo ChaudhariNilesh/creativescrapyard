@@ -32,7 +32,7 @@
                 {% for prd in myProducts %}
                 <tr>
                     <td scope="row" class="text-center">
-                        <a href="{% url 'Home:Items:scrapSingleItem' %}" class="link-effect">{{prd.scp_item_name}}</a></td>
+                        <a href="{% url 'Home:Items:scrapSingleItem' prd.scp_item_id %}" class="link-effect">{{prd.scp_item_name}}</a></td>
                     <td class="text-center">{{prd.scp_item_qty}}</td>
 
                     <td class="text-center">&#8377; {{prd.scp_item_price}}</td>
@@ -64,11 +64,19 @@
                     </td>
                 </tr>
                 {% endfor %}
+
+
             </tbody>
         </table>
     </div>
     <button id="loadmore-btn" class="btn btn-sm pri-bg-color btn-cxt">Load more</button>
 </div>
+
+
+
+{% endblock %}
+<!-- ################################################################### -->
+
 
 <!--Model popup-->
 <div class="modal fade bd-example-modal-lg-1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -277,5 +285,106 @@
         </div>
     </div>
 </div>
+<tr>
+    <td scope="row" class="text-center">
+        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Old Monitor</a></td>
+    <td class="text-center">1</td>
 
-{% endblock %}
+    <td class="text-center">&#8377; 800</td>
+    <td class="text-center">
+        <select class="p-1 ord-status">
+        <option value="Processing" selected>Active</option>
+        <option value="Shipping">Inactive</option>
+    </select>
+    </td>
+    <td class="text-center">1/01/21</td>
+    <td class="text-center">
+        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+        </a>
+        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' 1 %}">Edit</a>
+    </td>
+</tr>
+
+<tr>
+    <td scope="row" class="text-center">
+        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Tire</a></td>
+    <td class="text-center">4</td>
+
+    <td class="text-center">&#8377; 520</td>
+    <td class="text-center">
+        <select class="p-1 ord-status">
+        <option value="Processing" selected>Active</option>
+        <option value="Shipping">Inactive</option>
+    </select>
+    </td>
+    <td class="text-center">8/02/21</td>
+    <td class="text-center">
+        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+        </a>
+        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' 1 %}">Edit</a>
+    </td>
+</tr>
+<tr>
+    <td scope="row" class="text-center">
+        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Handle Broken Mug</a></td>
+    <td class="text-center">1</td>
+
+    <td class="text-center">&#8377; 70</td>
+    <td class="text-center">
+        <select class="p-1 ord-status">
+        <option value="Processing" selected>Active</option>
+        <option value="Shipping">Inactive</option>
+    </select>
+    </td>
+    <td class="text-center">10/02/21</td>
+    <td class="text-center">
+        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+        </a>
+        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' 1 %}">Edit</a>
+    </td>
+</tr>
+
+<tr>
+    <td scope="row" class="text-center">
+        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Old Cycle</a></td>
+    <td class="text-center">1</td>
+
+    <td class="text-center">&#8377; 800</td>
+    <td class="text-center">
+        <select class="p-1 ord-status">
+        <option value="Processing" selected>Active</option>
+        <option value="Shipping">Inactive</option>
+    </select>
+    </td>
+    <td class="text-center">15/02/21</td>
+    <td class="text-center">
+        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+        </a>
+        <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' 1 %}">Edit</a>
+    </td>
+</tr>
+<!-- {% with n='[1,2,3,4,5,6]' %} {% for i in n %}
+<tr>
+    <td scope="row" class="text-center">
+        <a href="{% url 'Home:Items:creativeSingleItem' %}" class="link-effect">Designer Cup</a></td>
+    <td class="text-center">50</td>
+
+    <td class="text-center">&#8377; 500</td>
+    <td class="text-center">
+        <select class="p-1 ord-status">
+        <option value="Processing" selected>Active</option>
+        <option value="Shipping">Inactive</option>
+    </select>
+    </td>
+    <td class="text-center">27/12/20</td>
+    <td class="text-center">
+        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
+            <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
+        </a>
+    </td>
+</tr>
+{% endfor %} {% endwith %} -->

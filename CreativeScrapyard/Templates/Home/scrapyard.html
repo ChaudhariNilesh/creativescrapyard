@@ -75,9 +75,10 @@
                 <div class="text-bold border-bottom my-2 p-2">By Price:</div>
                 <div class="priceFilter py-2">
                     <div id="slider-range"></div>
-                    <form method="post" action="">
-                        <input type="hidden" id="amount1">
-                        <input type="hidden" id="amount2">
+                    <form method="post" id="priceform" action="{%url 'Home:scppricefilter'%}">
+                        {% csrf_token %}
+                        <input type="hidden" id="amount1" name="min_value" value="{{min_value}}">
+                        <input type="hidden" id="amount2" name="max_value" value="{{max_value}}">
                     </form>
                     <p>
                         Range: <span id="amount"></span>
@@ -127,25 +128,19 @@
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="product_card border-0 rounded px-0 mt-3">
                         <div class="imgbx py-0">
-                            <a
-                                href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id %} {% else %} {% url 'Home:Items:scrapSingleItem' product.scp_item_id %} {% endif %}">
-                                <img class="img-fluid prod-thumb-img grid" src="{% if is_scrap %}{{product.get_image_url.scp_img_url.url}}{% elif is_creative %}{{product.get_image_url.crt_img_url.url}}{%endif%}" style="height: 280px; width: 220px;"
-                                    alt="" change-src="{% static 'img/products/2.jpg' %}">
-                                <div class="contentbx m-0 px-3 py-3"
-                                    style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
+                            <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id %} {% else %} {% url 'Home:Items:scrapSingleItem' product.scp_item_id %} {% endif %}">
+                                <img class="img-fluid prod-thumb-img grid" src="{% if is_scrap %}{{product.get_image_url.scp_img_url.url}}{% elif is_creative %}{{product.get_image_url.crt_img_url.url}}{%endif%}" style="height: 280px; width: 220px;" alt="" change-src="{% static 'img/products/2.jpg' %}">
+                                <div class="contentbx m-0 px-3 py-3" style="{% if tab == 'scrap' %} background-color: #343a40c0; {% elif tab == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                     <div class="caption">
 
-                                        <p class="product-name pb-1"
-                                            style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
+                                        <p class="product-name pb-1" style="{% if tab == 'scrap' %} color: #fff; {% elif tab == 'creative' %} #000 {% else %}   {% endif %}">
                                             {{product.scp_item_name}}</p>
-                                        <p class="price mb-2 "
-                                            style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
+                                        <p class="price mb-2 " style="{% if tab == 'scrap' %} color: var(--pri-color-scp); {% elif tab == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">
                                             &#8377; {{product.scp_item_price}}</p>
 
                                     </div>
                                     <a href="#">
-                                        <button id="contactBtn"
-                                            class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
+                                        <button id="contactBtn" class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                                     </a>
                                     {% if is_creative %}
                                     <a href="{% url 'Home:Items:Cart:addToCart' %}"><button
@@ -160,7 +155,7 @@
                 {%endfor%}
             </div>
         </div>
-    <!--    <div class="col-9">
+        <!--    <div class="col-9">
             <div class="d-md-flex row ">
                 <div class="col-12 col-sm-6 col-lg-3">
 
@@ -308,4 +303,30 @@
 
 
 
-{% endblock %}
+{% endblock %} {% block customscript %}
+<script>
+    $(function() {
+        let sym = "&#8377;"
+        let minval = '{{min_value}}'
+        let maxval = '{{max_value}}'
+
+        $("#slider-range").slider({
+            range: true,
+            min: 100,
+            max: 1000,
+            values: [minval, maxval],
+            slide: function(event, ui) {
+                $("#amount").html(sym + ui.values[0] + " -" + sym + ui.values[1]);
+                $("#amount1").val(ui.values[0]);
+                $("#amount2").val(ui.values[1]);
+            },
+            change: function(event, ui) {
+                $("#priceform").submit();
+
+            }
+        });
+        $("#amount").html(sym + $("#slider-range").slider("values", 0) +
+            " - " + sym + $("#slider-range").slider("values", 1));
+    })
+</script>
+{% endblock customscript %}

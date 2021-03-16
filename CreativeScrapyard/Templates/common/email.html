@@ -14,7 +14,13 @@
     {% elif type == 'queryReply' %}
         Hi, {{QrySender.first_name|capfirst}} {{QrySender.last_name|capfirst}}
         {{message}} 
-        
+    {% elif type == 'verifiedUser' %}
+        {% if verified %}
+            Welcome, {{user.first_name|capfirst}} {{user.last_name|capfirst}} to our community of artists 
+        {% else %}
+            Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}}
+        {%endif%}
+        {{message}} 
     {% else %}
         {{message}}
     {% endif %}

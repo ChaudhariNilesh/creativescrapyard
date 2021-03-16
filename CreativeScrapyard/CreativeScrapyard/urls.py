@@ -24,6 +24,9 @@ urlpatterns = [
     path('accounts/', include('Authentication.urls')),
     path('admin/',include('CustomAdmin.urls')),
     path('', include('Payments.urls')),
+    # path('report_builder/', include('report_builder.urls')),
+    
+
 ]
 
 if settings.DEBUG:

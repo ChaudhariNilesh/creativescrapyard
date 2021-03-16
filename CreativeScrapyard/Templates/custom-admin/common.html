@@ -125,6 +125,24 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reports</a>
+                                <ul class="collapse list-unstyled" id="reportSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Reports:productReports' %}">Creative Item Reports</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Reports:scpItemsReports' %}">Scrap Item Reports</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Reports:userReports' %}">User Reports</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Reports:orderReports' %}">Order Reports</a>
+                                    </li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </div>
 

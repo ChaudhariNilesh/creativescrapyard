@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <label class="text-dark" for="reportMsg">Please tell us about the issue</label>
 
-                                        <input type='hidden' value="6" name="user_id">
+                                        <input type='hidden' value="{{artist.user_id}}" name="user_id">
                                         <input type='hidden' value="3" name="issue_type">
 
                                         <select class="form-control form-control-sm rounded" id="issue_sub" name="issue_sub">
@@ -128,7 +128,7 @@
                         <div class="d-md-flex row">
                             {%for product in crt_products%}
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
-                                <div class="product_card border-0 rounded px-0 " >
+                                <div class="product_card border-0 rounded px-0 ">
                                     <div class="imgbx  py-0">
                                         <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
                                             <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.crt_img_url.url}}" alt="" change-src="{% static 'img/products/creative/ceramicairfreshner.jpg' %}" style="height: 280px; width: 220px;">
@@ -142,7 +142,7 @@
                                                 <a href="#">
                                                     <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                                                 </a>
-                                                </div>
+                                            </div>
                                         </a>
 
                                     </div>
@@ -178,7 +178,7 @@
                     <div class="tab-pane fade m-2" id="nav-scrap">
                         {% with tab='scrap' %}
                         <div class="d-md-flex row">
-                        {%for product in scp_products%}
+                            {%for product in scp_products%}
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
 
                                 <div class="product_card border-0 rounded px-0 ">
@@ -195,7 +195,7 @@
                                                 <a href="#">
                                                     <button class="{% if is_scrap or tab == 'scrap' %} btn-scp {% else %} btn-cxt {% endif %} shadow-none px-3">{% if is_scrap or tab == 'scrap' %} Contact {% else %} Buy Now {% endif %}</button>
                                                 </a>
-                                                
+
                                             </div>
                                         </a>
 
@@ -293,21 +293,26 @@
             context: form,
             dataType: 'json',
             success: function(data) {
+                if (data.dbError) {
+                    // console.log("db");
+                    $("#reportIssueModal").modal("hide");
+                    Swal.fire(
+                        data.msg, "", "warning");
 
-                if (data.errors) {
-                    console.log(data.errors);
+                } else if (data.errors) {
+                    // console.log(data.errors);
                     $(".invalid-feedback").remove();
                     $("#reportIssueModal").modal("show");
-                    if (data.errors.issue_sub) {
+                    if (data.msg.issue_sub) {
                         $("#issue_sub").removeClass("is-valid is-invalid");
-                        $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_sub + "</div>");
+                        $("#issue_sub").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.msg.issue_sub + "</div>");
                     } else {
                         $("#issue_sub").removeClass("is-valid is-invalid");
                         $("#issue_sub").addClass("is-valid");
                     }
-                    if (data.errors.issue_msg) {
+                    if (data.msg.issue_msg) {
                         $("#issue_msg").removeClass("is-valid is-invalid");
-                        $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.errors.issue_msg + "</div>");
+                        $("#issue_msg").addClass("is-invalid").after("<div class='invalid-feedback'>" + data.msg.issue_msg + "</div>");
                     } else {
                         $("#issue_msg").removeClass("is-valid is-invalid");
                         $("#issue_msg").addClass("is-valid");
