@@ -182,19 +182,18 @@ def creative_items(request):
 
 def scrap_items(request):
     template = "account/dashboard/scrap-items.html"
-    products=tbl_scrapitems.objects.filter(user=request.user)
 
     if request.method == "POST":
         try:
             id = request.POST.get('itemId')
             itemStatus = request.POST.get('statusSelect')
-            print("-----", itemStatus)
-            itemObj = tbl_scrapitems.objects.get(scp_item_id=id)
+            itemObj = tbl_scrapitems.objects.get(scp_item_id=id, user=request.user)
             itemObj.scp_item_status = itemStatus
             itemObj.save()
         except Exception as e:
             messages.error(request,"Something went wrong." + str(e))
 
+    products = tbl_scrapitems.objects.filter(user=request.user)
     context={
         "myProducts":products
     }

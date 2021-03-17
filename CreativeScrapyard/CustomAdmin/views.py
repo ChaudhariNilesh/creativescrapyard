@@ -696,6 +696,17 @@ def scrapitems(request):
 def allorders(request):
     if request.user.is_superuser:    
         template = 'custom-admin/allorders.html'
+
+        if request.method == "POST":
+            try:
+                id = request.POST.get('ordId')
+                currentStatus = request.POST.get('currentStatus')
+                orderObj = tbl_orders_mst.objects.get(order_id=id)
+                orderObj.delivery_status = currentStatus
+                orderObj.save()
+            except Exception as e:
+                messages.error(request, "Something went wrong." + str(e))
+
         orders = tbl_orders_mst.objects.all()
 
         return render(request,template,{'orders':orders})
