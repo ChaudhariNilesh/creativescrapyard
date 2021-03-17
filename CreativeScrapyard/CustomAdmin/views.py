@@ -366,7 +366,7 @@ def creativeCat(request,id=None,action=None):
         mainCrtCnt = tbl_crt_subcategories.objects.values("crt_category__crt_category_name").annotate(CrtCnt=Count('tbl_creativeitems_mst'))
         
         # zipped=zip(crtMainCats, mainCrtCnt)
-        # print(tuple(zipped))
+        # print(crtMainCats)
 
 
         template = 'custom-admin/products/creativecategory.html' 
@@ -552,15 +552,17 @@ def scrapCat(request,id=None,action=None):
         scpMainCats=MainScrapCategory.objects.all() 
         template = 'custom-admin/products/scrapcategory.html'
         # print("OUT")
+        mainScpCnt = SubScrapCategory.objects.values("scp_category__scp_category_name").annotate(ScpCnt=Count('tbl_scrapitems'))
+
         if id != None and action==None :
             # print("DD1")
             subScpCats=SubScrapCategory.objects.filter(scp_category_id=id)
             parentCat=get_object_or_404(MainScrapCategory,pk=id)
                 
             if subScpCats!= None:
-                return render(request,template,{"subScpCats":subScpCats,"mainCat":scpMainCats,"parentCat":parentCat, "dispSubCat":True })
+                return render(request,template,{"subScpCats":subScpCats,"mainCat":scpMainCats,"parentCat":parentCat, "dispSubCat":True ,"mainScpCnt":zip(scpMainCats, mainScpCnt)})
             else:
-                return render(request,template,{"subScpCats":subScpCats,"mainCat":scpMainCats, "parentCat":parentCat,"dispSubCat":True })
+                return render(request,template,{"subScpCats":subScpCats,"mainCat":scpMainCats, "parentCat":parentCat,"dispSubCat":True ,"mainScpCnt":zip(scpMainCats, mainScpCnt)})
 
         elif action=="addMain":
          #   print("DD2")
@@ -676,7 +678,7 @@ def scrapCat(request,id=None,action=None):
    
             else:
                 raise PermissionDenied
-        return render(request,template,{"dispSubCat":False,"mainCat":scpMainCats})
+        return render(request,template,{"dispSubCat":False,"mainCat":scpMainCats,"mainScpCnt":zip(scpMainCats, mainScpCnt)})
 
     else:
         return redirect('CustomAdmin:login')
