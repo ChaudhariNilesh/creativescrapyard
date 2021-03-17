@@ -33,7 +33,7 @@
                     <td class="text-center">&#8377; {{ order.total_amt }}
                     </td>
                     <td class="text-center">
-                        <form method="post" id="statusUpdate">{% csrf_token %}
+                        <form method="post" id="statusUpdate-{{ order.order_id }}">{% csrf_token %}
                         <input type="hidden" name="ordId" value="{{ order.order_id }}">
                         <select class="p-1 ord-status" name="currentStatus">
                             <option value="1" {% if order.delivery_status == 1 %}selected{% endif %}>Pending</option>
@@ -44,7 +44,7 @@
                         </form>
                     </td>
                     <td class="text-center">
-                        <button type="sunmit" class="btn btn-sm pri-bg-color" form="statusUpdate">Save</input>
+                        <button type="sunmit" class="btn btn-sm pri-bg-color" form="statusUpdate-{{ order.order_id }}">Save</button>
                     </td>
                 </tr>
                 {% endfor %}

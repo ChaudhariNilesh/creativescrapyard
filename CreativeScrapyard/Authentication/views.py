@@ -242,7 +242,7 @@ def add_creative_product(request):
                     # print(value,first,mstObj)
                     tbl_crtimages.objects.create(crt_img_url=value, is_primary=first, crt_item_details=mstObj)
                     first = False
-
+            messages.success(request, "Product Added successfully.")
             return redirect("Authentication:creative_items")
 
         else:
@@ -301,6 +301,7 @@ def edit_creative_product(request, id=None):
                 mstObj.user = request.user
                 mstObj.save()
 
+                messages.success(request,"Product updated successfully.")
                 # print(request.POST)
                 return redirect("Authentication:creative_items")
             else:
@@ -589,27 +590,31 @@ def order_history(request, action='current'):
 @login_required
 def order_details(request, id=None):
     template = "account/dashboard/order-details.html"
-    
-    if request.method=='POST':
-        print(request.POST)
-        rate=request.POST.get('item_rating',0.0)
-        review=request.POST.get('item_review','')
-        crt_item=get_object_or_404(tbl_creativeitems_mst,crt_item_id=request.POST.get('crt_item_id',None))
-        if not (Reviews.objects.filter(crt_item=crt_item,user=request.user).exists()):
-            reviewForm=Reviews(item_rating=rate,item_review=review,crt_item=crt_item,user=request.user)
-            reviewForm.save()
-            user=crt_item.user.profile
-            rating=user.user_rating
-            avg=(float(rating)+float(rate))/2
-            user.user_rating=avg
-            user.save()
-            messages.success(request,"Review Submitted Succesfully")
-            return redirect('Authentication:order_details')
-        else:
-            messages.warning(request,"You already reviewed this item.")
-
     order = tbl_orders_mst.objects.get(order_id=id)
-    orderDetails = tbl_orders_details.objects.filter(order=order, crt_item_mst__user = request.user)
+
+    if order.user == request.user:
+        if request.method=='POST':
+            print(request.POST)
+            rate=request.POST.get('item_rating',0.0)
+            review=request.POST.get('item_review','')
+            crt_item=get_object_or_404(tbl_creativeitems_mst,crt_item_id=request.POST.get('crt_item_id',None))
+            if not (Reviews.objects.filter(crt_item=crt_item,user=request.user).exists()):
+                reviewForm=Reviews(item_rating=rate,item_review=review,crt_item=crt_item,user=request.user)
+                reviewForm.save()
+                user=crt_item.user.profile
+                rating=user.user_rating
+                avg=(float(rating)+float(rate))/2
+                user.user_rating=avg
+                user.save()
+                messages.success(request,"Review Submitted Succesfully")
+                return redirect('Authentication:order_details')
+            else:
+                messages.warning(request,"You already reviewed this item.")
+
+        orderDetails = tbl_orders_details.objects.filter(order=order)
+    else:
+        orderDetails = tbl_orders_details.objects.filter(order=order, crt_item_mst__user=request.user)
+
     totUserItemPrice = 0
     for d in orderDetails:
         totUserItemPrice += d.total_price()
@@ -626,6 +631,7 @@ def order_details(request, id=None):
         "totUserItemPrice": totUserItemPrice,
     }
     return render(request, template, context)
+
 
 @login_required
 def dashboard_payments(request):
@@ -1057,7 +1063,8 @@ def add_scrap_product(request):
                     # print("valid")
                     tbl_scrapimages.objects.create(scp_img_url=value, is_primary=first, scp_item=scpObj)
                     first = False
-            
+
+            messages.success(request, "Product added successfully.")
             return redirect('Authentication:scrap_items')
             
         else:
@@ -1124,7 +1131,7 @@ def edit_scrap_product(request, id=None):
                 scpObj.scp_sub_category = subCat
                 scpObj.user = request.user
                 scpObj.save()
-
+                messages.success(request, "Product updated successfully.")
                 return redirect('Authentication:scrap_items')
             else:
                 messages.error(request, "Please correct above errors.")

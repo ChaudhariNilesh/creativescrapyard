@@ -717,13 +717,22 @@ def allorders(request):
 
 
 def orderdetails(request,id):
-    if request.user.is_superuser:    
+    if request.user.is_superuser:
+
+        if request.method == "POST":
+            detailId = request.POST.get('detailId')
+            currentStatus = request.POST.get('currentStatus')
+            detailObj = tbl_orders_details.objects.get(order_details_id=detailId)
+            detailObj.item_status = currentStatus
+            detailObj.save()
+
         template = 'custom-admin/orderdetails.html'
         order = tbl_orders_mst.objects.get(order_id = id)
         orderDetails = tbl_orders_details.objects.filter(order_id = id) #.annotate(totalPrice=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
         totalPrice = tbl_orders_details.objects.filter(order_id = id).aggregate(tot = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
         commission = float(totalPrice['tot']) * 0.2
         # print(totalPrice)
+
         try:
             payment = Payment.objects.get(order)
             print(payment)
