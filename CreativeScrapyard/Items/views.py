@@ -2,6 +2,7 @@ from django.core.checks import messages
 from django.http.response import JsonResponse
 from CreativeScrapyard import settings
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
+from Home.views import creativeCategories,scrapCategories
 from .forms import *
 from .models import *
 import random
@@ -33,6 +34,7 @@ def creativeSingleItem(request,id):
     'is_creative':True,
     'product':product,
     'images':images,
+    'categories':creativeCategories(),
     'artist_products':artist_products,
     'explore_products':explore_products
     }
@@ -62,6 +64,7 @@ def scrapSingleItem(request,id):
     'is_scrap':True,
     'product':product,
     'images':images,
+    'categories':scrapCategories(),
     'artist_products':seller_products,
     'explore_products':explore_products
     }

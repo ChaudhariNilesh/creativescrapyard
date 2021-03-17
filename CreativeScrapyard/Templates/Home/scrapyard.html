@@ -8,28 +8,31 @@
 <!--Main page after nav -->
 <div class="infomain mx-5">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Scrap Store</a></li>
-        <li class="breadcrumb-item"><a href="#">All Materials</a></li>
+        <li class="breadcrumb-item"><a href="{%url 'Home:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{%url 'Home:scrapyard'%}">Scrapyard</a></li>
+        <li class="breadcrumb-item"><a href="#">{{parent_category.scp_category_name|default:"All Materials"}}</a></li>
+        {%if sub_category%}
+        <li class="breadcrumb-item"><a href="#">{{sub_category.scp_sub_category_name}}</a></li>
+        {%endif%}
     </ol>
 </div>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-10">
-            <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">All Materials</h2>
+            <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">{%if sub_category%}{{sub_category.scp_sub_category_name|default:"All Materials"}}{%else%}{{parent_category.scp_category_name|default:"All Materials"}}{%endif%}</h2>
         </div>
         <div class="col-2">
             <div class="dropdown">
-                <button class="btn btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By : Relevence</button>
+                    <button class="btn btn-outline-light dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
+                    {{sort|default:"Relevance"}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Revelence</a>
-                    <a class="dropdown-item" href="#">Low to High Price</a>
-                    <a class="dropdown-item" href="#">High to Low Price</a>
-                    <a class="dropdown-item" href="#">Most Recent</a>
-                    <a class="dropdown-item" href="#">Top Review Artists</a>
-                    <a class="dropdown-item" href="#">Alphabetic</a>
-
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'rel' %}">Revelence</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'lh' %}">Low to High Price</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'hl' %}">High to Low Price</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'mr' %}">Most Recent</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'top' %}">Top Review Artists</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'alpha' %}">Alphabetic</a>
                 </div>
             </div>
 
@@ -40,33 +43,22 @@
             <h4 class="text-center my-2">Filters</h4>
 
             <div>
-                <div class="text-bold border-bottom my-2 p-2">By Category:</div>
+               <div class="text-bold border-bottom my-2 p-2">By Category: {{parent_category.scp_category_name}}</div>
                 <div>
                     <ul>
+                        {% if not type == 'all' %}
+                        {% for subcategory in parent_category.subscrapcategory_set.all %}
                         <li>
-                            <a class="scrapyard-link" href="#">Glass & Ceramics</a>
+                            <a href="{% url 'Home:scrapyard' 's' subcategory.scp_sub_category_id%}">{{subcategory.scp_sub_category_name}}</a>
                         </li>
+                        {% endfor %} 
+                        {%else%} 
+                        {% for subcategory in categories %}
                         <li>
-                            <a class="scrapyard-link" href="#">Fabrics</a>
+                            <a href="{% url 'Home:scrapyard' 'm' subcategory.scp_category_id%}">{{subcategory.scp_category_name}}</a>
                         </li>
-                        <li>
-                            <a class="scrapyard-link" href="#">Metals</a>
-                        </li>
-                        <li>
-                            <a class="scrapyard-link" href="#">Paper</a>
-                        </li>
-                        <li>
-                            <a class="scrapyard-link" href="#">Rubber & Leather</a>
-                        </li>
-                        <li>
-                            <a class="scrapyard-link" href="#">Electronics</a>
-                        </li>
-                        <li>
-                            <a class="scrapyard-link" href="#">Woods & Furniture</a>
-                        </li>
-                        <li>
-                            <a class="scrapyard-link" href="#">Others</a>
-                        </li>
+                        {%endfor%} 
+                        {% endif %}
                     </ul>
                 </div>
             </div>

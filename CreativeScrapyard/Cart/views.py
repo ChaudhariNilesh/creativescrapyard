@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
+from Home.views import creativeCategories
 from Items.models import tbl_creativeitems_mst,tbl_crtimages
 from django.db.models import Count
 from django.db.models import Q
@@ -20,6 +21,7 @@ def addToCart(request):
     cartitems = Cart.objects.filter(user_id=request.user.user_id)
 
     context['cartitems'] = cartitems
+    context['categories'] = creativeCategories()
     # prd = tbl_creativeitems_mst.objects.filter(cart__in=cartitems)
     # image = tbl_crtimages.objects.filter(crt_item_details_id__in=prd,is_primary=True)
 

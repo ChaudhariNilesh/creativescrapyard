@@ -23,7 +23,7 @@
                 <button class="btn btn-outline-dark dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
                     {{sort|default:"Relevance"}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Revelence</a>
+                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'rel' %}">Revelence</a>
                     <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'lh' %}">Low to High Price</a>
                     <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'hl' %}">High to Low Price</a>
                     <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'mr' %}">Most Recent</a>
