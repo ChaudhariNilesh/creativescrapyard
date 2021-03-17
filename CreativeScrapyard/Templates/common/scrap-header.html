@@ -13,6 +13,7 @@
                 </h4>
             </div>
 
+
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-8 w-75">
@@ -68,7 +69,28 @@
             </div>
         </div>
 
+        <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example">
+             <div>
+                <a href="{% url 'Home:scrapyard'%}">
+                    <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
+                </a>
+                </div>
 
+
+            <!--li id="{{badge.badge_id}}" class="btn tags {{badgecolor}} mx-1 my-1 badges">{{badge.badge.badge_name}}</li-->
+            {% for category in categories%}
+            <div>
+                <div class="btn-group custom-dropdown" role="group">
+                    <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.scp_category_name}}</button>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="">
+                        {%for subcategory in category.subscrapcategory_set.all%}
+                        <a class="dropdown-item" href="{% url 'Home:scrapyard' 's' subcategory.scp_sub_category_id%}">{{subcategory.scp_sub_category_name}}</a> {%endfor%}
+                    </div>
+
+                </div>
+            </div>
+            {%endfor%}
         <!-- </div> -->
         <!-- <div class="row"> -->
         <div class="container-fluid ">

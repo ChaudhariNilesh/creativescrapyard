@@ -16,6 +16,7 @@ urlpatterns = [
     
     
     path('scrapyard/',scrapyard,name="scrapyard"),
+    path('scrapyard/<str:type>/<int:id>/',scrapyard,name="scrapyard"),
     path('scrapyard/',scrapyard,name="scppricefilter"),
 
     path('achievers/',achievers,name="achievers"),

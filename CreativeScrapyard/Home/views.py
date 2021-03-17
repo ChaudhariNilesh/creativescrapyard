@@ -126,19 +126,77 @@ def FilterNSrch(postDate,prdObj,sort=None):
 #     max_value=postData.get('max_value')
 #     return products,min_value,max_value
 
-def scrapyard(request):
+def scrapyard(request,type="all",id=None):
     template="Home/scrapyard.html"
-    products = tbl_scrapitems.objects.all()
     min_value=100
     max_value=1000
-    if request.POST:
-        products=tbl_scrapitems.objects.filter(scp_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
-        min_value=request.POST.get('min_value')
-        max_value=request.POST.get('max_value')
+    products=None
+    # if request.POST:
+    #     products=tbl_scrapitems.objects.filter(scp_item_price__range=(request.POST.get('min_value'),request.POST.get('max_value')))
+    #     min_value=request.POST.get('min_value')
+    #     max_value=request.POST.get('max_value')
 
-    context={'products':products,'is_scrap':True,'min_value':min_value,
-        'max_value':max_value,}
+    subcategory=None
+    parentcategory=None
+    search=""
+    categories=MainScrapCategory.objects.all()
+    if type=="s":
+        subcategory=get_object_or_404(SubScrapCategory,scp_sub_category=id)
+        parentcategory=subcategory.scp_category
+        products = tbl_scrapitems.objects.filter(scp_sub_category_id=id)
+       
+        if request.method == "POST":
+            products,min_value,max_value,search = FilterNSrch(request.POST,products)
+   
+    elif type=="m":
+        subcategories=SubScrapCategory.objects.filter(scp_category=id)
+        parentcategory=get_object_or_404(SubScrapCategory,scp_category_id=id)
+        products=tbl_scrapitems.objects.filter(scp_sub_category__in=subcategories)
 
+        if request.method == "POST":
+            products,min_value,max_value,search = FilterNSrch(request.POST,products)
+   
+    elif type=="all":
+        products = tbl_scrapitems.objects.all()
+        
+        if request.method == "POST" :
+            products,min_value,max_value,search = FilterNSrch(request.POST,products)
+            
+
+    # if sort is not None:
+    #     if sort=="lh":
+    #         products=products.order_by("scp_item_price")
+    #         sort="Low To High Price"
+
+
+    #     elif sort=="hl":
+    #         products=products.order_by("-scp_item_price")
+    #         sort="High To Low Price"
+
+    #     elif sort=="mr":
+    #         products=products.order_by("scp_created_on")
+    #         sort="Most Recent"
+
+    #     elif sort=="alpha":
+    #         products=products.order_by("scp_item_name")
+    #         sort="Alphabetic"   
+
+    #     elif sort=="top":
+    #         products=products.order_by("-user__profile__user_rating")
+    #         sort="Top Review Artist"     
+
+    context={
+        'products':products,
+        'is_scrap':True,
+        'categories':categories,
+        'sub_category':subcategory,
+        'parent_category':parentcategory,
+        'type':type,
+        # 'sort':sort,
+        'min_value':min_value,
+        'max_value':max_value,
+        'search':search,
+        }
     return render(request,template,context)    
 
 def achievers(request):
