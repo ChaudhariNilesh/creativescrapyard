@@ -58,8 +58,10 @@ def productReports(request,by=None,search=None,export=None):
                 'request': request,
                 'qtyCnt':crtItem_filter.qs.aggregate(itemCount=Sum('crt_item_qty')),
                 'totalCost':crtItem_filter.qs.aggregate(cost=Sum(ExpressionWrapper(F('crt_item_qty')*F("crt_item_price"),output_field=DecimalField()))),
+                'summary':crtItem_filter.qs.values('crt_item_status').annotate(itemStatus=Count('crt_item_status')),
                 'filter_by':filter_by
             }
+            print(context['summary'])
             pdf = render_to_pdf('Reports/report-pdf.html', context)
             
             if pdf:
@@ -108,6 +110,8 @@ def scpItemsReports(request,by=None,search=None,export=None):
                 'request': request,
                 'qtyCnt':scpItem_filter.qs.aggregate(itemCount=Sum('scp_item_qty')),
                 'totalCost':scpItem_filter.qs.aggregate(cost=Sum(ExpressionWrapper(F('scp_item_qty')*F("scp_item_price"),output_field=DecimalField()))),
+                'summary':scpItem_filter.qs.values('scp_item_status').annotate(itemStatus=Count('scp_item_status')),
+
                 'filter_by':filter_by
             }
             pdf = render_to_pdf('Reports/report-pdf.html', context)

@@ -156,6 +156,12 @@ def initiate_payment(request):
                         # print("POD")
                         orderMst.order_status=True
                         orderMst.save()
+                        
+                        # ordDet=tbl_orders_details.objects.filter(order=orderMst)
+                        # qty=ordDet.crt_item_mst.crt_item_qty-ordDet.crt_item_qty
+                        
+                        # print("QUANTITY->",ordDet)
+
                         cartitems = Cart.objects.filter(user_id=request.user.user_id)
                         cartitems.delete()
                         
