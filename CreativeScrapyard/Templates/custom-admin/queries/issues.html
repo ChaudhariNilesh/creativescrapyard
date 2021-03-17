@@ -69,16 +69,27 @@
                                 <button class="btn btn-sm pri-bg-color" type="submit" form="frmChangeStat">Save</button>
                                 <!--  -->
                                 {% if issueType == 1 %}
+                                <!--  -->
+                                {% if issue.issue_status == 2 %}
+                                <a href="{% url 'Home:Items:creativeSingleItem' issue.crt_item.crt_item_id  %}" class="user-view"><button class="btn btn-sm pri-bg-color " >View</button></a> {% else %}
+
                                 <a href="{% url 'Home:Items:creativeSingleItem' issue.crt_item.crt_item_id  %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable mt-1" aria-hidden="true">DISABLE</button>
+                                <button id="" data="{{issue.crt_item_id}}" type="crt" class="btn-sm btn-danger text-white rounded cus prod-disable mt-1" aria-hidden="true">DISABLE</button> {% endif %}
                                 <!--  -->
                                 {% elif issueType == 2 %}
-                                <a href="{% url 'Home:Items:scrapSingleItem' issue.scp_item.scp_item_id %}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button id="" data="nileshchaudhary89.nc@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn mt-1" aria-hidden="true">DISABLE</button></a>
+                                <!--  -->
+                                {% if issue.issue_status == 2 %}
+                                <a href="{% url 'Home:Items:scrapSingleItem' issue.scp_item.scp_item_id %}" class="user-view"><button class="btn btn-sm pri-bg-color " >View</button></a> {% else %}
+                                <a href="{% url 'Home:Items:scrapSingleItem' issue.scp_item.scp_item_id %}" class="user-view"><button class="btn btn-sm pri-bg-color " >View</button></a>
+                                <button id="" data="{{issue.scp_item_id}}" type="scp" class="btn-sm btn-danger text-white rounded cus prod-disable mt-1" aria-hidden="true">DISABLE</button></a>
+                                {% endif %}
                                 <!--  -->
                                 {%elif issueType == 3 %}
-                                <a href="{% url 'Authentication:profile' issue.reported_user.user_id%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a>
-                                <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus disable-btn mt-1" aria-hidden="true">DISABLE</button>
+                                <!--  -->
+                                {% if issue.issue_status == 2 %}
+                                <a href="{% url 'Authentication:profile' issue.reported_user.user_id%}" class="user-view"><button class="btn btn-sm pri-bg-color" >View</button></a> {% else %}
+                                <a href="{% url 'Authentication:profile' issue.reported_user.user_id%}" class="user-view"><button class="btn btn-sm pri-bg-color " >View</button></a>
+                                <button id="" data="{{issue.reported_user.email}}" class="btn-sm btn-danger text-white rounded cus disable-btn mt-1" aria-hidden="true">DISABLE</button> {% endif %}
 
                                 <!--  -->
                                 {% endif %}

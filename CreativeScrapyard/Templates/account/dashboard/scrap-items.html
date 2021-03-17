@@ -39,9 +39,15 @@
                     <td class="text-center">
                         {% if prd.scp_item_status == 'INAPPROPRIATE' %}
                         <span class="text-danger">Inappropriate</span>
+
+                        <!--  -->
+                        {% elif prd.scp_item_status == 'SOLD' %}
+                        <span class="text-danger">SOLD</span>
+                        <!--  -->
                         {% else %}
+                        <!--  -->
                         <form method="post" id="updateStatus"> {% csrf_token %}
-                            <input  type="hidden" value="{{prd.scp_item_id}}" name="itemId"/>
+                            <input type="hidden" value="{{prd.scp_item_id}}" name="itemId" />
                             <select class="p-1 ord-status" name="statusSelect">
                                 <option value="ACTIVE" {% if prd.scp_item_status == 'ACTIVE' %} selected {% endif %}>Active</option>
                                 <option value="INACTIVE" {% if prd.scp_item_status == 'INACTIVE' %} selected {% endif %}>Inactive</option>
@@ -50,17 +56,26 @@
                         </form>
                         {% endif %}
                     </td>
-                    <td class="text-center">{{prd.scp_created_on|date:"d/m/y"}}</td>
+                    <td class="text-center">{{prd.scp_created_on|date:"M d, Y"}}</td>
                     <td class="text-center">
+
                         {% if prd.scp_item_status != 'INAPPROPRIATE' %}
+                        <!--  -->
+                        {% if prd.scp_item_status != 'SOLD' %}
+                        <!--  -->
                         <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
                             <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
                         </a>
                         <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' prd.scp_item_id %}">Edit</a>
                         <button class="btn btn-sm pri-bg-color" form="updateStatus">Save</button>
+                        <!--  -->
                         {% else %}
-                        <span class="text-danger">Disabled</span>
-                        {% endif %}
+                        <span class="text-danger">Disabled</span> {% endif %}
+                        <!--  -->
+                        {% else %}
+                        <!--  -->
+                        <span class="text-danger">Disabled</span> {% endif %}
+                        <!--  -->
                     </td>
                 </tr>
                 {% endfor %}

@@ -1,8 +1,18 @@
 ************************************
 drop in account and categories
 sorting
+payment at seller side layout
+categorywise prd count in reports
 ************************************
+ASK:
 
+issue and quesr status changed so save btn remove?
+admin crt and scp sold prds show?
+ask for approp title in report
+prd delte for user
+
+-show prd summary at admin side 
+--filtered by report in other also
 
 
 
@@ -44,9 +54,9 @@ add report flag item link
 
 
 -----------------------
-Shopping Cart no item
-disable user/product send mail reason/disable pe dropdown
-change images
+--Shopping Cart no item
+--disable user/product send mail reason/disable pe dropdown
+--change images
 
 *see later*breadcrumbs and 
 --sidebar open in nested page

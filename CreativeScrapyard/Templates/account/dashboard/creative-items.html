@@ -41,10 +41,10 @@
                     <td class="text-center">&#8377; {{prd.crt_item_price|floatformat:2}}</td>
                     <td class="text-center">
                         {% if prd.crt_item_status == 'INAPPROPRIATE' %}
-                        <span class="text-danger">Inappropriate</span>
-                        {% else %}
+                        <span class="text-danger">Inappropriate</span> {% elif prd.crt_item_status == 'SOLD' %}
+                        <span class="text-danger">SOLD</span> {% else %}
                         <form method="post" id="updateStatus"> {% csrf_token %}
-                            <input  type="hidden" value="{{prd.crt_item_id}}" name="itemId"/>
+                            <input type="hidden" value="{{prd.crt_item_id}}" name="itemId" />
                             <select class="p-1 ord-status" name="statusSelect">
                                 <option value="ACTIVE" {% if prd.crt_item_status == 'ACTIVE' %} selected {% endif %}>Active</option>
                                 <option value="INACTIVE" {% if prd.crt_item_status == 'INACTIVE' %} selected {% endif %}>Inactive</option>
@@ -55,15 +55,25 @@
                     <td class="text-center">{{prd.crt_created_on|date:"M d, Y"}}</td>
                     <td class="text-center">
                         {% if prd.crt_item_status != 'INAPPROPRIATE' %}
-                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}" >
+                        <!--  -->
+                        {% if prd.crt_item_status != 'SOLD' %}
+                        <!--  -->
+
+                        <a class="btn btn-sm pri-bg-color" data-toggle="modal" data-target=".bd-example-modal-lg-{{i}}">
                             <img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="18" height="18">
                         </a>
                         <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_creative_product' prd.crt_item_id %}">Edit</a>
 
                         <button class="btn btn-sm pri-bg-color" form="updateStatus">Save</button>
+                        <!--  -->
                         {% else %}
-                        <span class="text-danger">Disabled</span>
-                        {% endif %}
+                        <span class="text-danger">Disabled</span> {% endif %}
+                        <!--  -->
+                        {% else %}
+                        <!--  -->
+                        <span class="text-danger">Disabled</span> {% endif %}
+                        <!--  -->
+
                     </td>
                 </tr>
                 {% endfor %}

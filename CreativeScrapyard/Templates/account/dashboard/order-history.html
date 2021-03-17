@@ -50,7 +50,7 @@
                 <tr>
                     <td class="text-center">{{ detail.order_details_id }}</td>
                     <td class="text-center">{{ detail.order.order_id }}</td>
-                    <td class="text-center"><a href={% url 'Home:Items:creativeSingleItem' %} class="link-effect">{{ detail.crt_item_mst.crt_item_id }}</a></td>
+                    <td class="text-center"><a href="{% url 'Home:Items:creativeSingleItem' detail.crt_item_mst.crt_item_id %}" class="link-effect">{{ detail.crt_item_mst.crt_item_id }}</a></td>
                     <td class="text-center">{{ detail.order.order_date|date:"M d, Y" }}</td>
                     <td class="text-center">{{ detail.order.delivery_date|date:"M d, Y" }}</td>
                     <td class="text-center">{{ detail.crt_item_qty }}</td>
@@ -59,7 +59,7 @@
                     <td class="text-center"><a href="{% url 'Authentication:order_details' detail.order.order_id %}" class="btn btn-sm pri-bg-color">View</a></td>
                 </tr>
                 {% empty %}
-                <h3 class="text-center" > No data to display here </h3>
+                <h3 class="text-center"> No data to display here </h3>
                 {% endfor %}
 
             </tbody>

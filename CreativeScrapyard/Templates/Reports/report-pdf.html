@@ -103,14 +103,18 @@
                 {% if reportType == 'crt-report' %}
 
                 <div class='header'>
-                    <p class='title'>Creative Items Report - {{ today | date:"d/m/Y" }}</p>
+                    <p class='title'>Creative Items Report</p>
                 </div>
 
                 <div class="list-group">
                     <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+                    <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+
                 </div>
 
-
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
+                </div>
 
 
                 <div class="details">
@@ -150,6 +154,26 @@
                         </tbody>
 
                     </table>
+                    <hr/>
+
+                    <div class="total-summary">
+
+                        {% for summary in summary %}
+                        <!--  -->
+                        <p>
+                            {% if summary.crt_item_status == 'ACTIVE' %} Total Active Creative Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                            {% if summary.crt_item_status == 'INACTIVE' %} Total Inactive Creative Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                            {% if summary.crt_item_status == 'INAPPROPRIATE' %} Total Inappropriate Creative Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                            {% if summary.crt_item_status == 'SOLD' %} Total sold Creative Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                        </p>
+                        {% endfor %}
+
+                        <p>Total Creative Items(s) : {{qtyCnt.itemCount}}</p>
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -165,6 +189,9 @@
                 <div class="list-group">
                     <p>Admin Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                     <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+                </div>
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
                 </div>
                 <div class="details">
 
@@ -204,6 +231,25 @@
                         </tbody>
 
                     </table>
+
+                    <div class="total-summary">
+
+                        {% for summary in summary %}
+                        <!--  -->
+                        <p>
+                            {% if summary.scp_item_status == 'ACTIVE' %} Total Active Scrap Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                            {% if summary.scp_item_status == 'INACTIVE' %} Total Inactive Scrap Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                            {% if summary.scp_item_status == 'INAPPROPRIATE' %} Total Inappropriate Scrap Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                            {% if summary.scp_item_status == 'SOLD' %} Total sold Scrap Item(s) : {{ summary.itemStatus}} {% endif %}
+                            <!--  -->
+                        </p>
+                        {% endfor %}
+
+                        <p>Total Scrap Items(s) : {{qtyCnt.itemCount}}</p>
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -220,6 +266,9 @@
                 <div class="list-group">
                     <p>Admin Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                     <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
+                </div>
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
                 </div>
                 <div class="details">
 
@@ -258,7 +307,7 @@
 
                     <div class="total-summary">
                         <p>Total Active(s) : {{ cnt.activeCount}} </p>
-                        <p>Total Inactive(s) : {{cnt.activeCount|sub:users.count}}</p>
+                        <p>Total Inactive(s) : {{users.count|sub:cnt.activeCount}}</p>
                         <p>Total Artist(s) : {{ cnt.artistCount}}</p>
 
                         <p>Total User(s) :{{ users.count}}</p>
@@ -284,7 +333,7 @@
                     <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
                 </div>
                 <div class="list-group">
-                    <p>Filtered By : {{filter_by}}</p>
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
                 </div>
                 <div class="details">
 

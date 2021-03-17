@@ -1,12 +1,13 @@
 {% autoescape off %} 
     {% if type == 'product' %}
-    Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
-        Product ID
-        {{message}} 
+    Hi, {{item.user.first_name|capfirst}} {{item.user.last_name|capfirst}} 
+        Your product named '{{item.crt_item_name}}' is disabled 
+        {{message}}
+        if this was a mistake contact us at http://127.0.0.1:8000/contact-us/ 
     {% elif type == 'user' %}
     Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
-        USER 
         {{message}} 
+        if this was a mistake contact us at http://127.0.0.1:8000/contact-us/ 
     {% elif type == 'contactuser' %}
         Hi, {{seller.first_name|capfirst}} {{seller.last_name|capfirst}}
         {{user.first_name|capfirst}} {{user.last_name|capfirst}} {{message}} 
