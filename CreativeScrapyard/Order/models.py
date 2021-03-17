@@ -71,7 +71,8 @@ class tbl_orders_details(models.Model):
     def updateQty(self):
         qty=self.crt_item_mst.crt_item_qty
         qty-=self.crt_item_qty
-        crt=self.tbl_creativeitems_mst_set.get()
-        print(crt)
+        crt=tbl_creativeitems_mst.objects.get(crt_item_id=self.crt_item_mst.crt_item_id)
+        crt.crt_item_qty=qty
+        crt.save()
         print("QRY UPDATED",qty)
         return qty

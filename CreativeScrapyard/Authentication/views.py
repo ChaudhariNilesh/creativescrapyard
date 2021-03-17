@@ -315,6 +315,19 @@ def edit_creative_product(request, id=None):
     else:
         return redirect("Authentication:creative_items")
 
+def removeCrtItem(request,id=None):
+    if id:
+        crtItem = tbl_creativeitems_mst.objects.get(crt_item_id=id,user=request.user)
+        if tbl_orders_details.objects.filter(crt_item_mst=crtItem).exists():
+            messages.warning(request,"Item present in orders, unable to delete.")
+        else:
+            crtItem.delete()
+            messages.success(request,"Your item delete successfully.")
+    else:
+        messages.error(request, "Some error occured.")
+    
+    return redirect("Authentication:creative_items")
+    
 
 def edit_crt_images(request,id=None,action=None):
     if action== "addItemImage":
@@ -1166,6 +1179,7 @@ def edit_scp_images(request,id=None,action=None):
         return redirect(next)
 
 
+
     if id and request.method=="POST" :
         try:
             images = tbl_scrapimages.objects.get(scp_img_id=id)
@@ -1192,6 +1206,16 @@ def edit_scp_images(request,id=None,action=None):
             return redirect(next)
     else:
         return redirect("Authentication:scrap_items")
+
+def removeScpItem(request,id=None):
+    if id:
+        scpItem = tbl_scrapitems.objects.get(scp_item_id=id,user=request.user)
+        scpItem.delete()
+        messages.success(request,"Your item delete successfully.")
+
+    else:
+        messages.error(request, "Some error occured.")
+    return redirect("Authentication:scrap_items")
 
 def remove_scp_images(request,id=None):
     if id :

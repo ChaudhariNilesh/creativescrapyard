@@ -32,7 +32,7 @@
                                     <td class="text-center">{{user.user_id}}</td>
                                     <td class="text-center"><a href="#"><span class="list-enq-name">{{user.first_name|capfirst}} {{user.last_name|capfirst}}</span></a></td>
                                     <td class="text-center pl-2">{{user.email}}</td>
-                                    <td class="text-center">{% if user.is_active %}<span class="listing">active</span>{% else %} <span class="text-danger">DISABLED</span> {% endif %}
+                                    <td class="text-center">{% if user.is_active %}<span class="listing">active</span>{% else %} <span class="text-danger">disable</span> {% endif %}
                                     </td>
                                     <td><span class="listing text-center">{{ user.num_crt }}</span></td>
                                     <td><span class="listing text-center">{{ user.seller_id.all|length }}</span></td>

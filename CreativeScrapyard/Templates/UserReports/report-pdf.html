@@ -138,7 +138,7 @@
                             {% for item in items %}
                             <tr>
                                 <td>{{ item.crt_item_SKU }}</td>
-                                <td>{{ item.crt_sub_category }}</td>
+                                <td>{{ item.crt_sub_category.crt_category.crt_category_name }}</td>
                                 <td>{{ item.crt_item_name }} </td>
                                 <td>{{ item.crt_item_qty }}</td>
                                 <td>{{ item.crt_item_price }}</td>
@@ -214,7 +214,7 @@
                             {% for item in items %}
                             <tr>
                                 <td>{{ item.scp_item_SKU }}</td>
-                                <td>{{ item.scp_sub_category }}</td>
+                                <td>{{ item.scp_sub_category.scp_category.scp_category_name }}</td>
                                 <td>{{ item.scp_item_name }} </td>
                                 <td>{{ item.scp_item_qty }}</td>
                                 <td>{{ item.scp_item_price }}</td>
@@ -296,7 +296,7 @@
 
                             <tr>
                                 <td>{{ ord.order.person_name }} </td>
-                                <td>{{ ord.crt_item_mst.crt_sub_category.crt_sub_category_name }}</td>
+                                <td>{{ ord.crt_item_mst.crt_sub_category.crt_category.crt_category_name }}</td>
                                 <td>{{ ord.crt_item_mst.crt_item_name }}</td>
                                 <td>{{ ord.get_item_status_display }}</td>
                                 <td>{{ ord.crt_item_qty }}</td>

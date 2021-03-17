@@ -59,7 +59,7 @@ def checkout(request,action=None):
                 }
             else:
                 next = request.POST.get('next', '/')
-                messages.warning(request, 'Ohh! Are you trying to buy own item. We dont do that here.')
+                messages.warning(request, 'Ohh! Are you trying to buy your own item. We dont do that here.')
                 return redirect(next)
             
 

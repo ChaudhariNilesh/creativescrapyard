@@ -68,6 +68,8 @@
                         </a>
                         <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_scrap_product' prd.scp_item_id %}">Edit</a>
                         <button class="btn btn-sm pri-bg-color" form="updateStatus-{{prd.scp_item_id}}">Save</button>
+                        <a href="{% url 'Authentication:removeScpItem' prd.scp_item_id %}" class="btn btn-sm btn-danger remove-assigned"><img src="https://s2.svgbox.net/octicons.svg?ic=trashcan-bold&color=fff " width="20 " height="20 "></a>
+                        </a>
                         <!--  -->
                         {% else %}
                         <span class="text-danger">Disabled</span> {% endif %}

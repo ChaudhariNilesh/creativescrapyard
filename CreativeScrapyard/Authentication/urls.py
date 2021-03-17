@@ -45,6 +45,8 @@ urlpatterns = [
     path('dashboard/product/creative/edit-creative-images/<str:action>/', edit_crt_images,name="add_crt_images"),
     path('dashboard/product/creative/remove-creative-images/<int:id>/', remove_crt_images,name="remove_crt_images"),
 
+    path('dashboard/product/creative/remove-creative/<int:id>/', removeCrtItem,name="removeCrtItem"),
+
 
 
 
@@ -57,6 +59,9 @@ urlpatterns = [
     path('dashboard/product/scrap/edit-scrap-images/<int:id>/',edit_scp_images,name="edit_scp_images"),
     path('dashboard/product/scrap/edit-scrap-images/<str:action>/',edit_scp_images,name="add_scp_images"),
     path('dashboard/product/scrap/remove-scrap-images/<int:id>/',remove_scp_images,name="remove_scp_images"),
+
+    path('dashboard/product/scrap/remove-scrap/<int:id>/', removeScpItem,name="removeScpItem"),
+
 
     path('dashboard/add-document/', add_document, name="add_document"),
     path('dashboard/profile/', dashboard_profile, name="dashboard_profile"),
@@ -94,6 +99,9 @@ urlpatterns = [
 
     ######REPORTS######
     path('', include('UserReports.urls')),
+
+
+
     
 ]
 

@@ -162,15 +162,10 @@ def initiate_payment(request):
                         orderMst.order_status=True
                         orderMst.save()
 
-                        # orderDetails = tbl_orders_details.objects.filter(order=orderMst)
-                        # totUserItemPrice = 0
-                        # for d in orderDetails:
-                        #     totUserItemPrice += d.updateQty()
-
-                        # ordDet=tbl_orders_details.objects.filter(order=orderMst)
-                        # qty=ordDet.crt_item_mst.crt_item_qty-ordDet.crt_item_qty
-                        
-                        # print("QUANTITY->",ordDet)
+                        orderDetails = tbl_orders_details.objects.filter(order=orderMst)
+                        totUserItemPrice = 0
+                        for d in orderDetails:
+                            totUserItemPrice += d.updateQty()
 
                         cartitems = Cart.objects.filter(user_id=request.user.user_id)
                         cartitems.delete()
@@ -257,6 +252,11 @@ def callback(request):
             order.order_status=True
             order.save()
 
+            orderDetails = tbl_orders_details.objects.filter(order=orderMst)
+            totUserItemPrice = 0
+            for d in orderDetails:
+                totUserItemPrice += d.updateQty()
+                
             paymentObj=Payment(transaction_id=txt_id,payment_mode=pay_mode,payment_amt=pay_amt,payment_status=2,payment_remark=payment_remark,order=order)
             paymentObj.save()
 

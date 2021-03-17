@@ -39,7 +39,7 @@ def addToCart(request):
                 product = get_object_or_404(tbl_creativeitems_mst,crt_item_id=pid)
                 
                 if (product.user==request.user):
-                    messages.warning(request, 'Ohh! Are you trying to buy own item. We dont do that here.')
+                    messages.warning(request, 'Ohh! Are you trying to buy your own item. We dont do that here.')
                     next = request.POST.get('next', '/')
                     return redirect(next)
 
