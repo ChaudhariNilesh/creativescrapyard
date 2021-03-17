@@ -94,11 +94,11 @@
                         <legend class="col-form-label col-sm-2 py-0">Gender</legend>
                         <div class="col-10 px-sm-5 px-md-4">
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderMale" value="M" name="user_gender" {% if user.profile.user_gender=='M' %} checked {% endif %}/>
+                                <input class="form-check-input" type="radio" id="profileGenderMale" value="M" name="user_gender" {% if user.profile.user_gender == 'M' %} checked {% endif %}/>
                                 <label class="form-check-label" for="profileGenderMale">Male</label>
                             </div>
                             <div class="form-check form-check-inline px-1">
-                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="F" name="user_gender" {% if user.profile.user_gender=='F' %} checked {% endif %}/>
+                                <input class="form-check-input" type="radio" id="profileGenderFemale" value="F" name="user_gender" {% if user.profile.user_gender == 'F' %} checked {% endif %}/>
                                 <label class="form-check-label" for="profileGenderFemale">Female</label>
                             </div>
                         </div>

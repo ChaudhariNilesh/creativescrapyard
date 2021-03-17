@@ -139,31 +139,26 @@
                 </div>
 
                 <div class="d-flex flex-row-reverse mt-4">
-                    {% if detail.order.user == request.user %}
-                        {% if detail.item_status == 1 %}
-                        <div class="px-1">
-                            <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Item
+                    {% if detail.order.user == request.user %} {% if detail.item_status == 1 %}
+                    <div class="px-1">
+                        <button class="btn btn-sm btn-danger  btn-item-cancel" data-item-cancel="" style="font-size: small;"> Cancel Item
                             </button>
-                        </div>
-                        {% elif detail.item_status == 2 %}
-                        <div class="px-1">
-                            <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
+                    </div>
+                    {% elif detail.item_status == 2 %}
+                    <div class="px-1">
+                        <button type="button" class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#reviewModal">
                                 Give Rating & Review
                               </button>
-                        </div>
-                        {% endif %}
-
-                        {% comment %}
-                        <div class="px-1">
-                            <a href="{% url 'Home:Items:Order:orderTrack' %}">
-                                <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;">
+                    </div>
+                    {% endif %} {% comment %}
+                    <div class="px-1">
+                        <a href="{% url 'Home:Items:Order:orderTrack' %}">
+                            <button class="btn btn-sm pri-bg-color" id="ord-track-btn" style="font-size: small;">
                                     Track
                                 </button>
-                            </a>
-                        </div>
-                    {% endcomment %}
-
-                    {% endif %}
+                        </a>
+                    </div>
+                    {% endcomment %} {% endif %}
                 </div>
 
             </div>
@@ -182,7 +177,7 @@
           </button>
             </div>
             <div class="modal-body">
-                <form action="{%url 'Authentication:order_details'%}" method="POST">
+                <form action="{%url 'Authentication:order_details' order.order_id %}" method="POST">
                     {% csrf_token %}
                     <div class="container">
                         <input type="hidden" name="crt_item_id" value={{detail.crt_item_mst.crt_item_id}}>

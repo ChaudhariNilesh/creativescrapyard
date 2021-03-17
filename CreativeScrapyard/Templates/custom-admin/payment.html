@@ -22,19 +22,16 @@
                 <tr>
                     <td class="text-center"><span class="list-enq-name">{{pay.payment_id}}</span>
                     </td>
-                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' 20 %}">{{pay.order.order_id}}</a></span>
+                    <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' pay.order.order_id %}">{{pay.order.order_id}}</a></span>
                     </td>
                     <td class="text-center"><span class="list-enq-name">{{pay.payment_mode}}</span>
                     </td>
                     <td class="text-center">&#8377; {{pay.payment_amt|floatformat:2}}</td>
                     <td class="text-center">
                         {% if pay.payment_status == 1 %}
-                        <span class="text-warning">Pending</span>
-                        {% elif pay.payment_status == 2 %}
-                        <span style="color:#20c997;">Success</span>
-                        {% elif pay.payment_status == 3 %}
-                        <span class="text-danger">Failed</span>
-                        {% endif %}
+                        <span class="text-warning">Pending</span> {% elif pay.payment_status == 2 %}
+                        <span style="color:#20c997;">Success</span> {% elif pay.payment_status == 3 %}
+                        <span class="text-danger">Failed</span> {% endif %}
                     </td>
                     <td class="text-center">{{pay.payment_remark}}
                     </td>

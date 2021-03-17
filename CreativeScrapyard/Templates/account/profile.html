@@ -180,7 +180,7 @@
                             {%for product in scp_products%}
                             <div class="col-12 col-sm-6 col-lg-4" id="product-grid">
 
-                                <div class="product_card border-0 rounded px-0 ">
+                                <div class="product_card border-0 rounded px-0 mt-2">
                                     <div class="imgbx  py-0">
                                         <a href="{% if is_creative and tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
                                             <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.scp_img_url.url}}" alt="" change-src="{% static 'img/products/scrap/brokenmug.jpg' %}" style="height: 280px; width: 220px;">
@@ -227,7 +227,9 @@
                         </div>
                     </div>
                     <div class="tab-pane fade mt-2" id="nav-review">
-                        {% comment %} {% with r="[0,1,2,3,4]"%} {% for i in r%} {% endcomment %} {% for review in reviews %}
+                        {% comment %} {% with r="[0,1,2,3,4]"%} {% for i in r%} {% endcomment %}
+                        <!--  -->
+                        {% for review in reviews %}
                         <div class="container py-3 px-4 my-3 d-block border shadow-sm">
                             <div class="row">
                                 <div class="col">
@@ -248,7 +250,9 @@
                                 <p>{{review.item_review}}</p>
                             </div>
                         </div>
-                        {% endfor %} {% comment %} {% endfor %} {% endwith %} {% endcomment %}
+                        {% endfor %}
+                        <!--  -->
+                        {% comment %} {% endfor %} {% endwith %} {% endcomment %}
                         <div class="row mx-auto mt-3">
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation example">

@@ -145,7 +145,8 @@ def profile(request,id):
     crt_products = tbl_creativeitems_mst.objects.filter(user=id)
     print(crt_products)
     scp_products = tbl_scrapitems.objects.filter(user=id)
-    reviews=Reviews.objects.filter(crt_item__in = crt_products,user=id)
+    reviews=Reviews.objects.filter(crt_item__in = crt_products,crt_item__user__user_id=id)
+    
     badges=BadgeEntries.objects.filter(user=id)
     print(reviews)
     context={

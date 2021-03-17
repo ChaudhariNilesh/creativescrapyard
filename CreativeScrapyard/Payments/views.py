@@ -216,7 +216,7 @@ def initiate_payment(request):
             print(e)
             # print(request.POST.get('next', '/'))
             next = request.POST.get('next', '/')
-            messages.error(request, 'Some error occured, Try again11.'+str(e))
+            messages.error(request, 'Some error occured, Try again.'+str(e))
             return redirect(next)
 
 
@@ -252,7 +252,7 @@ def callback(request):
             order.order_status=True
             order.save()
 
-            orderDetails = tbl_orders_details.objects.filter(order=orderMst)
+            orderDetails = tbl_orders_details.objects.filter(order=order)
             totUserItemPrice = 0
             for d in orderDetails:
                 totUserItemPrice += d.updateQty()

@@ -49,7 +49,7 @@ def scrapSingleItem(request,id):
     ids=all_products.values_list('scp_item_id',flat=True)
     print(ids)
     
-    r_ids = random.sample(list(ids), 1)
+    r_ids = random.sample(list(ids), 5)
  
     explore_products=all_products.filter(scp_item_id__in=r_ids)
 
