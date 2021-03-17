@@ -23,8 +23,15 @@
                                         <!-- <h3 style="margin-top: 0">Filter(s)</h3> -->
                                         <div class="row">
                                             <div class="form-group col-sm-8 col-md-12">
-                                                Category: {% render_field filter.form.crt_sub_category class="form-control" %}
+                                                Category Names :
+                                                <br> {% for choice in filter.form.crt_sub_category %}
+                                                <label class="checkbox">
+                                                    {{ choice.tag }} {{ choice.choice_label }}
+                                                  </label> {% endfor %}
                                             </div>
+                                            <!-- <div class="form-group col-sm-8 col-md-12">
+                                                Category: {% render_field filter.form.crt_sub_category class="form-control" %}
+                                            </div> -->
                                             <div class="form-group col-sm-3 col-md-4">
                                                 Item SKU : {% render_field filter.form.crt_item_SKU class="form-control" %}
                                             </div>
@@ -67,6 +74,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">SKU</th>
+                            <th class="text-center">Category Name</th>
                             <th class="text-center">Item Name</th>
                             <th class="text-center">Seller Email</th>
                             <th class="text-center">Quantity</th>
@@ -81,6 +89,9 @@
                         <tr>
                             <td>
                                 <span class="listing ">{{ item.crt_item_SKU }}</span>
+                            </td>
+                            <td>
+                                <span class="listing ">{{ item.crt_sub_category }}</span>
                             </td>
                             <td class="text-center"><span class="listing">{{ item.crt_item_name }}</span>
                             </td>

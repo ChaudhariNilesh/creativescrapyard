@@ -68,13 +68,13 @@ def AdminLogin(request):
 def adminindex(request):
     if request.user.is_superuser:
         template='custom-admin/admin-dashboard.html'
-        totalRevenue = tbl_orders_details.objects.filter(item_status=2).aggregate(total = Sum(F('crt_item_qty') * F('unit_price'),output_field=models.FloatField()))
+        totalRevenue = tbl_orders_details.objects.filter(item_status=2).aggregate(total = Sum(F('crt_item_qty') * F('unit_price')*0.2,output_field=models.FloatField()))
         currentOrder = tbl_orders_mst.objects.filter(delivery_status=1).count()
         totalOrder = tbl_orders_mst.objects.all().count()
-        totalSeller = Profile.objects.filter(is_verified=True).count()
-        totalUser = User.objects.all().count()
-        totalScrapProduct = tbl_scrapitems.objects.filter(scp_item_status="Active").count()
-        totalCreativeProduct = tbl_creativeitems_mst.objects.filter(crt_item_status="Active").count()
+        totalSeller = Profile.objects.filter(is_verified=True,user__is_active=True).count()
+        totalUser = User.objects.filter(is_active=True,is_superuser=False).count()
+        totalScrapProduct = tbl_scrapitems.objects.filter(scp_item_status="ACTIVE").count()
+        totalCreativeProduct = tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE").count()
 
         context = {
             "totalRevenue": totalRevenue,
@@ -129,7 +129,7 @@ def adminAccount(request):
 
 @login_required        
 def changePassword(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/account-settings/change-password.html'
 
         if request.method == 'POST':
@@ -214,16 +214,17 @@ def buyers(request):
         template = 'custom-admin/users/buyers.html'
 
         # buyers = tbl_orders_mst.objects.filter(user__in=users)
-        buyerItemCount = tbl_orders_details.objects.values("order__user").annotate(itemCount=Count('crt_item_mst'))
 
-        itemCount = tbl_orders_mst.objects.all().values("user").annotate(itemCount=Sum('tbl_orders_details__crt_item_qty'))
-
+        buyerItemCount = tbl_orders_details.objects.filter(item_status=2).values("order__user").annotate(itemCount=Count('crt_item_mst'))
+        buyerOrdAmt= tbl_orders_details.objects.filter(item_status=2).values("order__user").annotate(ordAmt=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.FloatField()))
         users = User.objects.filter(is_superuser=False, is_active=True)
-        print(itemCount)
-        print(users)
+
+        # itemCount = tbl_orders_mst.objects.all().values("user").annotate(itemCount=Sum('tbl_orders_details__crt_item_qty'))
+        # print(itemCount)
+        # print(users)
 
         context = {
-            "buyers":zip(users,buyerItemCount),
+            "buyers":zip(users,buyerItemCount,buyerOrdAmt),
         }
         return render(request,template,context)
     else:
@@ -234,12 +235,14 @@ def sellers(request):
         template = 'custom-admin/users/sellers.html'
         #user=User.objects.filter(is_superuser=False)
         
-        #user=User.objects.filter(is_superuser=False,is_active=True)
-        #print(user)
-        sellers = Profile.objects.filter(is_verified=True)
+        sellers = Profile.objects.filter(is_verified=True,user__is_active=True)
 
+        sellerItemCount = tbl_orders_details.objects.filter(item_status=2).values("crt_item_mst__user").annotate(itemCount=Count('crt_item_mst'))
+        sellerOrdAmt= tbl_orders_details.objects.filter(item_status=2).values("crt_item_mst__user").annotate(ordAmt=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.FloatField()))
+        
+        
         context={
-            "sellers":sellers,
+            "sellers":zip(sellers,sellerItemCount,sellerOrdAmt)
         }
 
         return render(request,template,context)
@@ -356,7 +359,7 @@ def verifyChk(request,action=None,usrId=None):
 ### CREATIVE ###
 
 def creativeCat(request,id=None,action=None):
-    if request.session.get('user'):
+    if request.user.is_superuser:
         crtMainCats=tbl_crt_categories.objects.all()
 
      
@@ -534,9 +537,9 @@ def creativeCat(request,id=None,action=None):
 
 
 def creativeitems(request):
-    if request.session.get('user'):
+    if request.user.is_superuser:
         template = 'custom-admin/products/creativeitems.html'
-        items = tbl_creativeitems_mst.objects.all()
+        items = tbl_creativeitems_mst.objects.filter(crt_item_status__in=["ACTIVE","INAPPROPRIATE"])
         return render(request,template,{"dispSubCat":False, "items": items})
     else:
         return redirect('CustomAdmin:login')
@@ -545,7 +548,7 @@ def creativeitems(request):
 ### SCRAP ###
 def scrapCat(request,id=None,action=None):
    # print("SCRAPCAT FUNC")
-    if request.session.get('user'):   
+    if request.user.is_superuser:   
         scpMainCats=MainScrapCategory.objects.all() 
         template = 'custom-admin/products/scrapcategory.html'
         # print("OUT")
@@ -680,16 +683,18 @@ def scrapCat(request,id=None,action=None):
 
         
 def scrapitems(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/products/scrapitems.html'
-        items = tbl_scrapitems.objects.order_by('scp_created_on')[::-1]
+        # items = tbl_scrapitems.objects.order_by('scp_created_on')[::-1]
+        items = tbl_scrapitems.objects.filter(scp_item_status__in=["ACTIVE","INAPPROPRIATE"])
+
         return render(request, template, {"items": items})
     else:
         return redirect('CustomAdmin:login')
 
 ####### ORDERS RELATED #######
 def allorders(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/allorders.html'
         orders = tbl_orders_mst.objects.all()
 
@@ -699,7 +704,7 @@ def allorders(request):
 
 
 def orderdetails(request,id):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/orderdetails.html'
         order = tbl_orders_mst.objects.get(order_id = id)
         orderDetails = tbl_orders_details.objects.filter(order_id = id) #.annotate(totalPrice=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
@@ -725,7 +730,7 @@ def orderdetails(request,id):
 
 def allorderdetails(request,action='delivered'):
     
-    if request.session.get('user'):  
+    if request.user.is_superuser:  
         #print(action)
         if action == 'delivered':
             title = "Delivered Orders"
@@ -752,7 +757,7 @@ def allorderdetails(request,action='delivered'):
 #######    PAYMENT     #######
 
 def payment(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/payment.html'
         payments = Payment.objects.all()
 
@@ -763,7 +768,7 @@ def payment(request):
         return redirect('CustomAdmin:login')
 ####### BADGES RELATED #######
 def badges(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/manage-badges.html'
         badges=Badges.objects.all()
         badgeEntries=BadgeEntries.objects.all()
@@ -785,17 +790,17 @@ def assignBadges(request):
 
             email=request.POST.get('email')
             badge_id=request.POST.get('badge_id',None)
-            print(badge_id)
-            isEmailExist = User.objects.filter(email=email,is_superuser=False).exists()
+            
+            isEmailExist = User.objects.filter(email=email,is_superuser=False,is_active=True).exists()
             if not isEmailExist and (badge_id=="" or badge_id is None):
                 msg={
-                    "email":"Given email does not exists.",
+                    "email":"Given email does not exists or user account is disabled.",
                     "badge":"Please select the badge."
                 }
                 return JsonResponse({"errors":msg})
             elif not isEmailExist:
                 msg={
-                    "email":"Given email does not exists.",
+                    "email":"Given email does not exists or user account is disabled.",
                 }
 
                 return JsonResponse({"errors":msg})
@@ -908,7 +913,7 @@ def queries(request,qryid=None):
         return redirect('CustomAdmin:login')    
 
 def issues(request,issid=None):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/queries/issues.html'
         title = "Reported Creative Items"
         issueType=1
@@ -962,7 +967,7 @@ def issues(request,issid=None):
 ####### SEND EMAIL RELATED #######
 @login_required
 def sendmail(request):
-    if request.session.get('user'):    
+    if request.user.is_superuser:    
         template = 'custom-admin/sendmail/sendmail.html'
         registerEmails = User.objects.filter(is_active=True,is_superuser=False)
         if request.method == "POST" and not request.is_ajax():
@@ -1000,53 +1005,68 @@ def sendmail(request):
             email = request.POST.get('email', '')
             emailmessage = request.POST.get('message', '')
             typeFor = request.POST.get('type', '')
+            Id = request.POST.get('Id', '')
+            
 
-            if not email or not emailmessage:
-                return JsonResponse({"send":True,"msg":"empty email field is not allowed."})
-            else:
-                if typeFor == "user":
-                    #print(email.split(","),subject,emailmessage)
-                    try:
-                        emailList=email.split(",")
-                        current_site = get_current_site(request)
-                        mail_subject = "Your account is disabled"
-                        message = render_to_string('common/email.html', {
-                            'message':str("\n")+emailmessage,
-                            'user':User.objects.get(email__iexact=email),
-                            'type':"user",
-                        })
-                        to_email = email
-                        email = EmailMessage(
-                                    mail_subject, message, to=emailList
-                        )
-                        email.send()
+            if typeFor == "user":
+                #print(email.split(","),subject,emailmessage)
+                try:
+                    usr=User.objects.get(email=email)
+                    usr.is_active=False
+                    usr.save()
                     
-                    except Exception as e:
-                        return redirect({"send":True,"msg":str(e)})           
-                    else:
-                        return JsonResponse({"send":True,"msg":"Mail Sent"})
-                elif typeFor == "product":
-                    try:                
-                        emailList=email.split(",")
-                        current_site = get_current_site(request)
-                        mail_subject = "Your Product is disabled"
-                        message = render_to_string('common/email.html', {
-                            'message':str("\n")+emailmessage,
-                            'user':User.objects.get(email__iexact=email),
-                            'type':"product"
-                            # here get the product obj
-                        })
-                        to_email = email
-                        email = EmailMessage(
-                                    mail_subject, message, to=emailList
-                        )
-                        email.send()
-                
-                    except Exception as e:
-                        return redirect({"send":True,"msg":str(e)})           
-                    else:
-                        return JsonResponse({"send":True,"msg":"Mail Sent"})
-                
+                    emailList=email.split(",")
+                    current_site = get_current_site(request)
+                    mail_subject = "Your account is disabled"
+                    message = render_to_string('common/email.html', {
+                        'message':str("\n")+emailmessage,
+                        'user':User.objects.get(email__iexact=email),
+                        'type':"user",
+                    })
+                    to_email = email
+                    email = EmailMessage(
+                                mail_subject, message, to=emailList
+                    )
+                    email.send()
+
+                    
+
+                except Exception as e:
+                    return redirect({"send":True,"msg":str(e)})           
+                else:
+                    return JsonResponse({"send":True,"msg":"Mail Sent"})
+            elif typeFor == "product":
+                try:        
+
+                    if request.POST.get("item")=='crt':                    
+                        item=tbl_creativeitems_mst.objects.get(crt_item_id=Id)
+                        item.crt_item_status="INAPPROPRIATE"
+                        item.save()
+                    elif request.POST.get("item")=='scp':
+                        item=tbl_scrapitems.objects.get(scp_item_id=Id)
+                        print(item)
+                        item.scp_item_status="INAPPROPRIATE"
+                        item.save()
+
+                    emailList=item.user.email
+                    current_site = get_current_site(request)
+                    mail_subject = "Your Product is disabled"
+                    message = render_to_string('common/email.html', {
+                        'message':str("\n")+emailmessage,
+                        'type':"product",
+                        'item':item,
+                    })
+                    to_email = email
+                    email = EmailMessage(
+                                mail_subject, message, to=[emailList,]
+                    )
+                    email.send()
+                    
+                except Exception as e:
+                    return redirect({"send":True,"msg":str(e)})           
+                else:
+                    return JsonResponse({"send":True,"msg":"Mail Sent"})
+            
                     
             #return JsonResponse({"send":True,"msg":"Mail Sent"})
 
@@ -1139,7 +1159,7 @@ def sendVerifiedMail(typeFor,profile,verified):
             return True
 ######################################################
 # def loadSubCrtCats(request,id=None):
-#     if request.session.get('user'):
+#     if request.user.is_superuser:
 #         if request.is_ajax() :
 #             main={"mainCatName":[{"Home Decor":["a","b","c"]},{"LifeStyle-Men":["d","e","f","g"]}]}
 #             return JsonResponse(main)

@@ -443,7 +443,8 @@ def dashboard(request):
 
         idLst = [d['order'] for d in detail]
         # print(idLst)
-        netRevenue = tbl_orders_details.objects.filter(order__user=request.user).aggregate(total=Sum(F('crt_item_qty') * F('unit_price'),output_field=models.DecimalField()))
+        netRevenue = tbl_orders_details.objects.filter(crt_item_mst__user=request.user,item_status=2).aggregate(total=Sum(F('crt_item_qty') * F('unit_price') *0.8 ,output_field=models.DecimalField()))
+        print(netRevenue)
         currentOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 1 ).count()
         completedOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 2 ).count()
         totalCreativeItems = tbl_creativeitems_mst.objects.filter(user = request.user).count()

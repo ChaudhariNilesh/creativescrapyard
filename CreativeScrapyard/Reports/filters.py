@@ -15,7 +15,8 @@ class ProductFilter(django_filters.FilterSet):
     crt_created_on = django_filters.DateFromToRangeFilter(field_name='crt_created_on')
     crt_item_price = django_filters.RangeFilter(field_name='crt_item_price')
     crt_item_qty = django_filters.RangeFilter(field_name='crt_item_qty')
-
+    crt_sub_category  = django_filters.ModelMultipleChoiceFilter(queryset=tbl_crt_subcategories.objects.all(),field_name="crt_sub_category",widget=forms.CheckboxSelectMultiple)
+   
     class Meta:
         model = tbl_creativeitems_mst
         fields = ['crt_item_SKU','crt_item_name','crt_created_on','crt_sub_category','crt_item_status','crt_item_price','crt_item_qty']
@@ -29,6 +30,7 @@ class ScrapItemFilter(django_filters.FilterSet):
     scp_created_on = django_filters.DateFromToRangeFilter(field_name='scp_created_on')
     scp_item_price = django_filters.RangeFilter(field_name='scp_item_price')
     scp_item_qty = django_filters.RangeFilter(field_name='scp_item_qty')
+    scp_sub_category  = django_filters.ModelMultipleChoiceFilter(queryset=SubScrapCategory.objects.all(),field_name="scp_sub_category",widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = tbl_scrapitems

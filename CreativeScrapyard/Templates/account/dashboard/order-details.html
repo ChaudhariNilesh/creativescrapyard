@@ -54,6 +54,9 @@
             </div>
         </div>
         <div class="col">
+
+            {% if order.user == request.user %}
+
             <p class="card-title">Contact Details</p>
             <div class="contact-details border-top py-2">
                 <p>
@@ -65,6 +68,8 @@
                     <a class="link-effect px-2" href="tel:9874563210">{{order.contact_no}}</a>
                 </p>
             </div>
+            {% endif %}
+
         </div>
     </div>
 </div>

@@ -114,6 +114,10 @@
                 <div class="list-group">
                     <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                 </div>
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
+                </div>
+
                 <div class="details">
 
                     <table class="table">
@@ -168,6 +172,10 @@
                     <p> Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                     <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
                 </div>
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
+                </div>
+
                 <div class="details">
 
                     <table class="table">
@@ -224,6 +232,10 @@
                     <p> Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
                     <p>Report Created on : {{ today | date:"d/m/Y" }}</p>
                 </div>
+                <div class="list-group">
+                    <p>Filtered By : {{filter_by|default:'--'}}</p>
+                </div>
+
                 <div class="details">
 
                     <table class="table">

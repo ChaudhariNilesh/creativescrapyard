@@ -40,18 +40,28 @@
                                         <span class="listing ">&#8377; {{ item.crt_item_price }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing ">{{ item.crt_item_SKU }}</span>
+                                        <span class="listing">{{ item.crt_item_SKU }}</span>
                                     </td>
                                     <td>
-                                        <span class="listing text-center text-danger">{{ item.crt_item_status }}</span>
+
+                                        {% if item.crt_item_status == "INAPPROPRIATE" %}
+                                        <span class="listing text-center text-danger">{{ item.crt_item_status }}</span> {% else %}
+                                        <span class="listing text-center">{{ item.crt_item_status }}</span> {% endif %}
+
                                     </td>
                                     <td class="text-center">
                                         <span class="listing">{{ item.crt_created_on|date:"M d, Y" }}</span>
                                     </td>
+                                    {% if item.crt_item_status == "INAPPROPRIATE" %}
+                                    <td class="text-center">
+                                        --
+                                    </td>
+                                    {% else %}
                                     <td class="text-center">
                                         <a href="{% url 'Home:Items:creativeSingleItem' item.crt_item_id %}" class="user-view btn btn-sm pri-bg-color"><img src="https://s2.svgbox.net/octicons.svg?ic=eye-bold&color=fff" width="20" height="20"></a>
-                                        <button id="" data="nileshchaudhary1905@gmail.com" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
+                                        <button id="" data="{{item.crt_item_id}}" type="crt" class="btn-sm btn-danger text-white rounded cus prod-disable" aria-hidden="true">DISABLE</button>
                                     </td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %}
 

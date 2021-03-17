@@ -765,7 +765,9 @@ $(function() {
             // })
 
             // console.log($(this).attr("data"));
-            const email = $(this).attr("data")
+            const Id = $(this).attr("data")
+            const item = $(this).attr("type")
+
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -800,9 +802,10 @@ $(function() {
                                 data: {
                                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                                     action: 'post',
-                                    email: email,
+                                    Id: Id,
                                     message: text,
-                                    type: 'product'
+                                    type: 'product',
+                                    item: item
                                 },
                                 dataype: "json",
                                 beforeSend: function() {
@@ -822,6 +825,12 @@ $(function() {
                                     if (data.send) {
                                         //Swal.fire(data.msg, "", "success");
                                         Swal.fire("Product disabled successfully.", "", "success");
+                                    } else {
+                                        Swal.fire(
+                                            data.msg,
+                                            "",
+                                            'error'
+                                        )
                                     }
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
