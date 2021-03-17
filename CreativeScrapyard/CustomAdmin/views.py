@@ -539,7 +539,7 @@ def creativeCat(request,id=None,action=None):
 def creativeitems(request):
     if request.user.is_superuser:
         template = 'custom-admin/products/creativeitems.html'
-        items = tbl_creativeitems_mst.objects.filter(crt_item_status__in=["ACTIVE","INAPPROPRIATE"])
+        items = tbl_creativeitems_mst.objects.all()
         return render(request,template,{"dispSubCat":False, "items": items})
     else:
         return redirect('CustomAdmin:login')
@@ -688,7 +688,7 @@ def scrapitems(request):
     if request.user.is_superuser:    
         template = 'custom-admin/products/scrapitems.html'
         # items = tbl_scrapitems.objects.order_by('scp_created_on')[::-1]
-        items = tbl_scrapitems.objects.filter(scp_item_status__in=["ACTIVE","INAPPROPRIATE"])
+        items = tbl_scrapitems.objects.all()
 
         return render(request, template, {"items": items})
     else:

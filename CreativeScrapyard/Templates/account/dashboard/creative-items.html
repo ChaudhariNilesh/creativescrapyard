@@ -43,7 +43,7 @@
                         {% if prd.crt_item_status == 'INAPPROPRIATE' %}
                         <span class="text-danger">Inappropriate</span> {% elif prd.crt_item_status == 'SOLD' %}
                         <span class="text-danger">SOLD</span> {% else %}
-                        <form method="post" id="updateStatus"> {% csrf_token %}
+                        <form method="post" id="updateStatus-{{prd.crt_item_id}}"> {% csrf_token %}
                             <input type="hidden" value="{{prd.crt_item_id}}" name="itemId" />
                             <select class="p-1 ord-status" name="statusSelect">
                                 <option value="ACTIVE" {% if prd.crt_item_status == 'ACTIVE' %} selected {% endif %}>Active</option>
@@ -64,7 +64,7 @@
                         </a>
                         <a class="btn btn-sm pri-bg-color" href="{% url 'Authentication:edit_creative_product' prd.crt_item_id %}">Edit</a>
 
-                        <button class="btn btn-sm pri-bg-color" form="updateStatus">Save</button>
+                        <button class="btn btn-sm pri-bg-color" form="updateStatus-{{prd.crt_item_id}}">Save</button>
                         <!--  -->
                         {% else %}
                         <span class="text-danger">Disabled</span> {% endif %}
