@@ -5,7 +5,7 @@ from Authentication.models import Address
 from Cart.models import Cart
 from Items.models import tbl_creativeitems_mst
 from django.http import HttpResponseNotFound
-
+from Home.views import creativeCategories,scrapCategories
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # Create your views here.
@@ -50,6 +50,7 @@ def checkout(request,action=None):
                 orderTotalAmt=shipping+float(total)
                 context={
                     'is_creative':True,
+                    'categories':creativeCategories(),
                     'defaultAddress':defaultAddress,
                     'addressList':addressList,
                     'total':total,
@@ -97,6 +98,7 @@ def checkout(request,action=None):
                 'orderTotalAmt':orderTotalAmt,
                 'crtItem':crtItem,
                 'is_cartItem':True,
+                'categories':creativeCategories(),
         }
         
         else:

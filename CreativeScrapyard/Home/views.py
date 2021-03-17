@@ -17,7 +17,15 @@ from django.http import JsonResponse,HttpResponse
 def home(request):
     template="Home/index.html"
     #print(request.user)
-    return render(request,template,{'is_home':True})
+    crt_products=tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE")
+    # ids=crt_products.values_list('crt_item_id',flat=True)
+    # r_ids = random.sample(list(ids), 12)
+#   crt_products=all_products.filter(crt_item_id__in=r_ids)
+    scp_products=tbl_scrapitems.objects.filter(scp_item_status="ACTIVE")
+    # ids=scp_products.values_list('scp_item_id',flat=True)
+    # r_ids = random.sample(list(ids), 0)
+    # scp_products=all_products.filter(scp_item_id__in=r_ids)
+    return render(request,template,{'is_home':True,'crt_products':crt_products,'scp_products':scp_products})
 
 def creativestore(request,type="all",id=None,products=None,sort=None):
     # print(tmp,products)
@@ -31,7 +39,7 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
     if type=="s":
         subcategory=get_object_or_404(tbl_crt_subcategories,crt_sub_category_id=id)
         parentcategory=subcategory.crt_category
-        products = tbl_creativeitems_mst.objects.filter(crt_sub_category=id)
+        products = tbl_creativeitems_mst.objects.filter(crt_sub_category=id,crt_item_status="ACTIVE")
        
         if request.method == "POST":
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
@@ -39,7 +47,7 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
     elif type=="m":
         subcategories=tbl_crt_subcategories.objects.filter(crt_category=id)
         parentcategory=get_object_or_404(tbl_crt_categories.objects,crt_category_id=id)
-        products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories)
+        products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories,crt_item_status="ACTIVE")
 
         if request.method == "POST":
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
@@ -62,13 +70,8 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
             sort="High To Low Price"
 
         elif sort=="mr":
-            products=products.order_by("crt_created_on")
+            products=products.order_by("-crt_created_on")
             sort="Most Recent"
- 
-        elif sort=="mr":
-            products=products.order_by("crt_created_on")
-            sort="Most Recent"
-
 
         elif sort=="alpha":
             products=products.order_by("crt_item_name")
@@ -76,12 +79,15 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
 
         elif sort=="top":
             products=products.order_by("-user__profile__user_rating")
-            sort="Top Review Artist"     
+            sort="Top Review Artist"
+        else:
+            products = tbl_creativeitems_mst.objects.all()
+
 
     context={
         'products':products,
         'is_creative':True,
-        'categories':categories,
+        'categories':creativeCategories(),
         'sub_category':subcategory,
         'parent_category':parentcategory,
         'type':type,
@@ -126,7 +132,7 @@ def FilterNSrch(postDate,prdObj,sort=None):
 #     max_value=postData.get('max_value')
 #     return products,min_value,max_value
 
-def scrapyard(request,type="all",id=None):
+def scrapyard(request,type="all",id=None,sort=None):
     template="Home/scrapyard.html"
     min_value=100
     max_value=1000
@@ -141,17 +147,17 @@ def scrapyard(request,type="all",id=None):
     search=""
     categories=MainScrapCategory.objects.all()
     if type=="s":
-        subcategory=get_object_or_404(SubScrapCategory,scp_sub_category=id)
+        subcategory=get_object_or_404(SubScrapCategory,scp_sub_category_id=id)
         parentcategory=subcategory.scp_category
-        products = tbl_scrapitems.objects.filter(scp_sub_category_id=id)
+        products = tbl_scrapitems.objects.filter(scp_sub_category_id=id,scp_item_status="ACTIVE")
        
         if request.method == "POST":
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
    
     elif type=="m":
         subcategories=SubScrapCategory.objects.filter(scp_category=id)
-        parentcategory=get_object_or_404(SubScrapCategory,scp_category_id=id)
-        products=tbl_scrapitems.objects.filter(scp_sub_category__in=subcategories)
+        parentcategory=get_object_or_404(MainScrapCategory.objects,scp_category_id=id)
+        products=tbl_scrapitems.objects.filter(scp_sub_category__in=subcategories,scp_item_status="ACTIVE")
 
         if request.method == "POST":
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
@@ -163,32 +169,34 @@ def scrapyard(request,type="all",id=None):
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
             
 
-    # if sort is not None:
-    #     if sort=="lh":
-    #         products=products.order_by("scp_item_price")
-    #         sort="Low To High Price"
+    if sort is not None:
+        if sort=="lh":
+            products=products.order_by("scp_item_price")
+            sort="Low To High Price"
 
 
-    #     elif sort=="hl":
-    #         products=products.order_by("-scp_item_price")
-    #         sort="High To Low Price"
+        elif sort=="hl":
+            products=products.order_by("-scp_item_price")
+            sort="High To Low Price"
 
-    #     elif sort=="mr":
-    #         products=products.order_by("scp_created_on")
-    #         sort="Most Recent"
+        elif sort=="mr":
+            products=products.order_by("scp_created_on")
+            sort="Most Recent"
 
-    #     elif sort=="alpha":
-    #         products=products.order_by("scp_item_name")
-    #         sort="Alphabetic"   
+        elif sort=="alpha":
+            products=products.order_by("scp_item_name")
+            sort="Alphabetic"   
 
-    #     elif sort=="top":
-    #         products=products.order_by("-user__profile__user_rating")
-    #         sort="Top Review Artist"     
+        elif sort=="top":
+            products=products.order_by("-user__profile__user_rating")
+            sort="Top Review Artist"     
+        else:
+            products = tbl_scrapitems.objects.all()
 
     context={
         'products':products,
         'is_scrap':True,
-        'categories':categories,
+        'categories':scrapCategories(),
         'sub_category':subcategory,
         'parent_category':parentcategory,
         'type':type,
@@ -199,9 +207,17 @@ def scrapyard(request,type="all",id=None):
         }
     return render(request,template,context)    
 
+def creativeCategories():
+    categories=tbl_crt_categories.objects.all()
+    return categories
+
+def scrapCategories():
+    categories=MainScrapCategory.objects.all()
+    return categories
+
 def achievers(request):
     template="achievers.html"
-    return render(request,template,{'is_creative':True})    
+    return render(request,template,{'is_creative':True,'categories':creativeCategories()})    
 
 def contactus(request):
     template="contact-us.html"
@@ -244,6 +260,7 @@ def contactus(request):
         "is_creative":True,
         "form":formData,
         "errorData":errorData,
+        'categories':creativeCategories(),
     }
 
     #print(context)
@@ -253,7 +270,7 @@ def contactus(request):
 
 def aboutus(request):
     template="about-us.html"
-    return render(request,template,{'is_creative':True})
+    return render(request,template,{'is_creative':True,'categories':creativeCategories()})
 
 def sendContactDetails(request):
     
@@ -294,4 +311,4 @@ def sendContactDetails(request):
     else:
         raise PermissionDenied
 
-    return render(request,template,{'is_scrap':True})         
+    return render(request,template,{'is_scrap':True,'categories':creativeCategories()})         

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect,HttpResponse,get_object_or_404
 from .models import*
 from .forms import *
 from CustomAdmin.models import *
+from Home.views import creativeCategories,scrapCategories
 from Items.forms import *
 from Items.models import *
 from django.contrib import messages
@@ -155,6 +156,7 @@ def profile(request,id):
         "crt_products":crt_products,
         "scp_products":scp_products,
         "reviews":reviews,
+        'categories':creativeCategories(),
         "badges":badges,
     }
     return render(request, template, context)
@@ -177,7 +179,7 @@ def creative_items(request):
     context={
         "myProducts":products
     }
-    return render(request, template,context)
+    return render(request, template,context)    
 
 
 def scrap_items(request):

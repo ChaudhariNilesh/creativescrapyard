@@ -24,15 +24,15 @@
         </div>
         <div class="col-2">
             <div class="dropdown">
-                    <button class="btn btn-outline-dark dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
+                    <button class="btn btn-outline-light dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
                     {{sort|default:"Relevance"}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Revelence</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'lh' %}">Low to High Price</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'hl' %}">High to Low Price</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'mr' %}">Most Recent</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'top' %}">Top Review Artists</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'alpha' %}">Alphabetic</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'rel' %}">Revelence</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'lh' %}">Low to High Price</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'hl' %}">High to Low Price</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'mr' %}">Most Recent</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'top' %}">Top Review Artists</a>
+                    <a class="dropdown-item" href="{% url 'Home:scrapyardsort' 'alpha' %}">Alphabetic</a>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 <div>
                     <ul>
                         {% if not type == 'all' %}
-                        {% for subcategory in parent_category.mainscrapcategory_set.all %}
+                        {% for subcategory in parent_category.subscrapcategory_set.all %}
                         <li>
                             <a href="{% url 'Home:scrapyard' 's' subcategory.scp_sub_category_id%}">{{subcategory.scp_sub_category_name}}</a>
                         </li>
