@@ -129,10 +129,10 @@
                             <form id="form_buy" method="POST" action="{% if is_creative %}{% url 'Home:Items:Order:checkout' 'buy-now' %}{% else %} # {% endif %}">{% csrf_token %} {% if is_creative %}
                                 <div class="form-group ">
                                     <label>Quantity : </label>
-                                    <input class="form-control-inline" name="crt_item_qty" type="number" value="1" min="1" max="10">
+                                    <input class="form-control-inline" name="crt_item_qty" type="number" value="1" min="1" max="{{product.crt_item_qty}}">
                                 </div>
 
-                                <!-- if creative then below buttons-->
+
                                 <div class="form-group">
                                     {% if is_creative %}
                                     <input class="form-control-inline" type="text" name="crt_item_id" value="{{product.crt_item_id}}" hidden>
@@ -213,11 +213,11 @@
                                             </tr>
                                             <tr>
                                                 <th>Height</th>
-                                                <td>{% if is_creative %}{{product.crt_item_height}}{% elif is_scrap %}{{product.scp_item_height}}{% endif %}</td>
+                                                <td>{% if is_creative %}{{product.crt_item_height|default:"N/A"}}{% elif is_scrap %}{{product.scp_item_height|default:"N/A"}}{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Width</th>
-                                                <td>{% if is_creative %}{{product.crt_item_width}}{% elif is_scrap %}{{product.scp_item_width}}{% endif %}</td>
+                                                <td>{% if is_creative %}{{product.crt_item_width|default:"N/A"}}{% elif is_scrap %}{{product.scp_item_width|default:"N/A"}}{% endif %}</td>
                                             </tr>
                                         </tbody>
                                     </table>

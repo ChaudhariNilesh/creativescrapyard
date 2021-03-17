@@ -71,6 +71,11 @@ def initiate_payment(request):
                     # print("POD")
                     orderMst.order_status=True
                     orderMst.save()
+                    orderDetails = tbl_orders_details.objects.filter(order=orderMst)
+                    totUserItemPrice = 0
+                    for d in orderDetails:
+                        totUserItemPrice += d.updateQty()
+                        
                     del request.session['is_cartItem']
                     del request.session['product']
                     del request.session['qty']
@@ -156,7 +161,12 @@ def initiate_payment(request):
                         # print("POD")
                         orderMst.order_status=True
                         orderMst.save()
-                        
+
+                        # orderDetails = tbl_orders_details.objects.filter(order=orderMst)
+                        # totUserItemPrice = 0
+                        # for d in orderDetails:
+                        #     totUserItemPrice += d.updateQty()
+
                         # ordDet=tbl_orders_details.objects.filter(order=orderMst)
                         # qty=ordDet.crt_item_mst.crt_item_qty-ordDet.crt_item_qty
                         

@@ -67,3 +67,11 @@ class tbl_orders_details(models.Model):
 
     def total_price(self):
         return int(self.crt_item_qty * self.unit_price)
+
+    def updateQty(self):
+        qty=self.crt_item_mst.crt_item_qty
+        qty-=self.crt_item_qty
+        crt=self.tbl_creativeitems_mst_set.get()
+        print(crt)
+        print("QRY UPDATED",qty)
+        return qty

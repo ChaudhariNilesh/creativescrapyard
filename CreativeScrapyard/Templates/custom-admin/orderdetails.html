@@ -70,13 +70,16 @@
                             <td class="text-center"><a href=""><span class="list-enq-name">{{ detail.crt_item_mst.user.first_name }} {{ detail.crt_item_mst.user.last_name }}</span></a>
                             </td>
                             <td class="text-center">
-                                <select class="p-1 ord-status">
-                                    <option value="Processing" {% if detail.detail == 1 %} selected {% endif %}>Pending</option>
-                                    <option value="Shipping" {% if detail.detail == 2 %} selected {% endif %}>Completed</option>
-                                    <option value="Delivered" {% if detail.detail == 3 %} selected {% endif %}>Cancelled</option>
-                                    <option value="Cancelled" {% if detail.detail == 4 %} selected {% endif %}>Failed</option>
-                                    <option value="Returned" {% if detail.detail == 5 %} selected {% endif %}>Returned</option>
-                                </select>
+                                <form method="post" id="detailStatusUpdate-{{detail.order_details_id}}"> {% csrf_token %}
+                                    <input type="hidden" name="detailId" value="{{detail.order_details_id}}">
+                                    <select class="p-1 ord-status" name="currentStatus">
+                                        <option value="1" {% if detail.item_status == 1 %} selected {% endif %}>Pending</option>
+                                        <option value="2" {% if detail.item_status == 2 %} selected {% endif %}>Completed</option>
+                                        <option value="3" {% if detail.item_status == 3 %} selected {% endif %}>Cancelled</option>
+                                        <option value="4" {% if detail.item_status == 4 %} selected {% endif %}>Failed</option>
+                                        <option value="5" {% if detail.item_status == 5 %} selected {% endif %}>Returned</option>
+                                    </select>
+                                </form>
                             </td>
                             <td class="text-center"><span class="list-enq-name">{{ detail.crt_item_qty }}</span>
                             </td>
@@ -88,7 +91,7 @@
                             </td>
 
                             <td class="text-center">
-                                <button class="btn btn-sm pri-bg-color">Save</button>
+                                <button type="submit" class="btn btn-sm pri-bg-color" form="detailStatusUpdate-{{detail.order_details_id}}">Save</button>
                             </td>
                         </tr>
                         {% endfor %}
