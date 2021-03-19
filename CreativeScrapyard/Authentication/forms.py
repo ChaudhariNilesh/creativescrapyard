@@ -167,7 +167,7 @@ class UserDocument(forms.ModelForm):
     def clean_pan_no(self):
         pan_no=self.cleaned_data.get("pan_no",None)
 
-        if not len(pan_no)==10 or not pan_no[0:5].isalpha() or not pan_no[5:10].isdigit():
+        if not len(pan_no)==10 or not pan_no[0:5].isalpha() or not pan_no[5:9].isdigit() or not pan_no[10].isalpha():
             self.add_error("pan_no",forms.ValidationError("Enter Valid Pan Card No."))
 
         return pan_no

@@ -42,7 +42,7 @@
                                             </td>
                                             <td class="text-center">{{qry.query_date}}</td>
                                             <td class="text-center">
-                                                <form action="{% url 'CustomAdmin:queryStatus' qry.query_id %}" method="POST" id="frmChangeStat">{% csrf_token %}
+                                                <form action="{% url 'CustomAdmin:queryStatus' qry.query_id %}" method="POST" id="frmChangeStat-{{qry.query_id}}">{% csrf_token %}
                                                     <select class="p-1 ord-status" name="query_status">
                                                         <option value="Resolved" {% if qry.query_status == "Resolved" %}selected{% endif %}>Resolved</option>
                                                         <option value="Pending" {% if qry.query_status == "Pending" %}selected{% endif %}>Pending</option>
@@ -56,11 +56,11 @@
 
                                                 {% if qry.query_status == 'Resolved' %}
                                                 <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal{{qry.query_id}}">View</button>
-                                                <button class="btn btn-sm pri-bg-color" type="submit" form="frmChangeStat">Save</button>
+                                                <button class="btn btn-sm pri-bg-color" type="submit" form="frmChangeStat-{{qry.query_id}}">Save</button>
                                                 <!--  -->
                                                 {% else %}
                                                 <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryModal{{qry.query_id}}">View</button>
-                                                <button class="btn btn-sm pri-bg-color" type="submit" form="frmChangeStat">Save</button>
+                                                <button class="btn btn-sm pri-bg-color" type="submit" form="frmChangeStat-{{qry.query_id}}">Save</button>
                                                 <button class="btn btn-sm pri-bg-color" data-toggle="modal" data-target="#queryReplyModal{{qry.query_id}}"><img src="https://s2.svgbox.net/hero-solid.svg?ic=reply&color=fff" width="20" height="20"></button>
                                                 <!--  -->
                                                 {% endif %}

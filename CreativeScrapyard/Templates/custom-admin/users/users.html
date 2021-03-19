@@ -35,7 +35,7 @@
                                     <td class="text-center">{% if user.is_active %}<span class="listing">active</span>{% else %} <span class="text-danger">disable</span> {% endif %}
                                     </td>
                                     <td><span class="listing text-center">{{ user.num_crt }}</span></td>
-                                    <td><span class="listing text-center">{{ user.seller_id.all|length }}</span></td>
+                                    <td><span class="listing text-center">{{ user.num_scp }}</span></td>
                                     <td class="text-center"><span class="listing">{{ user.date_joined|date:"M d, Y" }}</span></td>
                                     <td class="text-center">
                                         {% if user.profile.is_verified %}

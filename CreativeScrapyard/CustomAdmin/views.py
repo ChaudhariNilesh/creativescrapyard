@@ -198,7 +198,8 @@ def users(request):
         # for account in accounts:
         #     acc = account.seller_id.all().count()
         #     print(acc)
-        users = User.objects.filter(is_superuser=False).annotate(num_crt = Count('tbl_creativeitems_mst'))
+        users = User.objects.filter(is_superuser=False).annotate(num_crt = Count('tbl_creativeitems_mst'),num_scp=Count('tbl_scrapitems'))
+        print(users.values('num_scp'))
         context={
             "Users":users,
         }

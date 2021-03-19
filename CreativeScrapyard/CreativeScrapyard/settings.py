@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     # 'weasyprint',
     'django_filters',
     'widget_tweaks',
+    'Charts',
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

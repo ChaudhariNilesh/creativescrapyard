@@ -188,8 +188,7 @@
 
             <div id="owl-artist-products" class="owl-carousel owl-theme owl-prod owl-crt">
                 <!-- {% with type="creative" %} {%include 'Shop/product-owl.html' %} {% endwith %} -->
-                {% with type="creative" %}
-                {% for product in crt_products %}
+                {% with type="creative" %} {% for product in crt_products %}
                 <div class="product_card border-0 rounded px-0 m-3">
                     <div class="imgbx py-0">
                         <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
@@ -211,8 +210,7 @@
 
                     </div>
                 </div>
-                {% endfor %}
-                {% endwith %}
+                {% endfor %} {% endwith %}
             </div>
         </div>
     </div>
@@ -224,18 +222,16 @@
         <div class="col-9 ">
             <div id="owl-artist-products" class="owl-carousel owl-theme bg-dark owl-prod owl-scp">
                 <!-- {% with type="scrap" %} {%include 'Shop/product-owl.html' %} {% endwith %} -->
-                {% with type="scrap" %}
-
-                {% for product in scp_products %}
+                {% with type="scrap" %} {% for product in scp_products %}
                 <div class="product_card border-0 rounded px-0 m-3">
                     <div class="imgbx py-0">
                         <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
-                            <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.crt_img_url.url}}" alt="" change-src="{% static 'img/products/creative/wallstickers.jpg' %}" style="height: 280px; width: 220px;">
+                            <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.scp_img_url.url}}" alt="" change-src="{% static 'img/products/creative/wallstickers.jpg' %}" style="height: 280px; width: 220px;">
                             <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                 <div class="caption">
 
-                                    <p class="product-name  pb-1" style="{% if type == 'scrap' %} color: #fff; {% elif type == 'creative' %} #000 {% else %}   {% endif %}">{{product.crt_item_name}}</p>
-                                    <p class="price mb-2 " style="{% if type == 'scrap' %} color: var(--pri-color-scp); {% elif type == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; {{product.crt_item_price}}</p>
+                                    <p class="product-name  pb-1" style="{% if type == 'scrap' %} color: #fff; {% elif type == 'creative' %} #000 {% else %}   {% endif %}">{{product.scp_item_name}}</p>
+                                    <p class="price mb-2 " style="{% if type == 'scrap' %} color: var(--pri-color-scp); {% elif type == 'creative' %}  color: var(--pri-color); {% else %} {% endif %}">&#8377; {{product.scp_item_price}}</p>
 
                                 </div>
                                 <a href="#">
@@ -248,8 +244,7 @@
 
                     </div>
                 </div>
-                {% endfor %}
-                {% endwith %}
+                {% endfor %} {% endwith %}
             </div>
         </div>
         <div class="col-3 bg-dark text-white my-auto">
