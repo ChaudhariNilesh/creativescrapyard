@@ -123,6 +123,28 @@
                     </div>
                 </li>
 
+                <li>
+                    <a id="sideCharts" data-toggle="collapse" href="#sideCollapse9" aria-expanded="false">
+                        <img src="https://s2.svgbox.net/hero-solid.svg?ic=chart-pie&color=fff" width="28" height="28">
+
+                        <span class="px-2 align-middle">Charts</span>
+                        <span class="float-right pr-2">
+                            <img src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=fff" width="22"
+                                 height="22">
+                        </span>
+                    </a>
+                    <div id="sideCollapse9" data-parent="#sideNavMenu" class="collapse">
+
+                        <a href="{% url 'Authentication:Charts:charts' '1' %}" class="sub-link"><span style="font-size: 16px;">Categories-Wise Items</span></a>
+                        <a href="{% url 'CustomAdmin:Charts:charts' '2' %}" class="sub-link"><span style="font-size: 16px;">Categories-Wise Orders</span></a>
+                        <a href="{% url 'CustomAdmin:Charts:charts' '3' %}" class="sub-link"><span style="font-size: 16px;">Items Status</span></a>
+                        <a href="{% url 'CustomAdmin:Charts:charts' '5' %}" class="sub-link"><span style="font-size: 16px;">Monthly Orders</span></a>
+                        <a href="{% url 'CustomAdmin:Charts:charts' '6' %}" class="sub-link"><span style="font-size: 16px;">Monthly Sales</span></a>
+
+
+                    </div>
+                </li>
+
             </ul>
         </div>
     </div>
@@ -162,7 +184,9 @@
 </script> -->
 
 
-{% endblock custom-script %} {% endblock %} {% comment %} {% block customscript%} {% block baseScript %} {% endblock %} {% endblock %}
+{% endblock custom-script %} {% endblock %}
+<!--  -->
+{% comment %} {% block customscript%} {% block baseScript %} {% endblock %} {% endblock %}
 <script>
     function func_expand() {
         $(this).find("a").css({

@@ -1,0 +1,574 @@
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/creative-items.css' %}" /> {% endblock %} {% block base %}
+<div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6"></div>
+</div>
+
+{% if chartType == 1 %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Creative Categories-Wise Items
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="crtCat-pie-chart" data-url="{% url 'CustomAdmin:Charts:catItemCharts' %}"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Scrap Categories-Wise Items
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="scpCat-pie-chart" data-url="{% url 'CustomAdmin:Charts:catItemCharts' %}"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% elif chartType == 2 %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Categories-Wise Orders
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="catOrd-pie-chart" data-url="{% url 'CustomAdmin:Charts:catOrdCharts' %}"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% elif chartType == 3 %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Creative Item Status
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="items-pie-chart" data-url="{% url 'CustomAdmin:Charts:itemsCharts' %}"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Scrap Item Status
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="scpitems-pie-chart" data-url="{% url 'CustomAdmin:Charts:itemsCharts' %}"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% elif chartType == 4 %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    User Status
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="user-pie-chart" data-url="{% url 'CustomAdmin:Charts:userCharts' %}"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% elif chartType == 5 %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Monthly Orders
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="monOrd-pie-chart" data-url="{% url 'CustomAdmin:Charts:monOrds' %}"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% elif chartType == 6 %}
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-inn-sp">
+                <div class="page-title">
+                    Monthly Sales
+                </div>
+                <hr/>
+                <div id="container" style="width: 75%;">
+                    <canvas id="monSal-pie-chart" data-url="{% url 'CustomAdmin:Charts:monSales' %}"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<!--  -->
+{% endblock %} {% block customscript %}
+
+<!-- CAT ITEMS  -->
+{% if chartType == 1%}
+
+<script>
+    $(function() {
+
+        var $crtCatChart = $("#crtCat-pie-chart");
+        $.ajax({
+            url: $crtCatChart.attr('data-url'),
+            success: function(data) {
+                // console.log(data);
+                var ctx = $crtCatChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.crtCatdata) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: data.crtCatdata,
+                            backgroundColor: coloR,
+                            borderColor: 'rgba(200, 200, 200, 0.75)',
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                            label: 'Creative Category'
+                        }],
+                        labels: data.crtCatlabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Creative Category Pie Chart'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+
+    // ########################################### SCP CAT ###########################################
+    $(function() {
+
+        var $crtCatChart = $("#scpCat-pie-chart");
+        $.ajax({
+            url: $crtCatChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $crtCatChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.scpCatdata) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: data.scpCatdata,
+                            backgroundColor: coloR,
+
+                            borderColor: 'rgba(200, 200, 200, 0.75)',
+                            //hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                            //                backgroundColor: [chartColors.red,chartColors.orange,chartColors.yellow,chartColors.green,chartColors.blue,chartColors.purple,chartColors.grey,chartColors.tint_green,chartColors.tint_blue,chartColors.black ],
+                            label: 'Scrap Category'
+                        }],
+                        labels: data.scpCatlabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Scrap Category Pie Chart'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
+{% elif chartType == 2 %}
+
+
+<!-- ########################################### ORD CAT ########################################### -->
+<script>
+    $(function() {
+
+        var $OrdCatChart = $("#catOrd-pie-chart");
+        $.ajax({
+            url: $OrdCatChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $OrdCatChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.catOrddata) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: data.catOrddata,
+                            backgroundColor: coloR,
+
+                            borderColor: 'rgba(200, 200, 200, 0.75)',
+
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+
+                            label: 'Order Category'
+                        }],
+                        labels: data.catOrdlabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Category Wise Order Pie Chart'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+{% elif chartType == 3 %}
+
+
+<!-- ########################################### ITEM STATUS ########################################### -->
+<script>
+    $(function() {
+
+        var $itemStatChart = $("#items-pie-chart");
+        $.ajax({
+            url: $itemStatChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $itemStatChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.itemData) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: data.itemData,
+                            backgroundColor: coloR,
+
+                            borderColor: 'rgba(200, 200, 200, 0.75)',
+
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+
+                            label: 'Creative Item Status'
+                        }],
+                        labels: data.itemLabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Scrap Item Status Pie Chart'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+<script>
+    $(function() {
+
+        var $itemStatChart = $("#scpitems-pie-chart");
+        $.ajax({
+            url: $itemStatChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $itemStatChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.scpItemdata) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: data.scpItemdata,
+                            backgroundColor: coloR,
+
+                            borderColor: 'rgba(200, 200, 200, 0.75)',
+
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+
+                            label: 'Scrap Item Status'
+                        }],
+                        labels: data.scpItemlabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Scrap Item Status Pie Chart'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
+{% elif chartType == 4 %}
+
+
+<!-- ########################################### USER STATUS ########################################### -->
+<script>
+    $(function() {
+
+        var $usrStatChart = $("#user-pie-chart");
+        $.ajax({
+            url: $usrStatChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $usrStatChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.usrData) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        datasets: [{
+                            data: data.usrData,
+                            backgroundColor: coloR,
+
+                            borderColor: 'rgba(200, 200, 200, 0.75)',
+
+                            hoverBorderColor: 'rgba(200, 200, 200, 1)',
+
+                            label: 'User Status'
+                        }],
+                        labels: data.usrLabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'User Status Pie Chart'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
+{% elif chartType == 5 %}
+<!-- ########################################### MON ORDS STATUS ########################################### -->
+<script>
+    $(function() {
+
+        var $monOrdChart = $("#monOrd-pie-chart");
+        $.ajax({
+            url: $monOrdChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $monOrdChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.monOrddata) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            data: data.monOrddata,
+                            backgroundColor: coloR,
+                            fill: false,
+                            pointBorderColor: "black",
+                            pointHoverBackgroundColor: 'rgba(200, 200, 200, 0.75)',
+                            label: 'Monthy Creative Orders'
+                        }],
+                        labels: data.monOrdlabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Creative Orders'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+
+
+{% elif chartType == 6 %}
+<!-- ########################################### SALES ORDS STATUS ########################################### -->
+<script>
+    $(function() {
+
+        var $monSalChart = $("#monSal-pie-chart");
+        $.ajax({
+            url: $monSalChart.attr('data-url'),
+            success: function(data) {
+                var ctx = $monSalChart[0].getContext("2d");
+                var coloR = [];
+                var dynamicColors = function() {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
+
+                for (var i in data.monSaldata) {
+                    coloR.push(dynamicColors());
+                }
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            data: data.monSaldata,
+                            backgroundColor: coloR,
+                            fill: false,
+                            pointBorderColor: "black",
+                            pointHoverBackgroundColor: 'rgba(200, 200, 200, 0.75)',
+                            label: 'Monthy Sales'
+                        }],
+                        labels: data.monSallabels
+                    },
+                    options: {
+                        responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Creative Item Sales'
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+{% endif %} {% endblock customscript %}

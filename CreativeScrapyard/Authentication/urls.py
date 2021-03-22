@@ -100,6 +100,8 @@ urlpatterns = [
     ######REPORTS######
     path('', include('UserReports.urls')),
 
+    ######CHARTS######
+    path('', include('Charts.urls')),
 
 
     

@@ -73,6 +73,9 @@ class tbl_orders_details(models.Model):
         qty-=self.crt_item_qty
         crt=tbl_creativeitems_mst.objects.get(crt_item_id=self.crt_item_mst.crt_item_id)
         crt.crt_item_qty=qty
-        crt.save()
+        if qty==0 or qty<0:
+            crt.crt_item_status="SOLD"
+            crt.save()
+
         print("QRY UPDATED",qty)
         return qty

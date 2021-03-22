@@ -53,7 +53,7 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
    
     elif type=="all":
-        products = tbl_creativeitems_mst.objects.all()
+        products = tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE")
         
         if request.method == "POST" :
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
@@ -81,7 +81,7 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
             products=products.order_by("-user__profile__user_rating")
             sort="Top Review Artist"
         else:
-            products = tbl_creativeitems_mst.objects.all()
+            products = tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE")
 
 
     context={
@@ -163,7 +163,7 @@ def scrapyard(request,type="all",id=None,sort=None):
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
    
     elif type=="all":
-        products = tbl_scrapitems.objects.all()
+        products = tbl_scrapitems.objects.filter(crt_item_status="ACTIVE")
         
         if request.method == "POST" :
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
@@ -191,7 +191,7 @@ def scrapyard(request,type="all",id=None,sort=None):
             products=products.order_by("-user__profile__user_rating")
             sort="Top Review Artist"     
         else:
-            products = tbl_scrapitems.objects.all()
+            products = tbl_scrapitems.objects.filter(scp_item_status="ACTIVE")
 
     context={
         'products':products,

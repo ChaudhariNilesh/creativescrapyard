@@ -198,8 +198,12 @@ def users(request):
         # for account in accounts:
         #     acc = account.seller_id.all().count()
         #     print(acc)
-        users = User.objects.filter(is_superuser=False).annotate(num_crt = Count('tbl_creativeitems_mst'),num_scp=Count('tbl_scrapitems'))
-        print(users.values('num_scp'))
+
+        users = User.objects.filter(is_superuser=False).annotate(num_crt = Count('tbl_creativeitems_mst',distinct=True),\
+            num_scp=Count('tbl_scrapitems',distinct=True))
+        
+
+        # print(users.values('num_scp'))
         context={
             "Users":users,
         }
@@ -361,7 +365,7 @@ def verifyChk(request,action=None,usrId=None):
 
 def creativeCat(request,id=None,action=None):
     if request.user.is_superuser:
-        crtMainCats=tbl_crt_categories.objects.all()
+        crtMainCats=tbl_crt_categories.objects.all().order_by("crt_category_name")
 
      
         mainCrtCnt = tbl_crt_subcategories.objects.values("crt_category__crt_category_name").annotate(CrtCnt=Count('tbl_creativeitems_mst'))
@@ -384,7 +388,7 @@ def creativeCat(request,id=None,action=None):
 
 
         if id != None and action==None :
-            subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id).annotate(itemCount=Count('tbl_creativeitems_mst'))
+            subCrtCats=tbl_crt_subcategories.objects.filter(crt_category_id=id).annotate(itemCount=Count('tbl_creativeitems_mst')).order_by("crt_sub_category_name")
             # print("DD1")
             # tmp = Count('tbl_creativeitems_mst', filter=Q(tbl_creativeitems_mst__crt_sub_category=subCrtCats.values('crt_sub_category_id')))
             # print(tmp)
@@ -550,14 +554,14 @@ def creativeitems(request):
 def scrapCat(request,id=None,action=None):
    # print("SCRAPCAT FUNC")
     if request.user.is_superuser:   
-        scpMainCats=MainScrapCategory.objects.all() 
+        scpMainCats=MainScrapCategory.objects.all().order_by("scp_category_name")
         template = 'custom-admin/products/scrapcategory.html'
         # print("OUT")
         mainScpCnt = SubScrapCategory.objects.values("scp_category__scp_category_name").annotate(ScpCnt=Count('tbl_scrapitems'))
 
         if id != None and action==None :
             # print("DD1")
-            subScpCats=SubScrapCategory.objects.filter(scp_category_id=id)
+            subScpCats=SubScrapCategory.objects.filter(scp_category_id=id).order_by("scp_sub_category_name")
             parentCat=get_object_or_404(MainScrapCategory,pk=id)
                 
             if subScpCats!= None:

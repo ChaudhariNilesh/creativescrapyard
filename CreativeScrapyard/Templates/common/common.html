@@ -43,7 +43,6 @@
         </div>
     </footer>
     <script src="{% static 'js/jquery.min.js' %} "></script>
-    {% block customscript %} {% endblock %}
     <script src="{% static 'js/popper.min.js' %} "></script>
     <script src="{% static 'js/bootstrap.min.js' %} "></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
@@ -51,6 +50,8 @@
     <script src="{% static 'js/easy-responsive-tabs.js' %} "></script>
     <script src="{% static 'js/jquery-ui.js' %} "></script>
     <script src="{% static 'js/custom.js' %} "></script>
+
+    <script src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
 
     <!-- <script src="{% static 'js/sweetalert.min.js' %} "></script> -->
 
@@ -75,6 +76,10 @@
 
     <!-- my VALIDATION -->
     <script src="{% static 'js/myValidation.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    {% block customscript %} {% endblock %}
+
 
 </body>
 

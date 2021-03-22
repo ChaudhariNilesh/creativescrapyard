@@ -1,15 +1,20 @@
 ************************************
-drop in account and categories
-sorting
+dropdown in account and categories
+sorting of items
 payment at seller side layout
-categorywise prd count in reports
+check the admin user item count
+archivers page
+add documents bank selection 
+cancel item in order order_details
+
+ 
 ************************************
 ASK:
 
 --issue and quesr status changed so save btn remove?
 --admin crt and scp sold prds show?
 --ask for approp title in report
-prd delte for user
+--prd delte for user
 
 -show prd summary at admin side 
 --filtered by report in other also

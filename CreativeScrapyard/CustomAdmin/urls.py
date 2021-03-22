@@ -75,6 +75,11 @@ urlpatterns = [
     ######REPORTS######
     path('', include('Reports.urls')),
 
+    ######CHARTS######
+    path('', include('Charts.urls')),
+
+
+
 
 
 ]

@@ -143,6 +143,33 @@
                                 </ul>
                             </li>
 
+                            <li>
+                                <a href="#chartSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Charts</a>
+                                <ul class="collapse list-unstyled" id="chartSubmenu">
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Charts:charts' '1' %}">Categories-Wise Items</a>
+
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Charts:charts' '2' %}">Categories-Wise Orders</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Charts:charts' '3' %}">Items Status</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Charts:charts' '4' %}">Users Status</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Charts:charts' '5' %}">Monthly Orders</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'CustomAdmin:Charts:charts' '6' %}">Monthly Sales</a>
+                                    </li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </div>
 
@@ -216,10 +243,12 @@
 
             {% comment %}
             <script src="{% static 'custom-admin/js/sweetalert.min.js' %}"></script> {% endcomment %}
+
             <script src="{% static 'custom-admin/js/tableManager.js' %}"></script>
             <script src="{% static 'custom-admin/js/admin.js' %}"></script>
             <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/3.22.1/tagify.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
 
             {% endblock %}
