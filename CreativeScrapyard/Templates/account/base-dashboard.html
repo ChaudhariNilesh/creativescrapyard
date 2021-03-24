@@ -24,6 +24,7 @@
                     <img src="https://s2.svgbox.net/materialui.svg?ic=logout&color=fff" class="mr-2" width="20" height="20">Logout
                 </a>
             </span>
+
         </div>
     </header>
 
@@ -54,7 +55,9 @@
                         </span>
                     </a>
                     <div id="sideCollapse2" data-parent="#sideNavMenu" class="collapse exd">
+                        {% if request.user.profile.is_verified %}
                         <a href="{% url 'Authentication:creative_items' %}" class="sub-link"><span>Creative Items</span></a>
+                        {% endif %}
                         <a href="{% url 'Authentication:scrap_items' %}" class="sub-link"><span>Scrap Items</span></a>
                     </div>
                 </li>
@@ -84,7 +87,9 @@
                         </span>
                     </a>
                     <div id="sideCollapse5" data-parent="#sideNavMenu" class="collapse">
+                        {% if request.user.profile.is_verified %}
                         <a href="{% url 'Authentication:order_creative' %}" class="sub-link"><span>Creative orders</span></a>
+                        {% endif %}
                         <a href="{% url 'Authentication:order_history' %}" class="sub-link"><span>Orders History</span></a>
                     </div>
                 </li>
@@ -106,6 +111,7 @@
                     </a>
                     <div id="sideCollapse7" data-parent="#sideNavMenu" class="collapse"></div>
                 </li>
+                {% if request.user.profile.is_verified %}
                 <li>
                     <a id="sideReports" data-toggle="collapse" href="#sideCollapse8" aria-expanded="false">
                         <img src="https://s.svgbox.net/hero-solid.svg?ic=document-report&fill=fff" width="28" height="28">
@@ -122,7 +128,8 @@
 
                     </div>
                 </li>
-
+                {% endif %}
+                {% if request.user.profile.is_verified %}
                 <li>
                     <a id="sideCharts" data-toggle="collapse" href="#sideCollapse9" aria-expanded="false">
                         <img src="https://s2.svgbox.net/hero-solid.svg?ic=chart-pie&color=fff" width="28" height="28">
@@ -144,7 +151,7 @@
 
                     </div>
                 </li>
-
+                {% endif %}
             </ul>
         </div>
     </div>
