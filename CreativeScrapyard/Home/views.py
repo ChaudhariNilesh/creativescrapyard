@@ -240,17 +240,55 @@ def scrapCategories():
 
 def achievers(request):
     template="achievers.html"
-    aotm_badge=Badges.objects.get(badge_name="Artist Of The Month")
-    bsa_badge=Badges.objects.get(badge_name="Best Seller Artist")
-    hw_badge=Badges.objects.get(badge_name="Heart Winner")
-    cotm_badge=Badges.objects.get(badge_name="Creator Of The Month")
-    hw_user=None
-    print(aotm_badge)
-    aotm_user=BadgeEntries.objects.filter(badge=aotm_badge)
-    bsa_user=BadgeEntries.objects.filter(badge=bsa_badge)
-    hw_user=BadgeEntries.objects.filter(badge=hw_badge)
-    cotm_user=BadgeEntries.objects.filter(badge=cotm_badge)
-    print(aotm_user)
+    
+    aotm_badge=Badges.objects.filter(badge_name="Artist Of The Month").exists()
+    bsa_badge=Badges.objects.filter(badge_name="Best Seller Artist").exists()
+    hw_badge=Badges.objects.filter(badge_name="Heart Winner").exists()
+    cotm_badge=Badges.objects.filter(badge_name="Creator Of The Month").exists()
+    
+    if aotm_badge:
+        aotm_badge=Badges.objects.get(badge_name="Artist Of The Month")
+        aotm_user=BadgeEntries.objects.filter(badge=aotm_badge)
+    else:
+        aotm_user=None
+    
+    if bsa_badge:
+        bsa_badge=Badges.objects.get(badge_name="Best Seller Artist")
+        bsa_user=BadgeEntries.objects.filter(badge=bsa_badge)
+    else:
+        bsa_user=None
+
+    if hw_badge:
+        hw_badge=Badges.objects.get(badge_name="Heart Winner")    
+        hw_user=BadgeEntries.objects.filter(badge=hw_badge)
+    else:
+        hw_user=None                
+
+    if cotm_badge:
+        cotm_badge=Badges.objects.get(badge_name="Creator Of The Month")
+        cotm_user=BadgeEntries.objects.filter(badge=cotm_badge)
+    else:
+        cotm_user=None
+    
+    # try:
+        
+        # aotm_badge=Badges.objects.get(badge_name="Artist Of The Month")
+        # bsa_badge=Badges.objects.get(badge_name="Best Seller Artist")
+        # hw_badge=Badges.objects.get(badge_name="Heart Winner")    
+        # # cotm_badge=Badges.objects.get(badge_name="Creator Of The Month")
+
+        
+        # aotm_user=BadgeEntries.objects.filter(badge=aotm_badge)
+        # bsa_user=BadgeEntries.objects.filter(badge=bsa_badge)
+        # hw_user=BadgeEntries.objects.filter(badge=hw_badge)        
+        # cotm_user=BadgeEntries.objects.filter(badge=cotm_badge)
+        
+    # except:
+    #     aotm_user=None
+    #     bsa_user=None
+    #     hw_user=None
+    #     cotm_user=None
+    
     context={
         'is_creative':True,
         'categories':creativeCategories(),
