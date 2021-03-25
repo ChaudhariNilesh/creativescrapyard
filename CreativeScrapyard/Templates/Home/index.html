@@ -41,14 +41,14 @@
                             </a>
                         </span>
                         <span class="dropdown custom-dropdown">
-                            <a href="" data-toggle="dropdown">
+                            <a href="{% url 'Authentication:dashboard' %}" >
                                 <i class="fa fa-user fa-2x m-1"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{% url 'Authentication:dashboard' %}">My Account</a>
                                 <a class="dropdown-item" href="{% url 'Authentication:order_history' %}">My Order</a>
                                 <a class="dropdown-item" href="#">Logout</a>
-                            </div>
+                            </div> -->
                         </span> {%else%}
                         <span>
                             <a class="btn btn-outline-dark px-3" href="{% url 'Authentication:login'%}">Log In</a>
@@ -191,7 +191,7 @@
                 {% with type="creative" %} {% for product in crt_products %}
                 <div class="product_card border-0 rounded px-0 m-3">
                     <div class="imgbx py-0">
-                        <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                        <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
                             <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.crt_img_url.url}}" alt="" change-src="{% static 'img/products/creative/wallstickers.jpg' %}" style="height: 280px; width: 220px;">
                             <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                 <div class="caption">
@@ -225,7 +225,7 @@
                 {% with type="scrap" %} {% for product in scp_products %}
                 <div class="product_card border-0 rounded px-0 m-3">
                     <div class="imgbx py-0">
-                        <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' %} {% else %} {% url 'Home:Items:scrapSingleItem' %} {% endif %}">
+                        <a href="{% if is_creative or type == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id  %} {% else %} {% url 'Home:Items:scrapSingleItem' product.scp_item_id  %} {% endif %}">
                             <img class="img-fluid prod-thumb-img" src="{{product.get_image_url.scp_img_url.url}}" alt="" change-src="{% static 'img/products/creative/wallstickers.jpg' %}" style="height: 280px; width: 220px;">
                             <div class="contentbx  m-0 px-3 py-3" style="{% if type == 'scrap' %} background-color: #343a40c0; {% elif type == 'creative' %}  rgba(255, 255, 255, 0.90); {%else%} {% endif %}">
                                 <div class="caption">

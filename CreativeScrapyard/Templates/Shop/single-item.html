@@ -209,7 +209,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Weight</th>
-                                                <td>{% if is_creative %}{{product.crt_item_weight}} gm{% elif is_scrap %}{{product.scp_item_weight}} gm{% endif %}</td>
+                                                <td>{% if is_creative %}{{product.get_crt_item_weight_display}}{% elif is_scrap %}{{product.get_scp_item_weight_display}} {% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Height</th>
@@ -280,7 +280,7 @@
                         <div class="d-md-flex row">
                             {%for product in explore_products%}
                             <div class="col-12 col-sm-6 col-lg-3">
-                                <div class="product_card border-0 rounded px-0 mt-3">
+                                <div class="product_card border-0 rounded px-0 m-3">
                                     <div class="imgbx py-0">
                                         <a href="{% if is_creative or tab == 'creative' %} {% url 'Home:Items:creativeSingleItem' product.crt_item_id  %} {% else %} {% url 'Home:Items:scrapSingleItem' product.scp_item_id %} {% endif %}">
                                             <img class="img-fluid prod-thumb-img grid" src="{% if is_scrap %}{{product.get_image_url.scp_img_url.url}}{% elif is_creative %}{{product.get_image_url.crt_img_url.url}} {% endif %}" style="height:280px;width:220px" alt="" change-src="{% static 'img/products/2.jpg' %}">

@@ -47,14 +47,14 @@
                                 </a>
                             </span>
                             <span class="dropdown  custom-dropdown">
-                                <a href="" data-toggle="dropdown">
+                                <a href="{% url 'Authentication:dashboard' %}">
                                     <i class="fa fa-user fa-2x m-1"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'Authentication:dashboard' %}">My Account</a>
                                     <a class="dropdown-item" href="#">My Order</a>
                                     <a class="dropdown-item" href="#">Logout</a>
-                                </div>
+                                </div> -->
                             </span>
                             <!-- If logged in-->
                             {%else%}
@@ -70,131 +70,30 @@
         </div>
 
         <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example">
-             <div>
-                <a href="{% url 'Home:scrapyard'%}">
-                    <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
-                </a>
-                </div>
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+
+                    <ul class="nav navbar-nav list-group-horizontal">
+                        <li><a href="{% url 'Home:scrapyard'%}" class="btn font-weight-bold" id="scrapyard-category">All Materials</a></li>
 
 
-            <!--li id="{{badge.badge_id}}" class="btn tags {{badgecolor}} mx-1 my-1 badges">{{badge.badge.badge_name}}</li-->
-            {% for category in categories%}
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.scp_category_name}}</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="">
-                        {%for subcategory in category.subscrapcategory_set.all%}
-                        <a class="dropdown-item" href="{% url 'Home:scrapyard' 's' subcategory.scp_sub_category_id%}">{{subcategory.scp_sub_category_name}}</a> {%endfor%}
-                    </div>
+                        {% for category in categories%}
+                        <li class="dropdown ">
+                            <a href="{% url 'Home:scrapyard' 'm' category.scp_category_id%}" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{category.scp_category_name}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {%for subcategory in category.subscrapcategory_set.all%}
+                                <li><a class="dropdown-item" href="{% url 'Home:scrapyard' 's' subcategory.scp_sub_category_id%}">{{subcategory.scp_sub_category_name}}</a></li>
+                                {%endfor%}
+                            </ul>
+                        </li>{%endfor%}
+                    </ul>
+                </div>
 
-                </div>
-            </div>
-            {%endfor%}
-        <!-- </div> -->
-        <!-- <div class="row"> -->
-        {% comment %} <div class="container-fluid ">
-            <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example">
-                <div>
-                    <button type="button" id="scrapyard-category" class="btn font-weight-bold">All Materials</button>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Glass & Ceramics</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Crockery</a>
-                            <a class="dropdown-item" href="#">Plain Glass</a>
-                            <a class="dropdown-item" href="#">Glass Items</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Fabrics</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Footwear and Wearables</a>
-                            <a class="dropdown-item" href="#">Home Fabrics</a>
-                            <a class="dropdown-item" href="#">Jute Fabrics</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Metals</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Home Utensils</a>
-                            <a class="dropdown-item" href="#">Tools and Metals piece</a>
-                            <a class="dropdown-item" href="#">Vehicles Parts</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Plastic</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Utensils</a>
-                            <a class="dropdown-item" href="#">Toys</a>
-                            <a class="dropdown-item" href="#">Plastic items</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Paper</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Newspaper & Used Paper</a>
-                            <a class="dropdown-item" href="#">Decorative & Crafts</a>
-                            <a class="dropdown-item" href="#">Cardboard</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Rubber & Leather</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Tires</a>
-                            <a class="dropdown-item" href="#">Lifestyle</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold  dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Electronics</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">E-Waste</a>
+            </nav>
 
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group custom-dropdown" role="group">
-                        <button type="button" id="scrapyard-category" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Woods &
-                            Furniture</button>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">Furniture</a>
-                            <a class="dropdown-item" href="#">Wood Materials</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <button type="button" id="scrapyard-category" class="btn font-weight-bold">Others</button>
-                </div>
-            </div>
-        </div> {% endcomment %}
+
+
+        </div>
     </div>
 </div>

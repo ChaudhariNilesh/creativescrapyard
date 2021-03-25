@@ -43,6 +43,19 @@ a:hover {
     color: var(--pri-color-scp-bg);
 }
 
+ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+    position: absolute;
+    float: none;
+    padding: 10px;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    float: none;
+    padding: 10px;
+}
+
 
 /* Footer */
 

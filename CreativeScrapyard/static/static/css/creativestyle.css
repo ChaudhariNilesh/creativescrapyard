@@ -10,6 +10,19 @@
 
 /* Creative Header */
 
+ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+    position: absolute;
+    float: none;
+    padding: 10px;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    float: none;
+    padding: 10px;
+}
+
 #allcategory {
     background-color: #fff;
     color: #94c5ae;

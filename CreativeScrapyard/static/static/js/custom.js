@@ -490,6 +490,9 @@ $(function() {
     //   Dom Ready
     var orderItemCancel = () => {
         $('.btn-item-cancel').on('click', function() {
+            const ordID = $(this).attr("data-item-cancel");
+            const ordURL = $(this).attr("data-url");
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: "",
@@ -500,16 +503,125 @@ $(function() {
                 confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire(
-                        'Cancelled!',
-                        'order item is cancelled.',
-                        'success'
-                    );
+
+                    $.ajax({
+
+                        url: ordURL,
+                        dataype: "json",
+                        beforeSend: function() {
+                            // swal.fire({
+                            //     title: 'Sending Mail...',
+                            //     allowOutsideClick: false,
+                            //     allowEscapeKey: false,
+                            //     didOpen: () => {
+                            //         swal.showLoading();
+                            //     }
+                            // });
+                        },
+                        complete: function(data) {
+
+                        },
+                        success: function(data) {
+                            // swal.close();
+                            console.log(data.status)
+                            if (data.status) {
+
+                                Swal.fire(
+                                    'Cancelled!',
+                                    'order item is cancelled.',
+                                    'success'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    'Some error occured, Try again.',
+                                    'warning'
+                                );
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            swal.close();
+
+                            Swal.fire(
+                                jqXHR.status + "",
+                                textStatus + " : " + errorThrown,
+                                'error'
+                            )
+                        }
+
+                    });
+
                 }
             });
         });
     }
+    var orderItemReturn = () => {
+        $('.btn-item-return').on('click', function() {
 
+            const ordURL = $(this).attr("data-url");
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#20C993',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+
+                        url: ordURL,
+                        dataype: "json",
+                        beforeSend: function() {
+                            // swal.fire({
+                            //     title: 'Sending Mail...',
+                            //     allowOutsideClick: false,
+                            //     allowEscapeKey: false,
+                            //     didOpen: () => {
+                            //         swal.showLoading();
+                            //     }
+                            // });
+                        },
+                        complete: function(data) {
+
+                        },
+                        success: function(data) {
+                            // swal.close();
+                            console.log(data.status)
+                            if (data.status) {
+
+                                Swal.fire(
+                                    'Return!',
+                                    'order item is returned.',
+                                    'success'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    'Some error occured, Try again.',
+                                    'warning'
+                                );
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            swal.close();
+
+                            Swal.fire(
+                                jqXHR.status + "",
+                                textStatus + " : " + errorThrown,
+                                'error'
+                            )
+                        }
+
+                    });
+
+                }
+            });
+        });
+    }
     var btnLoading = () => {
         $('.btn-load').click(function() {
             $('.btn-load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
@@ -548,18 +660,8 @@ $(function() {
     }
     var tableManagerReports = function() {
             $('.tablemanager-report').tablemanager({
-                firstSort: [
-                    [1, 0],
-
-                ],
-                // disable: ["last"],
-                appendFilterby: false,
-                debug: false,
-                vocabulary: {
-                    voc_show_rows: 'Rows Per Page'
-                },
                 pagination: true,
-                showrows: [5, 10, 20, 50, 100],
+
                 // disableFilterBy: [1]
             });
 
@@ -588,11 +690,12 @@ $(function() {
         gridPagination();
         newFileUploader();
         orderItemCancel();
+        orderItemReturn();
         btnLoading();
         rating();
         //        loadSubCategory();
 
-        // tableManagerReports();
+        tableManagerReports();
     });
 });
 

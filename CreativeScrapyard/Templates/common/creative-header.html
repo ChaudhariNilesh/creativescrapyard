@@ -35,27 +35,25 @@
                         <diV style="float: right;" class="d-flex">
 
                             {% if user.is_authenticated and not user.is_superuser %}
-                            <span class="dropdown custom-dropdown px-3">
+                            <span class="px-3">
                                 <a href="{% url 'Home:Items:Cart:addToCart' %}">
                                     <i class="fa fa-shopping-cart fa-2x m-1"></i>
                                 </a>
                             </span>
+
                             <span class="dropdown custom-dropdown">
-                                <a href="" data-toggle="dropdown">
+                                <a href="{% url 'Authentication:dashboard' %}">
                                     <i class="fa fa-user fa-2x m-1"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'Authentication:dashboard' %}">My Account</a>
-                                    <a class="dropdown-item" href="#">My Order</a>
-                                    <a class="dropdown-item" href="#">Logout</a>
-                                </div>
+                                    <a class="dropdown-item" href="{% url 'Authentication:order_history' %}">My Order</a>
+                                    <a class="dropdown-item" href="{% url 'Authentication:logout' %}    ">Logout</a>
+                                </div> -->
                             </span> {%else%}
                             <span>
                                 <a class="btn btn-outline-dark px-3" href="{% url 'Authentication:login'%}">Log In</a>
                             </span> {%endif%}
-
-
-
 
                         </diV>
                     </div>
@@ -68,144 +66,30 @@
     <!-- Categories -->
     <div class="container-fluid ">
         <div class="btn-group mt-3 nav d-flex justify-content-center" role="group" aria-label="Basic outlined example">
-            <div>
-                <a href="{% url 'Home:creativestore'%}">
-                    <button type="button" id="allcategory" class="btn font-weight-bold">All Categories</button>
-                </a>
-            </div>
 
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
 
-            <!--li id="{{badge.badge_id}}" class="btn tags {{badgecolor}} mx-1 my-1 badges">{{badge.badge.badge_name}}</li-->
-            {% for category in categories%} {% cycle 'home-decor' 'lifestyle' 'accessories' 'jewellories' 'toys' 'electronics' 'arts' 'others' as categorycolor silent %}
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="{{categorycolor}}" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.crt_category_name}}</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="{{categorycolor}}">
-                        {%for subcategory in category.tbl_crt_subcategories_set.all%}
-                        <a class="dropdown-item" href="{% url 'Home:creativestore' 's' subcategory.crt_sub_category_id%}">{{subcategory.crt_sub_category_name}}</a> {%endfor%} {% comment %} <a class="dropdown-item" href="#">Decorative Cushions</a>
-                        <a class="dropdown-item" href="#">Clocks</a>
-                        <a class="dropdown-item" href="#">Bed Sheets</a>
-                        <a class="dropdown-item" href="#">Curtains</a>
-                        <a class="dropdown-item" href="#">Furniture</a>
-                        <a class="dropdown-item" href="#">Home Lights</a>
-                        <a class="dropdown-item" href="#">Rugs</a>
-                        <a class="dropdown-item" href="#">Kitchen and Dining</a>
-                        <a class="dropdown-item" href="#">Outdoor and Gardening</a>
-                        <a class="dropdown-item" href="#">Others</a> {% endcomment %}
-                    </div>
+                    <ul class="nav navbar-nav list-group-horizontal">
+                        <li><a href="{% url 'Home:creativestore'%}" class="btn font-weight-bold" id="allcategory">All Categories</a></li>
+                        {% for category in categories%} {% cycle 'home-decor' 'lifestyle' 'accessories' 'jewellories' 'toys' 'electronics' 'arts' 'others' as categorycolor silent %}
 
-                </div>
-            </div>
-            {%endfor%} {% comment %}
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="lifestyle" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Lifestyle</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <ul>
-                            <li class="dropdown-submenu custom-dropdown dropright">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> <span class="nav-label">Men's</span><span class="caret"></span></a>
-                                <ul class="dropdown-menu p-3">
-                                    <li><a href="#">Shirts and T-Shirts</a></li>
-                                    <li><a href="#">Pants and Trousers</a></li>
-                                    <li><a href="#">Shoes</a></li>
-                                    <li><a href="#">Jackets and Coats</a></li>
-                                    <li><a href="#">Ethnic and Fushions</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown-submenu custom-dropdown dropright">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> <span class="nav-label">Women's</span><span class="caret"></span></a>
-                                <ul class="dropdown-menu p-3">
-                                    <li><a href="#">Dresses</a></li>
-                                    <li><a href="#">Tops and Tees</a></li>
-                                    <li><a href="#">Skirts</a></li>
-                                    <li><a href="#">Jackets and Coat</a></li>
-                                    <li><a href="#">Trousers and Capris</a></li>
-                                    <li><a href="#">Shoes</a></li>
-                                    <li><a href="#">Ethnic and Fushions</a></li>
-                                </ul>
-                            </li>
+                        <li class="dropdown ">
 
-                        </ul>
-                    </div>
+                            <a href="{% url 'Home:creativestore' 'm' category.crt_category_id%}" id="{{categorycolor}}" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{category.crt_category_name}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {%for subcategory in category.tbl_crt_subcategories_set.all%}
+                                <li><a href="{% url 'Home:creativestore' 's' subcategory.crt_sub_category_id%}">{{subcategory.crt_sub_category_name}}</a></li>
+                                {%endfor%}
+                            </ul>
+                        </li>
+                        {%endfor%}
+                    </ul>
+                </div>
 
-                </div>
-            </div>
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="accessories" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Accesories</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Bags and Purses</a>
-                        <a class="dropdown-item" href="#">Headwear</a>
-                        <a class="dropdown-item" href="#">Keychains</a>
-                        <a class="dropdown-item" href="#">Belts</a>
-                        <a class="dropdown-item" href="#">Sunglasses</a>
-                        <a class="dropdown-item" href="#">Umbrella</a>
-                        <a class="dropdown-item" href="#">Others</a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="jewellories" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Jewellories</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Rings</a>
-                        <a class="dropdown-item" href="#">Necklace</a>
-                        <a class="dropdown-item" href="#">Earrings</a>
-                        <a class="dropdown-item" href="#">Bracelets</a>
-                        <a class="dropdown-item" href="#">Other Imitation Jewellories</a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="toys" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Toys</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Baby Toys</a>
-                        <a class="dropdown-item" href="#">Dolls and Action Figures</a>
-                        <a class="dropdown-item" href="#">Stuffed Toys</a>
-                        <a class="dropdown-item" href="#">Games and Puzzles</a>
-                        <a class="dropdown-item" href="#">Other</a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="electronics" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Electronics</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Mobile Accesories</a>
-                        <a class="dropdown-item" href="#">PC and Laptop Accesories</a>
-                        <a class="dropdown-item" href="#">Laptop Skins(Decal) and Stickers</a>
-                        <a class="dropdown-item" href="#">Other</a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="btn-group custom-dropdown" role="group">
-                    <button type="button" id="arts" class="btn font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Arts and Crafts</button>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Paper Crafts</a>
-                        <a class="dropdown-item" href="#">Sketches and Painting</a>
-                        <a class="dropdown-item" href="#">Sculpture</a>
-                        <a class="dropdown-item" href="#">Glass Art</a>
-                        <a class="dropdown-item" href="#">Photo Frame</a>
-                        <a class="dropdown-item" href="#">Ceramin Arts</a>
-                        <a class="dropdown-item" href="#">Clay Art</a>
-                        <a class="dropdown-item" href="#">Wood Art</a>
-                        <a class="dropdown-item" href="#">Other</a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <button type="button" id="others" class="btn font-weight-bold">Others</button>
-            </div> {% endcomment %}
+            </nav>
+
         </div>
-
-
     </div>
+</div>
+</div>

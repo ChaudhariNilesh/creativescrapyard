@@ -9,7 +9,7 @@ from Items.forms import *
 from Items.models import *
 from django.contrib import messages
 from django.http import JsonResponse
-from django.db.models import Sum,F,Q
+from django.db.models import Count,Sum,F,Q
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -144,12 +144,14 @@ def profile(request,id):
         defaultAddress=None
     
     crt_products = tbl_creativeitems_mst.objects.filter(user=id)
-    print(crt_products)
+    # print(crt_products)
     scp_products = tbl_scrapitems.objects.filter(user=id)
-    reviews=Reviews.objects.filter(crt_item__in = crt_products,crt_item__user__user_id=id)
-    
+    reviews=Reviews.objects.filter(crt_item__in = crt_products,crt_item__user__user_id=id).annotate(reviewCnt=Count("user_id"))
+    reviewCnt = reviews.count()
+    # print(reviews.values("reviewCnt"))
+    # print(reviewCnt)
+
     badges=BadgeEntries.objects.filter(user=id)
-    print(reviews)
     context={
         "is_creative":True,
         "artist":artist_details,
@@ -159,6 +161,7 @@ def profile(request,id):
         "reviews":reviews,
         'categories':creativeCategories(),
         "badges":badges,
+        "reviewCnt":reviewCnt
     }
     return render(request, template, context)
 
@@ -192,7 +195,10 @@ def scrap_items(request):
             itemStatus = request.POST.get('statusSelect')
             itemObj = tbl_scrapitems.objects.get(scp_item_id=id, user=request.user)
             itemObj.scp_item_status = itemStatus
+           
+            itemObj.scp_item_qty = 0
             itemObj.save()
+
         except Exception as e:
             messages.error(request,"Something went wrong." + str(e))
 
@@ -302,6 +308,8 @@ def edit_creative_product(request, id=None):
                 mstObj.crt_item_SKU = SKU
                 mstObj.crt_sub_category = subCat
                 mstObj.user = request.user
+                if mstObj.crt_item_qty >= 1 :
+                    mstObj.crt_item_status = "ACTIVE"
                 mstObj.save()
 
                 messages.success(request,"Product updated successfully.")
@@ -484,6 +492,9 @@ def dashboard_profile(request,action=None):
     UserFormData=EditUserFormData()
     profileFormData=EditProfileForm()
     
+    badges= BadgeEntries.objects.filter(user=request.user)
+    
+    
     try:
         UserAddressData = Address.objects.filter(user_id=request.user.user_id)
         UserDocumentData = Documents.objects.get(user_id=request.user.user_id)
@@ -562,6 +573,7 @@ def dashboard_profile(request,action=None):
         "Profileform":profileFormData,
         "UserAddress":UserAddressData,
         "UserDocument":UserDocumentData,
+        "badges":badges
     }
     
     return render(request, template,context)
@@ -569,14 +581,39 @@ def dashboard_profile(request,action=None):
 @login_required
 def order_creative(request):
     template = "account/dashboard/creative-orders.html"
-
+    oneCancelledItem=False
+    
     detail = tbl_orders_details.objects.filter(crt_item_mst__user = request.user).values('order').distinct()
+    
+    detail = tbl_orders_details.objects.filter(crt_item_mst__user = request.user)
+    # idLst = [ d['order'] for d in detail ]
+    # orderMst = tbl_orders_mst.objects.filter(order_id__in=idLst)
+    
+    
+    ######### IF item is only one and cancelled then show cancelled as status.
+    # ItemCnt=detail.filter()
+    
 
-    idLst = [ d['order'] for d in detail ]
-    print(idLst)
+    ##########################
+    # print(oneCancelledItem)
+    
+    # print(idLst)
 
-    orderMst = tbl_orders_mst.objects.filter(order_id__in=idLst)
-    return render(request, template, {'details': orderMst})
+    # print("BEFORE :: ",orderMst.values("delivery_status"))
+    
+    # for d in detail:
+    #     itm = detail.filter(order_id=d['order']).annotate(cnt=Count("crt_item_mst"))
+    #     stCnt=itm.values("item_status").count()
+    #     print(d)
+    #     if stCnt == 1:
+    #         for o in orderMst: 
+    #             if o == [*itm.values("order")]:
+    #                 print(True)
+    #                 print(o,itm.values("order"))
+    #                 orderMst=orderMst.upadate(delivery_status=itm.values("item_status"))
+            
+    # # print("AFTER :: ",orderMst.values("delivery_status"))
+    return render(request, template, {'details': detail,"oneCancelledItem":oneCancelledItem})
 
 
 @login_required
@@ -606,26 +643,31 @@ def order_history(request, action='current'):
 @login_required
 def order_details(request, id=None):
     template = "account/dashboard/order-details.html"
+    
+    
     order = tbl_orders_mst.objects.get(order_id=id)
+    
+    if request.method=='POST':
+        
+        rate=request.POST.get('item_rating',0.0)
+        review=request.POST.get('item_review','')
+        redirect_url = request.POST.get("redirect_url","accounts/dashboard/orders/history/")
+        crt_item=get_object_or_404(tbl_creativeitems_mst,crt_item_id=request.POST.get('crt_item_id',None))
+        if not (Reviews.objects.filter(crt_item=crt_item,user=request.user).exists()):
+            reviewForm=Reviews(item_rating=rate,item_review=review,crt_item=crt_item,user=request.user)
+            reviewForm.save()
+            user=crt_item.user.profile
+            rating=user.user_rating
+            avg=(float(rating)+float(rate))/2
+            user.user_rating=avg
+            user.save()
+            messages.success(request,"Review Submitted Succesfully")
+            return redirect(redirect_url)
+        else:
+            
+            messages.warning(request,"You already reviewed this item.")
 
     if order.user == request.user:
-        if request.method=='POST':
-            print(request.POST)
-            rate=request.POST.get('item_rating',0.0)
-            review=request.POST.get('item_review','')
-            crt_item=get_object_or_404(tbl_creativeitems_mst,crt_item_id=request.POST.get('crt_item_id',None))
-            if not (Reviews.objects.filter(crt_item=crt_item,user=request.user).exists()):
-                reviewForm=Reviews(item_rating=rate,item_review=review,crt_item=crt_item,user=request.user)
-                reviewForm.save()
-                user=crt_item.user.profile
-                rating=user.user_rating
-                avg=(float(rating)+float(rate))/2
-                user.user_rating=avg
-                user.save()
-                messages.success(request,"Review Submitted Succesfully")
-                return redirect('Authentication:order_details')
-            else:
-                messages.warning(request,"You already reviewed this item.")
 
         orderDetails = tbl_orders_details.objects.filter(order=order)
     else:
@@ -635,9 +677,10 @@ def order_details(request, id=None):
     for d in orderDetails:
         totUserItemPrice += d.total_price()
     try:
-        payment = Payments.objects.get(order=order)
-        print(payment)
-    except:
+        payment = Payment.objects.get(order=order)
+        # print(payment)
+    except Exception as e:
+        # print("EXCEPTION::",e)
         payment = None
     # print(orderDetails)
     context = {
@@ -1146,6 +1189,8 @@ def edit_scrap_product(request, id=None):
                 scpObj.scp_item_SKU = SKU
                 scpObj.scp_sub_category = subCat
                 scpObj.user = request.user
+                # if scpObj.scp_item_qty >= 1 :
+                #     scpObj.scp_item_status = "ACTIVE"
                 scpObj.save()
                 messages.success(request, "Product updated successfully.")
                 return redirect('Authentication:scrap_items')

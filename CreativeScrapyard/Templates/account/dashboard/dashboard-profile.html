@@ -44,8 +44,14 @@
                 </div>
                 <div class="col">
                     <ul class="pb-2 list-inline list-group list-group-horizontal nav d-flex justify-content-center">
-                        <li class="tags tags-common mx-1 my-1">Artist</li>
-                        <li class="tags tags-special mx-1 my-1">Best Artist</li>
+                    {% for badge in badges%} {% cycle 'tags-common' 'tags-special' 'tags-rare' 'tags-event' as badgecolor silent %}
+                        <li id="{{badge.badge_id}}" class="tags {{badgecolor}} mx-1 my-1 badges">{{badge}}</li>
+                    {%endfor%}
+                        {% comment %} <li class="tags tags-common mx-1 my-1">Artist</li>
+                        <li class="tags tags-special mx-1 my-1">Best Artist</li> {% endcomment %}
+
+
+
                     </ul>
                 </div>
             </div>

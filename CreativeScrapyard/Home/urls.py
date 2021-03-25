@@ -13,6 +13,9 @@ urlpatterns = [
     path('creativestore/sort/<str:sort>',creativestore,name="creativestoresort"),
     
     path('creativestore/<str:type>/<int:id>/',creativestore,name="creativestore"),
+    path('creativestore/<str:type>/<int:id>/<str:sort>',creativestore,name="creativestore"),
+    
+
     # path('creativestore/search/',creativestore,name="creativestoreSearch"),
     
     

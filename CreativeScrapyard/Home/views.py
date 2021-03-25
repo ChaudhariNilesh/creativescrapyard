@@ -27,7 +27,7 @@ def home(request):
     # scp_products=all_products.filter(scp_item_id__in=r_ids)
     return render(request,template,{'is_home':True,'crt_products':crt_products,'scp_products':scp_products})
 
-def creativestore(request,type="all",id=None,products=None,sort=None):
+def creativestore(request,type="all",id=None,products=None):
     # print(tmp,products)
     min_value=100
     max_value=1000
@@ -35,53 +35,45 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
     subcategory=None
     parentcategory=None
     search=""
+    
     categories=tbl_crt_categories.objects.all()
     if type=="s":
+        
         subcategory=get_object_or_404(tbl_crt_subcategories,crt_sub_category_id=id)
         parentcategory=subcategory.crt_category
         products = tbl_creativeitems_mst.objects.filter(crt_sub_category=id,crt_item_status="ACTIVE")
-       
+
+        sortBy = request.GET.get('sort','relv')
+        products,sort=sortByFn(sortBy,products)
+
         if request.method == "POST":
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
    
     elif type=="m":
+        
+
         subcategories=tbl_crt_subcategories.objects.filter(crt_category=id)
         parentcategory=get_object_or_404(tbl_crt_categories.objects,crt_category_id=id)
         products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories,crt_item_status="ACTIVE")
+        
+        sortBy = request.GET.get('sort','relv')
+        products,sort=sortByFn(sortBy,products)
 
         if request.method == "POST":
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
    
     elif type=="all":
+
         products = tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE")
+
+        sortBy = request.GET.get('sort','relv') 
+        products,sort=sortByFn(sortBy,products)
         
         if request.method == "POST" :
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
             
 
-    if sort is not None:
-        if sort=="lh":
-            products=products.order_by("crt_item_price")
-            sort="Low To High Price"
 
-
-        elif sort=="hl":
-            products=products.order_by("-crt_item_price")
-            sort="High To Low Price"
-
-        elif sort=="mr":
-            products=products.order_by("-crt_created_on")
-            sort="Most Recent"
-
-        elif sort=="alpha":
-            products=products.order_by("crt_item_name")
-            sort="Alphabetic"   
-
-        elif sort=="top":
-            products=products.order_by("-user__profile__user_rating")
-            sort="Top Review Artist"
-        else:
-            products = tbl_creativeitems_mst.objects.filter(crt_item_status="ACTIVE")
 
 
     context={
@@ -95,11 +87,40 @@ def creativestore(request,type="all",id=None,products=None,sort=None):
         'min_value':min_value,
         'max_value':max_value,
         'search':search,
+        
         }
     
     return render(request,template,context)  
 
-def FilterNSrch(postDate,prdObj,sort=None):
+def sortByFn(sort,products):
+    if sort=="lh":
+        products=products.order_by("crt_item_price")
+        sort="Low To High Price"
+
+    elif sort=="hl":
+        products=products.order_by("-crt_item_price")
+        sort="High To Low Price"
+
+    elif sort=="mr":
+        products=products.order_by("-crt_created_on")
+        sort="Most Recent"
+
+    elif sort=="alpha":
+        products=products.order_by("crt_item_name")
+        sort="Alphabetic"   
+
+    elif sort=="top":
+        products=products.order_by("-user__profile__user_rating")
+        sort="Top Review Artist"
+   
+    elif sort=="relv":
+        sort="Relevance"
+        products = products.filter(crt_item_status="ACTIVE")    
+    
+    return products,sort
+
+
+def FilterNSrch(postDate,prdObj):
 
     search=postDate.get('search',"")
     min_value = postDate.get('min_value',100)
@@ -163,13 +184,14 @@ def scrapyard(request,type="all",id=None,sort=None):
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
    
     elif type=="all":
-        products = tbl_scrapitems.objects.filter(crt_item_status="ACTIVE")
+        products = tbl_scrapitems.objects.filter(scp_item_status="ACTIVE")
         
         if request.method == "POST" :
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
             
 
     if sort is not None:
+        
         if sort=="lh":
             products=products.order_by("scp_item_price")
             sort="Low To High Price"
@@ -190,6 +212,7 @@ def scrapyard(request,type="all",id=None,sort=None):
         elif sort=="top":
             products=products.order_by("-user__profile__user_rating")
             sort="Top Review Artist"     
+        
         else:
             products = tbl_scrapitems.objects.filter(scp_item_status="ACTIVE")
 

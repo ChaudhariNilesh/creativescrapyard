@@ -1,4 +1,6 @@
+from django.contrib.auth import login
 from django.core.mail import message
+from django.http.response import JsonResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from CreativeScrapyard import settings
 from Authentication.models import Address
@@ -8,6 +10,7 @@ from django.http import HttpResponseNotFound
 from Home.views import creativeCategories,scrapCategories
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import *
 # Create your views here.
 @login_required
 def checkout(request,action=None):
@@ -120,3 +123,49 @@ def orderHistory(request):
 def orderTrack(request):
     template="Order/order-track.html"
     return render(request,template,{'is_creative':True})
+
+@login_required
+def orderCancel(request,id=None):
+    if request.is_ajax() and id is not None:
+        try:
+            ord = tbl_orders_details.objects.get(order_details_id=id)
+            ord.item_status = 3
+            ord.save()
+            
+            crt=tbl_creativeitems_mst.objects.get(crt_item_id=ord.crt_item_mst.crt_item_id)
+            qty=crt.crt_item_qty
+            qty+=ord.crt_item_qty
+            crt.crt_item_qty=qty
+            if  crt.crt_item_status=="SOLD":
+                crt.crt_item_status="ACTIVE"
+                crt.save()
+
+        except Exception as e:
+            print(e)
+            return JsonResponse({"status":False})
+        else:
+            return JsonResponse({"status":True})
+    
+
+@login_required
+def orderReturn(request,id=None):
+    if request.is_ajax() and id is not None:
+        try:
+            ord = tbl_orders_details.objects.get(order_details_id=id)
+            ord.item_status = 5
+            ord.save()
+            
+            crt=tbl_creativeitems_mst.objects.get(crt_item_id=ord.crt_item_mst.crt_item_id)
+            qty=crt.crt_item_qty
+            qty+=ord.crt_item_qty
+            crt.crt_item_qty=qty
+            if  crt.crt_item_status=="SOLD":
+                crt.crt_item_status="ACTIVE"
+                crt.save()
+
+        except Exception as e:
+            print(e)
+            return JsonResponse({"status":False})
+        else:
+            return JsonResponse({"status":True})
+    

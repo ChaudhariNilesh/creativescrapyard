@@ -19,16 +19,18 @@
             <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">{%if sub_category%}{{sub_category.crt_sub_category_name|default:"All Categories"}}{%else%}{{parent_category.crt_category_name|default:"All Categories"}}{%endif%}</h2>
         </div>
         <div class="col-3">
+
             <div class="dropdown">
                 <button class="btn btn-outline-dark dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">Sort By :
                     {{sort|default:"Relevance"}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'rel' %}">Revelence</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'lh' %}">Low to High Price</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'hl' %}">High to Low Price</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'mr' %}">Most Recent</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'top' %}">Top Review Artists</a>
-                    <a class="dropdown-item" href="{% url 'Home:creativestoresort' 'alpha' %}">Alphabetic</a>
+
+                    <a class="dropdown-item" href="{% url 'Home:creativestore' %}">Revelence</a>
+                    <a class="dropdown-item" href="?sort=lh">Low to High Price</a>
+                    <a class="dropdown-item" href="?sort=hl">High to Low Price</a>
+                    <a class="dropdown-item" href="?sort=mr">Most Recent</a>
+                    <a class="dropdown-item" href="?sort=top">Top Review Artists</a>
+                    <a class="dropdown-item" href="?sort=alpha">Alphabetic</a>
                 </div>
             </div>
 
@@ -109,8 +111,10 @@
         </div>
         <div class="col-9">
             <div class="row px-2 text-center">
-                {% if search %}
+                {% if search and products %}
                 <h5><i>Search results for item "{{search}}"</i></h5>
+                {% elif search and not products %}
+                <h5><i>No search results for item "{{search}}"</i></h5>
                 {% endif %}
             </div>
             <div class="d-md-flex row prd-loop">

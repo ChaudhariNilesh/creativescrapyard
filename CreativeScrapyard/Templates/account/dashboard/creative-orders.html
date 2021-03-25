@@ -13,12 +13,12 @@
         <table class="table table-hover border-bottom tablemanager">
             <thead>
                 <tr>
-                    <th scope="col" class="text-center fs-9">Order Id</th>
+                    <th scope="col" class="text-center fs-9">ID</th>
                     <th scope="col" class="text-center fs-9">Person name</th>
                     <th scope="col" class="text-center fs-9">Order date</th>
                     <th scope="col" class="text-center fs-9">Delivery Date</th>
                     <th scope="col" class="text-center fs-9">Deliver Address</th>
-                    <th scope="col" class="text-center fs-9">Deliver Status</th>
+                    <th scope="col" class="text-center fs-9">Status</th>
                     <th scope="col" class="text-center fs-9" style="width: 125px;">Commission</th>
                     <th scope="col" class="text-center fs-9">Total price</th>
                     <!-- <th scope="col" class="text-center fs-9 disableFilterBy disableSort">Action</th> -->
@@ -26,35 +26,39 @@
             </thead>
             <tbody>
                 {% for detail in details %}
+
                 <tr>
                     <td scope="row" class="text-center">
 
-                        <a href="{% url 'Authentication:order_details' detail.order_id  %}" class="link-effect">
-                            {{ detail.order_id }}
+                        <a href="{% url 'Authentication:order_details' detail.order.order_id  %}" class="link-effect">
+                            {{ detail.order.order_id }}
                         </a>
                     </td>
-                    <td class="text-center">{{ detail.person_name }}</td>
-                    <td class="text-center">{{ detail.order_date|date:"M d, Y" }}</td>
-                    <td class="text-center">{{ detail.delivery_date|date:"M d, Y" }}</td>
-                    <td class="text-center">{{ detail.delivery_address }}</td>
+                    <td class="text-center">{{ detail.order.person_name }}</td>
+                    <td class="text-center">{{ detail.order.order_date|date:"M d, Y" }}</td>
+                    <td class="text-center">{{ detail.order.delivery_date|date:"M d, Y" }}</td>
+                    <td class="text-center">{{ detail.order.delivery_address }}</td>
                     <td class="text-center"><span class="">
-                        {% if detail.delivery_status == 1 %}
+
+                            
+                        {% if detail.item_status == 1 %}
                             Pending
-                        {% elif detail.delivery_status == 2 %}
+                        {% elif detail.item_status == 2 %}
                             Completed
-                        {% elif detail.delivery_status == 3 %}
+                        {% elif detail.item_status == 3  %}
                             Cancelled
-                        {% elif detail.delivery_status == 4 %}
+                        {% elif detail.item_status == 4  %}
                             Failed
-                        {% elif detail.delivery_status == 5 %}
+                        {% elif detail.item_status == 5  %}
                             Returned
                         {% endif %}
                     </span></td>
-                    <td class="text-center">&#8377; {{ detail.total_amt|mul:"0.2"|floatformat:2 }}</td>
-                    <td class="text-center">&#8377; {{ detail.total_amt|floatformat:2 }}</td>
-                    <td class="text-center">
+                    <td class="text-center">&#8377; {{ detail.total_price|floatformat:2|mul:"0.2"|floatformat:2 }}</td>
+                    <td class="text-center">&#8377; {{ detail.total_price|floatformat:2 }}</td>
 
-                    </td>
+                    <!-- <td class="text-center">&#8377; {{ detail.total_amt|floatformat:2|mul:"0.2"|floatformat:2 }}</td>
+                    <td class="text-center">&#8377; {{ detail.total_amt|floatformat:2 }}</td> -->
+
                 </tr>
                 {% endfor %}
             </tbody>

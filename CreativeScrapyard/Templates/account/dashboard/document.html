@@ -34,13 +34,13 @@
         <div class="form-group col-md-6">
             <label for="bankName">Bank Name</label>
             <select id="bankName" class="form-control {% if form.errors.bank_name == None and form.is_bound %} is-valid {% elif form.errors.bank_name != None %} is-invalid {% endif %}" name="bank_name" aria-describedby="inputGroupPrepend3 validateBankName">
-                <option value="none" selected>Select {{form.bank_name.value|default:''}}</option>
-                <option >State Bank of India</option>
-                <option >Bank of Baroda</option>
-                <option >ICICI Bank</option>
-                <option >HDFC Bank</option>
-                <option >Bank of India</option>
-                <option >Axis Bank</option>
+                <option value="none"  {% if form.bank_name.value == 'none' %} selected {% endif %}>--Select-- </option>
+                <option  {% if form.bank_name.value == 'State Bank of India' %} selected {% endif %} >State Bank of India</option>
+                <option  {% if form.bank_name.value == 'Bank of Baroda' %} selected {% endif %}>Bank of Baroda</option>
+                <option  {% if form.bank_name.value == 'ICICI Bank' %} selected {% endif %}>ICICI Bank</option>
+                <option  {% if form.bank_name.value == 'HDFC Bank' %} selected {% endif %}>HDFC Bank</option>
+                <option  {% if form.bank_name.value == 'Bank of India' %} selected {% endif %}>Bank of India</option>
+                <option  {% if form.bank_name.value == 'Axis Bank' %} selected {% endif %}>Axis Bank</option>
             </select>
             <div id="validateBankName" class="invalid-feedback">
                 {{form.bank_name.errors.as_text}}

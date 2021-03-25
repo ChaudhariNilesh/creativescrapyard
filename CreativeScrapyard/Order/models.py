@@ -77,5 +77,5 @@ class tbl_orders_details(models.Model):
             crt.crt_item_status="SOLD"
             crt.save()
 
-        print("QRY UPDATED",qty)
+        # print("QRY UPDATED",qty)
         return qty

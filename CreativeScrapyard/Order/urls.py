@@ -13,4 +13,8 @@ urlpatterns = [
     
     path('my-orders/',orderHistory,name="orderHistory"), 
     path('track-order/',orderTrack,name="orderTrack"), 
+    path('cancel-order/<int:id>/',orderCancel,name="orderCancel"), 
+    path('return-order/<int:id>/',orderReturn,name="orderReturn"), 
+
+
 ]
