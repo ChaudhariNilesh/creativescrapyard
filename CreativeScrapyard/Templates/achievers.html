@@ -12,6 +12,7 @@
     <h2 class="py-2 pl-2 pl-lg-5 pl-md-4 pl-sm-3">Acheivers </h2>
 </div>
 <div class="container border my-3">
+{% if aotm_user %}
     <div class="row">
         <div class="col-4 border-right  my-auto d-block">
             <div class="container p-4">
@@ -25,21 +26,215 @@
         </div>
         <div class="col-8 ">
             <div class="container p-5">
+            {% for acheiver in aotm_user %}
                 <div class="row">
-                    <img src="../../../media/users/354.png" height="100" width="100" class="rounded-circle mx-auto d-block">
+                
+                    <img src="{{acheiver.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
                 </div>
                 <div class="row">
-                    <h4 class="mx-auto d-block mt-3">Nilesh Chaudhari</h4>
+                    <h4 class="mx-auto d-block mt-3">{{acheiver.user.first_name}} {{acheiver.user.last_name}}</h4>
                 </div>
                 <div class="row">
-                    <p class="mx-auto d-block mt-2">For Selling 15+ Products Last Month</p>
+                    <p class="mx-auto d-block mt-2">Sold Highest Number Of Products This Month</p>
                 </div>
                 <div class="row">
-                    <a href="{% url 'Authentication:profile' 1 %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                    <a href="{% url 'Authentication:profile' acheiver.user.user_id %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if cotm %}
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Creator Of The Month </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+            {% for acheiver in cotm_user %}
+                <div class="row">
+                
+                    <img src="{{acheiver.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">{{acheiver.user.first_name}} {{acheiver.user.last_name}}</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">Uploaded Highest Number Of Product This Month</p>
+                </div>
+                <div class="row">
+                    <a href="{% url 'Authentication:profile' acheiver.user.user_id %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if hw_user %}
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Heart Winner </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+            {% for acheiver in hw_user %}
+                <div class="row">
+                
+                    <img src="{{acheiver.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">{{acheiver.user.first_name}} {{acheiver.user.last_name}}</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">Got The Most Satisfying Reviews This Month</p>
+                </div>
+                <div class="row">
+                    <a href="{% url 'Authentication:profile' acheiver.user.user_id %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if bsa_user %}
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Best Selling Artist </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+            {% for acheiver in bsa_user %}
+                <div class="row">
+                
+                    <img src="{{acheiver.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">{{acheiver.user.first_name}} {{acheiver.user.last_name}}</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">Sold Highest Amount Of Products This Month</p>
+                </div>
+                <div class="row">
+                    <a href="{% url 'Authentication:profile' acheiver.user.user_id %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% comment %} {% endif %} {% endcomment %}
+{% comment %} {% if cotm_user %}
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Creator Of The Month </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+                <div class="row">
+                    <img src="{{cotm_user.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">{{cotm_user.user.first_name}} {{cotm_user.user.last_name}}</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">Uploaded Highest Number Of Product This Month</p>
+                </div>
+                <div class="row">
+                    <a href="{% url 'Authentication:profile' 8 %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
                 </div>
             </div>
         </div>
     </div>
+{% endif %}
+{% if hw_user %}
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Heart Winner </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+                <div class="row">
+                    <img src="{{hw_user.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">{{hw_user.user.first_name}} {{hw_user.user.last_name}}</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">Got The Most Satisfying Reviews This Month</p>
+                </div>
+                <div class="row">
+                    <a href="{% url 'Authentication:profile' 8 %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if bsa_user %}
+    <div class="row">
+        <div class="col-4 border-right  my-auto d-block">
+            <div class="container p-4">
+                <div class="row">
+                    <i class="fa fa-trophy fa-10x mx-auto my-auto d-block" style="color:goldenrod;"></i>
+                </div>
+                <div class="row">
+                    <h3 class="mx-auto mt-2 d-block" style="border-radius:16px;background:#bdefe0;color:#13775a;padding: 10px;"> Best Selling Artist </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-8 ">
+            <div class="container p-5">
+                <div class="row">
+                    <img src="{{bsa_user.user.profile.user_image.url}}" height="100" width="100" class="rounded-circle mx-auto d-block">
+                </div>
+                <div class="row">
+                    <h4 class="mx-auto d-block mt-3">{{bsa_user.user.first_name}} {{bsa_user.user.last_name}}</h4>
+                </div>
+                <div class="row">
+                    <p class="mx-auto d-block mt-2">Sold Highest Amount Of Products This Month</p>
+                </div>
+                <div class="row">
+                    <a href="{% url 'Authentication:profile' 8 %}" class="btn-cxt mx-auto d-block mt-3" style="color:white">Visit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}  {% endcomment %}
 </div>
 
 

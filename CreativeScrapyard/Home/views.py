@@ -240,7 +240,27 @@ def scrapCategories():
 
 def achievers(request):
     template="achievers.html"
-    return render(request,template,{'is_creative':True,'categories':creativeCategories()})    
+    aotm_badge=Badges.objects.get(badge_name="Artist Of The Month")
+    bsa_badge=Badges.objects.get(badge_name="Best Seller Artist")
+    hw_badge=Badges.objects.get(badge_name="Heart Winner")
+    cotm_badge=Badges.objects.get(badge_name="Creator Of The Month")
+    hw_user=None
+    print(aotm_badge)
+    aotm_user=BadgeEntries.objects.filter(badge=aotm_badge)
+    bsa_user=BadgeEntries.objects.filter(badge=bsa_badge)
+    hw_user=BadgeEntries.objects.filter(badge=hw_badge)
+    cotm_user=BadgeEntries.objects.filter(badge=cotm_badge)
+    print(aotm_user)
+    context={
+        'is_creative':True,
+        'categories':creativeCategories(),
+        'aotm_user':aotm_user,
+        'bsa_user':bsa_user,
+        'hw_user':hw_user,
+        'cotm_user':cotm_user,
+
+    }
+    return render(request,template,context)    
 
 def contactus(request):
     template="contact-us.html"

@@ -167,6 +167,9 @@ def profile(request,id):
 
 
 def creative_items(request):
+    p = Profile.objects.get(user=request.user)
+    if not p.is_verified :
+        return HttpResponse("Page not Found.")
     products=tbl_creativeitems_mst.objects.filter(user=request.user)
     template = "account/dashboard/creative-items.html"
 
@@ -210,10 +213,15 @@ def scrap_items(request):
 
 
 def add_creative_product(request):
+    address = Address.objects.filter(user = request.user)
+    if Address.objects.filter(user = request.user):
+        address = True
+    else:
+        address = False
     template = "account/dashboard/add-product/add-product.html"
     crtCategory = tbl_crt_categories.objects.all()
 
-    context = {'crtCategory': crtCategory}
+    context = {'crtCategory': crtCategory, "check_for_address": address}
 
     if request.method == "POST":
         productDetail = tbl_creativeitems_mst_form(request.POST or None, request.FILES or None)
@@ -580,6 +588,9 @@ def dashboard_profile(request,action=None):
 
 @login_required
 def order_creative(request):
+    p = Profile.objects.get(user=request.user)
+    if not p.is_verified:
+        return HttpResponse("Page not Found.")
     template = "account/dashboard/creative-orders.html"
     oneCancelledItem=False
     
