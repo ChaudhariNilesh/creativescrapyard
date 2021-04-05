@@ -399,9 +399,9 @@ def creativeCat(request,id=None,action=None):
             parentCat=get_object_or_404(tbl_crt_categories,pk=id)
 
             if subCrtCats!= None:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True,"mainCrtCnt":zip(crtMainCats, mainCrtCnt)})
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats,"parentCat":parentCat, "dispSubCat":True})
             else:
-                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True,"mainCrtCnt":zip(crtMainCats, mainCrtCnt) })
+                return render(request,template,{"subCrtCats":subCrtCats,"mainCat":crtMainCats, "parentCat":parentCat,"dispSubCat":True })
 
         elif action=="addMain":
             if request.method=="POST" and request.is_ajax():

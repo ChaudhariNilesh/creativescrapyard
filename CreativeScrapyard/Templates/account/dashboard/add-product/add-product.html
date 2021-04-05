@@ -6,13 +6,11 @@
 <div class="page-title">
     Add Creative Item
 </div>
-<hr/>
-
-{% if not check_for_address %}
-    <div class="bx-shd py-2 px-3 border mt-5 py-5">
-        <p class="card-title text-center">You should have to add pickup address before adding Creative product.</p>
-        <p class="text-center"><a href="{% url 'Authentication:addAddress' %}" class="link-effect">Click here </a> to add pick up address</p>
-    </div>
+<hr/> {% if not check_for_address %}
+<div class="bx-shd py-2 px-3 border mt-5 py-5">
+    <p class="card-title text-center">You should have to add pickup address before adding Creative product.</p>
+    <p class="text-center"><a href="{% url 'Authentication:addAddress' %}" class="link-effect">Click here </a> to add pick up address</p>
+</div>
 {% else %}
 <div class="main-page">
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
@@ -213,8 +211,7 @@
     </form>
 
 </div>
-{% endif %}
-{% endblock %} {% block customscript %}
+{% endif %} {% endblock %} {% block customscript %}
 
 
 

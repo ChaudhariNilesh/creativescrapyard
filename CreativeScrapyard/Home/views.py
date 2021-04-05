@@ -51,7 +51,6 @@ def creativestore(request,type="all",id=None,products=None):
    
     elif type=="m":
         
-
         subcategories=tbl_crt_subcategories.objects.filter(crt_category=id)
         parentcategory=get_object_or_404(tbl_crt_categories.objects,crt_category_id=id)
         products=tbl_creativeitems_mst.objects.filter(crt_sub_category__in=subcategories,crt_item_status="ACTIVE")
@@ -71,10 +70,6 @@ def creativestore(request,type="all",id=None,products=None):
         
         if request.method == "POST" :
             products,min_value,max_value,search = FilterNSrch(request.POST,products)
-            
-
-
-
 
     context={
         'products':products,

@@ -1,1 +1,18 @@
-{% autoescape off %} {% if type == 'placeOrder' %} Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} {{message}} {% endif %} {% endautoescape %}
+{% autoescape off %}
+    {% if type == 'placeOrder' %}
+
+        Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
+        {{message}} 
+
+    
+    {% elif type == 'cancelOrder' %} 
+        Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
+        {{message}} 
+    
+    {% elif type == 'returnOrder' %} 
+        Hi, {{user.first_name|capfirst}} {{user.last_name|capfirst}} 
+        {{message}} 
+
+    {% endif %} 
+
+{% endautoescape %}

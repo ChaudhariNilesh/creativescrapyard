@@ -29,15 +29,17 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">Category </th>
-                                    <th scope="col" class="text-center">Total Products</th>
+                                    <!-- <th scope="col" class="text-center">Total Products</th> -->
                                     <th class="disableFilterBy text-center">Action</th>
                                 </tr>
                             </thead>
-                            <tbody> {% for scpCat,cnt in mainScpCnt %}
+                            <tbody> {% for scpCat,cnt in mainScpCnt %} {% endfor %}
+                                <!--  -->
+                                {% for scpCat in mainCat %}
                                 <tr>
                                     <td class="text-center mainScpCatName"><a href="{% url 'CustomAdmin:loadSubScpCat' scpCat.scp_category_id %}"><span class="listing">{{scpCat.scp_category_name}}</span></a></td>
 
-                                    <td class="text-center"><a href="#"><span class="">{{cnt.ScpCnt}}</span></a></td>
+                                    <!-- <td class="text-center"><a href="#"><span class="">{{cnt.ScpCnt}}</span></a></td> -->
 
                                     <td class="text-center">
                                         <button class="edit-main-scp-cat btn btn-sm pri-bg-color" data-edit-mainScpCat="{% url 'CustomAdmin:ScpCatAction' scpCat.scp_category_id 'editMain' %}"><img src="https://s2.svgbox.net/materialui.svg?ic=edit&color=fff" width="20" height="20"></button></a>
@@ -45,6 +47,7 @@
                                     </td>
                                 </tr>
                                 {% endfor %}
+
                             </tbody>
                         </table>
                     </div>

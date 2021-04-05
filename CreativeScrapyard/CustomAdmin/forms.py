@@ -43,7 +43,9 @@ class MainCreativeCategoryForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
        
         crt_category_name = cleaned_data.get('crt_category_name', None)
-        cat = bool(re.match('[a-zA-Z\&\\\s]+$', crt_category_name))
+        cat = bool(re.match('[a-zA-Z-\&\\ \s]+$', crt_category_name))
+        print(crt_category_name,cat)
+
         isCatExists = tbl_crt_categories.objects.filter(crt_category_name__iexact=crt_category_name).exists()
         # print(isCatExists)
         if not cat:
@@ -64,7 +66,7 @@ class SubCreativeCategoryForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
        
         crt_sub_category_name = cleaned_data.get('crt_sub_category_name', None)
-        cat = bool(re.match('[a-zA-Z\&\\\s]+$', crt_sub_category_name))
+        cat = bool(re.match('[a-zA-Z-\&\\ \s]+$', crt_sub_category_name))
         isCatExists = tbl_crt_subcategories.objects.filter(crt_sub_category_name__iexact=crt_sub_category_name).exists()        
         if not cat:
             raise forms.ValidationError("Creative Sub-Category Name is invalid.")
@@ -83,7 +85,7 @@ class MainScrapCategoryForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
        
         scp_category_name = cleaned_data.get('scp_category_name', None)
-        cat = bool(re.match('[a-zA-Z\&\\\s]+$', scp_category_name))
+        cat = bool(re.match('[a-zA-Z-\&\\ \s]+$', scp_category_name))
         isCatExists = MainScrapCategory.objects.filter(scp_category_name__iexact=scp_category_name).exists()        
     
 
@@ -103,7 +105,7 @@ class SubScrapCategoryForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
        
         scp_sub_category_name = cleaned_data.get('scp_sub_category_name', None)
-        cat = bool(re.match('[a-zA-Z\&\\\s]+$', scp_sub_category_name))
+        cat = bool(re.match('[a-zA-Z-\&\\ \s]+$', scp_sub_category_name))
         isCatExists = SubScrapCategory.objects.filter(scp_sub_category_name__iexact=scp_sub_category_name).exists()                
 
         if not cat:

@@ -17,6 +17,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from Home.views import creativeCategories
 
 def initiate_payment(request):
     
@@ -225,7 +226,9 @@ def initiate_payment(request):
 
 @csrf_exempt
 def callback(request):
-    
+    # context={}
+    # context['categories']=creativeCategories()
+    # print(creativeCategories())
     if request.method == 'POST':
         
         received_data = dict(request.POST)
@@ -241,6 +244,7 @@ def callback(request):
         if is_valid_checksum:
             received_data['message'] = "Checksum Matched"
             received_data['is_creative'] = True
+            received_data['categories'] = creativeCategories()
             # print(received_data)
             payed_order_id=int(*received_data['ORDERID'])
             txt_id = str(*received_data['TXNID'])
@@ -268,7 +272,7 @@ def callback(request):
             return render(request, 'payments/callback.html', context=received_data)
         return render(request, 'payments/callback.html', context=received_data)
     else:
-        #return render(request, 'payments/callback.html', {"is_creative":True})
+        # return render(request, 'payments/callback.html', {"is_creative":True,"categories":creativeCategories()})
         raise PermissionDenied
 
 def orderMail(typeFor,order):

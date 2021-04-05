@@ -48,18 +48,24 @@ def catItemCharts(request):
             crtCats = tbl_crt_subcategories.objects.order_by('crt_category__crt_category_name').values("crt_category__crt_category_name").annotate(CrtCnt=Count('tbl_creativeitems_mst'))
         
             scpCats = SubScrapCategory.objects.order_by('scp_category__scp_category_name').values("scp_category__scp_category_name").annotate(ScpCnt=Count('tbl_scrapitems'))
+            for cat in crtCats:
+                crtCatlabels.append(cat["crt_category__crt_category_name"])
+                crtCatdata.append(cat["CrtCnt"])
+
+            for cat in scpCats:
+                scpCatlabels.append(cat["scp_category__scp_category_name"])
+                scpCatdata.append(cat["ScpCnt"])   
         else:
             crtCats = tbl_creativeitems_mst.objects.filter(user=request.user).order_by('crt_sub_category__crt_category__crt_category_name').values("crt_sub_category__crt_category__crt_category_name").annotate(CrtCnt=Count('crt_item_id'))
             scpCats = tbl_scrapitems.objects.filter(user=request.user).order_by('scp_sub_category__scp_category__scp_category_name').values("scp_sub_category__scp_category__scp_category_name").annotate(ScpCnt=Count('scp_item_id'))
         
-        
-        for cat in crtCats:
-            crtCatlabels.append(cat["crt_sub_category__crt_category__crt_category_name"])
-            crtCatdata.append(cat["CrtCnt"])
+            for cat in crtCats:
+                crtCatlabels.append(cat["crt_sub_category__crt_category__crt_category_name"])
+                crtCatdata.append(cat["CrtCnt"])
 
-        for cat in scpCats:
-            scpCatlabels.append(cat["scp_sub_category__scp_category__scp_category_name"])
-            scpCatdata.append(cat["ScpCnt"])        
+            for cat in scpCats:
+                scpCatlabels.append(cat["scp_sub_category__scp_category__scp_category_name"])
+                scpCatdata.append(cat["ScpCnt"])        
 
         context={
             "crtCatlabels":crtCatlabels,
@@ -195,12 +201,15 @@ def monOrds(request):
             .annotate(order_month=Trunc('order_date', 'month'))\
             .values('order_month')\
             .annotate(orderCnt=Count('order_id'))
+            for o in order_month:
+                ordMont[(o['order_month'].strftime("%B"))]=o['orderCnt']
         else:
         
             order_month = tbl_orders_mst.objects.filter(tbl_orders_details__crt_item_mst__user=request.user,order_status=True)\
             .annotate(order_month=Trunc('order_date', 'month'))\
             .values('order_month')\
             .annotate(orderCnt=Count('order_id'))    
+            
             for o in order_month:
                 ordMont[(o['order_month'].strftime("%B"))]=o['orderCnt']
         

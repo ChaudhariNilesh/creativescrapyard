@@ -1034,7 +1034,7 @@ $(function() {
 
         selectUserEmail();
 
-        // tableManagerReports();
+        tableManagerReports();
         // readMsg();
         //  reportTableManager();
     });

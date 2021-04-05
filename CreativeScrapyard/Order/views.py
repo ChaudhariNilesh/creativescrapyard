@@ -11,6 +11,8 @@ from Home.views import creativeCategories,scrapCategories
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 # Create your views here.
 @login_required
 def checkout(request,action=None):
@@ -139,7 +141,9 @@ def orderCancel(request,id=None):
             if  crt.crt_item_status=="SOLD":
                 crt.crt_item_status="ACTIVE"
                 crt.save()
-
+            
+            st = orderMail("cancelOrder",ord)
+            # print(st)
         except Exception as e:
             print(e)
             return JsonResponse({"status":False})
@@ -162,10 +166,64 @@ def orderReturn(request,id=None):
             if  crt.crt_item_status=="SOLD":
                 crt.crt_item_status="ACTIVE"
                 crt.save()
-
+            
+            orderMail("returnOrder",ord)
         except Exception as e:
             print(e)
             return JsonResponse({"status":False})
         else:
             return JsonResponse({"status":True})
+
+def orderMail(typeFor,orderDet):
     
+    if typeFor == "cancelOrder":
+        emailmessage="Your order has been cancelled successfully."
+        emailmessage+="\n\nThank You."
+        try:
+
+            mail_subject = "Order Cancelled"
+            message = render_to_string('Order/order-mail.html', {
+                'message':str("\n")+emailmessage,
+                'user':User.objects.get(user_id=orderDet.order.user.user_id),
+                'type':"cancelOrder",
+            })
+
+
+            to_email = orderDet.order.user.email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email,]
+            )
+            email.send()
+
+        except Exception as e:
+            
+            print("MAIL EXCEPTION : "+str(e))
+            return False     
+        else:
+            return True
+
+    elif typeFor == "returnOrder":
+        emailmessage="Your order has been returned successfully."
+        emailmessage+="\n\nThank You."
+        try:
+
+            mail_subject = "Order Returned"
+            message = render_to_string('Order/order-mail.html', {
+                'message':str("\n")+emailmessage,
+                'user':User.objects.get(user_id=orderDet.order.user.user_id),
+                'type':"returnOrder",
+            })
+
+
+            to_email = orderDet.order.user.email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email,]
+            )
+            email.send()
+
+        except Exception as e:
+            
+            print("MAIL EXCEPTION : "+str(e))
+            return False     
+        else:
+            return True

@@ -11,27 +11,27 @@
     <div class="p-2 container">
         <div class="row my-2">
             <div class="col-md-6 text-right font-weight-bold">TRANSACTION ID : </div>
-            <div class="col-md-6 text-left text-muted">{{ TXNID }}</div>
+            <div class="col-md-6 text-left text-muted">['20210401111212800110168610602504656']</div>
         </div>
         <div class="row my-2">
             <div class="col-md-6 text-right font-weight-bold"> ORDER ID : </div>
-            <div class="col-md-6 text-left text-muted">{{ORDERID}}</div>
+            <div class="col-md-6 text-left text-muted">['106']</div>
         </div>
         <div class="row my-2">
             <div class="col-md-6 text-right font-weight-bold"> AMOUNT : </div>
-            <div class="col-md-6 text-left text-muted"> &#8377;{{ TXNAMOUNT }}</div>
+            <div class="col-md-6 text-left text-muted"> &#8377;['200.00']</div>
         </div>
         <div class="row my-2">
             <div class="col-md-6 text-right font-weight-bold"> BANK NAME : </div>
-            <div class="col-md-6 text-left text-muted">{{ BANKNAME }}</div>
+            <div class="col-md-6 text-left text-muted">['SBI']</div>
         </div>
         <div class="row my-2">
             <div class="col-md-6 text-right font-weight-bold">PAYMENT MODE :</div>
-            <div class="col-md-6 text-left text-muted">{{ PAYMENTMODE }}</div>
+            <div class="col-md-6 text-left text-muted">['NB']</div>
         </div>
         <div class="row my-2">
             <div class="col-md-6 text-right font-weight-bold"> TRANSACTION DATE/TIME : </div>
-            <div class="col-md-6 text-left text-muted">{{ TXNDATE }}</div>
+            <div class="col-md-6 text-left text-muted">['2021-04-01 23:03:59.0']</div>
         </div>
 
         <div class="row my-2 pt-2">
@@ -68,3 +68,30 @@
     });
 </script>
 {% endblock %}
+
+
+
+<div class="row my-2">
+    <div class="col-md-6 text-right font-weight-bold">TRANSACTION ID : </div>
+    <div class="col-md-6 text-left text-muted">{{ TXNID }}</div>
+</div>
+<div class="row my-2">
+    <div class="col-md-6 text-right font-weight-bold"> ORDER ID : </div>
+    <div class="col-md-6 text-left text-muted">{{ORDERID}}</div>
+</div>
+<div class="row my-2">
+    <div class="col-md-6 text-right font-weight-bold"> AMOUNT : </div>
+    <div class="col-md-6 text-left text-muted"> &#8377;{{ TXNAMOUNT }}</div>
+</div>
+<div class="row my-2">
+    <div class="col-md-6 text-right font-weight-bold"> BANK NAME : </div>
+    <div class="col-md-6 text-left text-muted">{{ BANKNAME }}</div>
+</div>
+<div class="row my-2">
+    <div class="col-md-6 text-right font-weight-bold">PAYMENT MODE :</div>
+    <div class="col-md-6 text-left text-muted">{{ PAYMENTMODE }}</div>
+</div>
+<div class="row my-2">
+    <div class="col-md-6 text-right font-weight-bold"> TRANSACTION DATE/TIME : </div>
+    <div class="col-md-6 text-left text-muted">{{ TXNDATE }}</div>
+</div>

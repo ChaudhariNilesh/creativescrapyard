@@ -204,12 +204,12 @@
                                                 <td>{% if is_creative %}{{product.crt_item_SKU}}{% elif is_scrap %}{{product.scp_item_SKU}}{% endif %}</td>
                                             </tr>
                                             <tr>
-                                                <th>Artist Name</th>
+                                                <th>{% if is_creative %}Artist Name{% else %} Seller Name {% endif %}</th>
                                                 <td>{% if is_creative %}{{product.user}}{% elif is_scrap %}{{product.user}}{% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Weight</th>
-                                                <td>{% if is_creative %}{{product.get_crt_item_weight_display}}{% elif is_scrap %}{{product.get_scp_item_weight_display}} {% endif %}</td>
+                                                <td>{% if is_creative %}{{product.get_crt_item_weight_display|default:"N/A"}}{% elif is_scrap %}{{product.get_scp_item_weight_display|default:"N/A"}} {% endif %}</td>
                                             </tr>
                                             <tr>
                                                 <th>Height</th>

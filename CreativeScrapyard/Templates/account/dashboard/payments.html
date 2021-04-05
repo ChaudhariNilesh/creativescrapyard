@@ -1,10 +1,5 @@
-{% extends 'account/base-dashboard.html' %}
-{% load static %}
-{% block baselink %}
-<link rel="stylesheet" href="{% static 'css/nikul/payments.css' %}"/>
-{% endblock %}
-
-{% block base %}
+{% extends 'account/base-dashboard.html' %} {% load static %} {% block baselink %}
+<link rel="stylesheet" href="{% static 'css/nikul/payments.css' %}" /> {% endblock %} {% block base %}
 
 <div class="page-title">
     Payments
@@ -14,15 +9,15 @@
 <div class="bx-shd d-flex">
     <div class="flex-fill text-center border-right py-4">
         <div class="py-2 stat-text">Total Revenue</div>
-        <div class="stat-value">&#8377;5000.09</div>
+        <div class="stat-value">&#8377;1040.00</div>
     </div>
     <div class="flex-fill text-center border-right py-4">
         <div class="py-2 stat-text">Net Revenue</div>
-        <div class="stat-value">&#8377;4560.25</div>
+        <div class="stat-value">&#8377;832.00</div>
     </div>
     <div class="flex-fill text-center py-4">
         <div class="py-2 stat-text">Pending Clearance</div>
-        <div class="stat-value">&#8377;30.00</div>
+        <div class="stat-value">&#8377;300.00</div>
     </div>
 </div>
 
@@ -30,8 +25,7 @@
     <span class="stat-text">SHOW</span>
 
     <div class="btn-group mx-1">
-        <button type="button" class="btn btn-sm pri-bg-color dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">All</button>
+        <button type="button" class="btn btn-sm pri-bg-color dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="#">All</a>
             <a class="dropdown-item" href="#">Cleared</a>
@@ -41,8 +35,7 @@
     </div>
 
     <div class="btn-group mx-1">
-        <button type="button" class="btn btn-sm pri-bg-color dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">2021</button>
+        <button type="button" class="btn btn-sm pri-bg-color dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">2021</button>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="#">2021</a>
             <a class="dropdown-item" href="#">2020</a>
@@ -50,8 +43,7 @@
     </div>
 
     <div class="btn-group mx-1">
-        <button type="button" class="btn btn-sm pri-bg-color dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">JANUARY</button>
+        <button type="button" class="btn btn-sm pri-bg-color dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">JANUARY</button>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="#">JANUARY</a>
             <a class="dropdown-item" href="#">FEBRUARY</a>
@@ -72,16 +64,15 @@
 
 <div class="bx-shd mt-2">
     <table class="table table-hover border-bottom">
-            <thead>
+        <thead>
             <tr class="px-2">
                 <th scope="col" class="text-left" style="width:10%;">Date</th>
                 <th scope="col-3" class="text-left">For</th>
                 <th scope="col" class="text-right">Amount</th>
             </tr>
-            </thead>
-            <tbody>
-            {% with n='12' %}
-            {% for i in n %}
+        </thead>
+        <tbody>
+            {% with n='12' %} {% for i in n %}
             <tr class="px-2">
                 <th scope="row" class="text-left">27/1/2021</th>
                 <td class="text-left">Funds Pending Clearance <span class="view-order-link">(<a href="{% url 'Authentication:order_details' %}" class="link-effect">view order</a>)</span></td>
@@ -97,10 +88,9 @@
                 <td class="text-left">Cancelled Payment Refunded to buyer <span class="view-order-link">(<a href="{% url 'Authentication:order_details' %}" class="link-effect">view order</a>)</span></td>
                 <th class="text-right"><span class="text-danger">&#8377;50.00</span></th>
             </tr>
-            {% endfor %}
-            {% endwith %}
-            </tbody>
-        </table>
+            {% endfor %} {% endwith %}
+        </tbody>
+    </table>
 </div>
 
 

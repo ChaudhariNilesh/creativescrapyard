@@ -213,22 +213,27 @@ def scrap_items(request):
 
 
 def add_creative_product(request):
+    context={}
+
     address = Address.objects.filter(user = request.user)
+    # print(address)
     if Address.objects.filter(user = request.user):
         address = True
     else:
         address = False
+    # print(address)
     template = "account/dashboard/add-product/add-product.html"
     crtCategory = tbl_crt_categories.objects.all()
 
-    context = {'crtCategory': crtCategory, "check_for_address": address}
+    context["check_for_address"]= address
+    context['crtCategory']=crtCategory
 
     if request.method == "POST":
         productDetail = tbl_creativeitems_mst_form(request.POST or None, request.FILES or None)
         imageForm  =  tbl_crtimages_form(request.POST or None, request.FILES or None)
 
 
-        context = {}
+        # context = {}
 
         if productDetail.is_valid() and imageForm.is_valid():
             subCatId = request.POST.get('itemSubCategory')
@@ -478,7 +483,7 @@ def dashboard(request):
         netRevenue = tbl_orders_details.objects.filter(crt_item_mst__user=request.user,item_status=2).aggregate(total=Sum(F('crt_item_qty') * F('unit_price') *0.8 ,output_field=models.DecimalField()))
         print(netRevenue)
         currentOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 1 ).count()
-        completedOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 2 ).count()
+        completedOrders = tbl_orders_mst.objects.filter(order_id__in=idLst, delivery_status = 3 ).count()
         totalCreativeItems = tbl_creativeitems_mst.objects.filter(user = request.user).count()
 
         context = {
@@ -1085,7 +1090,7 @@ def setDefault(request,id):
     if request.is_ajax():
         if id:
             # print("rec")
-            address = Address.objects.get(is_default=True)
+            address = Address.objects.get(is_default=True,user=request.user)
             address.is_default=False
             address.save()
             newDefAddress = Address.objects.get(address_id=id)
