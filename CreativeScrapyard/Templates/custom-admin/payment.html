@@ -20,7 +20,7 @@
             <tbody>
                 {% for pay in payments %}
                 <tr>
-                    <td class="text-center"><span class="list-enq-name">{{pay.payment_id}}</span>
+                    <td class="text-center"><span class="list-enq-name">{{pay.transaction_id}}</span>
                     </td>
                     <td class="text-center"><span class="list-enq-name"><a href="{% url 'CustomAdmin:orderdetails' pay.order.order_id %}">{{pay.order.order_id}}</a></span>
                     </td>
