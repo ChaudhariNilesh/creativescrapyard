@@ -20,3 +20,4 @@ pip-delete-this-directory.txt
 db.sqlite3
 CreativeScrapyard/db.sqlite3
 env
+.env
